@@ -1,2 +1,6 @@
 @import "~bootstrap/scss/bootstrap";
 @import "./home";
+
+.main-div:has(.admin-navbar) {
+    display: flex;
+}

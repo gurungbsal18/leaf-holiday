@@ -15,7 +15,7 @@ function PackageCard({
 }) {
   return (
     <div className="cart w-25">
-      <Image src={imageUrl} height={200} width={350} />
+      <Image src={imageUrl} height={200} width={350} alt="package-image" />
       <div className="d-flex justify-content-between ">
         <span>
           <LocationOnIcon />
