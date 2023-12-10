@@ -17,7 +17,7 @@ export default function GlobalState({ children }) {
     if (extractAdminPath[1] === "admin") {
       setAdminView(true);
     }
-  }, [pathname]);
+  }, [extractAdminPath]);
   return (
     <GlobalContext.Provider
       value={{

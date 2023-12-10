@@ -4,7 +4,7 @@ import { adminNavItems } from "@/utils";
 
 export default function AdminNavbar() {
   return (
-    <div className="admin-navbar d-flex flex-column p-4 border-end min-vh-100">
+    <div className="admin-navbar d-flex flex-column p-4 border-end h-100 ">
       <div className="brand mb-5">
         <a href="/">
           <Image
@@ -18,7 +18,7 @@ export default function AdminNavbar() {
       </div>
       <div className="admin-navItems d-flex flex-column  gap-4">
         {adminNavItems.map((item) => (
-          <div className="nav-item d-flex gap-2" key={item.id}>
+          <div className="nav-item d-flex gap-2  " key={item.id}>
             <div className="nav-icon">{item.icon}</div>
             <div className="nav-label">
               <a href={item.path}>{item.label}</a>

@@ -1,6 +1,6 @@
 import PackageCard from "@/components/PackageCard";
-import "./scss/_home.scss";
-import image from "../../public/images/km.png";
+import "../scss/_home.scss";
+import image from "../../../public/images/km.png";
 
 export default function Home() {
   return (
