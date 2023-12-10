@@ -8,7 +8,7 @@ import { navItems } from "@/utils";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import CloseIcon from "@mui/icons-material/Close";
 
-export default function NavBar() {
+export default function ClientNavbar() {
   const [showNavbar, setShowNavbar] = useState(false);
 
   function handleShowNavBar() {
@@ -23,6 +23,7 @@ export default function NavBar() {
             width={191}
             height={76}
             alt="leaf-holiday-logo"
+            priority={true}
           />
         </a>
       </div>

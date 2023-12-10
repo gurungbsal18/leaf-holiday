@@ -1,4 +1,3 @@
-"use client";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
@@ -11,6 +10,7 @@ import Image from "next/image";
 function Footer() {
   const date = new Date();
   const year = date.getFullYear();
+
   return (
     <div className="footer bg-success p-5 text-white">
       <div className="footer-content d-flex justify-content-between ">

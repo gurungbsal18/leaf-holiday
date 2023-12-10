@@ -54,7 +54,7 @@ const BookingCard = ({ price }) => {
       },
     ],
   };
-  console.log(formData);
+
   const priceCalculator = (priceRange, guestNumber) => {
     for (let i = 0; i < priceRange.length; i++) {
       if (guestNumber <= priceRange[i].maxNoOfPeople) {
@@ -116,7 +116,7 @@ const BookingCard = ({ price }) => {
           </LocalizationProvider>
         </div>
         <div>
-          <a href="#">Or View Our Fixed Departure Dates</a>
+          <a href="#date-price">Or View Our Fixed Departure Dates</a>
         </div>
         <div>
           <p>No. of Guests</p>
@@ -151,15 +151,8 @@ const BookingCard = ({ price }) => {
       </div>
       <div>
         <div>
-          <Button onClick={() => console.log(formData)}>Book Now</Button>
-          <Button
-            onClick={() =>
-              console.log(
-                priceCalculator(bookingDetail.groupPrice, formData.noOfGuests)
-              )
-            }>
-            Send Inquiry
-          </Button>
+          <Button>Book Now</Button>
+          <Button>Send Inquiry</Button>
         </div>
         <Button>Customize Trip</Button>
         <Button className="d-flex">

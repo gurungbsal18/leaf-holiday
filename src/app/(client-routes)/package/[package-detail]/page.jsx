@@ -6,11 +6,14 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import BookingCard from "@/components/BookingCard";
+import { CalendarMonth } from "@mui/icons-material";
+import SelectComponent from "@/components/FormElements/SelectComponent";
+import DateTable from "@/components/DateTable";
 
 const PackageDetail = () => {
   const [showItineraryDetails, setShowItineraryDetails] = useState({});
-
   const [expandOrCollapse, setExpandOrCollapse] = useState(false);
+  const [showCostInclude, setShowConstInclude] = useState(true);
 
   useEffect(() => {
     if (
@@ -39,7 +42,7 @@ const PackageDetail = () => {
   };
 
   return (
-    <div className="">
+    <div className="main-div">
       <div>
         <Image
           src={pkgDetail.headerImage}
@@ -49,7 +52,7 @@ const PackageDetail = () => {
         />
       </div>
       <div className="d-flex justify-content-between ">
-        <h3>{pkgDetail.headerTitle}</h3>
+        <h5>{pkgDetail.headerTitle}</h5>
         <div className="">
           <Button>Book Now</Button>
           <Button>Send Inquiry</Button>
@@ -63,7 +66,7 @@ const PackageDetail = () => {
           </a>
         ))}
       </div>
-      <div className="d-flex gap-5 ">
+      <div className="content-div d-flex gap-5 ">
         <div className="p-3">
           <div className="d-flex">
             {pkgDetail.packageInformation.map((item) => (
@@ -77,13 +80,13 @@ const PackageDetail = () => {
             ))}
           </div>
           <div>
-            <h3>{pkgDetail.overviewTitle}</h3>
+            <h5>{pkgDetail.overviewTitle}</h5>
             <p>{pkgDetail.overviewContent}</p>
             <Button>Read More</Button>
           </div>
           <div>
             <div className="d-flex   justify-content-between ">
-              <h3>Itinerary</h3>
+              <h5>Itinerary</h5>
               <Button onClick={handleExpandCollapse}>
                 {expandOrCollapse ? "Collapse All" : "Expand All"}
               </Button>
@@ -110,9 +113,54 @@ const PackageDetail = () => {
                 </div>
               ))}
             </div>
+            <div className="cost-IE-container">
+              <div className="cost-IE-header">
+                <Button onClick={() => setShowConstInclude(true)}>
+                  Cost Include
+                </Button>
+                <Button onClick={() => setShowConstInclude(false)}>
+                  Cost Exclude
+                </Button>
+              </div>
+              <div className="const-IE-content">
+                <ul>
+                  {showCostInclude
+                    ? pkgDetail.costInclude.map((item) => (
+                        <li key={item.id}>{item.content}</li>
+                      ))
+                    : pkgDetail.costExclude.map((item) => (
+                        <li key={item.id}>{item.content}</li>
+                      ))}
+                </ul>
+              </div>
+            </div>
+            <div className="map-container">
+              <h5>Trip Map</h5>
+              <div className="map-image">
+                <Image
+                  src={pkgDetail.mapImage}
+                  width={611}
+                  height={897}
+                  alt="map"
+                />
+              </div>
+            </div>
+            <div className="date-price-container" id="date-price">
+              <h5>
+                <CalendarMonth />
+                Dates & Price
+              </h5>
+              <SelectComponent
+                options={[
+                  { id: 1, label: "June 2023" },
+                  { id: 2, label: "July 2023" },
+                ]}
+              />
+              <DateTable />
+            </div>
           </div>
         </div>
-        <div className="w-100 ">
+        <div className="booking-card w-100 ">
           <BookingCard price={1290} />
         </div>
       </div>

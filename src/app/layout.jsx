@@ -1,11 +1,8 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import GlobalState from "@/context";
-import NavBar from "@/components/Navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./scss/custom-style.scss";
-import Footer from "@/components/Footer";
-import Cart from "@/components/PackageCard";
+import GlobalState from "@/context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,11 +16,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <GlobalState>
-          <NavBar />
-          <main className="main-container">{children}</main>
-          <Footer />
-        </GlobalState>
+        <GlobalState>{children}</GlobalState>
       </body>
     </html>
   );

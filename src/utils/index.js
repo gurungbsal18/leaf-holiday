@@ -2,6 +2,17 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import HikingIcon from "@mui/icons-material/Hiking";
 import TerrainIcon from "@mui/icons-material/Terrain";
 import ThunderstormIcon from "@mui/icons-material/Thunderstorm";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import AutoStoriesIcon from "@mui/icons-material/AutoStories";
+import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import MapIcon from "@mui/icons-material/Map";
+import RateReviewIcon from "@mui/icons-material/RateReview";
+import ArticleIcon from "@mui/icons-material/Article";
+import SettingsIcon from "@mui/icons-material/Settings";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 export const navItems = [
   {
@@ -40,14 +51,82 @@ export const navItems = [
     path: "/nepal-tour",
   },
   {
-    id: "travelInfo",
-    label: "Travel Info",
-    path: "/travel-info",
+    id: "admin-dashboard",
+    label: "Admin View",
+    path: "/admin",
   },
   {
     id: "contact",
     label: "Contact",
     path: "/contact",
+  },
+];
+export const adminNavItems = [
+  {
+    id: "dashboard",
+    icon: <DashboardIcon />,
+    label: "Dashboard",
+    path: "/admin",
+  },
+  {
+    id: "pages",
+    icon: <AutoStoriesIcon />,
+    label: "Pages",
+    path: "/admin/pages",
+  },
+  {
+    id: "packages",
+    icon: <AirplanemodeActiveIcon />,
+    label: "Packages",
+    path: "/admin/packages",
+  },
+  {
+    id: "destination",
+    icon: <LocationOnIcon />,
+    label: "Destination",
+    path: "/admin/destination",
+  },
+  {
+    id: "regions",
+    icon: <MapIcon />,
+    label: "Regions",
+    path: "/admin/regions",
+  },
+  {
+    id: "testimonials",
+    icon: <RateReviewIcon />,
+    label: "Testimonials",
+    path: "/admin/testimonials",
+  },
+  {
+    id: "blogs",
+    icon: <ArticleIcon />,
+    label: "Blogs",
+    path: "/admin/blogs",
+  },
+  {
+    id: "settings",
+    icon: <SettingsIcon />,
+    label: "Settings",
+    path: "/admin/settings",
+  },
+  {
+    id: "forms",
+    icon: <AssignmentIcon />,
+    label: "Forms",
+    path: "/admin/forms",
+  },
+  {
+    id: "profile",
+    icon: <AccountCircleIcon />,
+    label: "Profile",
+    path: "/admin/profile",
+  },
+  {
+    id: "logout",
+    icon: <LogoutIcon />,
+    label: "Log Out",
+    path: "/",
   },
 ];
 export const registrationFormControls = [
@@ -211,19 +290,59 @@ export const pkgDetail = {
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum rutrum at. Mauris ultricies et mauris convallis consectetur. Cras pulvinar dolor eget felis vulputate, sit amet vestibulum erat ultricies. Ut at velit quam. Mauris porttitor suscipit ipsum sit amet dapibus. Aliquam lobortis vulputate nunc. Fusce pretium ultricies urna sed consectetur. Praesent ut egestas ex. Morbi eu lacinia enim. Nullam id erat elementum, porta eros fringilla, rutrum enim. Pellentesque iaculis felis ac malesuada vestibulum. Etiam facilisis, metus sed pretium tristique, nibh felis pretium arcu, at vehicula enim tortor sit amet urna.",
     },
   ],
-  constInclude: [
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
+  costInclude: [
+    {
+      id: 1,
+      content:
+        "1 Cost Include Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
+    },
+    {
+      id: 2,
+      content:
+        "2 Cost Include Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
+    },
+    {
+      id: 3,
+      content:
+        "3 Cost Include Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
+    },
+    {
+      id: 4,
+      content:
+        "4 Cost Include Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
+    },
+    {
+      id: 5,
+      content:
+        "5 Cost Include Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
+    },
   ],
-  constExclude: [
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
+  costExclude: [
+    {
+      id: 1,
+      content:
+        "1 Cost Exclude Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
+    },
+    {
+      id: 2,
+      content:
+        "2 Cost Exclude Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
+    },
+    {
+      id: 3,
+      content:
+        "3 Cost Exclude Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
+    },
+    {
+      id: 4,
+      content:
+        "4 Cost Exclude Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
+    },
+    {
+      id: 5,
+      content:
+        "5 Cost Exclude Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
+    },
   ],
   mapImage: "/images/map.png",
 };
