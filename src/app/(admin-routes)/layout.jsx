@@ -2,9 +2,9 @@ import AdminNavbar from "@/components/AdminNavbar";
 
 export default function ClientLayout({ children }) {
   return (
-    <div className="d-flex">
+    <div className="d-flex main-container">
       <AdminNavbar />
-      <main className="main-container">{children}</main>
+      {children}
     </div>
   );
 }

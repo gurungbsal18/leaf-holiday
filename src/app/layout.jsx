@@ -16,9 +16,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <GlobalState>
-          <main className="main-container">{children}</main>
-        </GlobalState>
+        <GlobalState>{children}</GlobalState>
       </body>
     </html>
   );

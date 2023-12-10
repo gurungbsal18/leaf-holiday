@@ -1,10 +1,12 @@
 import ClientNavbar from "@/components/ClientNavbar";
+import Footer from "@/components/Footer";
 
 export default function ClientLayout({ children }) {
   return (
-    <div>
+    <div className="main-container">
       <ClientNavbar />
-      <main className="main-container">{children}</main>
+      {children}
+      <Footer />
     </div>
   );
 }
