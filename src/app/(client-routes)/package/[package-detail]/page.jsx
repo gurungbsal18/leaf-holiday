@@ -110,7 +110,8 @@ const PackageDetail = () => {
                 <Button
                   variant="success"
                   size="sm"
-                  onClick={handleExpandCollapse}>
+                  onClick={handleExpandCollapse}
+                >
                   {expandOrCollapse ? "Collapse All -" : "Expand All +"}
                 </Button>
               </div>
@@ -131,14 +132,16 @@ const PackageDetail = () => {
                         variant="success"
                         size="sm"
                         className="itinerary-expand-btn"
-                        onClick={() => handleToggle(item.id)}>
+                        onClick={() => handleToggle(item.id)}
+                      >
                         {showItineraryDetails[item.id] ? "-" : "+"}
                       </Button>
                     </div>
                     <p
                       className={`${
                         showItineraryDetails[item.id] ? "" : "d-none "
-                      }`}>
+                      }`}
+                    >
                       {item.details}
                     </p>
                   </div>
@@ -146,36 +149,40 @@ const PackageDetail = () => {
               </div>
               <div className="cost-IE-container mt-5">
                 <div className="cost-IE-header d-flex align-items-center gap-2">
-                  <Button
-                    variant="outline-success"
+                  <div
                     size="sm"
                     className={`d-flex align-items-center ${
-                      activeCost ? "btn btn-sm btn-success" : ""
+                      activeCost
+                        ? "btn btn-sm btn-success"
+                        : "btn btn-sm btn-outline-success"
                     }`}
                     onClick={() => {
                       setShowConstInclude(true);
                       setActiveCost(true);
-                    }}>
+                    }}
+                  >
                     <span className="me-1">
                       <CheckCircleOutlineIcon fontSize="small" />
                     </span>
                     Cost Include
-                  </Button>
-                  <Button
-                    variant="outline-danger"
+                  </div>
+                  <div
                     size="sm"
                     className={`d-flex align-items-center ${
-                      activeCost ? "" : "btn btn-sm btn-danger"
+                      activeCost
+                        ? "btn btn-sm btn-outline-danger"
+                        : "btn btn-sm btn-danger"
                     }`}
                     onClick={() => {
                       setShowConstInclude(false);
                       setActiveCost(false);
-                    }}>
+                    }}
+                  >
                     <span className="me-1">
                       <CancelIcon fontSize="small" />
                     </span>
                     Cost Exclude
-                  </Button>
+                  </div>
                 </div>
                 <div className="const-IE-content mt-1 mt-md-3">
                   <ul>
