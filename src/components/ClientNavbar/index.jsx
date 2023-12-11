@@ -15,7 +15,7 @@ export default function ClientNavbar() {
     setShowNavbar(!showNavbar);
   }
   return (
-    <Navbar className="fixed-top p-5 pt-3 pb-3 h-20  " bg="light" expand="md">
+    <Navbar className="p-5 pt-3 pb-3 h-20  " bg="light" expand="md">
       <div className="image-container">
         <a href="/">
           <Image

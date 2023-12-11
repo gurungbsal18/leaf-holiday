@@ -5,3 +5,27 @@
 @import "./trip-card";
 @import "./home";
 @import "./single-trip";
+
+$theme-secondary: #f7941d;
+$theme-secondary-dark: #eb8101;
+
+.text-theme-secondary {
+  color: $theme-secondary;
+}
+
+.bg-theme-secondary {
+  background: $theme-secondary;
+}
+
+.btn.btn-theme-secondary {
+  background: $theme-secondary;
+  border-color: $theme-secondary-dark;
+  color: $black;
+  &:hover {
+    background: $theme-secondary-dark;
+  }
+}
+
+.text-decoration-none {
+  text-decoration: none;
+}

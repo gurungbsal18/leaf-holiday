@@ -3,6 +3,7 @@ import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import Button from "react-bootstrap/Button";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
@@ -64,27 +65,31 @@ const BookingCard = ({ price }) => {
   };
   return (
     <div className="sticky-top">
-      <div className="d-flex">
-        <LocalOfferIcon />
+      <div className="d-flex booking-card-price-header">
+        {/* <LocalOfferIcon /> */}
+        <AttachMoneyIcon />
         <div>
-          <p>Price Per Person</p>
-          <p>
+          <p className="price-title m-0">Price Per Person</p>
+          <p className="price-amount m-0">
             US ${priceCalculator(bookingDetail.groupPrice, formData.noOfGuests)}
           </p>
         </div>
       </div>
-      <div className="">
-        <div className="d-flex justify-content-center align-items-center">
+      <div className="booking-card-body mb-2">
+        <div className="d-flex align-items-center mb-4">
           <Button
+            variant="light"
+            size="sm"
             onClick={() => setShowGroupPrice(!showGroupPrice)}
-            className="d-flex gap-5 ">
-            <p>We Offer Group Prices</p>
+            className="d-flex justify-content-between gap-5 w-100"
+          >
+            <p className="m-0">We Offer Group Prices</p>
             <ArrowDropDownIcon />
           </Button>
         </div>
         <div className={`${showGroupPrice ? "" : "d-none"}`}>
           <ul>
-            <li className="d-flex justify-content-between ">
+            <li className="d-flex justify-content-between">
               <h6>No. of People</h6>
               <h6>Price per Person</h6>
             </li>
@@ -96,68 +101,83 @@ const BookingCard = ({ price }) => {
             ))}
           </ul>
         </div>
-      </div>
-      <div>
-        <div className="d-flex">
-          <CalendarMonthIcon />
-          <h6>Select Date</h6>
-        </div>
-        <div>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              onChange={(e) =>
+        <div className="bg-light booking-card-inner-body">
+          <div className="d-flex">
+            <CalendarMonthIcon />
+            <h6>Select Date</h6>
+          </div>
+          <div>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    tripDate: dayjs(e).format("ddd MMM DD, YYYY"),
+                  })
+                }
+                defaultValue={dayjs(formData.tripDate)}
+              />
+            </LocalizationProvider>
+          </div>
+          <div>
+            <a
+              href="#date-price"
+              className="fs-14 text-theme-secondary text-decoration-none"
+            >
+              Or View Our Fixed Departure Dates
+            </a>
+          </div>
+          <div>
+            <p>No. of Guests</p>
+            <input
+              min={1}
+              max={30}
+              placeholder={0}
+              type={"Number"}
+              value={formData.noOfGuests}
+              onChange={(e) => {
                 setFormData({
                   ...formData,
-                  tripDate: dayjs(e).format("ddd MMM DD, YYYY"),
-                })
-              }
-              defaultValue={dayjs(formData.tripDate)}
+                  noOfGuests: e.target.value,
+                  total:
+                    priceCalculator(bookingDetail.groupPrice, e.target.value) *
+                    e.target.value,
+                });
+              }}
             />
-          </LocalizationProvider>
-        </div>
-        <div>
-          <a href="#date-price">Or View Our Fixed Departure Dates</a>
-        </div>
-        <div>
-          <p>No. of Guests</p>
-          <input
-            min={1}
-            max={30}
-            placeholder={0}
-            type={"Number"}
-            value={formData.noOfGuests}
-            onChange={(e) => {
-              setFormData({
-                ...formData,
-                noOfGuests: e.target.value,
-                total:
-                  priceCalculator(bookingDetail.groupPrice, e.target.value) *
-                  e.target.value,
-              });
-            }}
-          />
-          <span className="d-flex justify-content-between ">
-            <p>{`$${priceCalculator(
-              bookingDetail.groupPrice,
-              formData.noOfGuests
-            )} x ${formData.noOfGuests}`}</p>
-            <p>{formData.total}</p>
-          </span>
-          <span className="d-flex justify-content-between ">
-            <p>Total</p>
-            <p>{formData.total}</p>
-          </span>
+            <span className="d-flex justify-content-between ">
+              <p>{`$${priceCalculator(
+                bookingDetail.groupPrice,
+                formData.noOfGuests
+              )} x ${formData.noOfGuests}`}</p>
+              <p>{formData.total}</p>
+            </span>
+            <span className="d-flex justify-content-between ">
+              <p>Total</p>
+              <p>{formData.total}</p>
+            </span>
+          </div>
         </div>
       </div>
-      <div>
-        <div>
-          <Button>Book Now</Button>
-          <Button>Send Inquiry</Button>
+
+      <div className="d-flex gap-3 flex-column">
+        <div className="d-flex gap-2">
+          <Button variant="success" className="w-100">
+            Book Now
+          </Button>
+          <Button variant="success" className="w-100">
+            Send Inquiry
+          </Button>
         </div>
-        <Button>Customize Trip</Button>
-        <Button className="d-flex">
-          <PictureAsPdfIcon />
-          <p>Download PDF</p>
+        <Button className="btn btn-theme-secondary w-100">
+          Customize Trip
+        </Button>
+        <Button
+          className="d-flex justify-content-center align-items-center gap-2"
+          variant="success"
+        >
+          <PictureAsPdfIcon fontSize="large" />
+          <p className="m-0">Download PDF</p>
         </Button>
       </div>
     </div>

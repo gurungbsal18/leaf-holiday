@@ -28,7 +28,7 @@
   &-title {
     font-size: 24px;
     font-weight: 700;
-    font-family: "Montserrat", sans-serif;
+    font-family: "Rubik", sans-serif;
   }
   .itinerary-title {
     font-weight: 600;
@@ -70,5 +70,38 @@
     width: max-content;
     color: $success;
     font-weight: 600;
+  }
+}
+
+.booking-card {
+  &-price-header {
+    background-color: $success;
+    padding: 10px;
+    gap: 13px;
+    align-items: center;
+    svg {
+      width: 52px;
+      height: 52px;
+      fill: $white;
+    }
+    .price-title {
+      font-size: 21px;
+      color: $white;
+      font-family: "Rubik", sans-serif;
+      font-weight: 600;
+    }
+    .price-amount {
+      font-size: 29px;
+      color: $white;
+      font-family: "Rubik", sans-serif;
+      font-weight: 800;
+    }
+  }
+  &-body {
+    background: $success;
+    padding: 10px;
+  }
+  &-inner-body {
+    padding: 10px;
   }
 }
