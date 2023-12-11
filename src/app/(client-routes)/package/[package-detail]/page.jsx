@@ -19,6 +19,7 @@ const PackageDetail = () => {
   const [showItineraryDetails, setShowItineraryDetails] = useState({});
   const [expandOrCollapse, setExpandOrCollapse] = useState(false);
   const [showCostInclude, setShowConstInclude] = useState(true);
+  const [activeCost, setActiveCost] = useState(true);
 
   useEffect(() => {
     if (
@@ -109,8 +110,7 @@ const PackageDetail = () => {
                 <Button
                   variant="success"
                   size="sm"
-                  onClick={handleExpandCollapse}
-                >
+                  onClick={handleExpandCollapse}>
                   {expandOrCollapse ? "Collapse All -" : "Expand All +"}
                 </Button>
               </div>
@@ -131,16 +131,14 @@ const PackageDetail = () => {
                         variant="success"
                         size="sm"
                         className="itinerary-expand-btn"
-                        onClick={() => handleToggle(item.id)}
-                      >
+                        onClick={() => handleToggle(item.id)}>
                         {showItineraryDetails[item.id] ? "-" : "+"}
                       </Button>
                     </div>
                     <p
                       className={`${
                         showItineraryDetails[item.id] ? "" : "d-none "
-                      }`}
-                    >
+                      }`}>
                       {item.details}
                     </p>
                   </div>
@@ -149,22 +147,30 @@ const PackageDetail = () => {
               <div className="cost-IE-container mt-5">
                 <div className="cost-IE-header d-flex align-items-center gap-2">
                   <Button
-                    variant="success"
+                    variant="outline-success"
                     size="sm"
-                    className="d-flex align-items-center"
-                    onClick={() => setShowConstInclude(true)}
-                  >
+                    className={`d-flex align-items-center ${
+                      activeCost ? "btn btn-sm btn-success" : ""
+                    }`}
+                    onClick={() => {
+                      setShowConstInclude(true);
+                      setActiveCost(true);
+                    }}>
                     <span className="me-1">
                       <CheckCircleOutlineIcon fontSize="small" />
                     </span>
                     Cost Include
                   </Button>
                   <Button
-                    variant="danger"
+                    variant="outline-danger"
                     size="sm"
-                    className="d-flex align-items-center"
-                    onClick={() => setShowConstInclude(false)}
-                  >
+                    className={`d-flex align-items-center ${
+                      activeCost ? "" : "btn btn-sm btn-danger"
+                    }`}
+                    onClick={() => {
+                      setShowConstInclude(false);
+                      setActiveCost(false);
+                    }}>
                     <span className="me-1">
                       <CancelIcon fontSize="small" />
                     </span>
