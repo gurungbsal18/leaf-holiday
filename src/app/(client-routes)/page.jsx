@@ -1,5 +1,6 @@
 import PackageCard from "@/components/PackageCard";
 import "../scss/_home.scss";
+import "material-icons/iconfont/material-icons.css";
 import image from "../../../public/images/km.png";
 
 export default function Home() {

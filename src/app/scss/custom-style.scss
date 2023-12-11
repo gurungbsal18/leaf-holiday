@@ -1,6 +1,7 @@
 @import "~bootstrap/scss/bootstrap";
+@import "material-icons/iconfont/material-icons.css";
+@import "custom-typography";
+@import "navbar";
+@import "./trip-card";
 @import "./home";
-
-.main-div:has(.admin-navbar) {
-  display: flex;
-}
+@import "./single-trip";

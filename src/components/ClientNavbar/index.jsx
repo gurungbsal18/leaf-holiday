@@ -28,7 +28,7 @@ export default function ClientNavbar() {
         </a>
       </div>
       <div className="nav-container d-flex flex-row align-items-end w-100 flex-lg-column">
-        <Button variant="success" className="w-25 p-2">
+        <Button variant="success" className="p-2">
           <span className="d-flex gap-2">
             Mount Kailash (Fixed Departure 2024)
           </span>

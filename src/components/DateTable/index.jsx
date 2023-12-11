@@ -41,7 +41,9 @@ export default function BasicTable() {
               <TableCell>{row.status}</TableCell>
               <TableCell>{row.price}</TableCell>
               <TableCell>
-                <Button>Book Now</Button>
+                <Button variant="success" size="sm">
+                  Book Now
+                </Button>
               </TableCell>
             </TableRow>
           ))}
