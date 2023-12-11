@@ -80,8 +80,8 @@ const PackageDetail = () => {
           ))}
         </div>
       </div>
-      <Container className="single-trip p-0">
-        <div className="container row content-div p-0">
+      <Container className="single-trip p-auto p-md-0">
+        <div className="row content-div p-auto p-md-0">
           <div className="col-12 col-md-9 pt-3">
             <div className="row d-flex gap-5 trip-fact my-4">
               {pkgDetail.packageInformation.map((item) => (
