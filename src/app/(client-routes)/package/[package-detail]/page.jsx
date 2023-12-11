@@ -72,7 +72,7 @@ const PackageDetail = () => {
       </div>
 
       <div className="bg-success-subtle">
-        <div className="container d-flex gap-5 single-trip-nav">
+        <div className="container d-flex gap-5 single-trip-nav px-3 px-md-0">
           {packageNavItems.map((item) => (
             <a key={item.id} href={item.path}>
               {item.label}
@@ -82,7 +82,7 @@ const PackageDetail = () => {
       </div>
       <Container className="single-trip p-auto p-md-0">
         <div className="row content-div p-auto p-md-0">
-          <div className="col-12 col-md-9 pt-3">
+          <div className="col-12 col-lg-9 pt-3">
             <div className="row d-flex gap-5 trip-fact my-4">
               {pkgDetail.packageInformation.map((item) => (
                 <div key={item.id} className="col d-flex">
@@ -229,7 +229,7 @@ const PackageDetail = () => {
               </div>
             </div>
           </div>
-          <div className="col-12 col-md-3 booking-card pt-4">
+          <div className="col-12 col-lg-3 booking-card pt-4">
             <BookingCard price={1290} />
           </div>
         </div>
