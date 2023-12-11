@@ -57,7 +57,7 @@ const PackageDetail = () => {
           alt="header image"
         />
         <div className="container d-flex justify-content-center">
-          <div className="container d-flex justify-content-between single-trip-hero-title">
+          <div className="container d-flex justify-content-between flex-column flex-md-row single-trip-hero-title">
             <h1 className="single-trip-title mb-0">{pkgDetail.headerTitle}</h1>
             <div className="d-flex gap-2">
               <Button variant="success" size="sm">
@@ -71,16 +71,18 @@ const PackageDetail = () => {
         </div>
       </div>
 
-      <Container className="single-trip">
-        <div className="bg-white d-flex gap-5 single-trip-nav">
+      <div className="bg-success-subtle">
+        <div className="container d-flex gap-5 single-trip-nav">
           {packageNavItems.map((item) => (
             <a key={item.id} href={item.path}>
               {item.label}
             </a>
           ))}
         </div>
-        <div className="row content-div">
-          <div className="col-9 pt-3">
+      </div>
+      <Container className="single-trip p-0">
+        <div className="container row content-div p-0">
+          <div className="col-12 col-md-9 pt-3">
             <div className="row d-flex gap-5 trip-fact my-4">
               {pkgDetail.packageInformation.map((item) => (
                 <div key={item.id} className="col d-flex">
@@ -227,7 +229,7 @@ const PackageDetail = () => {
               </div>
             </div>
           </div>
-          <div className="col-3 booking-card">
+          <div className="col-12 col-md-3 booking-card pt-4">
             <BookingCard price={1290} />
           </div>
         </div>

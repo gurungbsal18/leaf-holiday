@@ -13,7 +13,7 @@ function Footer() {
 
   return (
     <div className="footer bg-success p-5 text-white">
-      <div className="footer-content d-flex justify-content-between ">
+      <div className="footer-content d-flex justify-content-between flex-column flex-md-row">
         <div className="d-flex flex-column ">
           <h4>Contact Us</h4>
           <a href="tel:+9771234567890">
