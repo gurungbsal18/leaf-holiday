@@ -48,18 +48,24 @@ const PackageDetail = () => {
 
   return (
     <div className="main-div">
-      <div>
+      <div className="single-trip-hero">
         <Image
           src={pkgDetail.headerImage}
           width={1519}
           height={800}
           alt="header image"
         />
-        <div className="container d-flex justify-content-between ">
-          <h1 className="single-trip-title">{pkgDetail.headerTitle}</h1>
-          <div className="">
-            <Button>Book Now</Button>
-            <Button>Send Inquiry</Button>
+        <div className="container d-flex justify-content-center">
+          <div className="container d-flex justify-content-between single-trip-hero-title">
+            <h1 className="single-trip-title mb-0">{pkgDetail.headerTitle}</h1>
+            <div className="d-flex gap-2">
+              <Button variant="success" size="sm">
+                Book Now
+              </Button>
+              <Button variant="outline-light" size="sm">
+                Send Inquiry
+              </Button>
+            </div>
           </div>
         </div>
       </div>

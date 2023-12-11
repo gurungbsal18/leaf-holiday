@@ -1,8 +1,25 @@
 .single-trip {
+  &-hero {
+    position: relative;
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+  &-hero-title {
+    position: absolute;
+    bottom: 10px;
+    color: $white;
+    width: 100%;
+  }
   &-nav {
+    padding: 30px 0;
     a {
       color: $black;
       text-decoration: none;
+      &:hover {
+        color: $success;
+      }
       &:active {
         color: $success;
       }
