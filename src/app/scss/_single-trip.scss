@@ -20,8 +20,15 @@
       color: $black;
       text-decoration: none;
       font-size: 14px;
+      svg {
+        width: 15px;
+        height: 15px;
+      }
       &:hover {
         color: $success;
+        svg {
+          fill: $success;
+        }
       }
       &:active {
         color: $success;

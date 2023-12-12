@@ -75,7 +75,7 @@ const PackageDetail = () => {
         <div className="container d-flex gap-5 single-trip-nav px-3 px-md-0">
           {packageNavItems.map((item) => (
             <a key={item.id} href={item.path}>
-              {item.label}
+              <span className="text-muted fs-12">{item.icon}</span> {item.label}
             </a>
           ))}
         </div>
