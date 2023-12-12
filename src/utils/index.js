@@ -13,6 +13,11 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
+import RouteIcon from '@mui/icons-material/Route';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import CollectionsIcon from '@mui/icons-material/Collections';
+import ContactSupportIcon from '@mui/icons-material/ContactSupport';
 
 export const navItems = [
   {
@@ -188,39 +193,46 @@ export const loginFormControls = [
 ];
 export const packageNavItems = [
   {
-    id: "details",
-    label: "Details",
-    path: "#details",
+    id: "overview",
+    icon: <RemoveRedEyeIcon/>,
+    label: "Overview",
+    path: "#overview",
   },
   {
     id: "itinerary",
+    icon: <RouteIcon/>,
     label: "Itinerary",
     path: "#itinerary",
   },
   {
     id: "map",
+    icon:<MapIcon/>,
     label: "Map",
     path: "#map",
   },
 
   {
     id: "costInclueExclude",
+    icon:<CurrencyExchangeIcon/>,
     label: "Cost Include/Exclude",
     path: "#costInclueExclude",
   },
   {
     id: "gallery",
+    icon:<CollectionsIcon/>,
     label: "Gallery",
     path: "#gallery",
   },
   {
     id: "faq",
+    icon:<ContactSupportIcon/>,
     label: "FAQ",
     path: "#faq",
   },
 
   {
     id: "review",
+    icon:<RateReviewIcon/>,
     label: "Review",
     path: "#review",
   },
