@@ -12,7 +12,7 @@ function Footer() {
   const year = date.getFullYear();
 
   return (
-    <div className="footer bg-success p-5 text-white">
+    <div className="footer bg-success p-5 text-white mt-3">
       <div className="footer-content d-flex justify-content-between flex-column flex-md-row">
         <div className="d-flex flex-column ">
           <h4>Contact Us</h4>
