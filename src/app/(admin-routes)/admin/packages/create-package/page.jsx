@@ -3,6 +3,7 @@
 import React from "react";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import Button from "react-bootstrap/Button";
+import TextField from "@mui/material/TextField";
 import TextEditor from "@/components/TextEditor";
 
 export default function CreatePackage() {
@@ -20,8 +21,11 @@ export default function CreatePackage() {
           <Button>Publish</Button>
         </div>
       </div>
-      <div>
-        <TextEditor />
+      <div className="d-flex">
+        <form>
+          <div className=""></div>
+          <div className=""></div>
+        </form>
       </div>
     </div>
   );
