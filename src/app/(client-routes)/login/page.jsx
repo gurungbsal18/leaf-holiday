@@ -1,22 +1,16 @@
 "use client";
 
-import { registrationFormControls } from "@/utils";
-import Checkbox from "@mui/material/Checkbox";
+import { loginFormControls } from "@/utils";
 import React from "react";
 import { useForm } from "react-hook-form";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
-import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
+
 import TextField from "@mui/material/TextField";
 
-export default function Register() {
+export default function Login() {
   const form = useForm({
     defaultValues: {
-      userName: "",
       email: "",
       password: "",
-      confirmPassword: "",
-      terms: false,
     },
   });
 
@@ -37,7 +31,7 @@ export default function Register() {
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-container d-flex flex-column gap-3">
-            {registrationFormControls.map((formControl) => (
+            {loginFormControls.map((formControl) => (
               <TextField
                 required
                 fullWidth
@@ -49,23 +43,14 @@ export default function Register() {
                 {...register(formControl.id)}
               />
             ))}
-            <FormControlLabel
-              control={
-                <Checkbox
-                  icon={<RadioButtonUncheckedIcon />}
-                  checkedIcon={<RadioButtonCheckedIcon />}
-                />
-              }
-              label="I agree to Terms and Conditions."
-              {...register("terms")}
-            />
-            <button>Regsiter</button>
+
+            <button>Log In</button>
           </div>
         </form>
-        <div className="login-router">
+        <div className="register-router">
           <span className="d-flex">
-            <p>Already Have An Account?</p>
-            <a href="/login">Login</a>
+            <p>Don't Have An Account?</p>
+            <a href="/register">Register</a>
           </span>
         </div>
       </div>

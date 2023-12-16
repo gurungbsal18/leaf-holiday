@@ -11,7 +11,6 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import MapIcon from "@mui/icons-material/Map";
 import BookingCard from "@/components/BookingCard";
 import { CalendarMonth } from "@mui/icons-material";
-import SelectComponent from "@/components/FormElements/SelectComponent";
 import DateTable from "@/components/DateTable";
 import { Container } from "react-bootstrap";
 
@@ -112,8 +111,7 @@ const PackageDetail = () => {
                 <Button
                   variant="success"
                   size="sm"
-                  onClick={handleExpandCollapse}
-                >
+                  onClick={handleExpandCollapse}>
                   {expandOrCollapse ? "Collapse All -" : "Expand All +"}
                 </Button>
               </div>
@@ -134,16 +132,14 @@ const PackageDetail = () => {
                         variant="success"
                         size="sm"
                         className="itinerary-expand-btn"
-                        onClick={() => handleToggle(item.id)}
-                      >
+                        onClick={() => handleToggle(item.id)}>
                         {showItineraryDetails[item.id] ? "-" : "+"}
                       </Button>
                     </div>
                     <p
                       className={`${
                         showItineraryDetails[item.id] ? "" : "d-none "
-                      }`}
-                    >
+                      }`}>
                       {item.details}
                     </p>
                   </div>
@@ -161,8 +157,7 @@ const PackageDetail = () => {
                     onClick={() => {
                       setShowConstInclude(true);
                       setActiveCost(true);
-                    }}
-                  >
+                    }}>
                     <span className="me-1">
                       <CheckCircleOutlineIcon fontSize="small" />
                     </span>
@@ -178,8 +173,7 @@ const PackageDetail = () => {
                     onClick={() => {
                       setShowConstInclude(false);
                       setActiveCost(false);
-                    }}
-                  >
+                    }}>
                     <span className="me-1">
                       <CancelIcon fontSize="small" />
                     </span>
@@ -217,14 +211,7 @@ const PackageDetail = () => {
                   <CalendarMonth />
                   Dates & Price
                 </h4>
-                <div className="mb-3">
-                  <SelectComponent
-                    options={[
-                      { id: 1, label: "June 2023" },
-                      { id: 2, label: "July 2023" },
-                    ]}
-                  />
-                </div>
+
                 <DateTable />
               </div>
             </div>

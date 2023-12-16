@@ -7,9 +7,7 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
-import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import InputComponent from "../FormElements/InputComponent";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 
 const BookingCard = ({ price }) => {
@@ -81,8 +79,7 @@ const BookingCard = ({ price }) => {
             variant="light"
             size="sm"
             onClick={() => setShowGroupPrice(!showGroupPrice)}
-            className="d-flex justify-content-between gap-5 w-100"
-          >
+            className="d-flex justify-content-between gap-5 w-100">
             <p className="m-0">We Offer Group Prices</p>
             <ArrowDropDownIcon />
           </Button>
@@ -122,8 +119,7 @@ const BookingCard = ({ price }) => {
           <div>
             <a
               href="#date-price"
-              className="fs-14 text-theme-secondary text-decoration-none"
-            >
+              className="fs-14 text-theme-secondary text-decoration-none">
               Or View Our Fixed Departure Dates
             </a>
           </div>
@@ -174,8 +170,7 @@ const BookingCard = ({ price }) => {
         </Button>
         <Button
           className="d-flex justify-content-center align-items-center gap-2"
-          variant="success"
-        >
+          variant="success">
           <PictureAsPdfIcon fontSize="large" />
           <p className="m-0">Download PDF</p>
         </Button>
