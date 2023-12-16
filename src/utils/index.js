@@ -13,11 +13,11 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
-import RouteIcon from '@mui/icons-material/Route';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
-import CollectionsIcon from '@mui/icons-material/Collections';
-import ContactSupportIcon from '@mui/icons-material/ContactSupport';
+import RouteIcon from "@mui/icons-material/Route";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
+import CollectionsIcon from "@mui/icons-material/Collections";
+import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 
 export const navItems = [
   {
@@ -136,42 +136,28 @@ export const adminNavItems = [
 ];
 export const registrationFormControls = [
   {
-    id: "name",
+    id: "userName",
     type: "text",
-    placeholder: "Enter your name",
-    label: "Name",
-    componentType: "input",
+    placeholder: "Enter your username",
+    label: "Username",
   },
   {
     id: "email",
     type: "email",
     placeholder: "Enter your email",
     label: "Email",
-    componentType: "input",
   },
   {
     id: "password",
     type: "password",
     placeholder: "Enter your password",
     label: "Password",
-    componentType: "input",
   },
   {
-    id: "role",
-    type: "",
-    placeholder: "",
-    label: "Role",
-    componentType: "select",
-    options: [
-      {
-        id: "admin",
-        label: "Admin",
-      },
-      {
-        id: "customer",
-        label: "Customer",
-      },
-    ],
+    id: "confirmPassword",
+    type: "password",
+    placeholder: "Confirm your password",
+    label: "Confirm Password",
   },
 ];
 
@@ -194,45 +180,45 @@ export const loginFormControls = [
 export const packageNavItems = [
   {
     id: "overview",
-    icon: <RemoveRedEyeIcon/>,
+    icon: <RemoveRedEyeIcon />,
     label: "Overview",
     path: "#overview",
   },
   {
     id: "itinerary",
-    icon: <RouteIcon/>,
+    icon: <RouteIcon />,
     label: "Itinerary",
     path: "#itinerary",
   },
   {
     id: "map",
-    icon:<MapIcon/>,
+    icon: <MapIcon />,
     label: "Map",
     path: "#map",
   },
 
   {
     id: "costInclueExclude",
-    icon:<CurrencyExchangeIcon/>,
+    icon: <CurrencyExchangeIcon />,
     label: "Cost Include/Exclude",
     path: "#costInclueExclude",
   },
   {
     id: "gallery",
-    icon:<CollectionsIcon/>,
+    icon: <CollectionsIcon />,
     label: "Gallery",
     path: "#gallery",
   },
   {
     id: "faq",
-    icon:<ContactSupportIcon/>,
+    icon: <ContactSupportIcon />,
     label: "FAQ",
     path: "#faq",
   },
 
   {
     id: "review",
-    icon:<RateReviewIcon/>,
+    icon: <RateReviewIcon />,
     label: "Review",
     path: "#review",
   },

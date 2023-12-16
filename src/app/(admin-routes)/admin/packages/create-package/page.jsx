@@ -3,8 +3,6 @@
 import React from "react";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import Button from "react-bootstrap/Button";
-import BookingCard from "@/components/BookingCard";
-import PackageCard from "@/components/PackageCard";
 import TextEditor from "@/components/TextEditor";
 
 export default function CreatePackage() {
