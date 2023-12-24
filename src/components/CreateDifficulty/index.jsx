@@ -5,11 +5,13 @@ import TextareaAutosize from "@mui/material/TextareaAutosize";
 import Rating from "@mui/material/Rating";
 import { useForm } from "react-hook-form";
 
-export default function CreateDifficulty({ nameValue }) {
+export default function CreateDifficulty({ nameValue, handleClose, setValue }) {
   const form = useForm();
   const { register, handleSubmit } = form;
 
   const submitDestination = (data) => {
+    setValue(data.name);
+    handleClose();
     console.log("Difficulty Form submitted", data);
   };
 
@@ -18,7 +20,7 @@ export default function CreateDifficulty({ nameValue }) {
       <div className="">
         <div className="d-flex justify-content-between p-3 ">
           <p>Create Difficulty</p>
-          <GrClose />
+          <GrClose onClick={handleClose} />
         </div>
         <form>
           <div className="d-flex flex-column gap-2">

@@ -5,7 +5,7 @@ import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import { useForm } from "react-hook-form";
 
-export default function CreateRegion({ nameValue }) {
+export default function CreateRegion({ nameValue, handleClose, setValue }) {
   const inputRef = useRef(null);
   const [selectedFile, setSelectedFile] = React.useState(null);
   const openFilePicker = () => {
@@ -14,7 +14,9 @@ export default function CreateRegion({ nameValue }) {
   const form = useForm();
   const { register, handleSubmit } = form;
 
-  const submitDestination = (data) => {
+  const submitRegion = (data) => {
+    setValue(data.name);
+    handleClose();
     console.log("inner Form submitted", data);
   };
 
@@ -22,8 +24,8 @@ export default function CreateRegion({ nameValue }) {
     <div className="">
       <div className="">
         <div className="d-flex justify-content-between p-3 ">
-          <p>Create Destination</p>
-          <GrClose />
+          <p>Create Region</p>
+          <GrClose onClick={handleClose} />
         </div>
         <form>
           <div className="d-flex gap-5">
@@ -38,15 +40,15 @@ export default function CreateRegion({ nameValue }) {
                 variant="outlined"
                 {...register("name")}
               />
+              <label name="description">Description</label>
               <TextareaAutosize
                 className="w-100"
                 size="large"
-                label="Description"
                 type="text"
                 variant="outlined"
                 {...register("description")}
               />
-              <button type="submit" onClick={handleSubmit(submitDestination)}>
+              <button type="submit" onClick={handleSubmit(submitRegion)}>
                 Create
               </button>
             </div>

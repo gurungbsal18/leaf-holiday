@@ -2,7 +2,6 @@ import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
-import CreateDestination from "../CreateDestination";
 import CreateRegion from "../CreateRegion";
 import CreateDifficulty from "../CreateDifficulty";
 
@@ -99,9 +98,17 @@ export default function CreatableAutocomplete({ register, formName }) {
       />
       <Dialog open={open} toggleOpen={toggleOpen} onClose={handleClose}>
         {isFormOfRegion() ? (
-          <CreateRegion nameValue={dialogValue.name} />
+          <CreateRegion
+            nameValue={dialogValue.name}
+            handleClose={handleClose}
+            setValue={setValue}
+          />
         ) : (
-          <CreateDifficulty nameValue={dialogValue.name} />
+          <CreateDifficulty
+            nameValue={dialogValue.name}
+            handleClose={handleClose}
+            setValue={setValue}
+          />
         )}
       </Dialog>
     </React.Fragment>
