@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 
 export default function AdminPackages() {
   return (
-    <div className="admin-packages w-">
+    <div className="admin-packages">
       <div className="ap-header d-flex gap-5 justify-content-between ">
         <h4>Packages</h4>
         <div className="ap-buttons d-flex ">
