@@ -1,23 +1,29 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useState } from "react";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import Button from "react-bootstrap/Button";
 import TextEditor from "@/components/TextEditor";
 import { useFieldArray, useForm } from "react-hook-form";
 import GroupsIcon from "@mui/icons-material/Groups";
 import InputAdornment from "@mui/material/InputAdornment";
-import Autocomplete from "@mui/material/Autocomplete";
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import FormLabel from "@mui/material/FormLabel";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import { top100Films } from "../page";
 import CreatableAutocomplete from "@/components/ui/CreatableAutocomplete";
+import { MdOutlineAddPhotoAlternate } from "react-icons/md";
+import Image from "next/image";
 
 export default function CreatePackage() {
+  const inputRef = useRef(null);
+  const [selectedFile, setSelectedFile] = React.useState(null);
+  const openFilePicker = () => {
+    inputRef.current.click();
+  };
+
   const form = useForm({
     defaultValues: {
       title: "",
@@ -27,11 +33,15 @@ export default function CreatePackage() {
           price: "",
         },
       ],
-      duration: "",
-      maxAltitude: "",
+      duration: 0,
+      maxAltitude: 0,
       bestWeather: "",
       metaTitle: "",
       metaDescription: "",
+      info: "",
+      content: "",
+      region: "",
+      difficulty: "",
     },
   });
   const { register, control, handleSubmit } = form;
@@ -82,7 +92,7 @@ export default function CreatePackage() {
 
   return (
     <div className="create-edit-package">
-      <div className="d-flex justify-content-between ">
+      <div className="d-flex justify-content-between sticky-top">
         <div className="d-flex">
           <Button>
             <KeyboardArrowLeftIcon />
@@ -91,11 +101,11 @@ export default function CreatePackage() {
         </div>
         <div>
           <Button>Save As Draft</Button>
-          <Button>Publish</Button>
+          <Button onClick={handleSubmit(onSubmit)}>Publish</Button>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form>
         <div className="d-flex">
           <div className="">
             <TextField
@@ -223,7 +233,7 @@ export default function CreatePackage() {
                         fullWidth
                         size="small"
                         type="text"
-                        variant="outlined"
+                        label=""
                         {...register(`highlights.${index}.content`)}
                       />
                       <button onClick={() => highlightsRemove(index)}>-</button>
@@ -246,7 +256,7 @@ export default function CreatePackage() {
                   +Add trip inclusions
                 </button>
               </div>
-              <div className="form-content">
+              <div className="form-content d-flex flex-column gap-2">
                 {inclusionsFields.map((field, index) => {
                   return (
                     <div className="d-flex ">
@@ -344,9 +354,57 @@ export default function CreatePackage() {
             </FormControl>
 
             <div>
-              <CreatableAutocomplete />
+              <CreatableAutocomplete
+                name="region"
+                register={register}
+                formName={"region"}
+              />
             </div>
-            <button>Publish</button>
+
+            <div>
+              <CreatableAutocomplete
+                name="difficulty"
+                register={register}
+                formName={"difficulty"}
+              />
+            </div>
+            <div className="border-2 border-black">
+              <p>Header Image</p>
+              {selectedFile ? (
+                <div>
+                  <p onClick={openFilePicker}>File Selected </p>
+                  <p>{selectedFile.name}</p>
+                  <p onClick={() => setSelectedFile(null)}>Remove Image</p>
+                </div>
+              ) : (
+                <MdOutlineAddPhotoAlternate
+                  className="h3 cursor-pointer"
+                  onClick={openFilePicker}
+                />
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                ref={inputRef}
+                style={{ display: "none" }}
+                fileName={selectedFile}
+                onChange={(e) => {
+                  // Handle selected file here
+                  setSelectedFile(e.target.files[0]);
+                  console.log("Selected file:", selectedFile);
+                }}
+                // {...register("headerImage")}
+              />
+            </div>
+            <div>
+              <p>PDF</p>
+              <input
+                type="file"
+                accept="application/pdf"
+                {...register("pdf")}
+              />
+            </div>
+            <button onClick={handleSubmit(onSubmit)}>Publish</button>
           </div>
         </div>
       </form>

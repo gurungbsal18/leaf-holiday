@@ -30,12 +30,12 @@ export default function AdminNavbar() {
           )}
         </button>
         {adminNavItems.map((item) => (
-          <div className="nav-item d-flex gap-2  " key={item.id}>
+          <a href={item.path} className="nav-item d-flex gap-2" key={item.id}>
             <div className="nav-icon">{item.icon}</div>
-            <div className={`nav-label ${showNavText ? "" : "d-none"}`}>
-              <a href={item.path}>{item.label}</a>
-            </div>
-          </div>
+            <p className={`nav-label ${showNavText ? "" : "d-none"}`}>
+              {item.label}
+            </p>
+          </a>
         ))}
       </div>
     </div>

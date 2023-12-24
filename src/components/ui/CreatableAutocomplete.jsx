@@ -1,40 +1,47 @@
 import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogActions from "@mui/material/DialogActions";
-import Button from "@mui/material/Button";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
+import CreateDestination from "../CreateDestination";
+import CreateRegion from "../CreateRegion";
+import CreateDifficulty from "../CreateDifficulty";
 
 const filter = createFilterOptions();
 
-export default function CreatableAutocomplete() {
+export default function CreatableAutocomplete({ register, formName }) {
+  const regionInitialValues = {
+    name: "",
+    description: "",
+    imageUrl: "",
+  };
+  const difficultyInitialValues = {
+    name: "",
+    description: "",
+    rating: 1,
+  };
+  console.log(formName);
+
+  const isFormOfRegion = () => {
+    if (formName === "region") {
+      return true;
+    }
+    return false;
+  };
+  console.log("isformregion", isFormOfRegion());
+
   const [value, setValue] = React.useState(null);
   const [open, toggleOpen] = React.useState(false);
-  const [dialogValue, setDialogValue] = React.useState({
-    title: "",
-    year: "",
-  });
+  const [dialogValue, setDialogValue] = React.useState(
+    isFormOfRegion() ? regionInitialValues : difficultyInitialValues
+  );
 
   const handleClose = () => {
-    setDialogValue({
-      title: "",
-      year: "",
-    });
+    setDialogValue(
+      isFormOfRegion() ? regionInitialValues : difficultyInitialValues
+    );
     toggleOpen(false);
   };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setValue({
-      title: dialogValue.title,
-      year: parseInt(dialogValue.year, 10),
-    });
-    handleClose();
-  };
-
+  console.log(dialogValue);
   return (
     <React.Fragment>
       <Autocomplete
@@ -44,17 +51,11 @@ export default function CreatableAutocomplete() {
             // timeout to avoid instant validation of the dialog's form.
             setTimeout(() => {
               toggleOpen(true);
-              setDialogValue({
-                title: newValue,
-                year: "",
-              });
+              setDialogValue({ ...dialogValue, name: newValue });
             });
           } else if (newValue && newValue.inputValue) {
             toggleOpen(true);
-            setDialogValue({
-              title: newValue.inputValue,
-              year: "",
-            });
+            setDialogValue({ ...dialogValue, name: newValue.inputValue });
           } else {
             setValue(newValue);
           }
@@ -71,7 +72,6 @@ export default function CreatableAutocomplete() {
 
           return filtered;
         }}
-        id="free-solo-dialog-demo"
         options={top100Films}
         getOptionLabel={(option) => {
           // e.g. value selected with enter, right from the input
@@ -90,51 +90,19 @@ export default function CreatableAutocomplete() {
         sx={{ width: 300 }}
         freeSolo
         renderInput={(params) => (
-          <TextField {...params} label="Select Region" />
+          <TextField
+            {...params}
+            {...register(formName)}
+            label={isFormOfRegion() ? "Select Region" : "Select Difficulty"}
+          />
         )}
       />
-      <Dialog open={open} onClose={handleClose}>
-        <form onSubmit={handleSubmit}>
-          <DialogTitle>Create New Region</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Did you miss any film in our list? Please, add it!
-            </DialogContentText>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              value={dialogValue.title}
-              onChange={(event) =>
-                setDialogValue({
-                  ...dialogValue,
-                  title: event.target.value,
-                })
-              }
-              label="title"
-              type="text"
-              variant="standard"
-            />
-            <TextField
-              margin="dense"
-              id="name"
-              value={dialogValue.year}
-              onChange={(event) =>
-                setDialogValue({
-                  ...dialogValue,
-                  year: event.target.value,
-                })
-              }
-              label="year"
-              type="number"
-              variant="standard"
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit">Add</Button>
-          </DialogActions>
-        </form>
+      <Dialog open={open} toggleOpen={toggleOpen} onClose={handleClose}>
+        {isFormOfRegion() ? (
+          <CreateRegion nameValue={dialogValue.name} />
+        ) : (
+          <CreateDifficulty nameValue={dialogValue.name} />
+        )}
       </Dialog>
     </React.Fragment>
   );

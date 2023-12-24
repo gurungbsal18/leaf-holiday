@@ -5,7 +5,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
@@ -105,7 +105,7 @@ const BookingCard = ({ price }) => {
           </div>
           <div>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
+              <MobileDatePicker
                 onChange={(e) =>
                   setFormData({
                     ...formData,
