@@ -10,7 +10,7 @@ export default function AdminNavbar() {
   const [showNavText, setNavText] = useState(false);
   return (
     <div className="admin-navbar d-flex flex-column p-4 border-end">
-      <div className="brand mb-5">
+      <div className="brand">
         <a href="/">
           <Image
             src="/images/logo.png"
