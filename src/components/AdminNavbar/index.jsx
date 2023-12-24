@@ -4,7 +4,7 @@ import { adminNavItems } from "@/utils";
 
 export default function AdminNavbar() {
   return (
-    <div className="admin-navbar d-flex flex-column p-4 border-end h-100 ">
+    <div className="admin-navbar d-flex flex-column p-4 border-end">
       <div className="brand mb-5">
         <a href="/">
           <Image

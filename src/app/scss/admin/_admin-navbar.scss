@@ -1,0 +1,14 @@
+.admin-navbar {
+  background: #ffffff;
+  height: 100vh;
+  .admin-navItems {
+    .nav-item {
+      .nav-icon {
+        .nav-label a {
+          text-decoration: none;
+          color: $success;
+        }
+      }
+    }
+  }
+}
