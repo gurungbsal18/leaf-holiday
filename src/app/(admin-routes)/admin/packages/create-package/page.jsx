@@ -2,6 +2,8 @@
 
 import React, { useRef, useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import Button from "react-bootstrap/Button";
 import TextEditor from "@/components/TextEditor";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -109,8 +111,9 @@ export default function CreatePackage() {
 
       <form>
         <div className="">
-          <div className="row gap-5 w-100">
+          <div className="row gap-5 w-100 py-3">
             <div className="col flex-grow-1">
+              <h4 className="dashboard-title">Name of package</h4>
               <div className="">
                 <TextField
                   required
@@ -120,14 +123,19 @@ export default function CreatePackage() {
                   type="text"
                   variant="outlined"
                   {...register("title")}
+                  className="mb-3"
                 />
 
                 <div className="d-flex">
-                  <div className="">
-                    <p>List Of Prices</p>
+                  <div className="mb-5">
+                    <h4 className="dashboard-title">Price</h4>
                     {pricesFields.map((priceField, index) => (
-                      <div key={priceField.id}>
+                      <div
+                        className="d-flex gap-3 align-items-center"
+                        key={priceField.id}
+                      >
                         <TextField
+                          className="mx-0"
                           label="No. of People"
                           sx={{ m: 1, width: "25ch" }}
                           type="text"
@@ -142,6 +150,7 @@ export default function CreatePackage() {
                           {...register(`prices.${index}.noOfPeople`)}
                         />
                         <TextField
+                          className="mx-0"
                           label="Price"
                           sx={{ m: 1, width: "25ch" }}
                           type="number"
@@ -158,18 +167,26 @@ export default function CreatePackage() {
                           })}
                         />
                         {index > 0 && (
-                          <button
-                            type="button"
+                          <span
+                            role="button"
+                            className="text-secondary"
                             onClick={() => pricesRemove(index)}
                           >
-                            -
-                          </button>
+                            <RemoveCircleIcon />
+                          </span>
+                          // <button
+                          //   size="sm"
+                          //   type="button"
+                          //   onClick={() => pricesRemove(index)}
+                          // >
+                          //   -
+                          // </button>
                         )}
                       </div>
                     ))}
-                    <button
-                      className="border-none bg-none"
-                      type="button"
+                    <Button
+                      size="sm"
+                      variant="primary"
                       onClick={() =>
                         pricesAppend({
                           noOfPeople: "",
@@ -177,10 +194,13 @@ export default function CreatePackage() {
                         })
                       }
                     >
-                      Add Price
-                    </button>
+                      <span className="d-flex align-items-center gap-1">
+                        <MonetizationOnIcon />
+                        Add More Price
+                      </span>
+                    </Button>
                   </div>
-
+                  {/* 
                   <TextField
                     label="Duration"
                     sx={{ m: 1, width: "25ch" }}
@@ -192,11 +212,13 @@ export default function CreatePackage() {
                       ),
                     }}
                     {...register("duration", { valueAsNumber: true })}
-                  />
+                  /> */}
                 </div>
 
-                <div className="d-flex">
+                <h4 className="dashboard-title">Trip Fact</h4>
+                <div className="d-flex gap-3 flex-wrap mb-5">
                   <TextField
+                    className="mx-0"
                     label="Max Altitude"
                     sx={{ m: 1, width: "25ch" }}
                     type="number"
@@ -209,16 +231,30 @@ export default function CreatePackage() {
                     {...register("maxAltitude", { valueAsNumber: true })}
                   />
                   <TextField
-                    label="Best Weather"
-                    sx={{ m: 1, width: "25ch" }}
+                    className="mx-0"
+                    label="Weather"
+                    sx={{ m: 1, width: "50ch" }}
                     type="text"
                     size="small"
                     {...register("bestWeather")}
                   />
+                  <TextField
+                    className="mx-0"
+                    label="Duration"
+                    sx={{ m: 1, width: "15ch" }}
+                    type="number"
+                    size="small"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="start">Days</InputAdornment>
+                      ),
+                    }}
+                    {...register("duration", { valueAsNumber: true })}
+                  />
                 </div>
 
-                <div>
-                  <p>Info</p>
+                <div className="mb-5">
+                  <h4 className="dashboard-title">Overview</h4>
                   <TextEditor control={control} name="info" />
                 </div>
 

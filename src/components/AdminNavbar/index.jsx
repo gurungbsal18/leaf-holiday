@@ -9,8 +9,8 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 export default function AdminNavbar() {
   const [showNavText, setNavText] = useState(false);
   return (
-    <div className="admin-navbar d-flex flex-column p-4 border-end">
-      <div className="brand">
+    <div className="admin-navbar bg-success d-flex flex-column p-4 border-end">
+      {/* <div className="brand">
         <a href="/">
           <Image
             src="/images/logo.png"
@@ -20,8 +20,8 @@ export default function AdminNavbar() {
             priority={true}
           />
         </a>
-      </div>
-      <div className="admin-navItems d-flex flex-column  gap-4">
+      </div> */}
+      <div className="admin-nav-items d-flex flex-column gap-4">
         <button onClick={() => setNavText(!showNavText)}>
           {showNavText ? (
             <KeyboardDoubleArrowLeftIcon />
@@ -32,11 +32,22 @@ export default function AdminNavbar() {
         {adminNavItems.map((item) => (
           <a href={item.path} className="nav-item d-flex gap-2" key={item.id}>
             <div className="nav-icon">{item.icon}</div>
-            <p className={`nav-label ${showNavText ? "" : "d-none"}`}>
+            <p className={`nav-label m-0 ${showNavText ? "" : "d-none"}`}>
               {item.label}
             </p>
           </a>
         ))}
+      </div>
+      <div className="brand bg-white w-100">
+        <a href="/">
+          <Image
+            src="/images/logo.png"
+            width={showNavText ? 150 : 38}
+            height={showNavText ? 59 : 15}
+            alt="leaf-holiday-logo"
+            priority={true}
+          />
+        </a>
       </div>
     </div>
   );
