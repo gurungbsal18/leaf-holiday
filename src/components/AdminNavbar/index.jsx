@@ -22,13 +22,17 @@ export default function AdminNavbar() {
         </a>
       </div> */}
       <div className="admin-nav-items d-flex flex-column gap-4">
-        <button onClick={() => setNavText(!showNavText)}>
+        <span
+          role="button"
+          className="text-white"
+          onClick={() => setNavText(!showNavText)}
+        >
           {showNavText ? (
             <KeyboardDoubleArrowLeftIcon />
           ) : (
             <KeyboardDoubleArrowRightIcon />
           )}
-        </button>
+        </span>
         {adminNavItems.map((item) => (
           <a href={item.path} className="nav-item d-flex gap-2" key={item.id}>
             <div className="nav-icon">{item.icon}</div>

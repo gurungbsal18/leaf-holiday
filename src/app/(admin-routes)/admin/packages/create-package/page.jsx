@@ -169,7 +169,7 @@ export default function CreatePackage() {
                         {index > 0 && (
                           <span
                             role="button"
-                            className="text-secondary"
+                            className="text-danger"
                             onClick={() => pricesRemove(index)}
                           >
                             <RemoveCircleIcon />
@@ -258,109 +258,118 @@ export default function CreatePackage() {
                   <TextEditor control={control} name="info" />
                 </div>
 
-                <div className="trip-highlights">
-                  <div className="form-header d-flex justify-content-between ">
-                    <p>Trip Highlights</p>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        highlightsAppend({
-                          content: "",
-                        })
-                      }
-                    >
-                      +Add trip highlights
-                    </button>
+                <div className="d-flex flex-column gap-3 mb-5">
+                  <div className="trip-highlights border-bottom pb-3">
+                    <div className="form-header d-flex justify-content-between ">
+                      <h4 className="dashboard-title">Trip Highlights</h4>
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        onClick={() =>
+                          highlightsAppend({
+                            content: "",
+                          })
+                        }
+                      >
+                        + Add Trip Highlights
+                      </Button>
+                    </div>
+                    <div className="form-content">
+                      {highlightsFields.map((field, index) => {
+                        return (
+                          <div className="d-flex align-items-center">
+                            <TextField
+                              fullWidth
+                              size="small"
+                              type="text"
+                              label=""
+                              {...register(`highlights.${index}.content`)}
+                            />
+                            <span
+                              role="button"
+                              className="text-danger"
+                              onClick={() => highlightsRemove(index)}
+                            >
+                              <RemoveCircleIcon />
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
-                  <div className="form-content">
-                    {highlightsFields.map((field, index) => {
-                      return (
-                        <div className="d-flex ">
-                          <TextField
-                            fullWidth
-                            size="small"
-                            type="text"
-                            label=""
-                            {...register(`highlights.${index}.content`)}
-                          />
-                          <button onClick={() => highlightsRemove(index)}>
-                            -
-                          </button>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
 
-                <div className="trip-inclusions">
-                  <div className="form-header d-flex justify-content-between ">
-                    <p>Trip Inclusions</p>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        inclusionsAppend({
-                          content: "",
-                        })
-                      }
-                    >
-                      +Add trip inclusions
-                    </button>
+                  <div className="trip-inclusions border-bottom pb-3">
+                    <div className="form-header d-flex justify-content-between ">
+                      <h4 className="dashboard-title">Trip Inclusions</h4>
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        onClick={() =>
+                          inclusionsAppend({
+                            content: "",
+                          })
+                        }
+                      >
+                        + Add Cost Include
+                      </Button>
+                    </div>
+                    <div className="form-content d-flex flex-column gap-2">
+                      {inclusionsFields.map((field, index) => {
+                        return (
+                          <div className="d-flex ">
+                            <TextField
+                              fullWidth
+                              size="small"
+                              type="text"
+                              variant="outlined"
+                              {...register(`inclusions.${index}.content`)}
+                            />
+                            <button onClick={() => inclusionsRemove(index)}>
+                              -
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
-                  <div className="form-content d-flex flex-column gap-2">
-                    {inclusionsFields.map((field, index) => {
-                      return (
-                        <div className="d-flex ">
-                          <TextField
-                            fullWidth
-                            size="small"
-                            type="text"
-                            variant="outlined"
-                            {...register(`inclusions.${index}.content`)}
-                          />
-                          <button onClick={() => inclusionsRemove(index)}>
-                            -
-                          </button>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
 
-                <div className="trip-exclusions">
-                  <div className="form-header d-flex justify-content-between ">
-                    <p>Trip exclusions</p>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        exclusionsAppend({
-                          content: "",
-                        })
-                      }
-                    >
-                      +Add trip exclusions
-                    </button>
-                  </div>
-                  <div className="form-content">
-                    {exclusionsFields.map((field, index) => {
-                      return (
-                        <div className="d-flex ">
-                          <TextField
-                            fullWidth
-                            type="text"
-                            variant="outlined"
-                            {...register(`exclusions.${index}.content`)}
-                          />
-                          <button onClick={() => exclusionsRemove(index)}>
-                            -
-                          </button>
-                        </div>
-                      );
-                    })}
+                  <div className="trip-exclusions border-bottom pb-3">
+                    <div className="form-header d-flex justify-content-between ">
+                      <h4 className="dashboard-title">Trip exclusions</h4>
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        onClick={() =>
+                          exclusionsAppend({
+                            content: "",
+                          })
+                        }
+                      >
+                        + Add Cost Exclude
+                      </Button>
+                    </div>
+                    <div className="form-content">
+                      {exclusionsFields.map((field, index) => {
+                        return (
+                          <div className="d-flex ">
+                            <TextField
+                              fullWidth
+                              type="text"
+                              variant="outlined"
+                              {...register(`exclusions.${index}.content`)}
+                            />
+                            <button onClick={() => exclusionsRemove(index)}>
+                              -
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
 
                 <div>
-                  <p>Content</p>
+                  <h4 className="dashboard-title">Content</h4>
                   <TextEditor control={control} name="content" />
                 </div>
 
