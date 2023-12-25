@@ -93,7 +93,7 @@ export default function CreatePackage() {
   };
 
   return (
-    <div className="create-edit-package p-2 w-100">
+    <div className="create-edit-package pt-0 p-2 w-100">
       <div className="d-flex justify-content-between sticky-top bg-white py-2 align-items-center border-bottom mb-2">
         <div className="d-flex gap-2 align-items-center">
           <span role="button">
