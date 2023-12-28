@@ -57,13 +57,8 @@
       list-style-type: none;
       li {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         gap: 5px;
-        &::before {
-          font-family: "Material Icons";
-          content: "check_circle";
-          color: $success;
-        }
       }
     }
   }
