@@ -1,0 +1,32 @@
+.admin-navbar {
+  position: relative;
+  background: #ffffff;
+  height: 100vh;
+  .admin-nav-items {
+    // margin-top: 100px;
+    .nav-item {
+      color: $white;
+      height: 30px;
+      .nav-icon {
+        font-size: 14px;
+        .nav-label {
+          font-size: 14px;
+          margin: 0 !important;
+          a {
+            text-decoration: none;
+            color: $success;
+          }
+        }
+      }
+    }
+  }
+  .brand {
+    height: 90px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

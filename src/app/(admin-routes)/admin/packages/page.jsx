@@ -7,19 +7,25 @@ import Button from "react-bootstrap/Button";
 
 export default function AdminPackages() {
   return (
-    <div className="admin-packages w-">
-      <div className="ap-header d-flex gap-5 justify-content-between ">
-        <h4>Packages</h4>
-        <div className="ap-buttons d-flex ">
+    <div className="admin-packages">
+      <div className="ap-header d-flex gap-3 justify-content-between flex-column">
+        <h4 className="dashboard-header-title">Packages</h4>
+        <div className="ap-buttons d-flex gap-2">
           <Autocomplete
             disablePortal
             id="search-bar"
             options={top100Films}
+            size="small"
             sx={{ width: 300 }}
-            renderInput={(params) => <TextField {...params} label="Packages" />}
+            className="p-0"
+            renderInput={(params) => (
+              <TextField {...params} label="Select Packages" />
+            )}
           />
-          <Button variant="success">
-            <a href="/admin/packages/create-package">Create</a>
+          <Button size="sm" variant="success">
+            <a href="/admin/packages/create-package" className="text-white">
+              Create A New Package
+            </a>
           </Button>
         </div>
       </div>

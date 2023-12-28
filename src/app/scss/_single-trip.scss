@@ -68,6 +68,8 @@
     }
   }
   .map-image {
+    height: 300px;
+    overflow: auto;
     img {
       width: 100%;
       height: auto;
@@ -76,6 +78,7 @@
 }
 
 .trip-fact {
+  flex-wrap: wrap;
   &-icon {
     height: 30px;
     width: 30px;
@@ -116,6 +119,16 @@
   &-body {
     background: $success;
     padding: 10px;
+    .group-price-dropdown {
+      position: absolute;
+      left: 0;
+      background-color: $white;
+      z-index: 1;
+      width: 100%;
+      padding: 10px;
+      border: 1px solid $gray-300;
+      border-radius: 5px;
+    }
   }
   &-inner-body {
     padding: 10px;

@@ -74,24 +74,33 @@ const BookingCard = ({ price }) => {
         </div>
       </div>
       <div className="booking-card-body mb-2">
-        <div className="d-flex align-items-center mb-4">
+        <div
+          className="d-flex align-items-center mb-1"
+          style={{ position: "relative" }}
+        >
           <Button
             variant="light"
             size="sm"
             onClick={() => setShowGroupPrice(!showGroupPrice)}
-            className="d-flex justify-content-between gap-5 w-100">
+            className="d-flex justify-content-between gap-5 w-100"
+          >
             <p className="m-0">We Offer Group Prices</p>
             <ArrowDropDownIcon />
           </Button>
         </div>
-        <div className={`${showGroupPrice ? "" : "d-none"}`}>
-          <ul>
-            <li className="d-flex justify-content-between">
-              <h6>No. of People</h6>
-              <h6>Price per Person</h6>
+        <div
+          className={`${showGroupPrice ? "" : "d-none"} group-price-dropdown`}
+        >
+          <ul className="p-0 m-0">
+            <li className="d-flex justify-content-between align-items-center">
+              <p className="fs-14">No. of People</p>
+              <p className="fs-14">Price per Person</p>
             </li>
             {bookingDetail.groupPrice.map((item) => (
-              <li key={item.id} className="d-flex justify-content-between ">
+              <li
+                key={item.id}
+                className="d-flex justify-content-between align-items-center fs-14"
+              >
                 <p>{item.peopleRange}</p>
                 <p>US$ {item.price}</p>
               </li>
@@ -119,7 +128,8 @@ const BookingCard = ({ price }) => {
           <div>
             <a
               href="#date-price"
-              className="fs-14 text-theme-secondary text-decoration-none">
+              className="fs-14 text-theme-secondary text-decoration-none"
+            >
               Or View Our Fixed Departure Dates
             </a>
           </div>
@@ -170,7 +180,8 @@ const BookingCard = ({ price }) => {
         </Button>
         <Button
           className="d-flex justify-content-center align-items-center gap-2"
-          variant="success">
+          variant="success"
+        >
           <PictureAsPdfIcon fontSize="large" />
           <p className="m-0">Download PDF</p>
         </Button>
