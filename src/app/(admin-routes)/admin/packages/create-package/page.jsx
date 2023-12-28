@@ -33,15 +33,33 @@ export default function CreatePackage() {
           price: "",
         },
       ],
-      duration: 0,
-      maxAltitude: 0,
-      bestWeather: "",
+      packageIntro: {
+        duration: {
+          id: "duration",
+          label: "Duration",
+          information: "",
+        },
+        difficulty: {
+          id: "difficulty",
+          label: "Difficulty",
+          information: "",
+        },
+        bestWeater: {
+          id: "bestWeater",
+          label: "Best Weather",
+          information: "",
+        },
+        maxAltitude: {
+          id: "maxAltitude",
+          label: "Max Altitude",
+          information: "",
+        },
+      },
       metaTitle: "",
       metaDescription: "",
       info: "",
       content: "",
       region: "",
-      difficulty: "",
     },
   });
   const { register, control, handleSubmit } = form;

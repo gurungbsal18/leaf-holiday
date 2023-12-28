@@ -13,12 +13,23 @@ import BookingCard from "@/components/BookingCard";
 import { CalendarMonth } from "@mui/icons-material";
 import DateTable from "@/components/DateTable";
 import { Container } from "react-bootstrap";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import HikingIcon from "@mui/icons-material/Hiking";
+import TerrainIcon from "@mui/icons-material/Terrain";
+import ThunderstormIcon from "@mui/icons-material/Thunderstorm";
 
 const PackageDetail = () => {
   const [showItineraryDetails, setShowItineraryDetails] = useState({});
   const [expandOrCollapse, setExpandOrCollapse] = useState(false);
   const [showCostInclude, setShowConstInclude] = useState(true);
   const [activeCost, setActiveCost] = useState(true);
+
+  const iconMapping = {
+    duration: <CalendarMonthIcon />,
+    difficulty: <HikingIcon />,
+    maxAltitude: <TerrainIcon />,
+    bestWeather: <ThunderstormIcon />,
+  };
 
   useEffect(() => {
     if (
@@ -55,6 +66,7 @@ const PackageDetail = () => {
           height={800}
           alt="header image"
         />
+
         <div className="container d-flex justify-content-center">
           <div className="container d-flex justify-content-between flex-column flex-md-row single-trip-hero-title">
             <h1 className="single-trip-title mb-0">{pkgDetail.headerTitle}</h1>
@@ -85,7 +97,7 @@ const PackageDetail = () => {
             <div className="row d-flex gap-5 trip-fact my-4">
               {pkgDetail.packageInformation.map((item) => (
                 <div key={item.id} className="col d-flex">
-                  <div className="trip-fact-icon">{item.icon}</div>
+                  <div className="trip-fact-icon">{iconMapping[item.id]}</div>
                   <div>
                     <p className="trip-fact-title m-0 text-muted">
                       {item.label}
@@ -184,10 +196,22 @@ const PackageDetail = () => {
                   <ul>
                     {showCostInclude
                       ? pkgDetail.costInclude.map((item) => (
-                          <li key={item.id}>{item.content}</li>
+                          <li key={item.id}>
+                            <CheckCircleOutlineIcon
+                              className="text-success"
+                              fontSize="small"
+                            />
+                            {item.content}
+                          </li>
                         ))
                       : pkgDetail.costExclude.map((item) => (
-                          <li key={item.id}>{item.content}</li>
+                          <li key={item.id}>
+                            <CancelIcon
+                              className="text-danger"
+                              fontSize="small"
+                            />
+                            {item.content}
+                          </li>
                         ))}
                   </ul>
                 </div>

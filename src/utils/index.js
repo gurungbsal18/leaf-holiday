@@ -230,25 +230,21 @@ export const pkgDetail = {
   packageInformation: [
     {
       id: "duration",
-      icon: <CalendarMonthIcon />,
       label: "Duration",
       information: "14 Days",
     },
     {
       id: "difficulty",
-      icon: <HikingIcon />,
       label: "Difficulty",
       information: "Strenuous",
     },
     {
-      id: "weather",
-      icon: <ThunderstormIcon />,
-      label: "Weather",
+      id: "bestWeather",
+      label: "Best Weather",
       information: "March-May & Sep-Nav",
     },
     {
-      id: "altitude",
-      icon: <TerrainIcon />,
+      id: "maxAltitude",
       label: "Max Altitude",
       information: "5545m",
     },
