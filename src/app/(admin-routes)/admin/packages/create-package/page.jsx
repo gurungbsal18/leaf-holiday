@@ -131,7 +131,7 @@ export default function CreatePackage() {
                     <h4 className="dashboard-title">Price</h4>
                     {pricesFields.map((priceField, index) => (
                       <div
-                        className="d-flex gap-3 align-items-center"
+                        className="d-flex flex-column flex-md-row gap-3 align-items-center"
                         key={priceField.id}
                       >
                         <TextField
