@@ -86,13 +86,14 @@ export default function CreatableAutocomplete({ register, formName }) {
         clearOnBlur
         handleHomeEndKeys
         renderOption={(props, option) => <li {...props}>{option.title}</li>}
-        sx={{ width: 300 }}
+        // sx={{ width: 300 }}
         freeSolo
         renderInput={(params) => (
           <TextField
             {...params}
             {...register(formName)}
-            label={isFormOfRegion() ? "Select Region" : "Select Difficulty"}
+            size="small"
+            label={isFormOfRegion() ? "Select Region" : "Trip Difficulty"}
           />
         )}
       />

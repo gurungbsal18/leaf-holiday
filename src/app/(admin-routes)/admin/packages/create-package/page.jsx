@@ -368,38 +368,42 @@ export default function CreatePackage() {
                   </div>
                 </div>
 
-                <div>
+                <div className="mb-5">
                   <h4 className="dashboard-title">Content</h4>
                   <TextEditor control={control} name="content" />
                 </div>
 
-                <TextField
-                  fullWidth
-                  size="small"
-                  label="Meta Title"
-                  type="text"
-                  variant="outlined"
-                  {...register("metaTitle")}
-                />
+                <div className="d-flex gap-3 flex-column">
+                  <h4 className="dashboard-title">SEO</h4>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    label="Meta Title"
+                    type="text"
+                    variant="outlined"
+                    {...register("metaTitle")}
+                  />
 
-                <TextField
-                  fullWidth
-                  size="small"
-                  label="Meta Description"
-                  type="text"
-                  variant="outlined"
-                  {...register("metaDescription")}
-                />
+                  <TextField
+                    fullWidth
+                    size="small"
+                    label="Meta Description"
+                    type="text"
+                    variant="outlined"
+                    {...register("metaDescription")}
+                  />
+                </div>
               </div>
             </div>
             <div className="col-auto">
-              <div className="d-flex flex-column ">
+              <div className="d-flex flex-column gap-3">
                 <FormControl
                   sx={{ m: 3 }}
                   component="fieldset"
                   variant="standard"
                 >
-                  <FormLabel component="legend">Package Options</FormLabel>
+                  {/* <FormLabel component="legend">Package Options</FormLabel> */}
+                  <h4 className="dashboard-title">Package Options</h4>
                   <FormGroup>
                     <FormControlLabel
                       control={
@@ -422,7 +426,7 @@ export default function CreatePackage() {
                   </FormGroup>
                 </FormControl>
 
-                <div>
+                <div className="w-100">
                   <CreatableAutocomplete
                     name="region"
                     register={register}
@@ -473,7 +477,13 @@ export default function CreatePackage() {
                     {...register("pdf")}
                   />
                 </div>
-                <button onClick={handleSubmit(onSubmit)}>Publish</button>
+                <Button
+                  size="sm"
+                  variant="success"
+                  onClick={handleSubmit(onSubmit)}
+                >
+                  Publish
+                </Button>
               </div>
             </div>
           </div>
