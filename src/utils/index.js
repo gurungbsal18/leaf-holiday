@@ -292,55 +292,55 @@ export const pkgDetail = {
     {
       id: 1,
       content:
-        "1 Cost Include Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
+        "Cost Include Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
     },
     {
       id: 2,
       content:
-        "2 Cost Include Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
+        "Cost Include Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
     },
     {
       id: 3,
       content:
-        "3 Cost Include Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
+        "Cost Include Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
     },
     {
       id: 4,
       content:
-        "4 Cost Include Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
+        "Cost Include Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
     },
     {
       id: 5,
       content:
-        "5 Cost Include Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
+        "Cost Include Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
     },
   ],
   costExclude: [
     {
       id: 1,
       content:
-        "1 Cost Exclude Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
+        "Cost Exclude Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
     },
     {
       id: 2,
       content:
-        "2 Cost Exclude Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
+        "Cost Exclude Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
     },
     {
       id: 3,
       content:
-        "3 Cost Exclude Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
+        "Cost Exclude Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
     },
     {
       id: 4,
       content:
-        "4 Cost Exclude Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
+        "Cost Exclude Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
     },
     {
       id: 5,
       content:
-        "5 Cost Exclude Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
+        "Cost Exclude Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
     },
   ],
-  mapImage: "/images/map.png",
+  mapImage: "/images/map.jpg",
 };

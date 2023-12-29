@@ -55,10 +55,12 @@
     ul {
       padding: 0;
       list-style-type: none;
+      line-height: 1.7;
       li {
         display: flex;
         align-items: flex-start;
         gap: 5px;
+        margin-bottom: 15px;
         &::before {
           font-family: "Material Icons";
           content: "check_circle";
@@ -68,7 +70,8 @@
     }
   }
   .map-image {
-    height: 300px;
+    // height: 300px;
+    width: 450px;
     overflow: auto;
     img {
       width: 100%;
@@ -106,14 +109,15 @@
     .price-title {
       font-size: 21px;
       color: $white;
-      font-family: "Rubik", sans-serif;
+      // font-family: "Rubik", sans-serif;
       font-weight: 600;
     }
     .price-amount {
       font-size: 29px;
       color: $white;
-      font-family: "Rubik", sans-serif;
+      // font-family: "Rubik", sans-serif;
       font-weight: 800;
+      line-height: 1;
     }
   }
   &-body {
