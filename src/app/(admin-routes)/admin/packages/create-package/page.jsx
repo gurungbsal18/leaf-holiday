@@ -203,7 +203,7 @@ export default function CreatePackage() {
                     ))}
                     <Button
                       size="sm"
-                      variant="primary"
+                      variant="success"
                       onClick={() =>
                         pricesAppend({
                           noOfPeople: "",
