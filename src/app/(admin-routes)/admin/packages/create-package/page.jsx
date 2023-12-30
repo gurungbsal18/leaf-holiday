@@ -19,50 +19,51 @@ import CreatableAutocomplete from "@/components/ui/CreatableAutocomplete";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import Image from "next/image";
 
+import { DevTool } from "@hookform/devtools";
+
 export default function CreatePackage() {
   const inputRef = useRef(null);
   const [selectedFile, setSelectedFile] = React.useState(null);
   const openFilePicker = () => {
     inputRef.current.click();
   };
+  const initialFormData = {
+    title: "",
+    prices: [
+      {
+        noOfPeople: "",
+        price: "",
+      },
+    ],
+    packageIntro: {
+      duration: {
+        id: "duration",
+        label: "Duration",
+      },
+      difficulty: {
+        id: "difficulty",
+        label: "Difficulty",
+      },
+      bestWeather: {
+        id: "bestWeater",
+        label: "Best Weather",
+      },
+      maxAltitude: {
+        id: "maxAltitude",
+        label: "Max Altitude",
+      },
+    },
+    metaTitle: "",
+    metaDescription: "",
+    info: "",
+    content: "",
+    region: "",
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
 
   const form = useForm({
-    defaultValues: {
-      title: "",
-      prices: [
-        {
-          noOfPeople: "",
-          price: "",
-        },
-      ],
-      packageIntro: {
-        duration: {
-          id: "duration",
-          label: "Duration",
-          information: "",
-        },
-        difficulty: {
-          id: "difficulty",
-          label: "Difficulty",
-          information: "",
-        },
-        bestWeater: {
-          id: "bestWeater",
-          label: "Best Weather",
-          information: "",
-        },
-        maxAltitude: {
-          id: "maxAltitude",
-          label: "Max Altitude",
-          information: "",
-        },
-      },
-      metaTitle: "",
-      metaDescription: "",
-      info: "",
-      content: "",
-      region: "",
-    },
+    defaultValues: formData,
   });
   const { register, control, handleSubmit } = form;
 
@@ -150,8 +151,7 @@ export default function CreatePackage() {
                     {pricesFields.map((priceField, index) => (
                       <div
                         className="d-flex gap-3 align-items-center"
-                        key={priceField.id}
-                      >
+                        key={priceField.id}>
                         <TextField
                           className="mx-0"
                           label="No. of People"
@@ -188,8 +188,7 @@ export default function CreatePackage() {
                           <span
                             role="button"
                             className="text-danger"
-                            onClick={() => pricesRemove(index)}
-                          >
+                            onClick={() => pricesRemove(index)}>
                             <RemoveCircleIcon />
                           </span>
                           // <button
@@ -210,8 +209,7 @@ export default function CreatePackage() {
                           noOfPeople: "",
                           price: 0,
                         })
-                      }
-                    >
+                      }>
                       <span className="d-flex align-items-center gap-1">
                         <MonetizationOnIcon />
                         Add More Price
@@ -246,20 +244,22 @@ export default function CreatePackage() {
                         <InputAdornment position="start">Meters</InputAdornment>
                       ),
                     }}
-                    {...register("maxAltitude", { valueAsNumber: true })}
+                    {...register("packageIntro.maxAltitude.info", {
+                      valueAsNumber: true,
+                    })}
                   />
                   <TextField
                     className="mx-0"
-                    label="Weather"
+                    label="Best Weather"
                     sx={{ m: 1, width: "50ch" }}
                     type="text"
                     size="small"
-                    {...register("bestWeather")}
+                    {...register("packageIntro.bestWeather.info")}
                   />
                   <TextField
                     className="mx-0"
                     label="Duration"
-                    sx={{ m: 1, width: "15ch" }}
+                    sx={{ m: 1, width: "25ch" }}
                     type="number"
                     size="small"
                     InputProps={{
@@ -267,7 +267,9 @@ export default function CreatePackage() {
                         <InputAdornment position="start">Days</InputAdornment>
                       ),
                     }}
-                    {...register("duration", { valueAsNumber: true })}
+                    {...register("packageIntro.duration.info", {
+                      valueAsNumber: true,
+                    })}
                   />
                 </div>
 
@@ -287,8 +289,7 @@ export default function CreatePackage() {
                           highlightsAppend({
                             content: "",
                           })
-                        }
-                      >
+                        }>
                         + Add Trip Highlights
                       </Button>
                     </div>
@@ -296,18 +297,13 @@ export default function CreatePackage() {
                       {highlightsFields.map((field, index) => {
                         return (
                           <div className="d-flex align-items-center">
-                            <TextField
-                              fullWidth
-                              size="small"
-                              type="text"
-                              label=""
+                            <input
                               {...register(`highlights.${index}.content`)}
                             />
                             <span
                               role="button"
                               className="text-danger"
-                              onClick={() => highlightsRemove(index)}
-                            >
+                              onClick={() => highlightsRemove(index)}>
                               <RemoveCircleIcon />
                             </span>
                           </div>
@@ -326,8 +322,7 @@ export default function CreatePackage() {
                           inclusionsAppend({
                             content: "",
                           })
-                        }
-                      >
+                        }>
                         + Add Cost Include
                       </Button>
                     </div>
@@ -335,11 +330,7 @@ export default function CreatePackage() {
                       {inclusionsFields.map((field, index) => {
                         return (
                           <div className="d-flex ">
-                            <TextField
-                              fullWidth
-                              size="small"
-                              type="text"
-                              variant="outlined"
+                            <input
                               {...register(`inclusions.${index}.content`)}
                             />
                             <button onClick={() => inclusionsRemove(index)}>
@@ -361,8 +352,7 @@ export default function CreatePackage() {
                           exclusionsAppend({
                             content: "",
                           })
-                        }
-                      >
+                        }>
                         + Add Cost Exclude
                       </Button>
                     </div>
@@ -370,10 +360,7 @@ export default function CreatePackage() {
                       {exclusionsFields.map((field, index) => {
                         return (
                           <div className="d-flex ">
-                            <TextField
-                              fullWidth
-                              type="text"
-                              variant="outlined"
+                            <input
                               {...register(`exclusions.${index}.content`)}
                             />
                             <button onClick={() => exclusionsRemove(index)}>
@@ -415,8 +402,7 @@ export default function CreatePackage() {
                 <FormControl
                   sx={{ m: 3 }}
                   component="fieldset"
-                  variant="standard"
-                >
+                  variant="standard">
                   <FormLabel component="legend">Package Options</FormLabel>
                   <FormGroup>
                     <FormControlLabel
@@ -452,7 +438,7 @@ export default function CreatePackage() {
                   <CreatableAutocomplete
                     name="difficulty"
                     register={register}
-                    formName={"difficulty"}
+                    formName={"packageIntro.difficulty.info"}
                   />
                 </div>
                 <div className="border-2 border-black">
@@ -497,6 +483,7 @@ export default function CreatePackage() {
           </div>
         </div>
       </form>
+      <DevTool control={control} />
     </div>
   );
 }

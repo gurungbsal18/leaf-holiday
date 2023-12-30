@@ -18,7 +18,6 @@ export default function CreatableAutocomplete({ register, formName }) {
     description: "",
     rating: 1,
   };
-  console.log(formName);
 
   const isFormOfRegion = () => {
     if (formName === "region") {
@@ -26,7 +25,6 @@ export default function CreatableAutocomplete({ register, formName }) {
     }
     return false;
   };
-  console.log("isformregion", isFormOfRegion());
 
   const [value, setValue] = React.useState(null);
   const [open, toggleOpen] = React.useState(false);
@@ -40,7 +38,7 @@ export default function CreatableAutocomplete({ register, formName }) {
     );
     toggleOpen(false);
   };
-  console.log(dialogValue);
+
   return (
     <React.Fragment>
       <Autocomplete
