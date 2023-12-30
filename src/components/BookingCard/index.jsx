@@ -3,7 +3,7 @@ import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import Button from "react-bootstrap/Button";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import TurnedInNotIcon from "@mui/icons-material/TurnedInNot";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import dayjs from "dayjs";
@@ -65,9 +65,16 @@ const BookingCard = ({ price }) => {
     <div className="sticky-top">
       <div className="d-flex booking-card-price-header">
         {/* <LocalOfferIcon /> */}
-        <AttachMoneyIcon />
+        <TurnedInNotIcon />
         <div>
-          <p className="price-title m-0">Price Per Person</p>
+          <p className="price-title m-0">
+            Price Per Person
+            {/* <br />
+            <span>
+              US $
+              {priceCalculator(bookingDetail.groupPrice, formData.noOfGuests)}
+            </span> */}
+          </p>
           <p className="price-amount m-0">
             US ${priceCalculator(bookingDetail.groupPrice, formData.noOfGuests)}
           </p>
@@ -115,6 +122,7 @@ const BookingCard = ({ price }) => {
           <div>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <MobileDatePicker
+                className="w-100"
                 onChange={(e) =>
                   setFormData({
                     ...formData,
@@ -125,17 +133,21 @@ const BookingCard = ({ price }) => {
               />
             </LocalizationProvider>
           </div>
-          <div>
+          <div className="p-2 bg-success my-2 rounded d-flex justify-content-center align-items-center gap-2">
+            <CalendarMonthIcon style={{ color: "white" }} />
             <a
               href="#date-price"
-              className="fs-14 text-theme-secondary text-decoration-none"
+              role="button"
+              className="fs-14 text-light text-decoration-none"
             >
-              Or View Our Fixed Departure Dates
+              Fixed Departure Dates
             </a>
           </div>
           <div>
-            <p>No. of Guests</p>
+            <p className="mb-1 mt-3">No. of Guests</p>
             <input
+              className="form-control mb-2"
+              defaultValue={1}
               min={1}
               max={30}
               placeholder={0}

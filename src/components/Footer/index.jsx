@@ -12,12 +12,12 @@ function Footer() {
   const year = date.getFullYear();
 
   return (
-    <div className="footer bg-success p-5 text-white mt-3">
+    <div className="footer bg-success p-5 text-white">
       <div className="footer-content d-flex justify-content-between flex-column flex-md-row">
-        <div className="d-flex flex-column ">
+        <div className="d-flex flex-column footer-content-contact">
           <h4>Contact Us</h4>
           <a href="tel:+9771234567890">
-            <LocalPhoneIcon />
+            <WhatsAppIcon />
             +977 1234567890
           </a>
           <a href="mailto:info@thenepaltrekking.com">
@@ -51,8 +51,8 @@ function Footer() {
           <a href="">Covid Protocol</a>
         </div>
       </div>
-      <div className="association d-flex flex-column  justify-content-center  align-items-center ">
-        <p>Associated With</p>
+      <div className="footer-association d-flex flex-column justify-content-center align-items-center mt-5">
+        <h4>Associated With</h4>
         <div className="d-flex bg-white p-2 rounded-5 gap-3 ">
           <Image src="/images/akton.png" width={25} height={25} alt="akton" />
           <Image src="/images/ntb.png" width={25} height={25} alt="ntb" />
@@ -66,9 +66,9 @@ function Footer() {
           />
         </div>
       </div>
-      <div className="social d-flex justify-content-between ">
-        <p>© Leaf Holiday {year}</p>
-        <div className="">
+      <div className="d-flex justify-content-between mt-5">
+        <p className="m-0 fs-12">© Leaf Holiday {year}</p>
+        <div className="footer-social d-flex gap-2">
           <a href="" className="text-white">
             <FacebookIcon />
           </a>

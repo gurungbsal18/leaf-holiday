@@ -1,7 +1,31 @@
 .footer {
+  padding-bottom: 10px !important;
+  h4 {
+    font-size: 18px;
+    font-weight: 600;
+    font-family: "Montserrat", sans-serif;
+  }
+  margin-top: 60px;
   a {
     text-decoration: none;
     color: $white;
-    font-size: 14px;
+    font-size: 13px;
+  }
+  &-content {
+    &-contact {
+      a {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+  &-social {
+    svg {
+      width: 15px !important;
+      height: 15px !important;
+    }
   }
 }
