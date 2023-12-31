@@ -60,11 +60,6 @@
         align-items: center;
         gap: 5px;
         margin-bottom: 15px;
-        &::before {
-          font-family: "Material Icons";
-          content: "check_circle";
-          color: $success;
-        }
       }
     }
   }

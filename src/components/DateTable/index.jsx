@@ -26,11 +26,11 @@ export default function BasicTable() {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Start Date</TableCell>
-            <TableCell>End Date</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Price</TableCell>
-            <TableCell></TableCell>
+            <TableCell className="fw-bold">Start Date</TableCell>
+            <TableCell className="fw-bold">End Date</TableCell>
+            <TableCell className="fw-bold">Status</TableCell>
+            <TableCell className="fw-bold">Price</TableCell>
+            <TableCell className="fw-bold"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
