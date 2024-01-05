@@ -1,2 +1,20 @@
 @import "./admin-navbar";
 @import "./create-package";
+
+@media (max-width: 576px) {
+  .main-container {
+    .admin-navbar {
+      position: absolute;
+      float: left;
+      left: 0;
+      z-index: 10001;
+    }
+
+    .create-edit-package {
+      position: absolute;
+      float: right;
+      width: calc(100% - 80px) !important;
+      right: 0;
+    }
+  }
+}
