@@ -23,6 +23,7 @@ const PackageDetail = () => {
   const [expandOrCollapse, setExpandOrCollapse] = useState(false);
   const [showCostInclude, setShowConstInclude] = useState(true);
   const [activeCost, setActiveCost] = useState(true);
+  const [contentExpand, setContentExpand] = useState(false);
 
   const iconMapping = {
     duration: <CalendarMonthIcon />,
@@ -55,6 +56,10 @@ const PackageDetail = () => {
         [item.id]: expandOrCollapse ? false : true,
       }))
     );
+  };
+
+  const readMoreBtn = () => {
+    setContentExpand(!contentExpand);
   };
 
   return (
@@ -109,8 +114,17 @@ const PackageDetail = () => {
             </div>
             <div>
               <h4 className="title">{pkgDetail.overviewTitle}</h4>
-              <p>{pkgDetail.overviewContent}</p>
-              <Button size="sm" variant="success">
+              {/* <div className="overview-content-collapse overview-content-expand"> */}
+              <div
+                className={`${
+                  contentExpand
+                    ? "overview-content-expand"
+                    : "overview-content-collapse"
+                }`}
+              >
+                <p>{pkgDetail.overviewContent}</p>
+              </div>
+              <Button size="sm" variant="success" onClick={readMoreBtn}>
                 Read More
               </Button>
             </div>
@@ -123,7 +137,8 @@ const PackageDetail = () => {
                 <Button
                   variant="success"
                   size="sm"
-                  onClick={handleExpandCollapse}>
+                  onClick={handleExpandCollapse}
+                >
                   {expandOrCollapse ? "Collapse All -" : "Expand All +"}
                 </Button>
               </div>
@@ -144,14 +159,16 @@ const PackageDetail = () => {
                         variant="success"
                         size="sm"
                         className="itinerary-expand-btn"
-                        onClick={() => handleToggle(item.id)}>
+                        onClick={() => handleToggle(item.id)}
+                      >
                         {showItineraryDetails[item.id] ? "-" : "+"}
                       </Button>
                     </div>
                     <p
                       className={`${
                         showItineraryDetails[item.id] ? "" : "d-none "
-                      }`}>
+                      }`}
+                    >
                       {item.details}
                     </p>
                   </div>
@@ -169,7 +186,8 @@ const PackageDetail = () => {
                     onClick={() => {
                       setShowConstInclude(true);
                       setActiveCost(true);
-                    }}>
+                    }}
+                  >
                     <span className="me-1">
                       <CheckCircleOutlineIcon fontSize="small" />
                     </span>
@@ -185,7 +203,8 @@ const PackageDetail = () => {
                     onClick={() => {
                       setShowConstInclude(false);
                       setActiveCost(false);
-                    }}>
+                    }}
+                  >
                     <span className="me-1">
                       <CancelIcon fontSize="small" />
                     </span>

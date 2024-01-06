@@ -72,6 +72,15 @@
       height: auto;
     }
   }
+  .overview-content-collapse {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 7;
+  }
+  .overview-content-expand {
+    display: block;
+  }
 }
 
 .trip-fact {

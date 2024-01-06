@@ -19,7 +19,7 @@ import CreatableAutocomplete from "@/components/ui/CreatableAutocomplete";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import Image from "next/image";
 
-// import { DevTool } from "@hookform/devtools";
+import { DevTool } from "@hookform/devtools";
 
 export default function CreatePackage() {
   const inputRef = useRef(null);
@@ -493,7 +493,7 @@ export default function CreatePackage() {
           </div>
         </div>
       </form>
-      {/* <DevTool control={control} /> */}
+      <DevTool control={control} />
     </div>
   );
 }
