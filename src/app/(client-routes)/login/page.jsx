@@ -67,7 +67,7 @@ export default function Login() {
         </div>
       </div>
       <div className="register-image">
-        <Image src="/images/login-page.png" width={537} height={360} />
+        <Image src="/images/login-page.png" width={537} height={350} />
       </div>
     </div>
   );

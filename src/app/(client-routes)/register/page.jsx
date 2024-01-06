@@ -8,6 +8,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import TextField from "@mui/material/TextField";
+import { Button } from "react-bootstrap";
+import Image from "next/image";
 
 export default function Register() {
   const form = useForm({
@@ -29,10 +31,11 @@ export default function Register() {
   };
 
   return (
-    <div className="d-flex">
-      <div className="register-container w-50 ">
+    <div className="container d-flex flex-column-reverse flex-md-row justify-content-between my-5 gap-5 align-items-center">
+      <div className="register-container">
         <div className="register-text">
-          <h1>Register</h1>
+          <h4>Register</h4>
+          <p>Join to Leaf Holiday and book your favorite trek and tours.</p>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -59,17 +62,21 @@ export default function Register() {
               label="I agree to Terms and Conditions."
               {...register("terms")}
             />
-            <button>Regsiter</button>
+            <Button variant="success">Register</Button>
           </div>
         </form>
         <div className="login-router">
-          <span className="d-flex">
+          <span className="d-flex mt-3">
             <p>Already Have An Account?</p>
-            <a href="/login">Login</a>
+            <a href="/login" className="ms-2">
+              Login
+            </a>
           </span>
         </div>
       </div>
-      <div className="register-image w-50 "></div>
+      <div className="register-image">
+        <Image src="/images/register-page.png" width={500} height={425} />
+      </div>
     </div>
   );
 }
