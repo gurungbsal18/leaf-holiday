@@ -58,21 +58,16 @@ export default function Login() {
           </div>
         </form>
         <div className="register-router">
-          <span className="d-flex flex-column flex-md-row mt-3">
+          <span className="d-flex mt-3">
             <p className="m-0">Don't Have An Account?</p>
-            <span className="ms-0 ms-md-2">
+            <span className="ms-2">
               <a href="/register">Register</a>
             </span>
           </span>
         </div>
       </div>
       <div className="register-image">
-        <Image
-          src="/images/login-page.png"
-          width={537}
-          height={360}
-          sizes="(max-width: 576px) 100vw, 33vw"
-        />
+        <Image src="/images/login-page.png" width={537} height={360} />
       </div>
     </div>
   );
