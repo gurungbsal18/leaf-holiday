@@ -125,7 +125,7 @@ const PackageDetail = () => {
                 <p>{pkgDetail.overviewContent}</p>
               </div>
               <Button size="sm" variant="success" onClick={readMoreBtn}>
-                Read More
+                {contentExpand ? "Read Less" : "Read More"}
               </Button>
             </div>
             <div className="mt-5">
