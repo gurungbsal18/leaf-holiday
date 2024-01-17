@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Header from "./Header";
 import Title from "./Title";
 import Contents from "./Contents";

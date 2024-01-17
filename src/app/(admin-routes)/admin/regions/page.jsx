@@ -1,26 +1,27 @@
 "use client";
 import AdminPages from "@/components/AdminPages";
-import CreateDestination from "@/components/CreateDestination";
+import CreateRegion from "@/components/CreateRegion";
+import React from "react";
 
-export default function Destination() {
+export default function Region() {
   const data = {
-    pageName: "Destinations",
-    createComponent: <CreateDestination />,
+    pageName: "Regions",
+    createComponent: <CreateRegion />,
     titles: ["NAME", "DESCRIPTION"],
     contents: [
       {
         label: "Nepal",
-        description: "Nepal is a beautiful country.",
+        description: "Nepal is a beautiful region.",
         img: "/images/ng.png",
       },
       {
         label: "Bhutan",
-        description: "Bhutan is a beautiful country.",
+        description: "Bhutan is a beautiful region.",
         img: "/images/nma.png",
       },
       {
         label: "Tibet",
-        description: "Tibet is a beautiful country.",
+        description: "Tibet is a beautiful region.",
         img: "/images/ntb.png",
       },
     ],

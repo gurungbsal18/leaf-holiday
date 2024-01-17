@@ -1,12 +1,14 @@
-import React, { useRef } from "react";
+"use client";
+import React, { useContext, useRef } from "react";
 import { GrClose } from "react-icons/gr";
 import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import { useForm } from "react-hook-form";
-import { logging } from "../../../next.config";
+import { GlobalContext } from "@/context";
 
-export default function CreateDestination({ nameValue }) {
+export default function CreateDestination() {
+  const { setCreateComponentOpen } = useContext(GlobalContext);
   const inputRef = useRef(null);
   const [selectedFile, setSelectedFile] = React.useState(null);
   const openFilePicker = () => {
@@ -20,6 +22,7 @@ export default function CreateDestination({ nameValue }) {
     event.stopPropagation();
 
     console.log("inner Form submitted", data);
+    setCreateComponentOpen(false);
   };
 
   return (
@@ -27,7 +30,7 @@ export default function CreateDestination({ nameValue }) {
       <div className="">
         <div className="d-flex justify-content-between p-3 ">
           <p>Create Destination</p>
-          <GrClose />
+          <GrClose onClick={() => setCreateComponentOpen(false)} />
         </div>
         <form>
           <div className="d-flex gap-5">
@@ -35,13 +38,13 @@ export default function CreateDestination({ nameValue }) {
               <TextField
                 required
                 fullWidth
-                value={nameValue}
                 size="small"
                 label="Name"
                 type="text"
                 variant="outlined"
                 {...register("name")}
               />
+              <label name="description">Description</label>
               <TextareaAutosize
                 className="w-100"
                 size="large"

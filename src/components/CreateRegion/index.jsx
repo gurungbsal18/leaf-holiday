@@ -1,11 +1,15 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { GrClose } from "react-icons/gr";
 import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import { useForm } from "react-hook-form";
+import { GlobalContext } from "@/context";
+import { top100Films } from "@/app/(admin-routes)/admin/packages/page";
 
 export default function CreateRegion({ nameValue, handleClose, setValue }) {
+  const { createComponentOpen, setCreateComponentOpen } =
+    useContext(GlobalContext);
   const inputRef = useRef(null);
   const [selectedFile, setSelectedFile] = React.useState(null);
   const openFilePicker = () => {
@@ -15,9 +19,12 @@ export default function CreateRegion({ nameValue, handleClose, setValue }) {
   const { register, handleSubmit } = form;
 
   const submitRegion = (data) => {
-    setValue(data.name);
-    handleClose();
+    if (nameValue) {
+      setValue(data.name);
+      handleClose();
+    }
     console.log("inner Form submitted", data);
+    setCreateComponentOpen(false);
   };
 
   return (
@@ -25,7 +32,14 @@ export default function CreateRegion({ nameValue, handleClose, setValue }) {
       <div className="">
         <div className="d-flex justify-content-between p-3 ">
           <p>Create Region</p>
-          <GrClose onClick={handleClose} />
+          <GrClose
+            onClick={() => {
+              setCreateComponentOpen(false);
+              if (nameValue) {
+                handleClose();
+              }
+            }}
+          />
         </div>
         <form>
           <div className="d-flex gap-5">
@@ -48,6 +62,19 @@ export default function CreateRegion({ nameValue, handleClose, setValue }) {
                 variant="outlined"
                 {...register("description")}
               />
+
+              <div>
+                <label for="destination">Choose a Destination:</label>
+                <select
+                  name="destination"
+                  id="destination"
+                  {...register("destination")}>
+                  {top100Films.map((item) => (
+                    <option value={item.label}>{item.label}</option>
+                  ))}
+                </select>
+              </div>
+
               <button type="submit" onClick={handleSubmit(submitRegion)}>
                 Create
               </button>

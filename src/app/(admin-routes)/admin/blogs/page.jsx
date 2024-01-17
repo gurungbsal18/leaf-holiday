@@ -1,11 +1,12 @@
 "use client";
 import AdminPages from "@/components/AdminPages";
-import CreateDestination from "@/components/CreateDestination";
+import CreateBlog from "@/components/CreateBlog";
+import React from "react";
 
-export default function Destination() {
+export default function Blog() {
   const data = {
-    pageName: "Destinations",
-    createComponent: <CreateDestination />,
+    pageName: "Blogs",
+    createComponent: <CreateBlog />,
     titles: ["NAME", "DESCRIPTION"],
     contents: [
       {

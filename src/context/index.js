@@ -9,6 +9,7 @@ export default function GlobalState({ children }) {
   const [componentLevelLoader, setComponentLevelLoader] = useState(false);
   const [pageLevelLoader, setPageLevelLoader] = useState(true);
   const [isAdminView, setAdminView] = useState(false);
+  const [createComponentOpen, setCreateComponentOpen] = useState(false);
 
   const pathname = usePathname();
   const extractAdminPath = pathname.split("/");
@@ -27,6 +28,8 @@ export default function GlobalState({ children }) {
         setPageLevelLoader,
         isAdminView,
         setAdminView,
+        createComponentOpen,
+        setCreateComponentOpen,
       }}>
       {children}
     </GlobalContext.Provider>
