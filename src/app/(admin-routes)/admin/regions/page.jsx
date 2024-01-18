@@ -1,6 +1,6 @@
 "use client";
 import AdminPages from "@/components/AdminPages";
-import CreateRegion from "@/components/CreateRegion";
+import CreateRegion from "@/components/CreateComponents/CreateRegion";
 import React from "react";
 
 export default function Region() {

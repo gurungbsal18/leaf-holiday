@@ -1,6 +1,6 @@
 "use client";
 import AdminPages from "@/components/AdminPages";
-import CreateBlog from "@/components/CreateBlog";
+import CreateBlog from "@/components/CreateComponents/CreateBlog";
 import React from "react";
 
 export default function Blog() {

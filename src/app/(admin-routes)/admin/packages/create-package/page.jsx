@@ -35,22 +35,56 @@ export default function CreatePackage() {
         price: "",
       },
     ],
-    packageIntro: {
+    tripFacts: {
       duration: {
         id: "duration",
         label: "Duration",
+        info: "",
       },
       difficulty: {
         id: "difficulty",
         label: "Difficulty",
+        info: "",
       },
       bestWeather: {
         id: "bestWeater",
         label: "Best Weather",
+        info: "",
       },
       maxAltitude: {
         id: "maxAltitude",
         label: "Max Altitude",
+        info: "",
+      },
+      accomodation: {
+        id: "accomodation",
+        label: "Accomodation",
+        info: "",
+      },
+      meals: {
+        id: "meals",
+        label: "Meals",
+        info: "",
+      },
+      transportation: {
+        id: "transportation",
+        label: "Transportation",
+        info: "",
+      },
+      group: {
+        id: "group",
+        label: "Group",
+        info: "",
+      },
+      activity: {
+        id: "activity",
+        label: "Activity",
+        info: "",
+      },
+      destination: {
+        id: "destination",
+        label: "Destination",
+        info: "",
       },
     },
     metaTitle: "",
@@ -243,7 +277,7 @@ export default function CreatePackage() {
                       <InputAdornment position="start">Meters</InputAdornment>
                     ),
                   }}
-                  {...register("packageIntro.maxAltitude.info", {
+                  {...register("tripFacts.maxAltitude.info", {
                     valueAsNumber: true,
                   })}
                 />
@@ -253,7 +287,7 @@ export default function CreatePackage() {
                   sx={{ m: 1, width: "50ch" }}
                   type="text"
                   size="small"
-                  {...register("packageIntro.bestWeather.info")}
+                  {...register("tripFacts.bestWeather.info")}
                 />
                 <TextField
                   className="mx-0"
@@ -266,9 +300,62 @@ export default function CreatePackage() {
                       <InputAdornment position="start">Days</InputAdornment>
                     ),
                   }}
-                  {...register("packageIntro.duration.info", {
+                  {...register("tripFacts.duration.info", {
                     valueAsNumber: true,
                   })}
+                />
+                <CreatableAutocomplete
+                  name="difficulty"
+                  register={register}
+                  formName="tripFacts.difficulty.info"
+                />
+                <TextField
+                  className="mx-0"
+                  label="Accomodation"
+                  sx={{ m: 1, width: "50ch" }}
+                  type="text"
+                  size="small"
+                  {...register("tripFacts.accomodation.info")}
+                />
+                <TextField
+                  className="mx-0"
+                  label="Meals"
+                  sx={{ m: 1, width: "50ch" }}
+                  type="text"
+                  size="small"
+                  {...register("tripFacts.meals.info")}
+                />
+                <TextField
+                  className="mx-0"
+                  label="Transportation"
+                  sx={{ m: 1, width: "50ch" }}
+                  type="text"
+                  size="small"
+                  {...register("tripFacts.transportation.info")}
+                />
+                <TextField
+                  className="mx-0"
+                  label="Group"
+                  sx={{ m: 1, width: "50ch" }}
+                  type="text"
+                  size="small"
+                  {...register("tripFacts.group.info")}
+                />
+                <TextField
+                  className="mx-0"
+                  label="Activity"
+                  sx={{ m: 1, width: "50ch" }}
+                  type="text"
+                  size="small"
+                  {...register("tripFacts.activity.info")}
+                />
+                <TextField
+                  className="mx-0"
+                  label="Destination"
+                  sx={{ m: 1, width: "50ch" }}
+                  type="text"
+                  size="small"
+                  {...register("tripFacts.destination.info")}
                 />
               </div>
 
@@ -430,13 +517,6 @@ export default function CreatePackage() {
                 />
               </div>
 
-              <div>
-                <CreatableAutocomplete
-                  name="difficulty"
-                  register={register}
-                  formName="packageIntro.difficulty.info"
-                />
-              </div>
               <div className="border-2 border-black">
                 <p>Header Image</p>
                 {selectedFile ? (

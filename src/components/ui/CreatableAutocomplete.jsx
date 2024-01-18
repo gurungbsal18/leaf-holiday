@@ -2,8 +2,8 @@ import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
-import CreateRegion from "../CreateRegion";
-import CreateDifficulty from "../CreateDifficulty";
+import CreateRegion from "../CreateComponents/CreateRegion";
+import CreateDifficulty from "../CreateComponents/CreateDifficulty";
 
 const filter = createFilterOptions();
 

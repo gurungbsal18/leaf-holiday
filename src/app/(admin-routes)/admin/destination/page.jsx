@@ -1,6 +1,6 @@
 "use client";
 import AdminPages from "@/components/AdminPages";
-import CreateDestination from "@/components/CreateDestination";
+import CreateDestination from "@/components/CreateComponents/CreateDestination";
 
 export default function Destination() {
   const data = {
