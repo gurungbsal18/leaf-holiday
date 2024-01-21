@@ -8,23 +8,7 @@ export default function Region() {
     pageName: "Regions",
     createComponent: <CreateRegion />,
     titles: ["NAME", "DESCRIPTION"],
-    contents: [
-      {
-        label: "Nepal",
-        description: "Nepal is a beautiful region.",
-        img: "/images/ng.png",
-      },
-      {
-        label: "Bhutan",
-        description: "Bhutan is a beautiful region.",
-        img: "/images/nma.png",
-      },
-      {
-        label: "Tibet",
-        description: "Tibet is a beautiful region.",
-        img: "/images/ntb.png",
-      },
-    ],
+    apiName: "region",
   };
 
   return (

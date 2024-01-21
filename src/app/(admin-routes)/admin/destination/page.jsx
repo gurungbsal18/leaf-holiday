@@ -1,29 +1,13 @@
-"use client";
 import AdminPages from "@/components/AdminPages";
 import CreateDestination from "@/components/CreateComponents/CreateDestination";
+import axios from "axios";
 
-export default function Destination() {
+export default async function Destination() {
   const data = {
     pageName: "Destinations",
+    apiName: "destination",
     createComponent: <CreateDestination />,
     titles: ["NAME", "DESCRIPTION"],
-    contents: [
-      {
-        label: "Nepal",
-        description: "Nepal is a beautiful country.",
-        img: "/images/ng.png",
-      },
-      {
-        label: "Bhutan",
-        description: "Bhutan is a beautiful country.",
-        img: "/images/nma.png",
-      },
-      {
-        label: "Tibet",
-        description: "Tibet is a beautiful country.",
-        img: "/images/ntb.png",
-      },
-    ],
   };
 
   return (

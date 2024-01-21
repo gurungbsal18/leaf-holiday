@@ -18,12 +18,14 @@ import Checkbox from "@mui/material/Checkbox";
 import CreatableAutocomplete from "@/components/ui/CreatableAutocomplete";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import { DevTool } from "@hookform/devtools";
 
 export default function CreatePackage() {
   const inputRef = useRef(null);
   const [selectedFile, setSelectedFile] = React.useState(null);
+  const router = useRouter();
   const openFilePicker = () => {
     inputRef.current.click();
   };
@@ -39,7 +41,7 @@ export default function CreatePackage() {
       duration: {
         id: "duration",
         label: "Duration",
-        info: "",
+        info: 0,
       },
       difficulty: {
         id: "difficulty",
@@ -54,7 +56,7 @@ export default function CreatePackage() {
       maxAltitude: {
         id: "maxAltitude",
         label: "Max Altitude",
-        info: "",
+        info: 0,
       },
       accomodation: {
         id: "accomodation",
@@ -150,7 +152,7 @@ export default function CreatePackage() {
       <div className="d-flex flex-column flex-md-row justify-content-start justify-content-md-between sticky-top bg-white py-2 align-itmes-start align-items-md-center border-bottom mb-2">
         <div className="d-flex gap-2 align-items-center">
           <span role="button">
-            <ArrowBackIcon />
+            <ArrowBackIcon onClick={() => router.push("/admin/packages")} />
           </span>
           <h4 className="m-0 dashboard-header-title">Create Package</h4>
         </div>
@@ -304,11 +306,6 @@ export default function CreatePackage() {
                     valueAsNumber: true,
                   })}
                 />
-                <CreatableAutocomplete
-                  name="difficulty"
-                  register={register}
-                  formName="tripFacts.difficulty.info"
-                />
                 <TextField
                   className="mx-0"
                   label="Accomodation"
@@ -357,6 +354,13 @@ export default function CreatePackage() {
                   size="small"
                   {...register("tripFacts.destination.info")}
                 />
+                <div className="w-50">
+                  <CreatableAutocomplete
+                    name="difficulty"
+                    register={register}
+                    formName="tripFacts.difficulty.info"
+                  />
+                </div>
               </div>
 
               <div className="mb-5">

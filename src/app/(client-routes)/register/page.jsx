@@ -10,15 +10,15 @@ import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import TextField from "@mui/material/TextField";
 import { Button } from "react-bootstrap";
 import Image from "next/image";
+import axios from "axios";
 
 export default function Register() {
   const form = useForm({
     defaultValues: {
-      userName: "",
+      name: "",
       email: "",
       password: "",
-      confirmPassword: "",
-      terms: false,
+      address: "swoyambhu",
     },
   });
 
@@ -26,8 +26,10 @@ export default function Register() {
 
   const { register, handleSubmit } = form;
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log("form submitted", data);
+    const res = await axios.post("http://localhost:5001/auth/register", data);
+    console.log(res);
   };
 
   return (
@@ -38,7 +40,7 @@ export default function Register() {
           <p>Join to Leaf Holiday and book your favorite trek and tours.</p>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form>
           <div className="form-container d-flex flex-column gap-3">
             {registrationFormControls.map((formControl) => (
               <TextField
@@ -60,9 +62,10 @@ export default function Register() {
                 />
               }
               label="I agree to Terms and Conditions."
-              {...register("terms")}
             />
-            <Button variant="success">Register</Button>
+            <Button variant="success" onClick={handleSubmit(onSubmit)}>
+              Register
+            </Button>
           </div>
         </form>
         <div className="login-router">
@@ -75,7 +78,12 @@ export default function Register() {
         </div>
       </div>
       <div className="register-image">
-        <Image src="/images/register-page.png" width={500} height={425} />
+        <Image
+          src="/images/register-page.png"
+          width={500}
+          height={425}
+          alt="register-img"
+        />
       </div>
     </div>
   );

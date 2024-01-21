@@ -136,7 +136,7 @@ export const adminNavItems = [
 ];
 export const registrationFormControls = [
   {
-    id: "userName",
+    id: "name",
     type: "text",
     placeholder: "Enter your username",
     label: "Username",
@@ -152,12 +152,6 @@ export const registrationFormControls = [
     type: "password",
     placeholder: "Enter your password",
     label: "Password",
-  },
-  {
-    id: "confirmPassword",
-    type: "password",
-    placeholder: "Confirm your password",
-    label: "Confirm Password",
   },
 ];
 

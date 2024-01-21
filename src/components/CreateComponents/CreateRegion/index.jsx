@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { GrClose } from "react-icons/gr";
 import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
@@ -6,24 +6,63 @@ import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import { useForm } from "react-hook-form";
 import { GlobalContext } from "@/context";
 import { top100Films } from "@/app/(admin-routes)/admin/packages/page";
+import axios from "axios";
 
 export default function CreateRegion({ nameValue, handleClose, setValue }) {
-  const { createComponentOpen, setCreateComponentOpen } =
-    useContext(GlobalContext);
+  const {
+    callExtractAll,
+    setCallExtractAll,
+    updateForm,
+    setUpdateForm,
+    setCreateComponentOpen,
+  } = useContext(GlobalContext);
   const inputRef = useRef(null);
   const [selectedFile, setSelectedFile] = React.useState(null);
+  const [destinationList, setDestinationList] = useState([]);
   const openFilePicker = () => {
     inputRef.current.click();
   };
-  const form = useForm();
+
+  useEffect(() => {
+    fetch("http://localhost:5001/destination/")
+      .then((data) => data.json())
+      .then((val) => setDestinationList(val));
+  }, []);
+
+  const initialRegionForm = {
+    name: nameValue ? nameValue : "",
+    description: "",
+    destination: "nepal",
+    imgUrl: "",
+  };
+
+  const form = useForm({
+    defaultValues: updateForm ? updateForm : initialRegionForm,
+  });
   const { register, handleSubmit } = form;
 
-  const submitRegion = (data) => {
+  const submitRegion = async (data) => {
+    console.log("form value", data);
+    if (updateForm) {
+      const res = await axios.put(
+        `http://localhost:5001/region/update/${data._id}`,
+        data
+      );
+    } else {
+      try {
+        const res = await axios.post("http://localhost:5001/region/add", data);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
     if (nameValue) {
       setValue(data.name);
       handleClose();
     }
-    console.log("inner Form submitted", data);
+
+    setUpdateForm(null);
+    setCallExtractAll(!callExtractAll);
     setCreateComponentOpen(false);
   };
 
@@ -31,10 +70,11 @@ export default function CreateRegion({ nameValue, handleClose, setValue }) {
     <div className="">
       <div className="">
         <div className="d-flex justify-content-between p-3 ">
-          <p>Create Region</p>
+          <p>{updateForm ? "Update Region" : "Create Region"}</p>
           <GrClose
             onClick={() => {
               setCreateComponentOpen(false);
+              setUpdateForm(null);
               if (nameValue) {
                 handleClose();
               }
@@ -47,7 +87,6 @@ export default function CreateRegion({ nameValue, handleClose, setValue }) {
               <TextField
                 required
                 fullWidth
-                value={nameValue}
                 size="small"
                 label="Name"
                 type="text"
@@ -69,14 +108,14 @@ export default function CreateRegion({ nameValue, handleClose, setValue }) {
                   name="destination"
                   id="destination"
                   {...register("destination")}>
-                  {top100Films.map((item) => (
-                    <option value={item.label}>{item.label}</option>
+                  {destinationList.data?.map((item) => (
+                    <option value={item.name}>{item.name}</option>
                   ))}
                 </select>
               </div>
 
               <button type="submit" onClick={handleSubmit(submitRegion)}>
-                Create
+                {updateForm ? "Update" : "Create"}
               </button>
             </div>
             <div className="border-2 border-black">

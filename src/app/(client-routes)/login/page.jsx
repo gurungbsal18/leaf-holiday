@@ -5,6 +5,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "react-bootstrap";
 import Image from "next/image";
+import axios from "axios";
 
 import TextField from "@mui/material/TextField";
 
@@ -20,8 +21,10 @@ export default function Login() {
 
   const { register, handleSubmit } = form;
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log("form submitted", data);
+    const res = await axios.post("http://localhost:5001/auth/login", data);
+    console.log(res);
   };
 
   return (
@@ -32,7 +35,7 @@ export default function Login() {
           <p>Join to Leaf Holiday and book your favorite treks and tours.</p>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form>
           <div className="form-container d-flex flex-column gap-3">
             {loginFormControls.map((formControl) => (
               <TextField
@@ -48,7 +51,10 @@ export default function Login() {
             ))}
 
             <div className="d-flex gap-2">
-              <Button variant="success" className="flex-grow-1">
+              <Button
+                variant="success"
+                className="flex-grow-1"
+                onClick={handleSubmit(onSubmit)}>
                 Login
               </Button>
               <Button variant="secondary" className="flex-grow-1">

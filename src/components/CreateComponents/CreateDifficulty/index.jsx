@@ -5,20 +5,49 @@ import TextareaAutosize from "@mui/material/TextareaAutosize";
 import Rating from "@mui/material/Rating";
 import { useForm, Controller } from "react-hook-form";
 import { GlobalContext } from "@/context";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function CreateDifficulty({ nameValue, handleClose, setValue }) {
-  const form = useForm();
-  const { register, handleSubmit, control } = form;
-  const { createComponentOpen, setCreateComponentOpen } =
-    useContext(GlobalContext);
+  const initialFormData = {
+    name: nameValue ? nameValue : "",
+    description: "",
+    rating: 1,
+  };
 
-  const submitDestination = (data) => {
-    if (nameValue) {
-      setValue(data.name);
-      handleClose();
+  const {
+    createComponentOpen,
+    setCreateComponentOpen,
+    updateForm,
+    setUpdateForm,
+    callExtractAll,
+    setCallExtractAll,
+  } = useContext(GlobalContext);
+
+  const form = useForm({
+    defaultValues: updateForm ? updateForm : initialFormData,
+  });
+  const { register, handleSubmit, control } = form;
+
+  const submitData = async (data) => {
+    const res = await axios.post("http://localhost:5001/difficulty/add", data);
+    console.log(res);
+    if (res.status === 201) {
+      toast.success(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setUpdateForm(null);
+      setCallExtractAll(!callExtractAll);
+      setCreateComponentOpen(false);
+      if (nameValue) {
+        setValue(data.name);
+        handleClose();
+      }
+    } else {
+      toast.error(res.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     }
-    console.log("Difficulty Form submitted", data);
-    setCreateComponentOpen(false);
   };
 
   return (
@@ -29,6 +58,7 @@ export default function CreateDifficulty({ nameValue, handleClose, setValue }) {
           <GrClose
             onClick={() => {
               setCreateComponentOpen(false);
+              setUpdateForm(null);
               if (nameValue) {
                 handleClose();
               }
@@ -40,7 +70,6 @@ export default function CreateDifficulty({ nameValue, handleClose, setValue }) {
             <TextField
               required
               fullWidth
-              value={nameValue}
               size="small"
               label="Name"
               type="text"
@@ -67,7 +96,7 @@ export default function CreateDifficulty({ nameValue, handleClose, setValue }) {
                 />
               )}
             />
-            <button type="submit" onClick={handleSubmit(submitDestination)}>
+            <button type="submit" onClick={handleSubmit(submitData)}>
               Create
             </button>
           </div>

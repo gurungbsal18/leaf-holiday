@@ -9,7 +9,7 @@ import { GlobalContext } from "@/context";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export default function CreateDestination() {
+export default function CreateItinerary() {
   const {
     updateForm,
     setUpdateForm,
@@ -23,47 +23,34 @@ export default function CreateDestination() {
     inputRef.current.click();
   };
 
-  const initialDestinationData = {
-    name: "",
-    description: "",
+  const initialFormData = {
+    packageId: "6578848ef9d2151e944ad965",
+    title: "itinerary title",
+    content: "icontent",
+    maxAltitude: 1000,
+    meals: "imeals",
+    accomodation: "iaccomodation",
     imageUrl: "",
   };
 
   const form = useForm({
-    defaultValues: updateForm ? updateForm : initialDestinationData,
+    defaultValues: updateForm ? updateForm : initialFormData,
   });
   const { register, handleSubmit } = form;
 
-  const submitDestination = async (data, event) => {
+  const onSubmit = async (data, event) => {
+    console.log("itinerary form: ", data);
+
     if (updateForm) {
       const res = await axios.put(
-        `http://localhost:5001/destination/update/${data._id}`,
+        `http://localhost:5001/itineraries/update/${data._id}`,
         data
       );
-      if (res.status === 200) {
-        toast.success(res.data.message, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      } else {
-        toast.error(res.message, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      }
     } else {
       const res = await axios.post(
-        "http://localhost:5001/destination/add",
+        "http://localhost:5001/itineraries/add",
         data
       );
-      if (res.status === 200) {
-        toast.success(res.data.message, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      } else {
-        toast.error(res.message, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      }
-      console.log(res);
     }
     console.log("inner Form submitted", data);
     setCallExtractAll(!callExtractAll);
@@ -75,7 +62,7 @@ export default function CreateDestination() {
     <div className="">
       <div className="">
         <div className="d-flex justify-content-between p-3 ">
-          <p>{updateForm ? "Update Destination" : "Create Destination"}</p>
+          <p>{updateForm ? "Update Itinerary" : "Create Itinerary"}</p>
           <GrClose
             onClick={() => {
               setUpdateForm(null);
@@ -90,21 +77,47 @@ export default function CreateDestination() {
                 required
                 fullWidth
                 size="small"
-                label="Name"
+                label="Title"
                 type="text"
                 variant="outlined"
-                {...register("name")}
+                {...register("title")}
               />
-              <label name="description">Description</label>
+              <label name="content">Content</label>
               <TextareaAutosize
                 className="w-100"
                 size="large"
-                label="Description"
+                label="content"
                 type="text"
                 variant="outlined"
-                {...register("description")}
+                {...register("content")}
               />
-              <button type="submit" onClick={handleSubmit(submitDestination)}>
+              <div>
+                <TextField
+                  required
+                  size="small"
+                  label="Max Altitude"
+                  type="number"
+                  variant="outlined"
+                  {...register("maxAltitude")}
+                />
+                <TextField
+                  required
+                  size="small"
+                  label="Meals"
+                  type="text"
+                  variant="outlined"
+                  {...register("meals")}
+                />
+                <TextField
+                  required
+                  size="small"
+                  label="Accomodation"
+                  type="text"
+                  variant="outlined"
+                  {...register("accomodation")}
+                />
+              </div>
+              <button type="submit" onClick={handleSubmit(onSubmit)}>
                 {updateForm ? "Update" : "Create"}
               </button>
             </div>

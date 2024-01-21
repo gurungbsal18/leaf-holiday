@@ -16,7 +16,7 @@ const TextEditor = ({ initialValue, control, name }) => {
         control={control}
         render={({ field: { onChange, value } }) => (
           <Editor
-            apiKey="4v19jtdg40108fy6zr5el8fkb8vgupp8sg5oqayi3yg93kda"
+            apiKey={process.env.NEXT_PUBLIC_TEXTEDITOR_API_KEY}
             onInit={(evt, editor) => (editorRef.current = editor)}
             onDirty={() => setDirty(true)}
             initialValue=""
