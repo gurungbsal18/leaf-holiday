@@ -5,35 +5,55 @@ import image from "../../../public/images/km.png";
 
 export default function Home() {
   return (
-    <div>
+    <div className="container">
       <h1>leaf holiday</h1>
-      <PackageCard
-        imageUrl={image}
-        address={"kailash"}
-        rating={5}
-        review={5}
-        title={"Kailash Mansarowar"}
-        duration={14}
-        price={1090}
-      />
-      <PackageCard
-        imageUrl={image}
-        address={"kailash"}
-        rating={4.5}
-        review={5}
-        title={"Kailash Mansarowar"}
-        duration={14}
-        price={1090}
-      />
-      <PackageCard
-        imageUrl={image}
-        address={"kailash"}
-        rating={2}
-        review={5}
-        title={"Kailash Mansarowar"}
-        duration={14}
-        price={1090}
-      />
+      <div className="d-flex flex-wrap gap-4">
+        <PackageCard
+          imageUrl={image}
+          address={"kailash"}
+          rating={5}
+          review={5}
+          title={"Kailash Mansarowar"}
+          duration={14}
+          price={1090}
+        />
+        <PackageCard
+          imageUrl={image}
+          address={"kailash"}
+          rating={4.5}
+          review={5}
+          title={"Kailash Mansarowar"}
+          duration={14}
+          price={1090}
+        />
+        <PackageCard
+          imageUrl={image}
+          address={"kailash"}
+          rating={2}
+          review={5}
+          title={"Kailash Mansarowar"}
+          duration={14}
+          price={1090}
+        />
+        <PackageCard
+          imageUrl={image}
+          address={"kailash"}
+          rating={2}
+          review={5}
+          title={"Kailash Mansarowar"}
+          duration={14}
+          price={1090}
+        />
+        <PackageCard
+          imageUrl={image}
+          address={"kailash"}
+          rating={2}
+          review={5}
+          title={"Kailash Mansarowar"}
+          duration={14}
+          price={1090}
+        />
+      </div>
     </div>
   );
 }
