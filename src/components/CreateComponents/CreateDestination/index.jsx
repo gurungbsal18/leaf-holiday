@@ -8,6 +8,8 @@ import { useForm } from "react-hook-form";
 import { GlobalContext } from "@/context";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { submitForm } from "@/utils/functions";
+import Notification from "@/components/Notification";
 
 export default function CreateDestination() {
   const {
@@ -34,37 +36,9 @@ export default function CreateDestination() {
   });
   const { register, handleSubmit } = form;
 
-  const submitDestination = async (data, event) => {
-    if (updateForm) {
-      const res = await axios.put(
-        `http://localhost:5001/destination/update/${data._id}`,
-        data
-      );
-      if (res.status === 200) {
-        toast.success(res.data.message, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      } else {
-        toast.error(res.message, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      }
-    } else {
-      const res = await axios.post(
-        "http://localhost:5001/destination/add",
-        data
-      );
-      if (res.status === 200) {
-        toast.success(res.data.message, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      } else {
-        toast.error(res.message, {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      }
-      console.log(res);
-    }
+  const onSubmit = async (data) => {
+    const res = await submitForm(data, "destination", updateForm);
+
     console.log("inner Form submitted", data);
     setCallExtractAll(!callExtractAll);
     setUpdateForm(null);
@@ -104,7 +78,7 @@ export default function CreateDestination() {
                 variant="outlined"
                 {...register("description")}
               />
-              <button type="submit" onClick={handleSubmit(submitDestination)}>
+              <button type="submit" onClick={handleSubmit(onSubmit)}>
                 {updateForm ? "Update" : "Create"}
               </button>
             </div>

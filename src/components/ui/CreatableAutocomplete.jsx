@@ -121,7 +121,7 @@ export default function CreatableAutocomplete({ register, formName }) {
           <CreateDifficulty
             nameValue={dialogValue.name}
             handleClose={handleClose}
-            setValue={setValue}
+            setNameValue={setValue}
           />
         )}
       </Dialog>

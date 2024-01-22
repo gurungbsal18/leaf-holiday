@@ -5,10 +5,9 @@ import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import { useForm } from "react-hook-form";
 import { GlobalContext } from "@/context";
-import { top100Films } from "@/app/(admin-routes)/admin/packages/page";
-import axios from "axios";
+import { submitForm } from "@/utils/functions";
 
-export default function CreateRegion({ nameValue, handleClose, setValue }) {
+export default function CreateRegion({ nameValue, handleClose, setNameValue }) {
   const {
     callExtractAll,
     setCallExtractAll,
@@ -22,48 +21,39 @@ export default function CreateRegion({ nameValue, handleClose, setValue }) {
   const openFilePicker = () => {
     inputRef.current.click();
   };
-
-  useEffect(() => {
-    fetch("http://localhost:5001/destination/")
-      .then((data) => data.json())
-      .then((val) => setDestinationList(val));
-  }, []);
-
   const initialRegionForm = {
     name: nameValue ? nameValue : "",
     description: "",
-    destination: "nepal",
+    destination: "",
     imgUrl: "",
   };
 
   const form = useForm({
     defaultValues: updateForm ? updateForm : initialRegionForm,
   });
-  const { register, handleSubmit } = form;
+  const { register, handleSubmit, setValue } = form;
 
-  const submitRegion = async (data) => {
-    console.log("form value", data);
-    if (updateForm) {
-      const res = await axios.put(
-        `http://localhost:5001/region/update/${data._id}`,
-        data
-      );
-    } else {
-      try {
-        const res = await axios.post("http://localhost:5001/region/add", data);
-      } catch (e) {
-        console.log(e);
-      }
-    }
+  useEffect(() => {
+    fetch("http://localhost:5001/destination/")
+      .then((data) => data.json())
+      .then((val) => {
+        setDestinationList(val);
+        setValue("destination", val.data[0]._id);
+      });
+  }, []);
+
+  const onSubmit = async (data) => {
+    const res = await submitForm(data, "region", updateForm);
+
+    console.log("inner Form submitted", data);
+    setCallExtractAll(!callExtractAll);
+    setUpdateForm(null);
+    setCreateComponentOpen(false);
 
     if (nameValue) {
-      setValue(data.name);
+      setNameValue(data.name);
       handleClose();
     }
-
-    setUpdateForm(null);
-    setCallExtractAll(!callExtractAll);
-    setCreateComponentOpen(false);
   };
 
   return (
@@ -109,12 +99,18 @@ export default function CreateRegion({ nameValue, handleClose, setValue }) {
                   id="destination"
                   {...register("destination")}>
                   {destinationList.data?.map((item) => (
-                    <option value={item.name}>{item.name}</option>
+                    <option
+                      value={item._id}
+                      selected={
+                        item._id === updateForm?.destination ? true : false
+                      }>
+                      {item.name}
+                    </option>
                   ))}
                 </select>
               </div>
 
-              <button type="submit" onClick={handleSubmit(submitRegion)}>
+              <button type="submit" onClick={handleSubmit(onSubmit)}>
                 {updateForm ? "Update" : "Create"}
               </button>
             </div>

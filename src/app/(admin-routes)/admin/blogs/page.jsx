@@ -9,9 +9,9 @@ import React from "react";
 export default function Blog() {
   const data = {
     pageName: "Blogs",
-    createComponent: <CreateFAQ />,
+    createComponent: <CreateDepartureDate />,
     titles: ["NAME", "DESCRIPTION"],
-    apiName: "faq",
+    apiName: "departureDate",
   };
 
   return (

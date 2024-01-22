@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { GlobalContext } from "@/context";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { submitForm } from "@/utils/functions";
 
 export default function CreateItinerary() {
   const {
@@ -38,20 +39,9 @@ export default function CreateItinerary() {
   });
   const { register, handleSubmit } = form;
 
-  const onSubmit = async (data, event) => {
-    console.log("itinerary form: ", data);
+  const onSubmit = async (data) => {
+    const res = await submitForm(data, "itineraries", updateForm);
 
-    if (updateForm) {
-      const res = await axios.put(
-        `http://localhost:5001/itineraries/update/${data._id}`,
-        data
-      );
-    } else {
-      const res = await axios.post(
-        "http://localhost:5001/itineraries/add",
-        data
-      );
-    }
     console.log("inner Form submitted", data);
     setCallExtractAll(!callExtractAll);
     setUpdateForm(null);

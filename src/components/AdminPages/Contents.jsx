@@ -36,7 +36,7 @@ export default function Contents({ contents, apiName }) {
             alt="destination-image"
           />
           <p>{content.name}</p>
-          <p>{content.description}</p>
+          <p>{content.destination}</p>
           <div className="d-flex gap-2">
             <button
               onClick={() => {

@@ -13,6 +13,7 @@ import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { toast } from "react-toastify";
+import { submitForm } from "@/utils/functions";
 
 export default function CreateDepartureDate() {
   const {
@@ -44,18 +45,9 @@ export default function CreateDepartureDate() {
   });
   const { register, handleSubmit, control } = form;
 
-  const onSubmit = async (data, event) => {
-    if (updateForm) {
-      const res = await axios.put(
-        `http://localhost:5001/departureDate/update/${data._id}`,
-        data
-      );
-    } else {
-      const res = await axios.post(
-        "http://localhost:5001/departureDate/add",
-        data
-      );
-    }
+  const onSubmit = async (data) => {
+    const res = await submitForm(data, "departureDate", updateForm);
+
     console.log("inner Form submitted", data);
     setCallExtractAll(!callExtractAll);
     setUpdateForm(null);

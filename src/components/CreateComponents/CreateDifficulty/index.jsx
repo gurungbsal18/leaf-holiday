@@ -7,8 +7,13 @@ import { useForm, Controller } from "react-hook-form";
 import { GlobalContext } from "@/context";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { submitForm } from "@/utils/functions";
 
-export default function CreateDifficulty({ nameValue, handleClose, setValue }) {
+export default function CreateDifficulty({
+  nameValue,
+  handleClose,
+  setNameValue,
+}) {
   const initialFormData = {
     name: nameValue ? nameValue : "",
     description: "",
@@ -16,7 +21,6 @@ export default function CreateDifficulty({ nameValue, handleClose, setValue }) {
   };
 
   const {
-    createComponentOpen,
     setCreateComponentOpen,
     updateForm,
     setUpdateForm,
@@ -29,24 +33,17 @@ export default function CreateDifficulty({ nameValue, handleClose, setValue }) {
   });
   const { register, handleSubmit, control } = form;
 
-  const submitData = async (data) => {
-    const res = await axios.post("http://localhost:5001/difficulty/add", data);
-    console.log(res);
-    if (res.status === 201) {
-      toast.success(res.data.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      setUpdateForm(null);
-      setCallExtractAll(!callExtractAll);
-      setCreateComponentOpen(false);
-      if (nameValue) {
-        setValue(data.name);
-        handleClose();
-      }
-    } else {
-      toast.error(res.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+  const onSubmit = async (data) => {
+    const res = await submitForm(data, "difficulty", updateForm);
+
+    console.log("inner Form submitted", data);
+    setCallExtractAll(!callExtractAll);
+    setUpdateForm(null);
+    setCreateComponentOpen(false);
+
+    if (nameValue) {
+      setNameValue(data.name);
+      handleClose();
     }
   };
 
@@ -54,7 +51,7 @@ export default function CreateDifficulty({ nameValue, handleClose, setValue }) {
     <div className="">
       <div className="">
         <div className="d-flex justify-content-between p-3 ">
-          <p>Create Difficulty</p>
+          <p>{updateForm ? "Update Difficulty" : "Create Difficulty"}</p>
           <GrClose
             onClick={() => {
               setCreateComponentOpen(false);
@@ -96,8 +93,8 @@ export default function CreateDifficulty({ nameValue, handleClose, setValue }) {
                 />
               )}
             />
-            <button type="submit" onClick={handleSubmit(submitData)}>
-              Create
+            <button type="submit" onClick={handleSubmit(onSubmit)}>
+              {updateForm ? "Update" : "Create"}
             </button>
           </div>
         </form>
