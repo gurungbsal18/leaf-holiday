@@ -4,13 +4,13 @@ import React from "react";
 
 export default function Package() {
   const data = {
-    pageName: "Packages",
+    pageName: "Package",
     titles: ["NAME", "DESCRIPTION"],
     apiName: "package",
   };
 
   return (
-    <div>
+    <div className="dashboard-content-section p-4">
       <AdminPages data={data} />
     </div>
   );

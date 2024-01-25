@@ -42,7 +42,8 @@ export default function Contents({ contents, apiName }) {
               onClick={() => {
                 setUpdateForm(content);
                 setCreateComponentOpen(true);
-              }}>
+              }}
+            >
               Edit
             </button>
             <button onClick={() => handleRemove(content._id)}>Remove</button>

@@ -7,7 +7,7 @@ import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrow
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 
 export default function AdminNavbar() {
-  const [showNavText, setNavText] = useState(false);
+  const [showNavText, setNavText] = useState(true);
   return (
     <div className="admin-navbar bg-success d-flex flex-column p-4 border-end">
       {/* <div className="brand">
