@@ -13,15 +13,16 @@ export default function CreateFAQ() {
   const {
     updateForm,
     setUpdateForm,
-    setCreateComponentOpen,
+    setDialogOpen,
     callExtractAll,
     setCallExtractAll,
+    updatePackage,
   } = useContext(GlobalContext);
 
   const initialData = {
-    packageId: "6578848ef9d2151e944ad965",
-    question: "what is your name",
-    answer: "my name is bijen",
+    packageId: updatePackage._id,
+    question: "",
+    answer: "",
   };
 
   const form = useForm({
@@ -32,10 +33,9 @@ export default function CreateFAQ() {
   const onSubmit = async (data) => {
     const res = await submitForm(data, "faq", updateForm);
 
-    console.log("inner Form submitted", data);
     setCallExtractAll(!callExtractAll);
     setUpdateForm(null);
-    setCreateComponentOpen(false);
+    setDialogOpen(false);
   };
 
   return (
@@ -46,7 +46,7 @@ export default function CreateFAQ() {
           <GrClose
             onClick={() => {
               setUpdateForm(null);
-              setCreateComponentOpen(false);
+              setDialogOpen(false);
             }}
           />
         </div>

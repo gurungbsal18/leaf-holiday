@@ -1,15 +1,45 @@
 "use client";
 
 import { loginFormControls } from "@/utils";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "react-bootstrap";
 import Image from "next/image";
 import axios from "axios";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 import TextField from "@mui/material/TextField";
+import { GlobalContext } from "@/context";
+import Notification from "@/components/Notification";
 
 export default function Login() {
+  const {
+    componentLevelLoader,
+    setComponentLevelLoader,
+    pageLevelLoader,
+    setPageLevelLoader,
+    isAdminView,
+    setAdminView,
+    createComponentOpen,
+    setCreateComponentOpen,
+    updateForm,
+    setUpdateForm,
+    callExtractAll,
+    setCallExtractAll,
+    dialogOpen,
+    setDialogOpen,
+    dialogContent,
+    setDialogContent,
+    updatePackage,
+    setUpdatePackage,
+    user,
+    setUser,
+    isAuthUser,
+    setIsAuthUser,
+  } = useContext(GlobalContext);
+
   const form = useForm({
     defaultValues: {
       email: "",
@@ -17,15 +47,46 @@ export default function Login() {
     },
   });
 
-  const label = { inputProps: { "aria-label": "Checkbox demo" } };
+  const router = useRouter();
 
   const { register, handleSubmit } = form;
 
   const onSubmit = async (data) => {
     console.log("form submitted", data);
-    const res = await axios.post("http://localhost:5001/auth/login", data);
-    console.log(res);
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/login`,
+        data
+      );
+      console.log(res);
+
+      if (res.status === 200) {
+        toast.success(res.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setIsAuthUser(true);
+        setUser(res?.data?.data?.user);
+        Cookies.set("token", res?.data?.data?.token);
+        localStorage.setItem("user", JSON.stringify(res?.data?.data?.user));
+        setComponentLevelLoader({ loading: false, id: "" });
+      } else {
+        toast.error(res.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setIsAuthUser(false);
+        setComponentLevelLoader({ loading: false, id: "" });
+      }
+    } catch (e) {
+      toast.error(e.response.data.error, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      console.log(e);
+    }
   };
+
+  useEffect(() => {
+    if (isAuthUser) router.push("/");
+  }, [isAuthUser]);
 
   return (
     <div className="container d-flex flex-column-reverse flex-md-row justify-content-between my-5 gap-5 align-items-center">
@@ -75,6 +136,7 @@ export default function Login() {
       <div className="register-image">
         <Image src="/images/login-page.png" width={537} height={350} />
       </div>
+      <Notification />
     </div>
   );
 }

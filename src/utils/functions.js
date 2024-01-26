@@ -1,6 +1,4 @@
-import { GlobalContext } from "@/context";
 import axios from "axios";
-import { useContext } from "react";
 import { toast } from "react-toastify";
 
 export const uploadImage = async (formData) => {
@@ -30,27 +28,72 @@ export const uploadImage = async (formData) => {
   }
 };
 
-export const submitForm = async (data, apiName, updateForm) => {
+export const submitForm = async (data, apiName, updateForm, setNameValue) => {
   try {
     let res = {};
     updateForm
       ? (res = await axios.put(
-          `http://localhost:5001/${apiName}/update/${data._id}`,
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/${apiName}/update/${data._id}`,
           data
         ))
-      : (res = await axios.post(`http://localhost:5001/${apiName}/add`, data));
+      : (res = await axios.post(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/${apiName}/add`,
+          data
+        ));
 
     if (res.status === 200) {
       toast.success(res.data.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
+      if (setNameValue) {
+        setNameValue(res.data.data._id);
+      }
+      console.log(res);
     } else {
       toast.error(res.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
   } catch (e) {
-    toast.error(e.response.request.statusText, {
+    toast.error(e.response.statusText, {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  }
+};
+
+export const submitPackageForm = async (
+  data,
+  updatePackage,
+  setUpdatePackage,
+  router
+) => {
+  try {
+    let res = {};
+    updatePackage
+      ? (res = await axios.put(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/package/update/${updatePackage._id}`,
+          data
+        ))
+      : (res = await axios.post(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/package/add`,
+          data
+        ));
+
+    if (res.status === 200) {
+      toast.success(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      updatePackage
+        ? router.push("/admin/packages")
+        : setUpdatePackage(res.data.data);
+      console.log(res);
+    } else {
+      toast.error(res.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+  } catch (e) {
+    toast.error(e.response.statusText, {
       position: toast.POSITION.TOP_RIGHT,
     });
   }

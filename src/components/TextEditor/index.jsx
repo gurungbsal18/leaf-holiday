@@ -18,8 +18,8 @@ const TextEditor = ({ initialValue, control, name }) => {
           <Editor
             apiKey={process.env.NEXT_PUBLIC_TEXTEDITOR_API_KEY}
             onInit={(evt, editor) => (editorRef.current = editor)}
-            initialValue=""
-            value={value}
+            initialValue={value}
+            // value={value}
             onEditorChange={onChange}
             init={{
               height: 250,

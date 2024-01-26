@@ -19,15 +19,16 @@ export default function CreateDepartureDate() {
   const {
     updateForm,
     setUpdateForm,
-    setCreateComponentOpen,
+    setDialogOpen,
     callExtractAll,
     setCallExtractAll,
+    updatePackage,
   } = useContext(GlobalContext);
 
   const currentDate = new Date().toDateString();
 
   const initialData = {
-    packageId: "6578848ef9d2151e944ad965",
+    packageId: updatePackage._id,
     startDate: dayjs(currentDate),
     endDate: dayjs(currentDate),
     pricePerPerson: 0,
@@ -48,10 +49,9 @@ export default function CreateDepartureDate() {
   const onSubmit = async (data) => {
     const res = await submitForm(data, "departureDate", updateForm);
 
-    console.log("inner Form submitted", data);
     setCallExtractAll(!callExtractAll);
     setUpdateForm(null);
-    setCreateComponentOpen(false);
+    setDialogOpen(false);
   };
 
   return (
@@ -64,7 +64,7 @@ export default function CreateDepartureDate() {
           <GrClose
             onClick={() => {
               setUpdateForm(null);
-              setCreateComponentOpen(false);
+              setDialogOpen(false);
             }}
           />
         </div>

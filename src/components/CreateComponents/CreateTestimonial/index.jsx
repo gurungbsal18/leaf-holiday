@@ -8,20 +8,21 @@ import { GlobalContext } from "@/context";
 import { submitForm } from "@/utils/functions";
 
 export default function CreateTestimonial() {
-  const initialFormData = {
-    packageId: "6578848ef9d2151e944ad965",
-    userID: "6578848ef9d2151e944ad965",
-    stars: 1,
-    comment: "Rcomment",
-  };
-
   const {
-    setCreateComponentOpen,
+    setDialogOpen,
     updateForm,
     setUpdateForm,
     callExtractAll,
     setCallExtractAll,
+    updatePackage,
   } = useContext(GlobalContext);
+
+  const initialFormData = {
+    packageId: updatePackage._id,
+    userID: "657c79f29c6b89ea65a5a5b6",
+    stars: 1,
+    comment: "",
+  };
 
   const form = useForm({
     defaultValues: updateForm ? updateForm : initialFormData,
@@ -31,10 +32,9 @@ export default function CreateTestimonial() {
   const onSubmit = async (data) => {
     const res = await submitForm(data, "review", updateForm);
 
-    console.log("inner Form submitted", data);
     setCallExtractAll(!callExtractAll);
     setUpdateForm(null);
-    setCreateComponentOpen(false);
+    setDialogOpen(false);
   };
 
   return (
@@ -44,7 +44,7 @@ export default function CreateTestimonial() {
           <p>{updateForm ? "Update Review" : "Create Review"}</p>
           <GrClose
             onClick={() => {
-              setCreateComponentOpen(false);
+              setDialogOpen(false);
               setUpdateForm(null);
             }}
           />

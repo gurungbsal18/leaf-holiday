@@ -4,18 +4,27 @@ import Image from "next/image";
 import axios from "axios";
 import { GlobalContext } from "@/context";
 import { toast } from "react-toastify";
+import PackageContent from "./ContentPages/PackageContent";
+import TestimonialContent from "./ContentPages/TestimonialContent";
+import DestinationContent from "./ContentPages/DestinationContent";
+import RegionContent from "./ContentPages/RegionContent";
+import { useRouter } from "next/navigation";
 
-export default function Contents({ contents, apiName }) {
+export default function Contents({ contents, apiName, updateComponent }) {
   const {
     callExtractAll,
     setCallExtractAll,
+    setUpdatePackage,
     setUpdateForm,
-    setCreateComponentOpen,
+    setDialogOpen,
+    setDialogContent,
   } = useContext(GlobalContext);
+
+  const router = useRouter();
 
   async function handleRemove(id) {
     const res = await axios.delete(
-      `http://localhost:5001/${apiName}/delete/${id}`
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/${apiName}/delete/${id}`
     );
     if (res.status === 200) {
       setCallExtractAll(!callExtractAll);
@@ -28,20 +37,30 @@ export default function Contents({ contents, apiName }) {
   return (
     <div>
       {contents?.map((content) => (
-        <div className="d-flex gap-5" key={content.name}>
-          <Image
-            src={content.imgUrl}
-            width={25}
-            height={25}
-            alt="destination-image"
-          />
-          <p>{content.name}</p>
-          <p>{content.destination}</p>
-          <div className="d-flex gap-2">
+        <div className="d-flex gap-5" key={content._id}>
+          {apiName === "package" && <PackageContent content={content} />}
+          {apiName === "region" && <RegionContent content={content} />}
+          {apiName === "destination" && (
+            <DestinationContent content={content} />
+          )}
+          {apiName === "review" && <TestimonialContent content={content} />}
+          {/* {apiName === "package" && <PackageContent content={content} />} */}
+          <div>
             <button
               onClick={() => {
-                setUpdateForm(content);
-                setCreateComponentOpen(true);
+                // setUpdateForm(content);
+                // apiName === "package"
+                //   ? router.push("/admin/packages/create-package")
+                //   : setDialogOpen(true);
+                // setDialogContent(updateComponent);
+                if (apiName === "package") {
+                  setUpdatePackage(content);
+                  router.push("/admin/packages/create-package");
+                } else {
+                  setUpdateForm(content);
+                  setDialogOpen(true);
+                  setDialogContent(updateComponent);
+                }
               }}>
               Edit
             </button>

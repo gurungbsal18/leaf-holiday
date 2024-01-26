@@ -2,21 +2,27 @@
 import AdminPages from "@/components/AdminPages";
 import CreateBlog from "@/components/CreateComponents/CreateBlog";
 import CreateDepartureDate from "@/components/CreateComponents/CreateDepartureDate";
-import CreateFAQ from "@/components/CreateComponents/CreateFAQ";
-import CreateItinerary from "@/components/CreateComponents/CreateItinerary";
-import React from "react";
+import CreateDifficulty from "@/components/CreateComponents/CreateDifficulty";
+import CallAllEdits from "@/components/EditPackage/CallAllEdits";
+
+import React, { useState } from "react";
 
 export default function Blog() {
   const data = {
     pageName: "Blogs",
-    createComponent: <CreateDepartureDate />,
+    createComponent: <CreateDifficulty />,
     titles: ["NAME", "DESCRIPTION"],
-    apiName: "departureDate",
+    apiName: "difficulty",
   };
+
+  const [images, setImages] = useState([]);
+  console.log("images", images);
 
   return (
     <div>
-      <AdminPages data={data} />
+      {/* <AdminPages data={data} /> */}
+      <h1>blogs</h1>
+      <CallAllEdits />
     </div>
   );
 }

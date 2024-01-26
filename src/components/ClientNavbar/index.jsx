@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import Image from "next/image";
@@ -7,13 +7,27 @@ import Nav from "react-bootstrap/Nav";
 import { navItems } from "@/utils";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import CloseIcon from "@mui/icons-material/Close";
+import { useRouter } from "next/navigation";
+import { GlobalContext } from "@/context";
+import Cookies from "js-cookie";
 
 export default function ClientNavbar() {
+  const { isAuthUser, setIsAuthUser, setUser, user } =
+    useContext(GlobalContext);
   const [showNavbar, setShowNavbar] = useState(false);
+  const router = useRouter();
 
   function handleShowNavBar() {
     setShowNavbar(!showNavbar);
   }
+  function handleLogout() {
+    setIsAuthUser(false);
+    setUser(null);
+    Cookies.remove("token");
+    localStorage.clear();
+    router.push("/");
+  }
+
   return (
     <Navbar className="p-5 pt-3 pb-3 h-20  " bg="light" expand="md">
       <div className="image-container">
@@ -41,6 +55,14 @@ export default function ClientNavbar() {
               </Nav.Link>
             ))}
           </Nav>
+        </div>
+        <div className="d-flex gap-3">
+          {isAuthUser ? (
+            <button onClick={handleLogout}>Log Out</button>
+          ) : (
+            <button onClick={() => router.push("/login")}>Log In</button>
+          )}
+          <button onClick={() => router.push("/register")}>Sign Up</button>
         </div>
         <span onClick={handleShowNavBar} className="d-md-none">
           {showNavbar ? <MenuOpenIcon /> : <CloseIcon />}

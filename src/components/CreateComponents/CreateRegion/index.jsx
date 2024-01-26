@@ -2,25 +2,25 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { GrClose } from "react-icons/gr";
 import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
-import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import { useForm } from "react-hook-form";
 import { GlobalContext } from "@/context";
 import { submitForm } from "@/utils/functions";
+import UploadToCloudinary from "@/components/ui/UploadToCloudinary";
 
-export default function CreateRegion({ nameValue, handleClose, setNameValue }) {
+export default function CreateRegion({ nameValue, setNameValue }) {
   const {
     callExtractAll,
     setCallExtractAll,
     updateForm,
     setUpdateForm,
-    setCreateComponentOpen,
+    setDialogOpen,
   } = useContext(GlobalContext);
-  const inputRef = useRef(null);
-  const [selectedFile, setSelectedFile] = React.useState(null);
+
+  const [selectedFile, setSelectedFile] = React.useState(
+    updateForm ? updateForm.imgUrl : null
+  );
   const [destinationList, setDestinationList] = useState([]);
-  const openFilePicker = () => {
-    inputRef.current.click();
-  };
+
   const initialRegionForm = {
     name: nameValue ? nameValue : "",
     description: "",
@@ -43,19 +43,13 @@ export default function CreateRegion({ nameValue, handleClose, setNameValue }) {
   }, []);
 
   const onSubmit = async (data) => {
-    const res = await submitForm(data, "region", updateForm);
+    const res = await submitForm(data, "region", updateForm, setNameValue);
 
-    console.log("inner Form submitted", data);
     setCallExtractAll(!callExtractAll);
     setUpdateForm(null);
-    setCreateComponentOpen(false);
-
-    if (nameValue) {
-      setNameValue(data.name);
-      handleClose();
-    }
+    setDialogOpen(false);
   };
-
+  console.log("region name value: ", nameValue);
   return (
     <div className="">
       <div className="">
@@ -63,11 +57,8 @@ export default function CreateRegion({ nameValue, handleClose, setNameValue }) {
           <p>{updateForm ? "Update Region" : "Create Region"}</p>
           <GrClose
             onClick={() => {
-              setCreateComponentOpen(false);
+              setDialogOpen(false);
               setUpdateForm(null);
-              if (nameValue) {
-                handleClose();
-              }
             }}
           />
         </div>
@@ -114,31 +105,13 @@ export default function CreateRegion({ nameValue, handleClose, setNameValue }) {
                 {updateForm ? "Update" : "Create"}
               </button>
             </div>
-            <div className="border-2 border-black">
-              <p>Photo</p>
-              {selectedFile ? (
-                <div>
-                  <p onClick={openFilePicker}>File Selected </p>
-                  <p>{selectedFile.name}</p>
-                  <p onClick={() => setSelectedFile(null)}>Remove Image</p>
-                </div>
-              ) : (
-                <MdOutlineAddPhotoAlternate
-                  className="h3 cursor-pointer"
-                  onClick={openFilePicker}
-                />
-              )}
-              <input
-                type="file"
-                ref={inputRef}
-                style={{ display: "none" }}
-                onChange={(e) => {
-                  // Handle selected file here
-                  setSelectedFile(e.target.files[0]);
-                  console.log("Selected file:", selectedFile);
-                }}
-              />
-            </div>
+            <UploadToCloudinary
+              selectedFile={selectedFile}
+              setSelectedFile={setSelectedFile}
+              label="Header Image"
+              setValue={setValue}
+              formName="imgUrl"
+            />
           </div>
         </form>
       </div>

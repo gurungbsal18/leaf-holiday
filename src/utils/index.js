@@ -242,6 +242,26 @@ export const pkgDetail = {
       label: "Max Altitude",
       information: "5545m",
     },
+    {
+      id: "duration",
+      label: "Duration",
+      information: "14 Days",
+    },
+    {
+      id: "difficulty",
+      label: "Difficulty",
+      information: "Strenuous",
+    },
+    {
+      id: "bestWeather",
+      label: "Best Weather",
+      information: "March-May & Sep-Nav",
+    },
+    {
+      id: "maxAltitude",
+      label: "Max Altitude",
+      information: "5545m",
+    },
   ],
   overviewTitle: "Experience the Allure of the Mount Kailash Overland Tour",
   overviewContent:

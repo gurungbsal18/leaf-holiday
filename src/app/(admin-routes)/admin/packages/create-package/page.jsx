@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useContext, useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
@@ -16,25 +16,50 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import CreatableAutocomplete from "@/components/ui/CreatableAutocomplete";
-import { MdOutlineAddPhotoAlternate } from "react-icons/md";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-
+import { toast } from "react-toastify";
+import Dialog from "@mui/material/Dialog";
 import { DevTool } from "@hookform/devtools";
+import { GlobalContext } from "@/context";
+import UploadToCloudinary from "@/components/ui/UploadToCloudinary";
+import Notification from "@/components/Notification";
+import { submitForm, submitPackageForm } from "@/utils/functions";
+import CallAllEdits from "@/components/EditPackage/CallAllEdits";
 
 export default function CreatePackage() {
-  const inputRef = useRef(null);
-  const [selectedFile, setSelectedFile] = React.useState(null);
+  const {
+    componentLevelLoader,
+    setComponentLevelLoader,
+    pageLevelLoader,
+    setPageLevelLoader,
+    isAdminView,
+    setAdminView,
+    createComponentOpen,
+    setCreateComponentOpen,
+    updatePackage,
+    setUpdatePackage,
+    callExtractAll,
+    setCallExtractAll,
+    dialogOpen,
+    setDialogOpen,
+    dialogContent,
+    setDialogContent,
+  } = useContext(GlobalContext);
+  const [mainImage, setMainImage] = useState(
+    updatePackage ? updatePackage.mainImageUrl : null
+  );
+  const [tripMap, setTripMap] = useState(
+    updatePackage ? updatePackage.tripMapUrl : null
+  );
+  const [pdf, setPdf] = useState(updatePackage ? updatePackage.pdfUrl : null);
   const router = useRouter();
-  const openFilePicker = () => {
-    inputRef.current.click();
-  };
+
   const initialFormData = {
-    title: "",
+    name: "",
     prices: [
       {
         noOfPeople: "",
-        price: "",
+        price: 0,
       },
     ],
     tripFacts: {
@@ -42,11 +67,6 @@ export default function CreatePackage() {
         id: "duration",
         label: "Duration",
         info: 0,
-      },
-      difficulty: {
-        id: "difficulty",
-        label: "Difficulty",
-        info: "",
       },
       bestWeather: {
         id: "bestWeater",
@@ -78,30 +98,26 @@ export default function CreatePackage() {
         label: "Group",
         info: "",
       },
-      activity: {
-        id: "activity",
-        label: "Activity",
-        info: "",
-      },
-      destination: {
-        id: "destination",
-        label: "Destination",
-        info: "",
-      },
     },
+    difficulty: "",
     metaTitle: "",
     metaDescription: "",
-    info: "",
+    overview: "",
     content: "",
     region: "",
+    mainImageUrl: "",
+    tripMapUrl: "",
+    pdfUrl: "",
+    isTopSelling: false,
+    isFeatured: false,
+    isTrending: false,
+    isGroupTour: false,
   };
 
-  const [formData, setFormData] = useState(initialFormData);
-
   const form = useForm({
-    defaultValues: formData,
+    defaultValues: updatePackage ? updatePackage : initialFormData,
   });
-  const { register, control, handleSubmit } = form;
+  const { register, control, handleSubmit, setValue } = form;
 
   //for price list
   const {
@@ -143,7 +159,14 @@ export default function CreatePackage() {
     control,
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    const res = submitPackageForm(
+      data,
+      updatePackage,
+      setUpdatePackage,
+      router
+    );
+
     console.log("Form submitted", data);
   };
 
@@ -152,16 +175,23 @@ export default function CreatePackage() {
       <div className="d-flex flex-column flex-md-row justify-content-start justify-content-md-between sticky-top bg-white py-2 align-itmes-start align-items-md-center border-bottom mb-2">
         <div className="d-flex gap-2 align-items-center">
           <span role="button">
-            <ArrowBackIcon onClick={() => router.push("/admin/packages")} />
+            <ArrowBackIcon
+              onClick={() => {
+                setUpdatePackage(null);
+                router.push("/admin/packages");
+              }}
+            />
           </span>
-          <h4 className="m-0 dashboard-header-title">Create Package</h4>
+          <h4 className="m-0 dashboard-header-title">
+            {updatePackage ? "Update Package" : "Create Package"}
+          </h4>
         </div>
         <div className="d-flex gap-2">
-          <Button size="sm" className="flex-grow-1">
+          {/* <Button size="sm" className="flex-grow-1">
             Save As Draft
-          </Button>
+          </Button> */}
           <Button size="sm" variant="success" onClick={handleSubmit(onSubmit)}>
-            Publish
+            {updatePackage ? "Update" : "Publish"}
           </Button>
         </div>
       </div>
@@ -178,7 +208,7 @@ export default function CreatePackage() {
                 label="Title"
                 type="text"
                 variant="outlined"
-                {...register("title")}
+                {...register("name")}
                 className="mb-3"
               />
 
@@ -338,34 +368,17 @@ export default function CreatePackage() {
                   size="small"
                   {...register("tripFacts.group.info")}
                 />
-                <TextField
-                  className="mx-0"
-                  label="Activity"
-                  sx={{ m: 1, width: "50ch" }}
-                  type="text"
-                  size="small"
-                  {...register("tripFacts.activity.info")}
-                />
-                <TextField
-                  className="mx-0"
-                  label="Destination"
-                  sx={{ m: 1, width: "50ch" }}
-                  type="text"
-                  size="small"
-                  {...register("tripFacts.destination.info")}
-                />
                 <div className="w-50">
                   <CreatableAutocomplete
-                    name="difficulty"
-                    register={register}
-                    formName="tripFacts.difficulty.info"
+                    control={control}
+                    formName="difficulty"
                   />
                 </div>
               </div>
 
               <div className="mb-5">
                 <h4 className="dashboard-title">Overview</h4>
-                <TextEditor control={control} name="info" />
+                <TextEditor control={control} name="overview" />
               </div>
 
               <div className="d-flex flex-column gap-3 mb-5">
@@ -375,11 +388,7 @@ export default function CreatePackage() {
                     <Button
                       variant="primary"
                       size="sm"
-                      onClick={() =>
-                        highlightsAppend({
-                          content: "",
-                        })
-                      }>
+                      onClick={() => highlightsAppend("")}>
                       + Add Trip Highlights
                     </Button>
                   </div>
@@ -387,7 +396,7 @@ export default function CreatePackage() {
                     {highlightsFields.map((field, index) => {
                       return (
                         <div className="d-flex align-items-center">
-                          <input {...register(`highlights.${index}.content`)} />
+                          <input {...register(`highlights.${index}`)} />
                           <span
                             role="button"
                             className="text-danger"
@@ -406,11 +415,7 @@ export default function CreatePackage() {
                     <Button
                       variant="primary"
                       size="sm"
-                      onClick={() =>
-                        inclusionsAppend({
-                          content: "",
-                        })
-                      }>
+                      onClick={() => inclusionsAppend("")}>
                       + Add Cost Include
                     </Button>
                   </div>
@@ -418,7 +423,7 @@ export default function CreatePackage() {
                     {inclusionsFields.map((field, index) => {
                       return (
                         <div className="d-flex ">
-                          <input {...register(`inclusions.${index}.content`)} />
+                          <input {...register(`inclusions.${index}`)} />
                           <button onClick={() => inclusionsRemove(index)}>
                             -
                           </button>
@@ -434,11 +439,7 @@ export default function CreatePackage() {
                     <Button
                       variant="primary"
                       size="sm"
-                      onClick={() =>
-                        exclusionsAppend({
-                          content: "",
-                        })
-                      }>
+                      onClick={() => exclusionsAppend("")}>
                       + Add Cost Exclude
                     </Button>
                   </div>
@@ -446,7 +447,7 @@ export default function CreatePackage() {
                     {exclusionsFields.map((field, index) => {
                       return (
                         <div className="d-flex ">
-                          <input {...register(`exclusions.${index}.content`)} />
+                          <input {...register(`exclusions.${index}`)} />
                           <button onClick={() => exclusionsRemove(index)}>
                             -
                           </button>
@@ -486,89 +487,73 @@ export default function CreatePackage() {
           </div>
           <div className="col-auto">
             <div className="d-flex flex-column gap-3">
-              <FormControl
-                sx={{ m: 3 }}
-                component="fieldset"
-                variant="standard">
-                <FormLabel component="legend">Package Options</FormLabel>
-                <FormGroup>
-                  <FormControlLabel
-                    control={
-                      <Checkbox {...register("packageOptions.featured")} />
-                    }
-                    label="Featured"
+              <div className="d-flex flex-column ">
+                <div>
+                  <input
+                    type="checkbox"
+                    id="isTopSelling"
+                    {...register("isTopSelling")}
                   />
-                  <FormControlLabel
-                    control={
-                      <Checkbox {...register("packageOptions.trending")} />
-                    }
-                    label="Trending"
+                  <label for="isFeatured">Top Selling</label>
+                </div>
+                <div>
+                  <input
+                    type="checkbox"
+                    id="isFeatured"
+                    {...register("isFeatured")}
                   />
-                  <FormControlLabel
-                    control={
-                      <Checkbox {...register("packageOptions.groupTour")} />
-                    }
-                    label="Group Tour"
+                  <label for="isFeatured">Featured</label>
+                </div>
+                <div>
+                  <input
+                    type="checkbox"
+                    id="isTrending"
+                    {...register("isTrending")}
                   />
-                </FormGroup>
-              </FormControl>
+                  <label for="isTrending">Trending</label>
+                </div>
+                <div>
+                  <input
+                    type="checkbox"
+                    id="isGroupTour"
+                    {...register("isGroupTour")}
+                  />
+                  <label for="isTrending">Group Tour</label>
+                </div>
+              </div>
 
               <div className="w-100">
-                <CreatableAutocomplete
-                  name="region"
-                  register={register}
-                  formName="region"
-                />
+                <CreatableAutocomplete control={control} formName="region" />
               </div>
 
-              <div className="border-2 border-black">
-                <p>Header Image</p>
-                {selectedFile ? (
-                  <div>
-                    <p onClick={openFilePicker}>File Selected </p>
-                    <p>{selectedFile.name}</p>
-                    <p onClick={() => setSelectedFile(null)}>Remove Image</p>
-                  </div>
-                ) : (
-                  <MdOutlineAddPhotoAlternate
-                    className="h3 cursor-pointer"
-                    onClick={openFilePicker}
-                  />
-                )}
-                <input
-                  type="file"
-                  accept="image/*"
-                  ref={inputRef}
-                  style={{ display: "none" }}
-                  fileName={selectedFile}
-                  onChange={(e) => {
-                    // Handle selected file here
-                    setSelectedFile(e.target.files[0]);
-                    console.log("Selected file:", selectedFile);
-                  }}
-                  // {...register("headerImage")}
-                />
-              </div>
-              <div className="pdf-upload">
-                <p>PDF</p>
-                <input
-                  type="file"
-                  accept="application/pdf"
-                  {...register("pdf")}
-                  className="w-100"
-                />
-              </div>
-              <Button
-                size="sm"
-                variant="success"
-                onClick={handleSubmit(onSubmit)}>
-                Publish
-              </Button>
+              <UploadToCloudinary
+                selectedFile={mainImage}
+                setSelectedFile={setMainImage}
+                label="Main Image"
+                setValue={setValue}
+                formName="mainImageUrl"
+              />
+              <UploadToCloudinary
+                selectedFile={tripMap}
+                setSelectedFile={setTripMap}
+                label="Trip Map"
+                setValue={setValue}
+                formName="tripMapUrl"
+              />
+              <UploadToCloudinary
+                selectedFile={pdf}
+                setSelectedFile={setPdf}
+                label="PDF"
+                setValue={setValue}
+                formName="pdfUrl"
+              />
             </div>
           </div>
         </div>
       </form>
-      <DevTool control={control} />
+      {updatePackage && <CallAllEdits />}
+      <Dialog open={dialogOpen}>{dialogContent}</Dialog>
+      <Notification />
     </div>
   );
 }

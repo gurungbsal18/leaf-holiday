@@ -10,17 +10,20 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { submitForm } from "@/utils/functions";
 import Notification from "@/components/Notification";
+import UploadToCloudinary from "@/components/ui/UploadToCloudinary";
 
 export default function CreateDestination() {
   const {
     updateForm,
     setUpdateForm,
-    setCreateComponentOpen,
+    setDialogOpen,
     callExtractAll,
     setCallExtractAll,
   } = useContext(GlobalContext);
   const inputRef = useRef(null);
-  const [selectedFile, setSelectedFile] = React.useState(null);
+  const [selectedFile, setSelectedFile] = React.useState(
+    updateForm ? updateForm.imageUrl : null
+  );
   const openFilePicker = () => {
     inputRef.current.click();
   };
@@ -34,15 +37,14 @@ export default function CreateDestination() {
   const form = useForm({
     defaultValues: updateForm ? updateForm : initialDestinationData,
   });
-  const { register, handleSubmit } = form;
+  const { register, handleSubmit, setValue } = form;
 
   const onSubmit = async (data) => {
     const res = await submitForm(data, "destination", updateForm);
 
-    console.log("inner Form submitted", data);
     setCallExtractAll(!callExtractAll);
     setUpdateForm(null);
-    setCreateComponentOpen(false);
+    setDialogOpen(false);
   };
 
   return (
@@ -53,7 +55,7 @@ export default function CreateDestination() {
           <GrClose
             onClick={() => {
               setUpdateForm(null);
-              setCreateComponentOpen(false);
+              setDialogOpen(false);
             }}
           />
         </div>
@@ -82,31 +84,13 @@ export default function CreateDestination() {
                 {updateForm ? "Update" : "Create"}
               </button>
             </div>
-            <div className="border-2 border-black">
-              <p>Photo</p>
-              {selectedFile ? (
-                <div>
-                  <p onClick={openFilePicker}>File Selected </p>
-                  <p>{selectedFile.name}</p>
-                  <p onClick={() => setSelectedFile(null)}>Remove Image</p>
-                </div>
-              ) : (
-                <MdOutlineAddPhotoAlternate
-                  className="h3 cursor-pointer"
-                  onClick={openFilePicker}
-                />
-              )}
-              <input
-                type="file"
-                ref={inputRef}
-                style={{ display: "none" }}
-                onChange={(e) => {
-                  // Handle selected file here
-                  setSelectedFile(e.target.files[0]);
-                  console.log("Selected file:", selectedFile);
-                }}
-              />
-            </div>
+            <UploadToCloudinary
+              selectedFile={selectedFile}
+              setSelectedFile={setSelectedFile}
+              label="Header Image"
+              setValue={setValue}
+              formName="imageUrl"
+            />
           </div>
         </form>
       </div>

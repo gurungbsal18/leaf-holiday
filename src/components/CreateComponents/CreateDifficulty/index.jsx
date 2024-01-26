@@ -9,11 +9,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { submitForm } from "@/utils/functions";
 
-export default function CreateDifficulty({
-  nameValue,
-  handleClose,
-  setNameValue,
-}) {
+export default function CreateDifficulty({ nameValue, setNameValue }) {
   const initialFormData = {
     name: nameValue ? nameValue : "",
     description: "",
@@ -21,7 +17,7 @@ export default function CreateDifficulty({
   };
 
   const {
-    setCreateComponentOpen,
+    setDialogOpen,
     updateForm,
     setUpdateForm,
     callExtractAll,
@@ -34,18 +30,13 @@ export default function CreateDifficulty({
   const { register, handleSubmit, control } = form;
 
   const onSubmit = async (data) => {
-    const res = await submitForm(data, "difficulty", updateForm);
+    const res = await submitForm(data, "difficulty", updateForm, setNameValue);
 
-    console.log("inner Form submitted", data);
     setCallExtractAll(!callExtractAll);
     setUpdateForm(null);
-    setCreateComponentOpen(false);
-
-    if (nameValue) {
-      setNameValue(data.name);
-      handleClose();
-    }
+    setDialogOpen(false);
   };
+  console.log("difficulty name value: ", nameValue);
 
   return (
     <div className="">
@@ -54,11 +45,8 @@ export default function CreateDifficulty({
           <p>{updateForm ? "Update Difficulty" : "Create Difficulty"}</p>
           <GrClose
             onClick={() => {
-              setCreateComponentOpen(false);
+              setDialogOpen(false);
               setUpdateForm(null);
-              if (nameValue) {
-                handleClose();
-              }
             }}
           />
         </div>

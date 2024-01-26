@@ -5,7 +5,7 @@ import { GlobalContext } from "@/context";
 import { useRouter } from "next/navigation";
 
 export default function ({ pageName, createComponent, keyword, setKeyword }) {
-  const { createComponentOpen, setCreateComponentOpen } =
+  const { setDialogOpen, setDialogContent, setUpdatePackage } =
     useContext(GlobalContext);
   const router = useRouter();
 
@@ -22,14 +22,15 @@ export default function ({ pageName, createComponent, keyword, setKeyword }) {
           onClick={() => {
             if (pageName === "Packages") {
               router.push("/admin/packages/create-package");
+              setUpdatePackage(null);
             } else {
-              setCreateComponentOpen(true);
+              setDialogOpen(true);
+              setDialogContent(createComponent);
             }
           }}>
           Create
         </button>
       </div>
-      <Dialog open={createComponentOpen}>{createComponent}</Dialog>
     </div>
   );
 }
