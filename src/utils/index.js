@@ -36,9 +36,9 @@ export const navItems = [
     path: "/package/kjfdf",
   },
   {
-    id: "outbound",
-    label: "Outbound",
-    path: "/outbound",
+    id: "aboutus",
+    label: "About Us",
+    path: "/aboutus",
   },
   {
     id: "activities",

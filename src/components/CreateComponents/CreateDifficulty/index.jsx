@@ -7,8 +7,9 @@ import { useForm, Controller } from "react-hook-form";
 import { GlobalContext } from "@/context";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { submitForm } from "@/utils/functions";
 
-export default function CreateDifficulty({ nameValue, handleClose, setValue }) {
+export default function CreateDifficulty({ nameValue, setNameValue }) {
   const initialFormData = {
     name: nameValue ? nameValue : "",
     description: "",
@@ -16,8 +17,7 @@ export default function CreateDifficulty({ nameValue, handleClose, setValue }) {
   };
 
   const {
-    createComponentOpen,
-    setCreateComponentOpen,
+    setDialogOpen,
     updateForm,
     setUpdateForm,
     callExtractAll,
@@ -29,39 +29,23 @@ export default function CreateDifficulty({ nameValue, handleClose, setValue }) {
   });
   const { register, handleSubmit, control } = form;
 
-  const submitData = async (data) => {
-    const res = await axios.post("http://localhost:5001/difficulty/add", data);
-    console.log(res);
-    if (res.status === 201) {
-      toast.success(res.data.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      setUpdateForm(null);
-      setCallExtractAll(!callExtractAll);
-      setCreateComponentOpen(false);
-      if (nameValue) {
-        setValue(data.name);
-        handleClose();
-      }
-    } else {
-      toast.error(res.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-    }
+  const onSubmit = async (data) => {
+    const res = await submitForm(data, "difficulty", updateForm, setNameValue);
+
+    setCallExtractAll(!callExtractAll);
+    setUpdateForm(null);
+    setDialogOpen(false);
   };
 
   return (
     <div className="">
       <div className="">
         <div className="d-flex justify-content-between p-3 ">
-          <p>Create Difficulty</p>
+          <p>{updateForm ? "Update Difficulty" : "Create Difficulty"}</p>
           <GrClose
             onClick={() => {
-              setCreateComponentOpen(false);
+              setDialogOpen(false);
               setUpdateForm(null);
-              if (nameValue) {
-                handleClose();
-              }
             }}
           />
         </div>
@@ -96,8 +80,8 @@ export default function CreateDifficulty({ nameValue, handleClose, setValue }) {
                 />
               )}
             />
-            <button type="submit" onClick={handleSubmit(submitData)}>
-              Create
+            <button type="submit" onClick={handleSubmit(onSubmit)}>
+              {updateForm ? "Update" : "Create"}
             </button>
           </div>
         </form>

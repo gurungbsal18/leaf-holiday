@@ -2,7 +2,7 @@
 
 import { registrationFormControls } from "@/utils";
 import Checkbox from "@mui/material/Checkbox";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
@@ -11,8 +11,13 @@ import TextField from "@mui/material/TextField";
 import { Button } from "react-bootstrap";
 import Image from "next/image";
 import axios from "axios";
+import { toast } from "react-toastify";
+import Notification from "@/components/Notification";
+import { GlobalContext } from "@/context";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
+  const { isAuthUser } = useContext(GlobalContext);
   const form = useForm({
     defaultValues: {
       name: "",
@@ -22,15 +27,46 @@ export default function Register() {
     },
   });
 
-  const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
+  const router = useRouter();
   const { register, handleSubmit } = form;
 
   const onSubmit = async (data) => {
-    console.log("form submitted", data);
-    const res = await axios.post("http://localhost:5001/auth/register", data);
-    console.log(res);
+    try {
+      const res = await axios.post("http://localhost:5001/auth/register", data);
+      if (res.status === 200) {
+        toast.success(
+          "User Registered Successfully. Please Check Your Email for Verification",
+          {
+            position: toast.POSITION.TOP_RIGHT,
+          }
+        );
+        setTimeout(() => {
+          router.push("/login");
+        }, 1000);
+      } else {
+        toast.error("Failed To Register User", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+      res;
+    } catch (e) {
+      toast.error(
+        e.response.data.error ||
+          "Something Went Wrong. Please try again later !!!",
+        {
+          position: toast.POSITION.TOP_RIGHT,
+        }
+      );
+      e;
+    }
   };
+  useEffect(() => {
+    if (isAuthUser) {
+      setTimeout(() => {
+        router.push("/");
+      }, [1000]);
+    }
+  }, [isAuthUser]);
 
   return (
     <div className="container d-flex flex-column-reverse flex-md-row justify-content-between my-5 gap-5 align-items-center">
@@ -85,6 +121,7 @@ export default function Register() {
           alt="register-img"
         />
       </div>
+      <Notification />
     </div>
   );
 }

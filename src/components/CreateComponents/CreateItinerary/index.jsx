@@ -1,61 +1,49 @@
 "use client";
-import React, { useContext, useRef } from "react";
+import React, { useContext } from "react";
 import { GrClose } from "react-icons/gr";
 import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
-import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import { useForm } from "react-hook-form";
 import { GlobalContext } from "@/context";
-import axios from "axios";
-import { toast } from "react-toastify";
+
+import { submitForm } from "@/utils/functions";
+import UploadToCloudinary from "@/components/ui/UploadToCloudinary";
+import TextEditor from "@/components/TextEditor";
 
 export default function CreateItinerary() {
   const {
     updateForm,
     setUpdateForm,
-    setCreateComponentOpen,
+    setDialogOpen,
     callExtractAll,
     setCallExtractAll,
+    updatePackage,
   } = useContext(GlobalContext);
-  const inputRef = useRef(null);
-  const [selectedFile, setSelectedFile] = React.useState(null);
-  const openFilePicker = () => {
-    inputRef.current.click();
-  };
+  const [selectedFile, setSelectedFile] = React.useState(
+    updateForm ? updateForm.imageUrl : null
+  );
 
   const initialFormData = {
-    packageId: "6578848ef9d2151e944ad965",
-    title: "itinerary title",
-    content: "icontent",
-    maxAltitude: 1000,
-    meals: "imeals",
-    accomodation: "iaccomodation",
+    packageId: updatePackage._id,
+    title: "",
+    content: "",
+    maxAltitude: 0,
+    meals: "",
+    accomodation: "",
     imageUrl: "",
   };
 
   const form = useForm({
     defaultValues: updateForm ? updateForm : initialFormData,
   });
-  const { register, handleSubmit } = form;
+  const { register, handleSubmit, setValue, control } = form;
 
-  const onSubmit = async (data, event) => {
-    console.log("itinerary form: ", data);
+  const onSubmit = async (data) => {
+    const res = await submitForm(data, "itineraries", updateForm);
 
-    if (updateForm) {
-      const res = await axios.put(
-        `http://localhost:5001/itineraries/update/${data._id}`,
-        data
-      );
-    } else {
-      const res = await axios.post(
-        "http://localhost:5001/itineraries/add",
-        data
-      );
-    }
-    console.log("inner Form submitted", data);
     setCallExtractAll(!callExtractAll);
     setUpdateForm(null);
-    setCreateComponentOpen(false);
+    setDialogOpen(false);
   };
 
   return (
@@ -66,7 +54,7 @@ export default function CreateItinerary() {
           <GrClose
             onClick={() => {
               setUpdateForm(null);
-              setCreateComponentOpen(false);
+              setDialogOpen(false);
             }}
           />
         </div>
@@ -82,15 +70,10 @@ export default function CreateItinerary() {
                 variant="outlined"
                 {...register("title")}
               />
-              <label name="content">Content</label>
-              <TextareaAutosize
-                className="w-100"
-                size="large"
-                label="content"
-                type="text"
-                variant="outlined"
-                {...register("content")}
-              />
+              <div>
+                <label name="content">Content</label>
+                <TextEditor control={control} name="content" />
+              </div>
               <div>
                 <TextField
                   required
@@ -121,31 +104,13 @@ export default function CreateItinerary() {
                 {updateForm ? "Update" : "Create"}
               </button>
             </div>
-            <div className="border-2 border-black">
-              <p>Photo</p>
-              {selectedFile ? (
-                <div>
-                  <p onClick={openFilePicker}>File Selected </p>
-                  <p>{selectedFile.name}</p>
-                  <p onClick={() => setSelectedFile(null)}>Remove Image</p>
-                </div>
-              ) : (
-                <MdOutlineAddPhotoAlternate
-                  className="h3 cursor-pointer"
-                  onClick={openFilePicker}
-                />
-              )}
-              <input
-                type="file"
-                ref={inputRef}
-                style={{ display: "none" }}
-                onChange={(e) => {
-                  // Handle selected file here
-                  setSelectedFile(e.target.files[0]);
-                  console.log("Selected file:", selectedFile);
-                }}
-              />
-            </div>
+            <UploadToCloudinary
+              selectedFile={selectedFile}
+              setSelectedFile={setSelectedFile}
+              label="Header Image"
+              setValue={setValue}
+              formName="imageUrl"
+            />
           </div>
         </form>
       </div>

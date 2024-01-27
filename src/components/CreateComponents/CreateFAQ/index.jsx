@@ -7,20 +7,22 @@ import { useForm } from "react-hook-form";
 import { GlobalContext } from "@/context";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { submitForm } from "@/utils/functions";
 
 export default function CreateFAQ() {
   const {
     updateForm,
     setUpdateForm,
-    setCreateComponentOpen,
+    setDialogOpen,
     callExtractAll,
     setCallExtractAll,
+    updatePackage,
   } = useContext(GlobalContext);
 
   const initialData = {
-    packageId: "6578848ef9d2151e944ad965",
-    question: "what is your name",
-    answer: "my name is bijen",
+    packageId: updatePackage._id,
+    question: "",
+    answer: "",
   };
 
   const form = useForm({
@@ -28,19 +30,12 @@ export default function CreateFAQ() {
   });
   const { register, handleSubmit } = form;
 
-  const onSubmit = async (data, event) => {
-    if (updateForm) {
-      const res = await axios.put(
-        `http://localhost:5001/faq/update/${data._id}`,
-        data
-      );
-    } else {
-      const res = await axios.post("http://localhost:5001/faq/add", data);
-    }
-    console.log("inner Form submitted", data);
+  const onSubmit = async (data) => {
+    const res = await submitForm(data, "faq", updateForm);
+
     setCallExtractAll(!callExtractAll);
     setUpdateForm(null);
-    setCreateComponentOpen(false);
+    setDialogOpen(false);
   };
 
   return (
@@ -51,7 +46,7 @@ export default function CreateFAQ() {
           <GrClose
             onClick={() => {
               setUpdateForm(null);
-              setCreateComponentOpen(false);
+              setDialogOpen(false);
             }}
           />
         </div>

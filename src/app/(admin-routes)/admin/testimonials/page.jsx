@@ -7,7 +7,7 @@ export default function Testimonial() {
   const data = {
     pageName: "Testimonials",
     createComponent: <CreateTestimonial />,
-    titles: ["NAME", "DESCRIPTION"],
+    titles: ["NAME", "COMMENT", "RATING", "PACKAGE NAME", "DATE"],
     apiName: "review",
   };
 

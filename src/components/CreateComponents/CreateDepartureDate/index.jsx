@@ -13,20 +13,22 @@ import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { toast } from "react-toastify";
+import { submitForm } from "@/utils/functions";
 
 export default function CreateDepartureDate() {
   const {
     updateForm,
     setUpdateForm,
-    setCreateComponentOpen,
+    setDialogOpen,
     callExtractAll,
     setCallExtractAll,
+    updatePackage,
   } = useContext(GlobalContext);
 
   const currentDate = new Date().toDateString();
 
   const initialData = {
-    packageId: "6578848ef9d2151e944ad965",
+    packageId: updatePackage._id,
     startDate: dayjs(currentDate),
     endDate: dayjs(currentDate),
     pricePerPerson: 0,
@@ -44,22 +46,12 @@ export default function CreateDepartureDate() {
   });
   const { register, handleSubmit, control } = form;
 
-  const onSubmit = async (data, event) => {
-    if (updateForm) {
-      const res = await axios.put(
-        `http://localhost:5001/departureDate/update/${data._id}`,
-        data
-      );
-    } else {
-      const res = await axios.post(
-        "http://localhost:5001/departureDate/add",
-        data
-      );
-    }
-    console.log("inner Form submitted", data);
+  const onSubmit = async (data) => {
+    const res = await submitForm(data, "departureDate", updateForm);
+
     setCallExtractAll(!callExtractAll);
     setUpdateForm(null);
-    setCreateComponentOpen(false);
+    setDialogOpen(false);
   };
 
   return (
@@ -72,7 +64,7 @@ export default function CreateDepartureDate() {
           <GrClose
             onClick={() => {
               setUpdateForm(null);
-              setCreateComponentOpen(false);
+              setDialogOpen(false);
             }}
           />
         </div>

@@ -5,54 +5,36 @@ import TextareaAutosize from "@mui/material/TextareaAutosize";
 import Rating from "@mui/material/Rating";
 import { useForm, Controller } from "react-hook-form";
 import { GlobalContext } from "@/context";
-import axios from "axios";
-import { toast } from "react-toastify";
+import { submitForm } from "@/utils/functions";
 
 export default function CreateTestimonial() {
-  const initialFormData = {
-    packageId: "6578848ef9d2151e944ad965",
-    userID: "6578848ef9d2151e944ad965",
-    stars: 1,
-    comment: "Rcomment",
-  };
-
   const {
-    createComponentOpen,
-    setCreateComponentOpen,
+    setDialogOpen,
     updateForm,
     setUpdateForm,
     callExtractAll,
     setCallExtractAll,
+    updatePackage,
   } = useContext(GlobalContext);
+
+  const initialFormData = {
+    packageId: updatePackage._id,
+    userID: "657c79f29c6b89ea65a5a5b6",
+    stars: 1,
+    comment: "",
+  };
 
   const form = useForm({
     defaultValues: updateForm ? updateForm : initialFormData,
   });
   const { register, handleSubmit, control } = form;
 
-  const submitData = async (data) => {
-    let res = {};
-    if (updateForm) {
-      res = await axios.put(
-        `http://localhost:5001/review/update/${data._id}`,
-        data
-      );
-    } else {
-      res = await axios.post("http://localhost:5001/review/add", data);
-    }
-    console.log(res);
-    if (res.status === 200) {
-      toast.success(res.data.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      setUpdateForm(null);
-      setCallExtractAll(!callExtractAll);
-      setCreateComponentOpen(false);
-    } else {
-      toast.error(res.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-    }
+  const onSubmit = async (data) => {
+    const res = await submitForm(data, "review", updateForm);
+
+    setCallExtractAll(!callExtractAll);
+    setUpdateForm(null);
+    setDialogOpen(false);
   };
 
   return (
@@ -62,13 +44,14 @@ export default function CreateTestimonial() {
           <p>{updateForm ? "Update Review" : "Create Review"}</p>
           <GrClose
             onClick={() => {
-              setCreateComponentOpen(false);
+              setDialogOpen(false);
               setUpdateForm(null);
             }}
           />
         </div>
         <form>
           <div className="d-flex flex-column gap-2">
+            <label name="comment">Comment</label>
             <TextareaAutosize
               className="w-100"
               size="large"
@@ -77,6 +60,7 @@ export default function CreateTestimonial() {
               variant="outlined"
               {...register("comment")}
             />
+            <label name="rating">Rating</label>
             <Controller
               control={control}
               name={"stars"}
@@ -89,7 +73,7 @@ export default function CreateTestimonial() {
                 />
               )}
             />
-            <button type="submit" onClick={handleSubmit(submitData)}>
+            <button type="submit" onClick={handleSubmit(onSubmit)}>
               {updateForm ? "Update" : "Create"}
             </button>
           </div>

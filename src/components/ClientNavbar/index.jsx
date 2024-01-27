@@ -62,7 +62,7 @@
 // }
 
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import Image from "next/image";
@@ -70,15 +70,32 @@ import Nav from "react-bootstrap/Nav";
 import { navItems } from "@/utils";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import CloseIcon from "@mui/icons-material/Close";
+import { useRouter } from "next/navigation";
+import { GlobalContext } from "@/context";
+import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 import { PrimeReactProvider } from "primereact/api";
 import MegaMenuMain from "./MegaMenu";
 
 export default function ClientNavbar() {
+  const { isAuthUser, setIsAuthUser, setUser, user } =
+    useContext(GlobalContext);
   const [showNavbar, setShowNavbar] = useState(false);
+  const router = useRouter();
 
   function handleShowNavBar() {
     setShowNavbar(!showNavbar);
+  }
+  function handleLogout() {
+    toast.success("Logged Out Successfully", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+    setIsAuthUser(false);
+    setUser(null);
+    Cookies.remove("token");
+    localStorage.clear();
+    router.push("/");
   }
 
   return (
@@ -108,6 +125,17 @@ export default function ClientNavbar() {
         <PrimeReactProvider>
           <MegaMenuMain />
         </PrimeReactProvider>
+        <div className="d-flex gap-3">
+          {isAuthUser ? (
+            <button onClick={handleLogout}>Log Out</button>
+          ) : (
+            <button onClick={() => router.push("/login")}>Log In</button>
+          )}
+          <button onClick={() => router.push("/register")}>Sign Up</button>
+        </div>
+        <span onClick={handleShowNavBar} className="d-md-none">
+          {showNavbar ? <MenuOpenIcon /> : <CloseIcon />}
+        </span>
       </div>
     </>
   );

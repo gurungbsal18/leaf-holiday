@@ -3,11 +3,11 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Controller } from "react-hook-form";
 import { Editor } from "@tinymce/tinymce-react";
+import { uploadImage } from "@/utils/functions";
+import { toast } from "react-toastify";
 
 const TextEditor = ({ initialValue, control, name }) => {
   const editorRef = useRef(null);
-  const [dirty, setDirty] = useState(false);
-  useEffect(() => setDirty(false), [initialValue]);
 
   return (
     <div className="">
@@ -18,9 +18,8 @@ const TextEditor = ({ initialValue, control, name }) => {
           <Editor
             apiKey={process.env.NEXT_PUBLIC_TEXTEDITOR_API_KEY}
             onInit={(evt, editor) => (editorRef.current = editor)}
-            onDirty={() => setDirty(true)}
-            initialValue=""
             value={value}
+            // value={value}
             onEditorChange={onChange}
             init={{
               height: 250,
@@ -71,29 +70,19 @@ const TextEditor = ({ initialValue, control, name }) => {
                   try {
                     const formData = new FormData();
                     formData.append("file", file);
-                    formData.append("upload_preset", "uploadPreset");
 
-                    const response = await fetch(
-                      `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
-                      {
-                        method: "POST",
-                        body: formData,
-                      }
-                    );
-
-                    if (response.ok) {
-                      const data = await response.json();
-                      const imageUrl = data.secure_url; // Get the uploaded image URL
-
-                      cb(imageUrl, { title: file.name });
+                    const res = await uploadImage(formData);
+                    if (res.success) {
+                      cb(res.imageUrl, { title: file.name });
                     } else {
-                      console.error(
-                        "Error uploading image to Cloudinary:",
-                        response.statusText
-                      );
+                      toast.error(res.message, {
+                        position: toast.POSITION.TOP_RIGHT,
+                      });
                     }
                   } catch (error) {
-                    console.error("Error uploading image:", error);
+                    toast.error("Failed to Upload Image on Cloudinary", {
+                      position: toast.POSITION.TOP_RIGHT,
+                    });
                   }
                 });
 

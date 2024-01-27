@@ -62,7 +62,7 @@ const HomeTest = () => {
         <div className="d-flex gap-3 flex-wrap">
           {TopSellingPackage.map((tripCard, index) => (
             <div key={index}>
-              <div className="trip-card border col-3">
+              <div className="trip-card border">
                 <Image
                   src={tripCard.imageUrl}
                   height={200}
