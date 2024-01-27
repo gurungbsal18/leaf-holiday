@@ -1,10 +1,12 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 import ScheduleOutlinedIcon from "@mui/icons-material/ScheduleOutlined";
 import Rating from "@mui/material/Rating";
 import Image from "next/image";
 import FmdGoodOutlinedIcon from "@mui/icons-material/FmdGoodOutlined";
+import ExploreDestination from "./ExploreDestination";
 
 const HomeTest = () => {
   const TopSellingPackage = [
@@ -33,6 +35,7 @@ const HomeTest = () => {
       price: 2650,
     },
   ];
+
   return (
     <>
       <div className="hero-section">
@@ -101,14 +104,19 @@ const HomeTest = () => {
         </div>
       </div>
 
-      <div className="container py-100">
+      {/* <div className="container py-100">
         <div className="text-center my-5">
           <h2 className="home-title">Explore More Destination</h2>
           <p className="m-0">Find things to do in different areas</p>
         </div>
 
         <div className="explore-section-btn d-flex justify-content-center gap-2">
-          <button className="btn btn-success">Kailash Tour</button>
+          <button
+            className="btn btn-success"
+            onClick={() => handelExploreBtn()}
+          >
+            Kailash Tour
+          </button>
           <button className="btn btn-outline-success">Everest Region</button>
           <button className="btn btn-outline-success">Annapurna Region</button>
         </div>
@@ -118,7 +126,9 @@ const HomeTest = () => {
             Explore Kailash Tour Packages
           </button>
         </div>
-      </div>
+      </div> */}
+
+      <ExploreDestination />
 
       <div className="container py-100">
         <div className="text-center my-5">
