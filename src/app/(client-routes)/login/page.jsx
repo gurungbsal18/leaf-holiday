@@ -57,7 +57,6 @@ export default function Login() {
         `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/login`,
         data
       );
-      
 
       if (res.status === 200) {
         toast.success("Logged in Successfully", {
@@ -79,7 +78,7 @@ export default function Login() {
       toast.error(e.response.data.error, {
         position: toast.POSITION.TOP_RIGHT,
       });
-      
+    }
   };
 
   useEffect(() => {
