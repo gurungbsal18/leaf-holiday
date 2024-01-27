@@ -1,0 +1,23 @@
+.p-megamenu .p-menuitem > .p-menuitem-content .p-menuitem-link,
+.p-megamenu .p-submenu-header {
+  padding: 0.75rem 1.25rem !important;
+}
+
+.p-megamenu .p-submenu-list {
+  padding: 0.5rem 0 !important;
+}
+
+.p-megamenu-col-3 {
+  padding: 0.5rem !important;
+}
+
+.p-megamenu {
+  background-color: $white !important;
+  border: none !important;
+}
+
+.p-megamenu-horizontal .p-megamenu-root-list {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto !important;
+}

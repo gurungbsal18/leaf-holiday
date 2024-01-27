@@ -24,6 +24,7 @@
     "jsonwebtoken": "^9.0.2",
     "material-icons": "^1.13.12",
     "next": "14.0.3",
+    "primereact": "^10.3.3",
     "react": "^18",
     "react-bootstrap": "^2.9.1",
     "react-dom": "^18",
