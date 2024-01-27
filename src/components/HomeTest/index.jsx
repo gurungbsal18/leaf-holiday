@@ -104,30 +104,6 @@ const HomeTest = () => {
         </div>
       </div>
 
-      {/* <div className="container py-100">
-        <div className="text-center my-5">
-          <h2 className="home-title">Explore More Destination</h2>
-          <p className="m-0">Find things to do in different areas</p>
-        </div>
-
-        <div className="explore-section-btn d-flex justify-content-center gap-2">
-          <button
-            className="btn btn-success"
-            onClick={() => handelExploreBtn()}
-          >
-            Kailash Tour
-          </button>
-          <button className="btn btn-outline-success">Everest Region</button>
-          <button className="btn btn-outline-success">Annapurna Region</button>
-        </div>
-
-        <div className="d-flex justify-content-center mt-5">
-          <button className="btn btn-success">
-            Explore Kailash Tour Packages
-          </button>
-        </div>
-      </div> */}
-
       <ExploreDestination />
 
       <div className="container py-100">
