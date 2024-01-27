@@ -166,8 +166,6 @@ export default function CreatePackage() {
       setUpdatePackage,
       router
     );
-
-    console.log("Form submitted", data);
   };
 
   return (

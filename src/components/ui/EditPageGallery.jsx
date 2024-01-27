@@ -15,8 +15,6 @@ export default function EditPageGallery({ documentImages, setValue }) {
     setValue("document", updatedImages);
   };
 
-  console.log("images list:", images);
-
   return (
     <div>
       <h1>Company Documents</h1>

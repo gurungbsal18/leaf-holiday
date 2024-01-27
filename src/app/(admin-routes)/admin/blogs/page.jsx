@@ -16,7 +16,7 @@ export default function Blog() {
   };
 
   const [images, setImages] = useState([]);
-  console.log("images", images);
+  "images", images;
 
   return (
     <div>

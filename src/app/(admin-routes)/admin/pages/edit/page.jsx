@@ -72,7 +72,6 @@ export default function EditPage() {
           `${process.env.NEXT_PUBLIC_SERVER_URL}/aboutUs/add`,
           data
         ));
-    console.log(res);
     if (res.status === 200) {
       getData();
     }
@@ -89,12 +88,10 @@ export default function EditPage() {
       reset(res.data.data[0]);
       setCallUpdate(true);
       setDocumentImages(res.data.data[0].document);
-      console.log(res.data);
     } else {
       setDocumentImages([]);
     }
   };
-  console.log("Doc images: ", documentImages);
 
   //get data from the server on mount
   useEffect(() => {

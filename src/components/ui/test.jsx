@@ -27,7 +27,6 @@ export default function TestCreatableAutocomplete({ control, formName }) {
       value !== undefined ? optionList.find((opt) => opt._id === value) : null;
 
     // Return the name of the selected option or an empty string if not found
-    console.log(selectedOption ? selectedOption.name : "");
     return selectedOption ? selectedOption.name : "";
   }
 

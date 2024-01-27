@@ -4,7 +4,6 @@ import Rating from "@mui/material/Rating";
 import dayjs from "dayjs";
 
 export default function TestimonialContent({ content }) {
-  console.log(content);
   return (
     <div className="d-flex gap-3">
       <p>{content?.userID.name}</p>

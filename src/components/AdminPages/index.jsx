@@ -43,8 +43,6 @@ export default function AdminPages({ data }) {
     }
   }, [keyword]);
 
-  console.log("filtered data", filteredData);
-
   return (
     <div className="">
       <Header

@@ -48,7 +48,7 @@ export const submitForm = async (data, apiName, updateForm, setNameValue) => {
       if (setNameValue) {
         setNameValue(res.data.data._id);
       }
-      console.log(res);
+      res;
     } else {
       toast.error(res.message, {
         position: toast.POSITION.TOP_RIGHT,
@@ -86,7 +86,7 @@ export const submitPackageForm = async (
       updatePackage
         ? router.push("/admin/packages")
         : setUpdatePackage(res.data.data);
-      console.log(res);
+      res;
     } else {
       toast.error(res.message, {
         position: toast.POSITION.TOP_RIGHT,

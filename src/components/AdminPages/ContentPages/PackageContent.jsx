@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 
 export default function PackageContent({ content }) {
-  console.log(content);
   return (
     <div className="d-flex gap-3">
       <div className="d-flex">

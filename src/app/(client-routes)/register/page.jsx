@@ -48,7 +48,7 @@ export default function Register() {
           position: toast.POSITION.TOP_RIGHT,
         });
       }
-      console.log(res);
+      res;
     } catch (e) {
       toast.error(
         e.response.data.error ||
@@ -57,7 +57,7 @@ export default function Register() {
           position: toast.POSITION.TOP_RIGHT,
         }
       );
-      console.log(e);
+      e;
     }
   };
   useEffect(() => {

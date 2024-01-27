@@ -66,7 +66,6 @@ export default function AboutUs() {
   useEffect(() => {
     getData();
   }, []);
-  console.log(aboutUsData);
 
   return (
     <>

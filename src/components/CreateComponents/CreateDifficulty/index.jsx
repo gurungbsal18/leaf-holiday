@@ -36,7 +36,6 @@ export default function CreateDifficulty({ nameValue, setNameValue }) {
     setUpdateForm(null);
     setDialogOpen(false);
   };
-  console.log("difficulty name value: ", nameValue);
 
   return (
     <div className="">

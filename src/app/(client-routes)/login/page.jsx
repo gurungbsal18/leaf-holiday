@@ -52,13 +52,12 @@ export default function Login() {
   const { register, handleSubmit } = form;
 
   const onSubmit = async (data) => {
-    console.log("form submitted", data);
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/login`,
         data
       );
-      console.log(res);
+      
 
       if (res.status === 200) {
         toast.success("Logged in Successfully", {
@@ -80,8 +79,7 @@ export default function Login() {
       toast.error(e.response.data.error, {
         position: toast.POSITION.TOP_RIGHT,
       });
-      console.log(e);
-    }
+      
   };
 
   useEffect(() => {

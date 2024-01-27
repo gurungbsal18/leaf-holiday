@@ -96,7 +96,7 @@ const PackageDetail = () => {
   useEffect(() => {
     getPackageDetail();
   }, []);
-  console.log(packageDetail);
+  packageDetail;
 
   return (
     <>

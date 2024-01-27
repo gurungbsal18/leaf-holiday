@@ -21,7 +21,6 @@ export default function Home() {
   useEffect(() => {
     extractAllPackages();
   }, []);
-  console.log(packageData);
 
   return (
     <>

@@ -49,7 +49,6 @@ export default function CreateRegion({ nameValue, setNameValue }) {
     setUpdateForm(null);
     setDialogOpen(false);
   };
-  console.log("region name value: ", nameValue);
   return (
     <div className="">
       <div className="">
