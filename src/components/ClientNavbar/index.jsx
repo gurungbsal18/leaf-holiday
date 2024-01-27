@@ -10,6 +10,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useRouter } from "next/navigation";
 import { GlobalContext } from "@/context";
 import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 export default function ClientNavbar() {
   const { isAuthUser, setIsAuthUser, setUser, user } =
@@ -21,6 +22,9 @@ export default function ClientNavbar() {
     setShowNavbar(!showNavbar);
   }
   function handleLogout() {
+    toast.success("Logged Out Successfully", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
     setIsAuthUser(false);
     setUser(null);
     Cookies.remove("token");

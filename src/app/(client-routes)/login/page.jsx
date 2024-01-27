@@ -7,7 +7,7 @@ import { Button } from "react-bootstrap";
 import Image from "next/image";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 
 import TextField from "@mui/material/TextField";
@@ -47,8 +47,8 @@ export default function Login() {
     },
   });
 
+  const isVerified = useSearchParams().get("verified");
   const router = useRouter();
-
   const { register, handleSubmit } = form;
 
   const onSubmit = async (data) => {
@@ -61,7 +61,7 @@ export default function Login() {
       console.log(res);
 
       if (res.status === 200) {
-        toast.success(res.message, {
+        toast.success("Logged in Successfully", {
           position: toast.POSITION.TOP_RIGHT,
         });
         setIsAuthUser(true);
@@ -85,8 +85,20 @@ export default function Login() {
   };
 
   useEffect(() => {
-    if (isAuthUser) router.push("/");
+    if (isAuthUser) {
+      setTimeout(() => {
+        router.push("/");
+      }, [1000]);
+    }
   }, [isAuthUser]);
+
+  useEffect(() => {
+    if (isVerified) {
+      toast.success("Account Verified Successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+  }, []);
 
   return (
     <div className="container d-flex flex-column-reverse flex-md-row justify-content-between my-5 gap-5 align-items-center">

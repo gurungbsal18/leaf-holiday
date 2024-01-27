@@ -36,9 +36,9 @@ export const navItems = [
     path: "/package/kjfdf",
   },
   {
-    id: "outbound",
-    label: "Outbound",
-    path: "/outbound",
+    id: "aboutus",
+    label: "About Us",
+    path: "/aboutus",
   },
   {
     id: "activities",
@@ -222,26 +222,6 @@ export const pkgDetail = {
   headerImage: "/images/km.png",
   headerTitle: "Kailash Overland Tour - 13 Days",
   packageInformation: [
-    {
-      id: "duration",
-      label: "Duration",
-      information: "14 Days",
-    },
-    {
-      id: "difficulty",
-      label: "Difficulty",
-      information: "Strenuous",
-    },
-    {
-      id: "bestWeather",
-      label: "Best Weather",
-      information: "March-May & Sep-Nav",
-    },
-    {
-      id: "maxAltitude",
-      label: "Max Altitude",
-      information: "5545m",
-    },
     {
       id: "duration",
       label: "Duration",

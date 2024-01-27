@@ -18,6 +18,8 @@ export default function GlobalState({ children }) {
   const [updatePackage, setUpdatePackage] = useState(null);
   const [user, setUser] = useState(null);
   const [isAuthUser, setIsAuthUser] = useState(null);
+  const [updatePageName, setUpdatePageName] = useState(null);
+  const [updatePageData, setUpdatePageData] = useState(null);
 
   const pathname = usePathname();
   const extractAdminPath = pathname.split("/");
@@ -63,6 +65,10 @@ export default function GlobalState({ children }) {
         setUser,
         isAuthUser,
         setIsAuthUser,
+        updatePageName,
+        setUpdatePageName,
+        updatePageData,
+        setUpdatePageData,
       }}>
       {children}
     </GlobalContext.Provider>

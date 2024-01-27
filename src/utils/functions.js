@@ -98,3 +98,20 @@ export const submitPackageForm = async (
     });
   }
 };
+
+export const averageReview = (reviews) => {
+  if (reviews.length === 0) {
+    return 0; // Return 0 if there are no reviews to avoid division by zero
+  }
+
+  // Calculate the sum of stars
+  const sumStars = reviews.reduce(
+    (accumulator, review) => accumulator + review.stars,
+    0
+  );
+
+  // Calculate the average stars
+  const averageStars = sumStars / reviews.length;
+
+  return averageStars;
+};

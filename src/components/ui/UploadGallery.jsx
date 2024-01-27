@@ -47,21 +47,6 @@ export default function UploadGallery() {
     }
   };
 
-  // if (updateGallery) {
-  //   useEffect(() => {
-  //     fetch(
-  //       `${process.env.NEXT_PUBLIC_SERVER_URL}/gallery/package/${packageId}`
-  //     )
-  //       .then((data) => data.json())
-  //       .then((val) => setImages(val.data[0]?.images));
-  //     console.log("gallery useeffect");
-  //   }, []);
-  // }
-
-  // console.log("package id: ", packageId);
-  // console.log("update package form", updatePackage);
-  console.log("images list:", images);
-
   return (
     <div>
       <h1>Gallery</h1>
