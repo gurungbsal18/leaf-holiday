@@ -11,7 +11,7 @@ export default async function Destination() {
   };
 
   return (
-    <div>
+    <div className="dashboard-content-section p-4">
       <AdminPages data={data} />
     </div>
   );

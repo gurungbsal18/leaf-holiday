@@ -2,7 +2,7 @@ import AdminNavbar from "@/components/AdminNavbar";
 
 export default function AdminLayout({ children }) {
   return (
-    <div className="d-flex main-container gap-3">
+    <div className="d-flex main-container">
       <AdminNavbar />
       {children}
     </div>

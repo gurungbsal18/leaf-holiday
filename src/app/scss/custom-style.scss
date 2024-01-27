@@ -8,6 +8,7 @@
 @import "./single-trip";
 @import "./footer";
 @import "./register-page";
+@import "./home-test";
 
 $theme-secondary: #f7941d;
 $theme-secondary-dark: #eb8101;
@@ -31,4 +32,8 @@ $theme-secondary-dark: #eb8101;
 
 .text-decoration-none {
   text-decoration: none;
+}
+
+.py-100 {
+  padding: 100px 0;
 }

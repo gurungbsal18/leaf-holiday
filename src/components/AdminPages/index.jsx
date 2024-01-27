@@ -46,7 +46,7 @@ export default function AdminPages({ data }) {
   console.log("filtered data", filteredData);
 
   return (
-    <div>
+    <div className="">
       <Header
         pageName={data.pageName}
         createComponent={data.createComponent}
