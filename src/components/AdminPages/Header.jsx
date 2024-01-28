@@ -23,8 +23,7 @@ export default function ({ pageName, createComponent, keyword, setKeyword }) {
               setDialogOpen(true);
               setDialogContent(createComponent);
             }
-          }}
-        >
+          }}>
           {`+ Create New ${pageName}`}
         </button>
         <input

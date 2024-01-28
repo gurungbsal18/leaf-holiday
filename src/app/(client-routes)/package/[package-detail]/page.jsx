@@ -11,7 +11,6 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import MapIcon from "@mui/icons-material/Map";
 import BookingCard from "@/components/BookingCard";
 import { CalendarMonth } from "@mui/icons-material";
-import DateTable from "@/components/DateTable";
 import { Container } from "react-bootstrap";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import HikingIcon from "@mui/icons-material/Hiking";
@@ -26,6 +25,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import Notification from "@/components/Notification";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
+import dayjs from "dayjs";
 
 const PackageDetail = () => {
   const [showItineraryDetails, setShowItineraryDetails] = useState({});
@@ -71,7 +71,7 @@ const PackageDetail = () => {
         );
       }
     }
-  }, [showItineraryDetails]);
+  }, [showItineraryDetails, packageDetail]);
 
   const handleToggle = (id) => {
     setShowItineraryDetails((prevShowItineraryDetails) => ({
@@ -84,19 +84,21 @@ const PackageDetail = () => {
     packageDetail.itineraries.map((item) =>
       setShowItineraryDetails((prevShowItineraryDetails) => ({
         ...prevShowItineraryDetails,
-        [item.id]: expandOrCollapse ? false : true,
+        [item._id]: expandOrCollapse ? false : true,
       }))
     );
   };
-
+  console.log(showItineraryDetails);
   const readMoreBtn = () => {
     setContentExpand(!contentExpand);
   };
 
   useEffect(() => {
     getPackageDetail();
+    console.log("called useeffect");
   }, []);
-  packageDetail;
+
+  console.log("package details: ", packageDetail);
 
   return (
     <>
@@ -140,19 +142,25 @@ const PackageDetail = () => {
               <div className="col-12 col-lg-9 pt-3">
                 <div className="row d-flex gap-5 trip-fact my-4">
                   {Object.entries(packageDetail.tripFacts).map(
-                    ([key, value]) => (
-                      <div key={value.id} className="col d-flex">
-                        <div className="trip-fact-icon">
-                          {iconMapping[value.id]}
-                        </div>
-                        <div>
-                          <p className="trip-fact-title m-0 text-muted">
-                            {value.label}
-                          </p>
-                          <p className="trip-fact-detail m-0">{value.info}</p>
-                        </div>
-                      </div>
-                    )
+                    ([key, value]) => {
+                      if (value.info !== "" && value.info !== 0) {
+                        return (
+                          <div key={value.id} className="col d-flex">
+                            <div className="trip-fact-icon">
+                              {iconMapping[value.id]}
+                            </div>
+                            <div>
+                              <p className="trip-fact-title m-0 text-muted">
+                                {value.label}
+                              </p>
+                              <p className="trip-fact-detail m-0">
+                                {value.info}
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      }
+                    }
                   )}
                   <div className="col d-flex">
                     <div className="trip-fact-icon">
@@ -168,75 +176,83 @@ const PackageDetail = () => {
                     </div>
                   </div>
                 </div>
-                <div id="overview">
-                  <h4 className="title">
-                    Experience The Allure Of {packageDetail.name}
-                  </h4>
-                  {/* <div className="overview-content-collapse overview-content-expand"> */}
-                  <div
-                    className={`${
-                      contentExpand
-                        ? "overview-content-expand"
-                        : "overview-content-collapse"
-                    }`}>
-                    <p>{packageDetail.overview}</p>
-                  </div>
-                  <Button size="sm" variant="success" onClick={readMoreBtn}>
-                    {contentExpand ? "Read Less" : "Read More"}
-                  </Button>
-                </div>
-                <div className="mt-5" id="itinerary">
-                  <div className="d-flex justify-content-between mb-3">
+                {packageDetail.overview !== "" && (
+                  <div id="overview">
                     <h4 className="title">
-                      <ModeOfTravelIcon />
-                      Itinerary
+                      Experience The Allure Of {packageDetail.name}
                     </h4>
-                    <Button
-                      variant="success"
-                      size="sm"
-                      onClick={handleExpandCollapse}>
-                      {expandOrCollapse ? "Collapse All -" : "Expand All +"}
+                    {/* <div className="overview-content-collapse overview-content-expand"> */}
+                    <div
+                      className={`${
+                        contentExpand
+                          ? "overview-content-expand"
+                          : "overview-content-collapse"
+                      }`}
+                      dangerouslySetInnerHTML={{
+                        __html: packageDetail.overview,
+                      }}></div>
+                    <Button size="sm" variant="success" onClick={readMoreBtn}>
+                      {contentExpand ? "Read Less" : "Read More"}
                     </Button>
                   </div>
-                  <div className="d-flex gap-3 flex-column">
-                    {packageDetail.itineraries.map((item) => (
-                      <div key={item._id}>
-                        <div className="d-flex justify-content-between align-items-center">
-                          <span className="d-flex align-items-center gap-2">
-                            <span className="text-success">
-                              <LocationOnIcon />
+                )}
+                {packageDetail.itineraries.length !== 0 && (
+                  <div className="mt-5" id="itinerary">
+                    <div className="d-flex justify-content-between mb-3">
+                      <h4 className="title">
+                        <ModeOfTravelIcon />
+                        Itinerary
+                      </h4>
+                      <Button
+                        variant="success"
+                        size="sm"
+                        onClick={handleExpandCollapse}>
+                        {expandOrCollapse ? "Collapse All -" : "Expand All +"}
+                      </Button>
+                    </div>
+                    <div className="d-flex gap-3 flex-column">
+                      {packageDetail.itineraries.map((item) => (
+                        <div key={item._id}>
+                          <div className="d-flex justify-content-between align-items-center">
+                            <span className="d-flex align-items-center gap-2">
+                              <span className="text-success">
+                                <LocationOnIcon />
+                              </span>
+                              <p className="m-0 itinerary-title text-success">
+                                {item.title}
+                              </p>
                             </span>
-                            <p className="m-0 itinerary-title text-success">
-                              {item.title}
-                            </p>
-                          </span>
 
-                          <Button
-                            variant="success"
-                            size="sm"
-                            className="itinerary-expand-btn"
-                            onClick={() => handleToggle(item.id)}>
-                            {showItineraryDetails[item.id] ? "-" : "+"}
-                          </Button>
-                        </div>
-                        <div
-                          className={`${
-                            showItineraryDetails[item.id] ? "" : "d-none "
-                          }`}>
-                          <Image
-                            src={item.imageUrl}
-                            height={500}
-                            width={500}
-                            alt={`${item.name}-image`}
-                          />
+                            <Button
+                              variant="success"
+                              size="sm"
+                              className="itinerary-expand-btn"
+                              onClick={() => handleToggle(item._id)}>
+                              {showItineraryDetails[item._id] ? "-" : "+"}
+                            </Button>
+                          </div>
                           <div
-                            dangerouslySetInnerHTML={{
-                              __html: item.content,
-                            }}></div>
+                            className={`${
+                              showItineraryDetails[item._id] ? "" : "d-none "
+                            }`}>
+                            <Image
+                              src={item.imageUrl}
+                              height={500}
+                              width={500}
+                              alt={`${item.name}-image`}
+                            />
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: item.content,
+                              }}></div>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
+                )}
+                {(packageDetail.inclusions.length !== 0 ||
+                  packageDetail.exclusions.length !== 0) && (
                   <div
                     className="cost-IE-container mt-5"
                     id="costInclueExclude">
@@ -298,6 +314,16 @@ const PackageDetail = () => {
                       </ul>
                     </div>
                   </div>
+                )}
+                {packageDetail.highlights.length !== 0 && (
+                  <div className="trip-highlights">
+                    <h4 className="title">Trip Highlights</h4>
+                    {packageDetail.highlights.map((item) => (
+                      <p>{item}</p>
+                    ))}
+                  </div>
+                )}
+                {packageDetail.tripMapUrl !== "" && (
                   <div className="map-container mt-5" id="map">
                     <h4 className="title">
                       <MapIcon />
@@ -312,18 +338,57 @@ const PackageDetail = () => {
                       />
                     </div>
                   </div>
+                )}
+                {packageDetail.departureDate.length !== 0 && (
                   <div className="date-price-container mt-5" id="date-price">
                     <h4 className="title">
                       <CalendarMonth />
                       Dates & Price
                     </h4>
-
-                    <DateTable />
+                    <div>
+                      <div className="d-flex gap-3">
+                        <p>Start Date</p>
+                        <p>End Date</p>
+                        <p>Status</p>
+                        <p>Price per Person</p>
+                      </div>
+                      <div>
+                        {packageDetail.departureDate.map((item) => (
+                          <div className="d-flex gap-3">
+                            <p>
+                              {dayjs(item.startDate).format("MMM DD, YYYY")}
+                            </p>
+                            <p>{dayjs(item.endDate).format("MMM DD, YYYY")}</p>
+                            <p>
+                              {item.isAvailable ? "Available" : "Unavailable"}
+                            </p>
+                            <p>{item.pricePerPerson}</p>
+                            <button
+                              disabled={!item.isAvailable}
+                              className={`${
+                                item.isAvailable
+                                  ? "bg-success"
+                                  : "bg-danger text-decoration-line-through"
+                              } text-light`}>
+                              Book Now
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                </div>
+                )}
+                <div
+                  className="extra-contents"
+                  dangerouslySetInnerHTML={{
+                    __html: packageDetail.content,
+                  }}></div>
               </div>
               <div className="col-12 col-lg-3 booking-card pt-4">
-                <BookingCard price={1290} />
+                <BookingCard
+                  prices={packageDetail.prices}
+                  packageId={packageDetail._id}
+                />
               </div>
             </div>
           </Container>

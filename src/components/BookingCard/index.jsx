@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import LocalOfferIcon from "@mui/icons-material/LocalOffer";
+"use client";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
@@ -9,58 +9,55 @@ import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import { GlobalContext } from "@/context";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
-const BookingCard = ({ price }) => {
+const BookingCard = ({ prices, packageId }) => {
+  const { user, setBookingFormData, isAuthUser } = useContext(GlobalContext);
+  const router = useRouter();
   const [showGroupPrice, setShowGroupPrice] = useState(false);
   const currentDate = new Date().toDateString();
   const [formData, setFormData] = useState({
-    tripDate: dayjs(currentDate).format("ddd MMM DD, YYYY"),
+    name: user?.name || "",
+    email: user?.email || "",
+    phoneNumber: "",
+    country: "",
+    noOfChildren: 0,
+    tripDate: dayjs(currentDate),
     noOfGuests: 1,
-    total: price,
+    total: prices[0]?.price,
+    message: "",
   });
 
-  const bookingDetail = {
-    groupPrice: [
-      {
-        id: 1,
-        maxNoOfPeople: 1,
-        peopleRange: "1 - 1",
-        price: 799,
-      },
-      {
-        id: 2,
-        maxNoOfPeople: 2,
-        peopleRange: "2 - 2",
-        price: 699,
-      },
-      {
-        id: 3,
-        maxNoOfPeople: 7,
-        peopleRange: "3 - 7",
-        price: 599,
-      },
-      {
-        id: 4,
-        maxNoOfPeople: 15,
-        peopleRange: "8 - 15",
-        price: 499,
-      },
-      {
-        id: 5,
-        maxNoOfPeople: 30,
-        peopleRange: "16 - 30",
-        price: 375,
-      },
-    ],
-  };
+  console.log("booking card prices: ", prices);
 
   const priceCalculator = (priceRange, guestNumber) => {
     for (let i = 0; i < priceRange.length; i++) {
-      if (guestNumber <= priceRange[i].maxNoOfPeople) {
+      if (guestNumber <= Number(priceRange[i].numberOfPeople.split("-")[1])) {
         return priceRange[i].price;
       }
     }
   };
+
+  const handleBook = () => {
+    if (!isAuthUser) {
+      toast.error("Please Login To Book The Package", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setTimeout(() => {
+        router.push("/login");
+      }, 1000);
+    } else {
+      console.log("Booking card form submitted: ", formData);
+      setBookingFormData(formData);
+      localStorage.setItem("bookingData", JSON.stringify(formData));
+      setTimeout(() => {
+        router.push(`/package/${packageId}/booking`);
+      }, 1000);
+    }
+  };
+
   return (
     <div className="sticky-top">
       <div className="d-flex booking-card-price-header">
@@ -72,42 +69,38 @@ const BookingCard = ({ price }) => {
             {/* <br />
             <span>
               US $
-              {priceCalculator(bookingDetail.groupPrice, formData.noOfGuests)}
+              {priceCalculator(prices, formData.noOfGuests)}
             </span> */}
           </p>
           <p className="price-amount m-0">
-            US ${priceCalculator(bookingDetail.groupPrice, formData.noOfGuests)}
+            US ${priceCalculator(prices, formData.noOfGuests)}
           </p>
         </div>
       </div>
       <div className="booking-card-body mb-2">
         <div
           className="d-flex align-items-center mb-1"
-          style={{ position: "relative" }}
-        >
+          style={{ position: "relative" }}>
           <Button
             variant="light"
             size="sm"
             onClick={() => setShowGroupPrice(!showGroupPrice)}
-            className="d-flex justify-content-between gap-5 w-100"
-          >
+            className="d-flex justify-content-between gap-5 w-100">
             <p className="m-0">We Offer Group Prices</p>
             <ArrowDropDownIcon />
           </Button>
         </div>
         <div
-          className={`${showGroupPrice ? "" : "d-none"} group-price-dropdown`}
-        >
+          className={`${showGroupPrice ? "" : "d-none"} group-price-dropdown`}>
           <ul className="p-0 m-0">
             <li className="d-flex justify-content-between align-items-center">
               <p className="fs-14">No. of People</p>
               <p className="fs-14">Price per Person</p>
             </li>
-            {bookingDetail.groupPrice.map((item) => (
+            {prices.map((item) => (
               <li
                 key={item.id}
-                className="d-flex justify-content-between align-items-center fs-14"
-              >
+                className="d-flex justify-content-between align-items-center fs-14">
                 <p>{item.peopleRange}</p>
                 <p>US$ {item.price}</p>
               </li>
@@ -126,7 +119,7 @@ const BookingCard = ({ price }) => {
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    tripDate: dayjs(e).format("ddd MMM DD, YYYY"),
+                    tripDate: e,
                   })
                 }
                 defaultValue={dayjs(formData.tripDate)}
@@ -138,8 +131,7 @@ const BookingCard = ({ price }) => {
             <a
               href="#date-price"
               role="button"
-              className="fs-14 text-light text-decoration-none"
-            >
+              className="fs-14 text-light text-decoration-none">
               Fixed Departure Dates
             </a>
           </div>
@@ -158,16 +150,14 @@ const BookingCard = ({ price }) => {
                   ...formData,
                   noOfGuests: e.target.value,
                   total:
-                    priceCalculator(bookingDetail.groupPrice, e.target.value) *
-                    e.target.value,
+                    priceCalculator(prices, e.target.value) * e.target.value,
                 });
               }}
             />
             <span className="d-flex justify-content-between ">
-              <p>{`$${priceCalculator(
-                bookingDetail.groupPrice,
+              <p>{`$${priceCalculator(prices, formData.noOfGuests)} x ${
                 formData.noOfGuests
-              )} x ${formData.noOfGuests}`}</p>
+              }`}</p>
               <p>{formData.total}</p>
             </span>
             <span className="d-flex justify-content-between ">
@@ -180,7 +170,7 @@ const BookingCard = ({ price }) => {
 
       <div className="d-flex gap-3 flex-column">
         <div className="d-flex gap-2">
-          <Button variant="success" className="w-100">
+          <Button variant="success" className="w-100" onClick={handleBook}>
             Book Now
           </Button>
           <Button variant="success" className="w-100">
@@ -192,8 +182,7 @@ const BookingCard = ({ price }) => {
         </Button>
         <Button
           className="d-flex justify-content-center align-items-center gap-2"
-          variant="success"
-        >
+          variant="success">
           <PictureAsPdfIcon fontSize="large" />
           <p className="m-0">Download PDF</p>
         </Button>

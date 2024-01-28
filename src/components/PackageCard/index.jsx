@@ -9,7 +9,9 @@ import { useRouter } from "next/navigation";
 function PackageCard({ packageDetail }) {
   const router = useRouter();
   return (
-    <div className="trip-card border col-3">
+    <div
+      className="trip-card border col-3"
+      onClick={() => router.push(`/package/${packageDetail._id}`)}>
       <Image
         src={packageDetail.mainImageUrl}
         height={200}
@@ -31,18 +33,14 @@ function PackageCard({ packageDetail }) {
             {packageDetail.reviews.length} Reviews
           </span>
         </div>
-        <h4
-          className="trip-card-title"
-          onClick={() => router.push(`/package/${packageDetail._id}`)}>
-          {packageDetail.name}
-        </h4>
+        <h4 className="trip-card-title">{packageDetail.name}</h4>
         <div className="d-flex justify-content-between align-items-center">
           <span className="text-muted trip-card-duration d-flex align-items-center gap-1">
             <ScheduleOutlinedIcon fontSize="14" />
-            {packageDetail.duration} Days
+            {packageDetail.tripFacts.duration.info} Days
           </span>
           <p className="m-0">
-            Startin From USD{" "}
+            Starting From USD{" "}
             {packageDetail.prices[packageDetail.prices.length - 1]?.price || 0}/
             <span className="text-muted" style={{ fontSize: "12px" }}>
               per person

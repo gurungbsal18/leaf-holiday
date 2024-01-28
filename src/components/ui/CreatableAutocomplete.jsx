@@ -93,6 +93,7 @@ export default function TestCreatableAutocomplete({ control, formName }) {
             renderOption={(props, option) => <li {...props}>{option.name}</li>}
             selectOnFocus
             clearOnBlur
+            autoSelect
             handleHomeEndKeys
             freeSolo
             renderInput={(params) => (
