@@ -39,10 +39,10 @@ function PackageCard({ packageDetail }) {
         <div className="d-flex justify-content-between align-items-center">
           <span className="text-muted trip-card-duration d-flex align-items-center gap-1">
             <ScheduleOutlinedIcon fontSize="14" />
-            {packageDetail.duration} Days
+            {packageDetail.tripFacts.duration.info} Days
           </span>
           <p className="m-0">
-            Startin From USD{" "}
+            Starting From USD{" "}
             {packageDetail.prices[packageDetail.prices.length - 1]?.price || 0}/
             <span className="text-muted" style={{ fontSize: "12px" }}>
               per person

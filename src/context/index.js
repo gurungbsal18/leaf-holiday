@@ -20,6 +20,7 @@ export default function GlobalState({ children }) {
   const [isAuthUser, setIsAuthUser] = useState(null);
   const [updatePageName, setUpdatePageName] = useState(null);
   const [updatePageData, setUpdatePageData] = useState(null);
+  const [bookingFormData, setBookingFormData] = useState(null);
 
   const pathname = usePathname();
   const extractAdminPath = pathname.split("/");
@@ -28,7 +29,9 @@ export default function GlobalState({ children }) {
     if (Cookies.get("token") !== undefined) {
       setIsAuthUser(true);
       const userData = JSON.parse(localStorage.getItem("user")) || {};
+      const bookingData = JSON.parse(localStorage.getItem("bookingData")) || {};
       setUser(userData);
+      setBookingFormData(bookingData);
     } else {
       setIsAuthUser(false);
       setUser({}); //unauthenticated user
@@ -69,6 +72,8 @@ export default function GlobalState({ children }) {
         setUpdatePageName,
         updatePageData,
         setUpdatePageData,
+        bookingFormData,
+        setBookingFormData,
       }}>
       {children}
     </GlobalContext.Provider>

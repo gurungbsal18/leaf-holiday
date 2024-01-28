@@ -16,15 +16,14 @@ export default function ({ pageName, createComponent, keyword, setKeyword }) {
         <button
           className="btn btn-success"
           onClick={() => {
-            if (pageName === "Packages") {
+            if (pageName === "Package") {
               router.push("/admin/packages/create-package");
               setUpdatePackage(null);
             } else {
               setDialogOpen(true);
               setDialogContent(createComponent);
             }
-          }}
-        >
+          }}>
           {`+ Create New ${pageName}`}
         </button>
         <input

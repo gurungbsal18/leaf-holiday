@@ -58,7 +58,7 @@ export default function CreatePackage() {
     name: "",
     prices: [
       {
-        noOfPeople: "",
+        numberOfPeople: "",
         price: 0,
       },
     ],
@@ -160,6 +160,7 @@ export default function CreatePackage() {
   });
 
   const onSubmit = async (data) => {
+    console.log("form submitted: ", data);
     const res = submitPackageForm(
       data,
       updatePackage,
@@ -230,7 +231,7 @@ export default function CreatePackage() {
                             </InputAdornment>
                           ),
                         }}
-                        {...register(`prices.${index}.noOfPeople`)}
+                        {...register(`prices.${index}.numberOfPeople`)}
                       />
                       <TextField
                         className="mx-0"
@@ -269,7 +270,7 @@ export default function CreatePackage() {
                     variant="success"
                     onClick={() =>
                       pricesAppend({
-                        noOfPeople: "",
+                        numberOfPeople: "",
                         price: 0,
                       })
                     }>
