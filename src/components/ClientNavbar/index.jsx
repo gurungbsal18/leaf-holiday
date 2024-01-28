@@ -77,6 +77,8 @@ import { toast } from "react-toastify";
 
 import { PrimeReactProvider } from "primereact/api";
 import MegaMenuMain from "./MegaMenu";
+import LogoutIcon from "@mui/icons-material/Logout";
+import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 
 export default function ClientNavbar() {
   const { isAuthUser, setIsAuthUser, setUser, user } =
@@ -122,20 +124,38 @@ export default function ClientNavbar() {
             </Button>
           </div>
         </div>
-        <PrimeReactProvider>
-          <MegaMenuMain />
-        </PrimeReactProvider>
-        <div className="d-flex gap-3">
-          {isAuthUser ? (
-            <button onClick={handleLogout}>Log Out</button>
-          ) : (
-            <button onClick={() => router.push("/login")}>Log In</button>
-          )}
-          <button onClick={() => router.push("/register")}>Sign Up</button>
+        <div className="d-block d-lg-flex justify-content-center gap-4 pb-2 align-items-center position-relative">
+          <PrimeReactProvider>
+            <MegaMenuMain />
+            <div className="d-flex gap-3 login-section">
+              {isAuthUser ? (
+                <a role="button" onClick={handleLogout}>
+                  Log Out
+                </a>
+              ) : (
+                <a
+                  role="button"
+                  className="text-success d-flex align-items-center gap-1 log-in-btn"
+                  onClick={() => router.push("/login")}
+                >
+                  <LogoutIcon />
+                  Log In
+                </a>
+              )}
+              {/* <a
+                role="button"
+                className="text-success d-flex align-items-center gap-2"
+                onClick={() => router.push("/register")}
+              >
+                <PersonAddAltOutlinedIcon />
+                Sign Up
+              </a> */}
+            </div>
+          </PrimeReactProvider>
         </div>
-        <span onClick={handleShowNavBar} className="d-md-none">
+        {/* <span onClick={handleShowNavBar} className="d-md-none">
           {showNavbar ? <MenuOpenIcon /> : <CloseIcon />}
-        </span>
+        </span> */}
       </div>
     </>
   );

@@ -25,6 +25,9 @@
   margin-top: -30px;
   position: relative;
   z-index: 1;
+  @media (max-width: 576px) {
+    width: 100%;
+  }
   input {
     height: 50px;
     &:focus {
@@ -47,6 +50,9 @@
 
   .trip-card {
     width: 315px;
+    @media (max-width: 820px) {
+      width: 100%;
+    }
     img {
       height: 160px;
     }

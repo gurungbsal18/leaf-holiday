@@ -1,3 +1,7 @@
+.register-image img {
+  object-fit: cover;
+}
+
 @media (max-width: 576px) {
   .register-image {
     img {
@@ -7,6 +11,9 @@
   }
 }
 
-.register-image img {
-  object-fit: cover;
+@media (max-width: 820px) {
+  .register-image img {
+    width: 300px;
+    height: auto;
+  }
 }

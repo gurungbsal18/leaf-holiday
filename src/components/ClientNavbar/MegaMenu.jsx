@@ -40,22 +40,41 @@ export default function MegaMenuMain() {
         ],
         [
           {
-            label: "Kailash Tour",
+            label: "Annapuarna Region",
             items: [
-              { label: "Kailash Overland Tour" },
-              { label: "Mount Kailash Yatra" },
+              { label: "Annapurna Base Camp Trek - 12 Days" },
+              { label: "Annapurna Circuit Trek - 19 Days" },
+              { label: "Tilicho Base Camp Trek - 15 Days" },
             ],
           },
         ],
         [
           {
-            label: "Appliances",
+            label: "Annapuarna Region",
             items: [
-              { label: "Coffee Machine" },
-              { label: "Fridge" },
-              { label: "Oven" },
-              { label: "Vaccum Cleaner" },
-              { label: "Washing Machine" },
+              { label: "Annapurna Base Camp Trek - 12 Days" },
+              { label: "Annapurna Circuit Trek - 19 Days" },
+              { label: "Tilicho Base Camp Trek - 15 Days" },
+            ],
+          },
+        ],
+        [
+          {
+            label: "Annapuarna Region",
+            items: [
+              { label: "Annapurna Base Camp Trek - 12 Days" },
+              { label: "Annapurna Circuit Trek - 19 Days" },
+              { label: "Tilicho Base Camp Trek - 15 Days" },
+            ],
+          },
+        ],
+        [
+          {
+            label: "Annapuarna Region",
+            items: [
+              { label: "Annapurna Base Camp Trek - 12 Days" },
+              { label: "Annapurna Circuit Trek - 19 Days" },
+              { label: "Tilicho Base Camp Trek - 15 Days" },
             ],
           },
         ],
