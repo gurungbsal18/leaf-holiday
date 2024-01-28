@@ -55,14 +55,14 @@ const HomeTest = () => {
         </button>
       </div>
 
-      <div className="container py-100">
-        <div className="text-center my-5">
-          <h4 className="home-title">Top Selling Packages</h4>
-        </div>
-        <div className="d-flex gap-3 flex-wrap">
-          {TopSellingPackage.map((tripCard, index) => (
-            <div key={index}>
-              <div className="trip-card border col-3">
+      <div className="py-100">
+        <div className="container">
+          <div className="text-center my-5">
+            <h4 className="home-title">Top Selling Packages</h4>
+          </div>
+          <div className="d-flex gap-3 flex-wrap">
+            {TopSellingPackage.map((tripCard, index) => (
+              <div key={index} className="trip-card border">
                 <Image
                   src={tripCard.imageUrl}
                   height={200}
@@ -99,35 +99,35 @@ const HomeTest = () => {
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 
       <ExploreDestination />
 
-      <div className="container py-100">
-        <div className="text-center my-5">
-          <h2 className="home-title">Best Of Kailash Tour</h2>
-        </div>
-
-        <div className="home-video-section d-flex gap-3">
-          <div className="col-6">
-            <iframe
-              width="560"
-              height="315"
-              src="https://www.youtube.com/embed/FXncx9XulCw?si=yAlx0fQQXCDtkjSH"
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
-            ></iframe>
+      <div className="py-100">
+        <div className="container">
+          <div className="text-center my-5">
+            <h2 className="home-title">Best Of Kailash Tour</h2>
           </div>
-          <div className="col-6">
-            <div className="d-flex gap-3 flex-wrap">
-              {TopSellingPackage.map((tripCard, index) => (
-                <div key={index}>
-                  <div className="trip-card border col-6">
+
+          <div className="home-video-section d-flex flex-column flex-lg-row gap-3">
+            <div className="col-12 col-lg-6">
+              <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/FXncx9XulCw?si=yAlx0fQQXCDtkjSH"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <div className="col-12 col-lg-6">
+              <div className="d-flex gap-3 flex-wrap">
+                {TopSellingPackage.map((tripCard, index) => (
+                  <div key={index} className="trip-card border col-12 col-md-6">
                     <Image
                       src={tripCard.imageUrl}
                       height={200}
@@ -167,19 +167,19 @@ const HomeTest = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="container blog-section py-100">
-          <div className="text-center">
-            <h2 className="home-title">Blogs and News</h2>
-          </div>
+          <div className="container blog-section py-100">
+            <div className="text-center">
+              <h2 className="home-title">Blogs and News</h2>
+            </div>
 
-          <div className="d-flex justify-content-center">
-            <button className="btn btn-success">View all</button>
+            <div className="d-flex justify-content-center">
+              <button className="btn btn-success">View all</button>
+            </div>
           </div>
         </div>
       </div>

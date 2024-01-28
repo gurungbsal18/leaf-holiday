@@ -1,3 +1,66 @@
+// "use client";
+// import React, { useState } from "react";
+// import Navbar from "react-bootstrap/Navbar";
+// import Button from "react-bootstrap/Button";
+// import Image from "next/image";
+// import Nav from "react-bootstrap/Nav";
+// import { navItems } from "@/utils";
+// import MenuOpenIcon from "@mui/icons-material/MenuOpen";
+// import CloseIcon from "@mui/icons-material/Close";
+
+// import { PrimeReactProvider } from "primereact/api";
+// import MegaMenuMain from "./MegaMenu";
+
+// export default function ClientNavbar() {
+//   const [showNavbar, setShowNavbar] = useState(false);
+
+//   function handleShowNavBar() {
+//     setShowNavbar(!showNavbar);
+//   }
+
+//   return (
+//     <>
+//       <Navbar className="p-5 pt-3 pb-3 h-20  " bg="light" expand="md">
+//        <div className="image-container">
+//          <a href="/">
+//           <Image
+//             src="/images/logo.png"
+//             width={191}
+//             height={76}
+//             alt="leaf-holiday-logo"
+//             priority={true}
+//           />
+//         </a>
+//       </div>
+//       <div className="nav-container d-flex flex-row align-items-end w-100 flex-lg-column">
+//         <Button variant="success" size="sm" className="p-2">
+//           <span className="d-flex gap-2">
+//             Mount Kailash (Fixed Departure 2024)
+//           </span>
+//         </Button>
+
+//       <PrimeReactProvider>
+//         <div className="nav-list">
+//             <Nav className="justify-content-end">
+//               {navItems.map((navItem) => (
+//                 <Nav.Link key={navItem.id} href={navItem.path}>
+//                   {navItem.label}
+//                 </Nav.Link>
+//               ))}
+//             </Nav>
+//           </div>
+
+//         <MegaMenuMain />
+//       </PrimeReactProvider>
+//       <span onClick={handleShowNavBar} className="d-md-none">
+//         {showNavbar ? <MenuOpenIcon /> : <CloseIcon />}
+//       </span>
+//       </div>
+//       // </Navbar>
+//     </>
+//   );
+// }
+
 "use client";
 import React, { useContext, useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
@@ -11,6 +74,11 @@ import { useRouter } from "next/navigation";
 import { GlobalContext } from "@/context";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
+
+import { PrimeReactProvider } from "primereact/api";
+import MegaMenuMain from "./MegaMenu";
+import LogoutIcon from "@mui/icons-material/Logout";
+import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 
 export default function ClientNavbar() {
   const { isAuthUser, setIsAuthUser, setUser, user } =
@@ -33,45 +101,62 @@ export default function ClientNavbar() {
   }
 
   return (
-    <Navbar className="p-5 pt-3 pb-3 h-20  " bg="light" expand="md">
-      <div className="image-container">
-        <a href="/">
-          <Image
-            src="/images/logo.png"
-            width={191}
-            height={76}
-            alt="leaf-holiday-logo"
-            priority={true}
-          />
-        </a>
-      </div>
-      <div className="nav-container d-flex flex-row align-items-end w-100 flex-lg-column">
-        <Button variant="success" size="sm" className="p-2">
-          <span className="d-flex gap-2">
-            Mount Kailash (Fixed Departure 2024)
-          </span>
-        </Button>
-        <div className="nav-list">
-          <Nav className="justify-content-end">
-            {navItems.map((navItem) => (
-              <Nav.Link key={navItem.id} href={navItem.path}>
-                {navItem.label}
-              </Nav.Link>
-            ))}
-          </Nav>
+    <>
+      <div className="container">
+        <div className="d-flex justify-content-between align-items-center">
+          <div className="image-container">
+            <a href="/">
+              <Image
+                src="/images/logo.png"
+                width={191}
+                height={76}
+                alt="leaf-holiday-logo"
+                priority={true}
+              />
+            </a>
+          </div>
+
+          <div className="d-flex flex-column">
+            <Button variant="success" size="sm" className="p-2">
+              <span className="d-flex gap-2">
+                Mount Kailash (Fixed Departure 2024)
+              </span>
+            </Button>
+          </div>
         </div>
-        <div className="d-flex gap-3">
-          {isAuthUser ? (
-            <button onClick={handleLogout}>Log Out</button>
-          ) : (
-            <button onClick={() => router.push("/login")}>Log In</button>
-          )}
-          <button onClick={() => router.push("/register")}>Sign Up</button>
+        <div className="d-block d-lg-flex justify-content-center gap-4 pb-2 align-items-center position-relative">
+          <PrimeReactProvider>
+            <MegaMenuMain />
+            <div className="d-flex gap-3 login-section">
+              {isAuthUser ? (
+                <a role="button" onClick={handleLogout}>
+                  Log Out
+                </a>
+              ) : (
+                <a
+                  role="button"
+                  className="text-success d-flex align-items-center gap-1 log-in-btn"
+                  onClick={() => router.push("/login")}
+                >
+                  <LogoutIcon />
+                  Log In
+                </a>
+              )}
+              {/* <a
+                role="button"
+                className="text-success d-flex align-items-center gap-2"
+                onClick={() => router.push("/register")}
+              >
+                <PersonAddAltOutlinedIcon />
+                Sign Up
+              </a> */}
+            </div>
+          </PrimeReactProvider>
         </div>
-        <span onClick={handleShowNavBar} className="d-md-none">
+        {/* <span onClick={handleShowNavBar} className="d-md-none">
           {showNavbar ? <MenuOpenIcon /> : <CloseIcon />}
-        </span>
+        </span> */}
       </div>
-    </Navbar>
+    </>
   );
 }

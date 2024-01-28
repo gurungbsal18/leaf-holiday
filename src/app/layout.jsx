@@ -5,6 +5,8 @@ import "./scss/variable.scss";
 import "./scss/custom-style.scss";
 import GlobalState from "@/context";
 
+import "primereact/resources/themes/lara-light-cyan/theme.css";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {

@@ -8,6 +8,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import { averageReview } from "@/utils/functions";
+import HomeTest from "@/components/HomeTest";
 
 export default function Home() {
   const [packageData, setPackageData] = useState(null);
@@ -24,19 +25,11 @@ export default function Home() {
 
   return (
     <>
+      <HomeTest />
       {packageData ? (
         <div className="container">
           <h1>leaf holiday</h1>
           <div className="d-flex flex-wrap gap-4">
-            {/* <PackageCard
-              imageUrl={image}
-              address={"kailash"}
-              rating={5}
-              review={5}
-              title={"Kailash Mansarowar"}
-              duration={14}
-              price={1090}
-            /> */}
             {packageData.map((item) => (
               <PackageCard packageDetail={item} />
             ))}
