@@ -139,7 +139,7 @@ export default function ClientNavbar() {
                   onClick={() => router.push("/login")}
                 >
                   <LogoutIcon />
-                  Log In
+                  Log In or Register
                 </a>
               )}
               {/* <a
