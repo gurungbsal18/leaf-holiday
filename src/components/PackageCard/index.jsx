@@ -10,8 +10,9 @@ function PackageCard({ packageDetail }) {
   const router = useRouter();
   return (
     <div
-      className="trip-card border col-3"
-      onClick={() => router.push(`/package/${packageDetail._id}`)}>
+      className="trip-card border"
+      onClick={() => router.push(`/package/${packageDetail._id}`)}
+    >
       <Image
         src={packageDetail.mainImageUrl}
         height={200}

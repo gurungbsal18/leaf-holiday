@@ -29,7 +29,7 @@ export default function Home() {
       {packageData ? (
         <div className="container">
           <h1>leaf holiday</h1>
-          <div className="d-flex flex-wrap gap-4">
+          <div className="d-flex flex-wrap gap-3 justify-content-center">
             {packageData.map((item) => (
               <PackageCard packageDetail={item} />
             ))}
