@@ -21,9 +21,17 @@ export default function GlobalState({ children }) {
   const [updatePageName, setUpdatePageName] = useState(null);
   const [updatePageData, setUpdatePageData] = useState(null);
   const [bookingFormData, setBookingFormData] = useState(null);
+  const [trackPage, setTrackPage] = useState("/");
 
   const pathname = usePathname();
   const extractAdminPath = pathname.split("/");
+
+  useEffect(() => {
+    if (pathname !== "/login" && pathname !== "/register") {
+      setTrackPage(pathname);
+      console.log(trackPage);
+    }
+  }, [pathname]);
 
   useEffect(() => {
     if (Cookies.get("token") !== undefined) {
@@ -74,6 +82,8 @@ export default function GlobalState({ children }) {
         setUpdatePageData,
         bookingFormData,
         setBookingFormData,
+        trackPage,
+        setTrackPage,
       }}>
       {children}
     </GlobalContext.Provider>

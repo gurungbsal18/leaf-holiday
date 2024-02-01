@@ -77,7 +77,7 @@ import { toast } from "react-toastify";
 
 import { PrimeReactProvider } from "primereact/api";
 import MegaMenuMain from "./MegaMenu";
-import LogoutIcon from "@mui/icons-material/Logout";
+import LoginIcon from "@mui/icons-material/Login";
 import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 
 export default function ClientNavbar() {
@@ -89,15 +89,17 @@ export default function ClientNavbar() {
   function handleShowNavBar() {
     setShowNavbar(!showNavbar);
   }
-  function handleLogout() {
-    toast.success("Logged Out Successfully", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-    setIsAuthUser(false);
-    setUser(null);
-    Cookies.remove("token");
-    localStorage.clear();
-    router.push("/");
+
+  function profileImageMaker() {
+    const { name } = user;
+
+    // Split the name into an array of words
+    const names = name.split(" ");
+
+    // Extract the first character of each word and convert to uppercase
+    const initials = names.map((word) => word.charAt(0).toUpperCase()).join("");
+    console.log(initials);
+    return initials;
   }
 
   return (
@@ -129,17 +131,23 @@ export default function ClientNavbar() {
             <MegaMenuMain />
             <div className="d-flex gap-3 login-section">
               {isAuthUser ? (
-                <a role="button" onClick={handleLogout}>
-                  Log Out
-                </a>
+                <div
+                  onClick={() =>
+                    setTimeout(() => {
+                      router.push("/account");
+                    }, 1000)
+                  }
+                >
+                  {profileImageMaker()}
+                </div>
               ) : (
                 <a
                   role="button"
                   className="text-success d-flex align-items-center gap-1 log-in-btn"
                   onClick={() => router.push("/login")}
                 >
-                  <LogoutIcon />
-                  Log In or Register
+                  <LoginIcon />
+                  Log In
                 </a>
               )}
               {/* <a

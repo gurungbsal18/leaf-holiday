@@ -16,6 +16,7 @@ import Notification from "@/components/Notification";
 
 export default function Login() {
   const {
+    trackPage,
     componentLevelLoader,
     setComponentLevelLoader,
     pageLevelLoader,
@@ -83,8 +84,9 @@ export default function Login() {
 
   useEffect(() => {
     if (isAuthUser) {
+      console.log("routing page ... to", trackPage);
       setTimeout(() => {
-        router.push("/");
+        router.push(trackPage);
       }, [1000]);
     }
   }, [isAuthUser]);
