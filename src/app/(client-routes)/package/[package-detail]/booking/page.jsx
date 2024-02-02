@@ -14,10 +14,18 @@ import TextareaAutosize from "@mui/material/TextareaAutosize";
 import Autocomplete from "@mui/material/Autocomplete";
 import axios from "axios";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
+import { countries } from "@/utils";
 
 export default function Booking() {
-  const { trackPage, isAuthUser, bookingFormData, setBookingFormData, user } =
-    useContext(GlobalContext);
+  const {
+    trackPage,
+    isAuthUser,
+    bookingFormData,
+    setBookingFormData,
+    user,
+    pageLevelLoader,
+    setPageLevelLoader,
+  } = useContext(GlobalContext);
   const router = useRouter();
   const [countryName, setCountryName] = useState("");
   const packageId = usePathname()
@@ -27,6 +35,7 @@ export default function Booking() {
 
   const { register, control, handleSubmit, watch, setValue } = useForm({
     defaultValues: bookingFormData || {
+      userId: user?._id,
       name: user?.name || "",
       email: user?.email || "",
       phoneNumber: "",
@@ -46,15 +55,18 @@ export default function Booking() {
 
   useEffect(() => {
     const getPackageDetail = async () => {
+      setPageLevelLoader(true);
       try {
         const res = await axios.get(
           `${process.env.NEXT_PUBLIC_SERVER_URL}/package/${packageId}`
         );
         if (res.status === 200) {
+          setPageLevelLoader(false);
           setPackageName(res.data.data.name);
         }
         console.log(res);
       } catch (e) {
+        setPageLevelLoader(false);
         toast.error("Package Not Found", {
           position: toast.POSITION.TOP_RIGHT,
         });
@@ -66,7 +78,9 @@ export default function Booking() {
 
   return (
     <>
-      {packageName ? (
+      {pageLevelLoader ? (
+        <PageLevelLoader loading={pageLevelLoader} />
+      ) : (
         <div className="d-flex">
           <div>
             <h1>Booking Form</h1>
@@ -117,7 +131,7 @@ export default function Booking() {
                 <TextField
                   required
                   size="small"
-                  label="Number of Adult"
+                  label="Number of Children"
                   type="number"
                   variant="outlined"
                   {...register("noOfChildren", {
@@ -161,10 +175,7 @@ export default function Booking() {
               ))}
             </div>
           </div>
-          <Notification />
         </div>
-      ) : (
-        <PageLevelLoader loading={true} />
       )}
     </>
   );
@@ -203,253 +214,4 @@ const mapHelper = [
     id: "message",
     label: "Message",
   },
-];
-
-const countries = [
-  "Andorra",
-  "French Southern and Antarctic Lands",
-  "Laos",
-  "Canada",
-  "Nigeria",
-  "Vanuatu",
-  "Czechia",
-  "Malawi",
-  "Mali",
-  "Iceland",
-  "Norway",
-  "Saint Vincent and the Grenadines",
-  "Guadeloupe",
-  "Chile",
-  "Bermuda",
-  "Kuwait",
-  "Dominica",
-  "Montenegro",
-  "United States Virgin Islands",
-  "Cameroon",
-  "Sri Lanka",
-  "China",
-  "Bangladesh",
-  "Sweden",
-  "Grenada",
-  "Turkey",
-  "Guinea",
-  "Tanzania",
-  "Rwanda",
-  "Singapore",
-  "Morocco",
-  "Saint Barthélemy",
-  "Iraq",
-  "Brunei",
-  "Isle of Man",
-  "North Korea",
-  "Iran",
-  "Curaçao",
-  "Paraguay",
-  "Albania",
-  "Tajikistan",
-  "Bolivia",
-  "Austria",
-  "Saint Kitts and Nevis",
-  "United States Minor Outlying Islands",
-  "Colombia",
-  "Kosovo",
-  "Belize",
-  "Guinea-Bissau",
-  "Marshall Islands",
-  "Myanmar",
-  "French Polynesia",
-  "Brazil",
-  "Croatia",
-  "Somalia",
-  "Afghanistan",
-  "Anguilla",
-  "Cook Islands",
-  "New Zealand",
-  "Eritrea",
-  "Cambodia",
-  "Bahamas",
-  "Belarus",
-  "Norfolk Island",
-  "Tuvalu",
-  "South Georgia",
-  "Mauritania",
-  "New Caledonia",
-  "Bulgaria",
-  "Mozambique",
-  "Niue",
-  "Estonia",
-  "Italy",
-  "Malta",
-  "Slovenia",
-  "India",
-  "Peru",
-  "Burundi",
-  "Lithuania",
-  "United States",
-  "Honduras",
-  "Tonga",
-  "Saudi Arabia",
-  "Suriname",
-  "Qatar",
-  "Gibraltar",
-  "Northern Mariana Islands",
-  "Mauritius",
-  "Barbados",
-  "Réunion",
-  "British Indian Ocean Territory",
-  "Syria",
-  "Egypt",
-  "São Tomé and Príncipe",
-  "Kiribati",
-  "Timor-Leste",
-  "Lesotho",
-  "Solomon Islands",
-  "Libya",
-  "South Korea",
-  "Liechtenstein",
-  "Nicaragua",
-  "Ecuador",
-  "Maldives",
-  "Algeria",
-  "Kyrgyzstan",
-  "Finland",
-  "Kenya",
-  "Cuba",
-  "Montserrat",
-  "Poland",
-  "Åland Islands",
-  "Ethiopia",
-  "Togo",
-  "Bosnia and Herzegovina",
-  "Uruguay",
-  "Guam",
-  "Cape Verde",
-  "Chad",
-  "Vatican City",
-  "Palau",
-  "Haiti",
-  "Yemen",
-  "Eswatini",
-  "Zimbabwe",
-  "Greece",
-  "Israel",
-  "Saint Martin",
-  "Antigua and Barbuda",
-  "Cyprus",
-  "Sint Maarten",
-  "Monaco",
-  "Fiji",
-  "Ukraine",
-  "Martinique",
-  "Hong Kong",
-  "Portugal",
-  "Bhutan",
-  "Nepal",
-  "France",
-  "Ireland",
-  "United Arab Emirates",
-  "Guernsey",
-  "Saint Lucia",
-  "Dominican Republic",
-  "Serbia",
-  "Botswana",
-  "Ivory Coast",
-  "Ghana",
-  "Comoros",
-  "Azerbaijan",
-  "United Kingdom",
-  "Central African Republic",
-  "Palestine",
-  "Caribbean Netherlands",
-  "Taiwan",
-  "Pitcairn Islands",
-  "San Marino",
-  "Svalbard and Jan Mayen",
-  "Djibouti",
-  "Wallis and Futuna",
-  "Denmark",
-  "Papua New Guinea",
-  "Madagascar",
-  "Bouvet Island",
-  "Hungary",
-  "Tokelau",
-  "Trinidad and Tobago",
-  "Gambia",
-  "Luxembourg",
-  "Cocos (Keeling) Islands",
-  "Republic of the Congo",
-  "Argentina",
-  "DR Congo",
-  "Greenland",
-  "Jordan",
-  "Belgium",
-  "Switzerland",
-  "Indonesia",
-  "Lebanon",
-  "Malaysia",
-  "Cayman Islands",
-  "Slovakia",
-  "Armenia",
-  "Christmas Island",
-  "Mongolia",
-  "Saint Pierre and Miquelon",
-  "Japan",
-  "South Africa",
-  "Philippines",
-  "Micronesia",
-  "Germany",
-  "Latvia",
-  "Jamaica",
-  "Macau",
-  "Nauru",
-  "Faroe Islands",
-  "Guyana",
-  "Burkina Faso",
-  "Sudan",
-  "Russia",
-  "Mayotte",
-  "Australia",
-  "Liberia",
-  "Mexico",
-  "Tunisia",
-  "Aruba",
-  "Kazakhstan",
-  "Oman",
-  "French Guiana",
-  "Niger",
-  "Turkmenistan",
-  "Sierra Leone",
-  "Samoa",
-  "Senegal",
-  "Georgia",
-  "Namibia",
-  "South Sudan",
-  "Thailand",
-  "Bahrain",
-  "Falkland Islands",
-  "Jersey",
-  "Vietnam",
-  "Guatemala",
-  "Moldova",
-  "North Macedonia",
-  "Uzbekistan",
-  "Romania",
-  "Uganda",
-  "El Salvador",
-  "Zambia",
-  "Gabon",
-  "Equatorial Guinea",
-  "Spain",
-  "Netherlands",
-  "British Virgin Islands",
-  "Benin",
-  "Pakistan",
-  "Panama",
-  "Turks and Caicos Islands",
-  "Angola",
-  "American Samoa",
-  "Venezuela",
-  "Costa Rica",
-  "Puerto Rico",
-  "Seychelles",
 ];

@@ -1,5 +1,6 @@
 import ClientNavbar from "@/components/ClientNavbar";
 import Footer from "@/components/Footer";
+import Notification from "@/components/Notification";
 
 export default function ClientLayout({ children }) {
   return (
@@ -7,6 +8,7 @@ export default function ClientLayout({ children }) {
       <ClientNavbar />
       {children}
       <Footer />
+      <Notification />
     </div>
   );
 }

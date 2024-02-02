@@ -147,7 +147,6 @@ export default function Login() {
       <div className="register-image">
         <Image src="/images/login-page.png" width={537} height={350} />
       </div>
-      <Notification />
     </div>
   );
 }

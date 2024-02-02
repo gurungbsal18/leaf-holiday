@@ -41,8 +41,7 @@ function PackageCard({ packageDetail }) {
             {packageDetail.tripFacts.duration.info} Days
           </span>
           <p className="m-0">
-            Starting From USD{" "}
-            {packageDetail.prices[packageDetail.prices.length - 1]?.price || 0}/
+            USD {packageDetail.prices[0]?.price || 0}/
             <span className="text-muted" style={{ fontSize: "12px" }}>
               per person
             </span>

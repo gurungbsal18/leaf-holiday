@@ -552,7 +552,6 @@ export default function CreatePackage() {
       </form>
       {updatePackage && <CallAllEdits />}
       <Dialog open={dialogOpen}>{dialogContent}</Dialog>
-      <Notification />
     </div>
   );
 }
