@@ -14,11 +14,13 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 const BookingCard = ({ prices, packageId }) => {
-  const { user, setBookingFormData, isAuthUser } = useContext(GlobalContext);
+  const { user, setBookingFormData, isAuthUser, setPageLevelLoader } =
+    useContext(GlobalContext);
   const router = useRouter();
   const [showGroupPrice, setShowGroupPrice] = useState(false);
   const currentDate = new Date().toDateString();
   const [formData, setFormData] = useState({
+    userId: user?._id,
     name: user?.name || "",
     email: user?.email || "",
     phoneNumber: "",
@@ -41,6 +43,7 @@ const BookingCard = ({ prices, packageId }) => {
   };
 
   const handleBook = () => {
+    setPageLevelLoader(true);
     if (!isAuthUser) {
       toast.error("Please Login To Book The Package", {
         position: toast.POSITION.TOP_RIGHT,
@@ -54,6 +57,36 @@ const BookingCard = ({ prices, packageId }) => {
       localStorage.setItem("bookingData", JSON.stringify(formData));
       setTimeout(() => {
         router.push(`/package/${packageId}/booking`);
+      }, 1000);
+    }
+  };
+  const handleInquiry = () => {
+    setPageLevelLoader(true);
+    if (!isAuthUser) {
+      toast.error("Please Login To Send An Inquiry", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setTimeout(() => {
+        router.push("/login");
+      }, 1000);
+    } else {
+      setTimeout(() => {
+        router.push(`/package/${packageId}/inquiry`);
+      }, 1000);
+    }
+  };
+  const handleCustomize = () => {
+    setPageLevelLoader(true);
+    if (!isAuthUser) {
+      toast.error("Please Login To Customize The Package", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setTimeout(() => {
+        router.push("/login");
+      }, 1000);
+    } else {
+      setTimeout(() => {
+        router.push(`/package/${packageId}/customizeTrip`);
       }, 1000);
     }
   };
@@ -101,7 +134,7 @@ const BookingCard = ({ prices, packageId }) => {
               <li
                 key={item.id}
                 className="d-flex justify-content-between align-items-center fs-14">
-                <p>{item.peopleRange}</p>
+                <p>{item.numberOfPeople}</p>
                 <p>US$ {item.price}</p>
               </li>
             ))}
@@ -173,11 +206,13 @@ const BookingCard = ({ prices, packageId }) => {
           <Button variant="success" className="w-100" onClick={handleBook}>
             Book Now
           </Button>
-          <Button variant="success" className="w-100">
+          <Button variant="success" className="w-100" onClick={handleInquiry}>
             Send Inquiry
           </Button>
         </div>
-        <Button className="btn btn-theme-secondary w-100">
+        <Button
+          className="btn btn-theme-secondary w-100"
+          onClick={handleCustomize}>
           Customize Trip
         </Button>
         <Button

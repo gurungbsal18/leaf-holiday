@@ -121,7 +121,6 @@ export default function Register() {
           alt="register-img"
         />
       </div>
-      <Notification />
     </div>
   );
 }

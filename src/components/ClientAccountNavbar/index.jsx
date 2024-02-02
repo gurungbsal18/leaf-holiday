@@ -35,11 +35,13 @@ export default function ClientAccountNavbar() {
     toast.success("Logged Out Successfully", {
       position: toast.POSITION.TOP_RIGHT,
     });
-    setIsAuthUser(false);
-    setUser(null);
-    Cookies.remove("token");
-    localStorage.clear();
-    router.push("/login");
+    setTimeout(() => {
+      setUser(null);
+      Cookies.remove("token");
+      localStorage.clear();
+      setIsAuthUser(false);
+      router.push("/login");
+    }, 1000);
   }
   return (
     <div className="d-flex flex-column ">

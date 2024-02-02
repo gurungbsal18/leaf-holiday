@@ -34,7 +34,6 @@ export default function Home() {
               <PackageCard packageDetail={item} />
             ))}
           </div>
-          <Notification />
         </div>
       ) : (
         <PageLevelLoader loading={true} />

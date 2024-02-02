@@ -22,6 +22,7 @@ export default function GlobalState({ children }) {
   const [updatePageData, setUpdatePageData] = useState(null);
   const [bookingFormData, setBookingFormData] = useState(null);
   const [trackPage, setTrackPage] = useState("/");
+  const [packageDetail, setPackageDetail] = useState(null);
 
   const pathname = usePathname();
   const extractAdminPath = pathname.split("/");
@@ -84,6 +85,8 @@ export default function GlobalState({ children }) {
         setBookingFormData,
         trackPage,
         setTrackPage,
+        packageDetail,
+        setPackageDetail,
       }}>
       {children}
     </GlobalContext.Provider>

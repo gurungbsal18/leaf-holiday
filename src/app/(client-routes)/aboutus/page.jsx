@@ -117,7 +117,6 @@ export default function AboutUs() {
           <p className="text-danger">Please Contact the Admin to Add Data</p>
         </div>
       )}
-      <Notification />
     </>
   );
 }
