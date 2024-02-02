@@ -35,7 +35,6 @@ export default function TestCreatableAutocomplete({ control, formName }) {
       <Controller
         name={formName}
         control={control}
-        defaultValue={null}
         render={({ field }) => (
           <Autocomplete
             {...field}

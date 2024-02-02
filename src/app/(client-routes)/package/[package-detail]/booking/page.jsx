@@ -92,6 +92,7 @@ export default function Booking() {
                   label="Full Name"
                   type="text"
                   variant="outlined"
+                  disabled
                   {...register("name")}
                 />
                 <TextField
@@ -100,6 +101,7 @@ export default function Booking() {
                   label="Email"
                   type="text"
                   variant="outlined"
+                  disabled
                   {...register("email")}
                 />
                 <TextField
@@ -121,23 +123,14 @@ export default function Booking() {
                 <TextField
                   required
                   size="small"
-                  label="Number of Adult"
+                  label="Number of People"
                   type="number"
                   variant="outlined"
                   {...register("noOfGuests", {
                     valueAsNumber: true,
                   })}
                 />
-                <TextField
-                  required
-                  size="small"
-                  label="Number of Children"
-                  type="number"
-                  variant="outlined"
-                  {...register("noOfChildren", {
-                    valueAsNumber: true,
-                  })}
-                />
+
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <Controller
                     name="tripDate"
@@ -200,12 +193,9 @@ const mapHelper = [
   },
   {
     id: "noOfGuests",
-    label: "Number of Adults",
+    label: "Number of People",
   },
-  {
-    id: "noOfChildren",
-    label: "Number of Children",
-  },
+
   {
     id: "tripDate",
     label: "Date of Travel",
@@ -213,5 +203,9 @@ const mapHelper = [
   {
     id: "message",
     label: "Message",
+  },
+  {
+    id: "totalPrice",
+    label: "Total Price",
   },
 ];

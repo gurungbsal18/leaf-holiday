@@ -1,16 +1,14 @@
 "use client";
 import TextEditor from "@/components/TextEditor";
 import UploadToCloudinary from "@/components/ui/UploadToCloudinary";
-import { GlobalContext } from "@/context";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import Link from "next/link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import EditPageGallery from "@/components/ui/EditPageGallery";
 
-export default function EditPage() {
-  const { updatePageName } = useContext(GlobalContext);
+export default function EditAboutUs() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [callUpdate, setCallUpdate] = useState(false);
   const [documentImages, setDocumentImages] = useState(null);
@@ -103,10 +101,10 @@ export default function EditPage() {
         <Link href="/admin/pages">
           <ArrowBackIcon />
         </Link>
-        <h1>Edit {updatePageName === "aboutUs" ? "About Us" : "Home"} Page</h1>
+        <h1>Edit About Us Page</h1>
 
         <button type="submit" onClick={handleSubmit(onSubmit)}>
-          {callUpdate ? "update" : "publish"}
+          Publish
         </button>
       </div>
       <div className="d-flex">

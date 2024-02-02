@@ -11,9 +11,9 @@ function PackageCard({ packageDetail }) {
   return (
     <div
       className="trip-card border col-3"
-      onClick={() => router.push(`/package/${packageDetail._id}`)}>
+      onClick={() => router.push(`/package/${packageDetail?._id}`)}>
       <Image
-        src={packageDetail.mainImageUrl}
+        src={packageDetail?.mainImageUrl}
         height={200}
         width={350}
         alt="package-image"
@@ -22,25 +22,25 @@ function PackageCard({ packageDetail }) {
         <div className="d-flex justify-content-between align-items-center">
           <span className="text-muted trip-card-location d-flex align-items-center gap-1">
             <FmdGoodOutlinedIcon />
-            {`${packageDetail.region.name}, ${packageDetail.region.destination.name}`}
+            {`${packageDetail?.region?.name}, ${packageDetail?.region?.destination?.name}`}
           </span>
           <span className="trip-card-review d-flex align-items-center gap-2 text-muted">
             <Rating
-              value={averageReview(packageDetail.reviews)}
+              value={averageReview(packageDetail?.reviews)}
               precision={0.5}
               readOnly
             />
-            {packageDetail.reviews.length} Reviews
+            {packageDetail?.reviews?.length} Reviews
           </span>
         </div>
-        <h4 className="trip-card-title">{packageDetail.name}</h4>
+        <h4 className="trip-card-title">{packageDetail?.name}</h4>
         <div className="d-flex justify-content-between align-items-center">
           <span className="text-muted trip-card-duration d-flex align-items-center gap-1">
             <ScheduleOutlinedIcon fontSize="14" />
-            {packageDetail.tripFacts.duration.info} Days
+            {packageDetail?.tripFacts?.duration?.info} Days
           </span>
           <p className="m-0">
-            USD {packageDetail.prices[0]?.price || 0}/
+            USD {packageDetail?.prices[0]?.price || 0}/
             <span className="text-muted" style={{ fontSize: "12px" }}>
               per person
             </span>
