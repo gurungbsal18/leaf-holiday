@@ -15,6 +15,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import axios from "axios";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import { countries } from "@/utils";
+import { priceCalculator } from "@/utils/functions";
 
 export default function Booking() {
   const {
@@ -31,7 +32,7 @@ export default function Booking() {
   const packageId = usePathname()
     .replace("/package/", "")
     .replace("/booking", "");
-  const [packageName, setPackageName] = useState(null);
+  const [packageDetail, setPackageDetail] = useState(null);
 
   const { register, control, handleSubmit, watch, setValue } = useForm({
     defaultValues: bookingFormData || {
@@ -62,7 +63,7 @@ export default function Booking() {
         );
         if (res.status === 200) {
           setPageLevelLoader(false);
-          setPackageName(res.data.data.name);
+          setPackageDetail(res.data.data);
         }
         console.log(res);
       } catch (e) {
@@ -70,7 +71,7 @@ export default function Booking() {
         toast.error("Package Not Found", {
           position: toast.POSITION.TOP_RIGHT,
         });
-        setPackageName("Package Not Found");
+        setPackageDetail({ name: "Package Not Found" });
       }
     };
     getPackageDetail();
@@ -153,7 +154,7 @@ export default function Booking() {
           <div>
             <h1>Booking Detail</h1>
             <div>
-              <p>Package Name: {packageName}</p>
+              <p>Package Name: {packageDetail.name}</p>
               {mapHelper.map((item) => (
                 <div key={item.id}>
                   {item.id === "tripDate" ? (
@@ -166,6 +167,15 @@ export default function Booking() {
                   )}
                 </div>
               ))}
+              {/* <div>
+                <p>
+                  Total Price: USD$ $
+                  {priceCalculator(
+                    packageDetail?.prices,
+                    watchAllFields("noOfGuests")
+                  )}
+                </p>
+              </div> */}
             </div>
           </div>
         </div>
@@ -203,9 +213,5 @@ const mapHelper = [
   {
     id: "message",
     label: "Message",
-  },
-  {
-    id: "totalPrice",
-    label: "Total Price",
   },
 ];

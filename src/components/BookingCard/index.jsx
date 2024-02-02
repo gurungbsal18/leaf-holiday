@@ -12,6 +12,7 @@ import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import { GlobalContext } from "@/context";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { priceCalculator } from "@/utils/functions";
 
 const BookingCard = ({ prices, packageId }) => {
   const { user, setBookingFormData, isAuthUser, setPageLevelLoader } =
@@ -33,14 +34,6 @@ const BookingCard = ({ prices, packageId }) => {
   });
 
   console.log("booking card prices: ", prices);
-
-  const priceCalculator = (priceRange, guestNumber) => {
-    for (let i = 0; i < priceRange.length; i++) {
-      if (guestNumber <= Number(priceRange[i].numberOfPeople.split("-")[1])) {
-        return priceRange[i].price;
-      }
-    }
-  };
 
   const handleBook = () => {
     setPageLevelLoader(true);
