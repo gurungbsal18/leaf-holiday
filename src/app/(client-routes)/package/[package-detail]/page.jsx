@@ -458,7 +458,12 @@ export default function PackageDetail() {
                                 item.isAvailable
                                   ? "bg-success"
                                   : "bg-danger text-decoration-line-through"
-                              } text-light`}>
+                              } text-light`}
+                              onClick={() =>
+                                router.push(
+                                  `/package/${packageDetail._id}/booking`
+                                )
+                              }>
                               Book Now
                             </button>
                           </div>
