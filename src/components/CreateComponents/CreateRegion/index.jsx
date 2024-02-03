@@ -51,9 +51,11 @@ export default function CreateRegion({ nameValue, setNameValue }) {
   };
   return (
     <div className="">
-      <div className="">
-        <div className="d-flex justify-content-between p-3 ">
-          <p>{updateForm ? "Update Region" : "Create Region"}</p>
+      <div className="custom-modal">
+        <div className="custom-modal-header">
+          <p className="m-0">
+            {updateForm ? "Update Region" : "Create Region"}
+          </p>
           <GrClose
             onClick={() => {
               setDialogOpen(false);
@@ -61,9 +63,9 @@ export default function CreateRegion({ nameValue, setNameValue }) {
             }}
           />
         </div>
-        <form>
-          <div className="d-flex gap-5">
-            <div className="d-flex flex-column gap-2">
+        <form className="p-4">
+          <div className="d-flex row">
+            <div className="d-flex flex-column gap-2 col-8">
               <TextField
                 required
                 fullWidth
@@ -74,35 +76,45 @@ export default function CreateRegion({ nameValue, setNameValue }) {
                 {...register("name")}
               />
               <label name="description">Description</label>
-              <TextareaAutosize
-                className="w-100"
-                size="large"
-                type="text"
-                variant="outlined"
-                {...register("description")}
-              />
+              <div className="form-floating">
+                <TextareaAutosize
+                  className="w-100 form-control pt-2"
+                  size="large"
+                  type="text"
+                  variant="outlined"
+                  {...register("description")}
+                />
+              </div>
 
               <div>
                 <label for="destination">Choose a Destination:</label>
                 <select
                   name="destination"
                   id="destination"
-                  {...register("destination")}>
+                  {...register("destination")}
+                  className="form-control"
+                >
                   {destinationList.data?.map((item) => (
                     <option
                       value={item._id}
                       selected={
                         item._id === updateForm?.destination ? true : false
-                      }>
+                      }
+                    >
                       {item.name}
                     </option>
                   ))}
                 </select>
               </div>
-
-              <button type="submit" onClick={handleSubmit(onSubmit)}>
-                {updateForm ? "Update" : "Create"}
-              </button>
+              <div className="d-flex justify-content-end">
+                <button
+                  type="submit"
+                  onClick={handleSubmit(onSubmit)}
+                  className="btn btn-success"
+                >
+                  {updateForm ? "Update" : "Create"}
+                </button>
+              </div>
             </div>
             <UploadToCloudinary
               selectedFile={selectedFile}

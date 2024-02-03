@@ -13,7 +13,9 @@ export default function ClientLayout({ children }) {
       <ClientNavbar />
       {children}
       <Footer />
+
       <Dialog open={dialogOpen}>{dialogContent}</Dialog>
+
       <Notification />
     </div>
   );

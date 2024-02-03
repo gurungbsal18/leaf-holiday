@@ -11,7 +11,7 @@ export default function UploadToCloudinary({
   formName,
 }) {
   return (
-    <div className="border-2 border-black">
+    <div className="border-2 col">
       {label && <p>{label}</p>}
       {selectedFile &&
         (label === "PDF" ? (
@@ -20,7 +20,7 @@ export default function UploadToCloudinary({
             <button onClick={() => setSelectedFile(null)}>Remove PDF</button>
           </div>
         ) : (
-          <div>
+          <div className="d-flex flex-column custom-modal-image">
             <Image
               src={selectedFile}
               height={300}
@@ -31,7 +31,9 @@ export default function UploadToCloudinary({
               onClick={() => {
                 setSelectedFile(null);
                 setValue(formName, "");
-              }}>
+              }}
+              className="btn btn-sm btn-success my-3"
+            >
               Remove Image
             </button>
           </div>

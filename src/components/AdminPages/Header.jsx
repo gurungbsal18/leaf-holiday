@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import { GlobalContext } from "@/context";
 import { useRouter } from "next/navigation";
+import PostAddIcon from "@mui/icons-material/PostAdd";
 
 export default function ({ pageName, createComponent, keyword, setKeyword }) {
   const { setDialogOpen, setDialogContent, setUpdatePackage } =
@@ -12,7 +13,7 @@ export default function ({ pageName, createComponent, keyword, setKeyword }) {
   return (
     <div className="d-flex justify-content-between flex-column">
       <h4 className="">List of {pageName}s</h4>
-      <div className="d-flex justify-content-between mb-5 mt-3 flex-column flex-md-row gap-3">
+      <div className="d-flex justify-content-between align-items-center mb-5 mt-3 flex-column flex-md-row gap-3">
         <button
           className="btn btn-success"
           onClick={() => {
@@ -23,8 +24,10 @@ export default function ({ pageName, createComponent, keyword, setKeyword }) {
               setDialogOpen(true);
               setDialogContent(createComponent);
             }
-          }}>
-          {`+ Create New ${pageName}`}
+          }}
+        >
+          <PostAddIcon className="me-1" />
+          {`Create New ${pageName}`}
         </button>
         <input
           type="text"
