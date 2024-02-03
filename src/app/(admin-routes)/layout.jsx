@@ -11,7 +11,11 @@ export default function AdminLayout({ children }) {
     <div className="d-flex main-container">
       <AdminNavbar />
       {children}
-      <Dialog open={dialogOpen}>{dialogContent}</Dialog>
+
+      <Dialog open={dialogOpen} className="custom-dialog">
+        {dialogContent}
+      </Dialog>
+
       <Notification />
     </div>
   );

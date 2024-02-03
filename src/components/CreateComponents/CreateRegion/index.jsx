@@ -52,7 +52,7 @@ export default function CreateRegion({ nameValue, setNameValue }) {
   return (
     <div className="">
       <div className="custom-modal">
-        <div className="d-flex justify-content-between align-items-center bg-success text-light px-4 py-3 mb-4">
+        <div className="custom-modal-header">
           <p className="m-0">
             {updateForm ? "Update Region" : "Create Region"}
           </p>
@@ -64,8 +64,8 @@ export default function CreateRegion({ nameValue, setNameValue }) {
           />
         </div>
         <form className="p-4">
-          <div className="d-flex gap-5">
-            <div className="d-flex flex-column gap-2">
+          <div className="d-flex row">
+            <div className="d-flex flex-column gap-2 col-8">
               <TextField
                 required
                 fullWidth
@@ -76,13 +76,15 @@ export default function CreateRegion({ nameValue, setNameValue }) {
                 {...register("name")}
               />
               <label name="description">Description</label>
-              <TextareaAutosize
-                className="w-100"
-                size="large"
-                type="text"
-                variant="outlined"
-                {...register("description")}
-              />
+              <div className="form-floating">
+                <TextareaAutosize
+                  className="w-100 form-control pt-2"
+                  size="large"
+                  type="text"
+                  variant="outlined"
+                  {...register("description")}
+                />
+              </div>
 
               <div>
                 <label for="destination">Choose a Destination:</label>
@@ -90,6 +92,7 @@ export default function CreateRegion({ nameValue, setNameValue }) {
                   name="destination"
                   id="destination"
                   {...register("destination")}
+                  className="form-control"
                 >
                   {destinationList.data?.map((item) => (
                     <option
@@ -103,10 +106,15 @@ export default function CreateRegion({ nameValue, setNameValue }) {
                   ))}
                 </select>
               </div>
-
-              <button type="submit" onClick={handleSubmit(onSubmit)}>
-                {updateForm ? "Update" : "Create"}
-              </button>
+              <div className="d-flex justify-content-end">
+                <button
+                  type="submit"
+                  onClick={handleSubmit(onSubmit)}
+                  className="btn btn-success"
+                >
+                  {updateForm ? "Update" : "Create"}
+                </button>
+              </div>
             </div>
             <UploadToCloudinary
               selectedFile={selectedFile}

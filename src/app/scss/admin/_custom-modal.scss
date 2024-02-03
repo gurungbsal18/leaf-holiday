@@ -1,3 +1,23 @@
-.custom-modal {
-  width: 600px;
+.custom-dialog {
+  .MuiDialog-paper {
+    max-width: 80% !important;
+    width: 80%;
+    .custom-modal {
+      width: 100%;
+      &-image img {
+        height: 300px !important;
+        width: 100% !important;
+        object-fit: cover;
+      }
+      &-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: $success;
+        color: $white;
+        padding: 1rem 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+    }
+  }
 }

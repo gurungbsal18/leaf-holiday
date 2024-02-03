@@ -49,9 +49,11 @@ export default function CreateDestination() {
 
   return (
     <div className="">
-      <div className="">
-        <div className="d-flex justify-content-between p-3 ">
-          <p>{updateForm ? "Update Destination" : "Create Destination"}</p>
+      <div className="custom-modal">
+        <div className="custom-modal-header">
+          <p className="m-0">
+            {updateForm ? "Update Destination" : "Create Destination"}
+          </p>
           <GrClose
             onClick={() => {
               setUpdateForm(null);
@@ -59,9 +61,9 @@ export default function CreateDestination() {
             }}
           />
         </div>
-        <form>
-          <div className="d-flex gap-5">
-            <div className="d-flex flex-column gap-2">
+        <form className="p-4">
+          <div className="d-flex row">
+            <div className="d-flex flex-column gap-2 col-8">
               <TextField
                 required
                 fullWidth
@@ -73,16 +75,22 @@ export default function CreateDestination() {
               />
               <label name="description">Description</label>
               <TextareaAutosize
-                className="w-100"
+                className="w-100 form-control pt-2"
                 size="large"
                 label="Description"
                 type="text"
                 variant="outlined"
                 {...register("description")}
               />
-              <button type="submit" onClick={handleSubmit(onSubmit)}>
-                {updateForm ? "Update" : "Create"}
-              </button>
+              <div className="d-flex justify-content-end">
+                <button
+                  type="submit"
+                  onClick={handleSubmit(onSubmit)}
+                  className="btn btn-success"
+                >
+                  {updateForm ? "Update" : "Create"}
+                </button>
+              </div>
             </div>
             <UploadToCloudinary
               selectedFile={selectedFile}
