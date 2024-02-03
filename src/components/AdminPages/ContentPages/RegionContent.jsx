@@ -13,8 +13,8 @@ export default function RegionContent({ content }) {
         /> */}
         <p style={{ width: "250px" }}>{content?.name}</p>
       </div>
-      <p style={{ width: "150px" }}>{content?.description}</p>
       <p style={{ width: "150px" }}>{content?.destination?.name}</p>
+      <p style={{ width: "150px" }}>{content?.description}</p>
     </div>
   );
 }

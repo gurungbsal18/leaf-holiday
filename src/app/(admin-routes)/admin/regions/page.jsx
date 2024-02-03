@@ -7,7 +7,7 @@ export default function Region() {
   const data = {
     pageName: "Regions",
     createComponent: <CreateRegion />,
-    titles: ["NAME", "DESCRIPTION", "DESTINATION"],
+    titles: ["NAME", "DESTINATION", "DESCRIPTION"],
     apiName: "region",
   };
 
