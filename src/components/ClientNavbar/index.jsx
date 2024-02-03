@@ -81,8 +81,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 
 export default function ClientNavbar() {
-  const { isAuthUser, setIsAuthUser, setUser, user } =
-    useContext(GlobalContext);
+  const { isAuthUser } = useContext(GlobalContext);
   const [showNavbar, setShowNavbar] = useState(false);
   const router = useRouter();
 
@@ -91,7 +90,7 @@ export default function ClientNavbar() {
   }
 
   function profileImageMaker() {
-    const { name } = user;
+    const { name } = JSON.parse(localStorage.getItem("user"));
 
     // Split the name into an array of words
     const names = name.split(" ");
@@ -136,16 +135,14 @@ export default function ClientNavbar() {
                     setTimeout(() => {
                       router.push("/account");
                     }, 1000)
-                  }
-                >
+                  }>
                   {profileImageMaker()}
                 </div>
               ) : (
                 <a
                   role="button"
                   className="text-success d-flex align-items-center gap-1 log-in-btn"
-                  onClick={() => router.push("/login")}
-                >
+                  onClick={() => router.push("/login")}>
                   <LoginIcon />
                   Log In
                 </a>
