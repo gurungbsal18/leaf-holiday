@@ -56,6 +56,7 @@ export default function CreatePackage() {
 
   const initialFormData = {
     name: "",
+    slug: "",
     prices: [
       {
         numberOfPeople: "",
@@ -117,7 +118,7 @@ export default function CreatePackage() {
   const form = useForm({
     defaultValues: updatePackage ? updatePackage : initialFormData,
   });
-  const { register, control, handleSubmit, setValue } = form;
+  const { register, control, handleSubmit, setValue, watch } = form;
 
   //for price list
   const {
@@ -209,6 +210,13 @@ export default function CreatePackage() {
                 variant="outlined"
                 {...register("name")}
                 className="mb-3"
+              />
+              <label htmlFor="url">
+                URL: {process.env.NEXT_PUBLIC_WEBSITE_URL}/package/
+              </label>
+              <input
+                type="text"
+                value={watch("name").toLowerCase().replace(/\s+/g, "-")}
               />
 
               <div className="d-flex">
