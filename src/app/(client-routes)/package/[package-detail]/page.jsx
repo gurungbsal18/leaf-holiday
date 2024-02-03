@@ -37,6 +37,9 @@ import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import CollectionsIcon from "@mui/icons-material/Collections";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import { GlobalContext } from "@/context";
+import { isImage } from "@/utils/functions";
+import { CldVideoPlayer } from "next-cloudinary";
+import "next-cloudinary/dist/cld-video-player.css";
 
 export default function PackageDetail() {
   const [showItineraryDetails, setShowItineraryDetails] = useState({});
@@ -485,14 +488,19 @@ export default function PackageDetail() {
                         Video & Photo Gallery
                       </h4>
                       <div>
-                        {packageDetail?.gallery[0].images.map((item) => (
-                          <Image
-                            src={item}
-                            key={item}
-                            height={200}
-                            width={200}
-                          />
-                        ))}
+                        {packageDetail?.gallery[0].images.map((item) =>
+                          isImage(item) ? (
+                            <Image src={item} height={200} width={200} />
+                          ) : (
+                            <div>
+                              <CldVideoPlayer
+                                width="640"
+                                height="360"
+                                src="leaf-holiday/xarbztl3saguijhnmtvy"
+                              />
+                            </div>
+                          )
+                        )}
                       </div>
                     </div>
                   )}

@@ -115,3 +115,20 @@ export const averageReview = (reviews) => {
 
   return averageStars;
 };
+
+export const priceCalculator = (priceRange, guestNumber) => {
+  for (let i = 0; i < priceRange.length; i++) {
+    if (guestNumber <= Number(priceRange[i].numberOfPeople.split("-")[1])) {
+      return priceRange[i].price;
+    }
+  }
+};
+
+export const isImage = (url) => {
+  // Regular expression to match common image file extensions
+  const imageRegex =
+    /\.(jpg|jpeg|png|gif|bmp|tiff|webp|svg|jfif|pjpeg|pjp|ico|heif|bat|raw|indd)$/i;
+
+  // Test if the URL ends with a recognized image file extension
+  return imageRegex.test(url);
+};
