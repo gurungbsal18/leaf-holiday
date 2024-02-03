@@ -5,7 +5,10 @@ import React from "react";
 export default function Package() {
   const data = {
     pageName: "Package",
-    titles: ["NAME", "DESCRIPTION"],
+    titles: [
+      { title: "NAME", style: { width: "500px" } },
+      { title: "DESCRIPTION", style: { width: "100px" } },
+    ],
     apiName: "package",
   };
 

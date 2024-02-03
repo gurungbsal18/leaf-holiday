@@ -23,7 +23,7 @@ import { DevTool } from "@hookform/devtools";
 import { GlobalContext } from "@/context";
 import UploadToCloudinary from "@/components/ui/UploadToCloudinary";
 import Notification from "@/components/Notification";
-import { submitForm, submitPackageForm } from "@/utils/functions";
+import { submitPackageForm } from "@/utils/functions";
 import CallAllEdits from "@/components/EditPackage/CallAllEdits";
 
 export default function CreatePackage() {
@@ -169,6 +169,8 @@ export default function CreatePackage() {
       router
     );
   };
+
+  const slugHandler = () => {};
 
   return (
     <div className="create-edit-package pt-0 p-2">
@@ -559,7 +561,6 @@ export default function CreatePackage() {
         </div>
       </form>
       {updatePackage && <CallAllEdits />}
-      <Dialog open={dialogOpen}>{dialogContent}</Dialog>
     </div>
   );
 }

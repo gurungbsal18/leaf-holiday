@@ -44,7 +44,6 @@ export default function CallAllEdits() {
       <EditPackage data={itineraryData} />
       <EditPackage data={departureDateData} />
       <EditPackage data={faqData} />
-      <Dialog open={dialogOpen}>{dialogContent}</Dialog>
     </div>
   );
 }

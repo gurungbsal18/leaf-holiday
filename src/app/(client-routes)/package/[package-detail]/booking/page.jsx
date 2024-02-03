@@ -36,12 +36,14 @@ export default function Booking() {
 
   const { register, control, handleSubmit, watch, setValue } = useForm({
     defaultValues: bookingFormData || {
-      userId: user?._id,
-      name: user?.name || "",
-      email: user?.email || "",
-      phoneNumber: "",
+      userId: user?._id || JSON.parse(localStorage.getItem("user"))._id,
+      name: user?.name || JSON.parse(localStorage.getItem("user")).name,
+      email: user?.email || JSON.parse(localStorage.getItem("user")).email,
+      phoneNumber:
+        user?.phoneNumber ||
+        JSON.parse(localStorage.getItem("user")).phoneNumber ||
+        "",
       country: "",
-      noOfChildren: 0,
       tripDate: dayjs(new Date().toDateString()),
       noOfGuests: 0,
       total: 0,
@@ -167,15 +169,13 @@ export default function Booking() {
                   )}
                 </div>
               ))}
-              {/* <div>
+              <div>
                 <p>
-                  Total Price: USD$ $
-                  {priceCalculator(
-                    packageDetail?.prices,
-                    watchAllFields("noOfGuests")
-                  )}
+                  Total Price: USD$
+                  {priceCalculator(packageDetail?.prices, watch("noOfGuests")) *
+                    watch("noOfGuests")}
                 </p>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>

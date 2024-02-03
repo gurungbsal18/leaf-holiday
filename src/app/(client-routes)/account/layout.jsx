@@ -1,5 +1,4 @@
 import ClientAccountNavbar from "@/components/ClientAccountNavbar";
-import Notification from "@/components/Notification";
 
 export default function ClientAccountLayout({ children }) {
   return (
