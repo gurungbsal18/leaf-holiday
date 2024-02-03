@@ -1,6 +1,6 @@
 "use client";
 
-import { BeatLoader } from "react-spinners";
+import { FadeLoader } from "react-spinners";
 
 export default function PageLevelLoader({ loading }) {
   return (
