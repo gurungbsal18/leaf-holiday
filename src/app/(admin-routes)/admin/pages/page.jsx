@@ -1,11 +1,6 @@
-"use client";
-import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
-import { GlobalContext } from "@/context";
 
 export default function Pages() {
-  const { setUpdatePageName } = useContext(GlobalContext);
-
   return (
     <div>
       <h1>Pages</h1>
@@ -19,11 +14,7 @@ export default function Pages() {
             <Link href="/" target="_blank">
               View
             </Link>
-            <Link
-              href="/admin/pages/edit"
-              onClick={() => setUpdatePageName("home")}>
-              Edit
-            </Link>
+            <Link href="/admin/pages/home">Edit</Link>
           </div>
         </div>
         <div className="d-flex justify-content-between">
@@ -32,11 +23,7 @@ export default function Pages() {
             <Link href="/aboutus" target="_blank">
               View
             </Link>
-            <Link
-              href="/admin/pages/edit"
-              onClick={() => setUpdatePageName("aboutUs")}>
-              Edit
-            </Link>
+            <Link href="/admin/pages/aboutUs">Edit</Link>
           </div>
         </div>
       </div>

@@ -26,10 +26,13 @@ export default function Inquiry() {
 
   const { register, handleSubmit, setValue, control } = useForm({
     defaultValues: {
-      userId: user?._id || "",
-      name: user?.name || "",
-      email: user?.email || "",
-      phoneNumber: user?.phoneNumber || "",
+      userId: user?._id || JSON.parse(localStorage.getItem("user"))._id,
+      name: user?.name || JSON.parse(localStorage.getItem("user")).name,
+      email: user?.email || JSON.parse(localStorage.getItem("user")).email,
+      phoneNumber:
+        user?.phoneNumber ||
+        JSON.parse(localStorage.getItem("user")).phoneNumber ||
+        "",
       country: "",
       tripDate: dayjs(new Date().toDateString()),
       noOfGuests: 0,
@@ -75,6 +78,7 @@ export default function Inquiry() {
           <div>
             <form>
               <TextField
+                disabled
                 required
                 size="small"
                 label="Full Name"
@@ -83,6 +87,7 @@ export default function Inquiry() {
                 {...register("name")}
               />
               <TextField
+                disabled
                 required
                 size="small"
                 label="Email"

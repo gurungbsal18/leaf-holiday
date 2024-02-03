@@ -57,8 +57,6 @@ export default function AdminPages({ data }) {
         apiName={data.apiName}
         updateComponent={data.createComponent}
       />
-
-      <Dialog open={dialogOpen}>{dialogContent}</Dialog>
     </div>
   );
 }
