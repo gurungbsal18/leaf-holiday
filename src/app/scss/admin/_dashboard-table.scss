@@ -1,0 +1,12 @@
+.dashboard-table {
+  .table-row {
+    padding: 10px;
+    &:nth-child(even) {
+      background-color: #f2f2f2 !important;
+    }
+  }
+}
+
+.table-title {
+  padding: 0 10px;
+}

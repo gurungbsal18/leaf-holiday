@@ -38,39 +38,10 @@ export default function MegaMenuMain() {
             ],
           },
         ],
+
         [
           {
-            label: "Annapuarna Region",
-            items: [
-              { label: "Annapurna Base Camp Trek - 12 Days" },
-              { label: "Annapurna Circuit Trek - 19 Days" },
-              { label: "Tilicho Base Camp Trek - 15 Days" },
-            ],
-          },
-        ],
-        [
-          {
-            label: "Annapuarna Region",
-            items: [
-              { label: "Annapurna Base Camp Trek - 12 Days" },
-              { label: "Annapurna Circuit Trek - 19 Days" },
-              { label: "Tilicho Base Camp Trek - 15 Days" },
-            ],
-          },
-        ],
-        [
-          {
-            label: "Annapuarna Region",
-            items: [
-              { label: "Annapurna Base Camp Trek - 12 Days" },
-              { label: "Annapurna Circuit Trek - 19 Days" },
-              { label: "Tilicho Base Camp Trek - 15 Days" },
-            ],
-          },
-        ],
-        [
-          {
-            label: "Annapuarna Region",
+            label: "Hello Region",
             items: [
               { label: "Annapurna Base Camp Trek - 12 Days" },
               { label: "Annapurna Circuit Trek - 19 Days" },

@@ -11,9 +11,9 @@ export default function DestinationContent({ content }) {
           height={25}
           alt="package-image"
         />
-        <p>{content?.name}</p>
+        <p style={{ width: "150px" }}>{content?.name}</p>
       </div>
-      <p>{content?.description}</p>
+      <p style={{ width: "150px" }}>{content?.description}</p>
     </div>
   );
 }

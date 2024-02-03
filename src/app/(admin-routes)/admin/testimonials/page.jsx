@@ -12,7 +12,7 @@ export default function Testimonial() {
   };
 
   return (
-    <div>
+    <div className="dashboard-content-section p-4">
       <AdminPages data={data} />
     </div>
   );

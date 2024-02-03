@@ -197,7 +197,8 @@ export default function PackageDetail() {
                   <Button
                     variant="outline-light"
                     size="sm"
-                    onClick={handleInquiry}>
+                    onClick={handleInquiry}
+                  >
                     Send Inquiry
                   </Button>
                 </div>
@@ -268,7 +269,8 @@ export default function PackageDetail() {
                       }`}
                       dangerouslySetInnerHTML={{
                         __html: packageDetail?.overview,
-                      }}></div>
+                      }}
+                    ></div>
                     <Button size="sm" variant="success" onClick={readMoreBtn}>
                       {contentExpand ? "Read Less" : "Read More"}
                     </Button>
@@ -276,15 +278,16 @@ export default function PackageDetail() {
                 )}
                 {packageDetail?.itineraries.length !== 0 && (
                   <div className="mt-5" id="itinerary">
-                    <div className="d-flex justify-content-between mb-3">
-                      <h4 className="title">
+                    <div className="d-flex justify-content-between mb-3 align-items-center">
+                      <h4 className="title ">
                         <ModeOfTravelIcon />
                         Itinerary
                       </h4>
                       <Button
                         variant="success"
                         size="sm"
-                        onClick={handleExpandCollapse}>
+                        onClick={handleExpandCollapse}
+                      >
                         {expandOrCollapse ? "Collapse All -" : "Expand All +"}
                       </Button>
                     </div>
@@ -305,14 +308,16 @@ export default function PackageDetail() {
                               variant="success"
                               size="sm"
                               className="itinerary-expand-btn"
-                              onClick={() => handleToggle(item._id)}>
+                              onClick={() => handleToggle(item._id)}
+                            >
                               {showItineraryDetails[item._id] ? "-" : "+"}
                             </Button>
                           </div>
                           <div
                             className={`${
                               showItineraryDetails[item._id] ? "" : "d-none "
-                            }`}>
+                            }`}
+                          >
                             <Image
                               src={item.imageUrl}
                               height={500}
@@ -322,7 +327,8 @@ export default function PackageDetail() {
                             <div
                               dangerouslySetInnerHTML={{
                                 __html: item.content,
-                              }}></div>
+                              }}
+                            ></div>
                             <div className="d-flex justify-content-between ">
                               <div className="d-flex">
                                 <TerrainIcon />
@@ -347,7 +353,8 @@ export default function PackageDetail() {
                   packageDetail?.exclusions.length !== 0) && (
                   <div
                     className="cost-IE-container mt-5"
-                    id="costInclueExclude">
+                    id="costInclueExclude"
+                  >
                     <div className="cost-IE-header d-flex align-items-center gap-2">
                       <div
                         size="sm"
@@ -359,7 +366,8 @@ export default function PackageDetail() {
                         onClick={() => {
                           setShowConstInclude(true);
                           setActiveCost(true);
-                        }}>
+                        }}
+                      >
                         <span className="me-1">
                           <CheckCircleOutlineIcon fontSize="small" />
                         </span>
@@ -375,7 +383,8 @@ export default function PackageDetail() {
                         onClick={() => {
                           setShowConstInclude(false);
                           setActiveCost(false);
-                        }}>
+                        }}
+                      >
                         <span className="me-1">
                           <CancelIcon fontSize="small" />
                         </span>
@@ -409,7 +418,7 @@ export default function PackageDetail() {
                 )}
                 {packageDetail?.highlights.length !== 0 && (
                   <div className="trip-highlights">
-                    <h4 className="title">Trip Highlights</h4>
+                    <h4 className="title pt-50">Trip Highlights</h4>
                     {packageDetail?.highlights.map((item) => (
                       <p>{item}</p>
                     ))}
@@ -432,58 +441,79 @@ export default function PackageDetail() {
                   </div>
                 )}
                 {packageDetail?.departureDate.length !== 0 && (
-                  <div className="date-price-container mt-5" id="date-price">
+                  <div
+                    className="fix-departure-date-table mt-5"
+                    id="date-price"
+                  >
                     <h4 className="title">
                       <CalendarMonth />
                       Dates & Price
                     </h4>
-                    <div>
-                      <div className="d-flex gap-3">
-                        <p>Start Date</p>
-                        <p>End Date</p>
-                        <p>Status</p>
-                        <p>Price per Person</p>
-                      </div>
-                      <div>
-                        {packageDetail?.departureDate.map((item) => (
-                          <div className="d-flex gap-3">
-                            <p>
+                    {/* <table> */}
+                    <table className="table table-hover">
+                      {/* <div className="d-flex gap-3"> */}
+                      <thead>
+                        <tr>
+                          <th className="text-success">Start Date</th>
+                          <th className="text-success">End Date</th>
+                          <th className="text-success">Status</th>
+                          <th className="text-success">Price per Person</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      {/* </div> */}
+
+                      {packageDetail?.departureDate.map((item) => (
+                        // <div className="d-flex gap-3">
+                        <tbody>
+                          <tr>
+                            <td className="text-muted">
                               {dayjs(item.startDate).format("MMM DD, YYYY")}
-                            </p>
-                            <p>{dayjs(item.endDate).format("MMM DD, YYYY")}</p>
-                            <p>
+                            </td>
+                            <td className="text-muted">
+                              {dayjs(item.endDate).format("MMM DD, YYYY")}
+                            </td>
+                            <td className="text-muted">
                               {item.isAvailable ? "Available" : "Unavailable"}
-                            </p>
-                            <p>{item.pricePerPerson}</p>
-                            <button
-                              disabled={!item.isAvailable}
-                              className={`${
-                                item.isAvailable
-                                  ? "bg-success"
-                                  : "bg-danger text-decoration-line-through"
-                              } text-light`}
-                              onClick={() =>
-                                router.push(
-                                  `/package/${packageDetail._id}/booking`
-                                )
-                              }>
-                              Book Now
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+                            </td>
+                            <td className="text-muted">
+                              {item.pricePerPerson}
+                            </td>
+                            <td>
+                              <button
+                                disabled={!item.isAvailable}
+                                className={`${
+                                  item.isAvailable
+                                    ? "btn btn-sm bg-success"
+                                    : "btn btn-sm bg-danger text-decoration-line-through"
+                                } text-light`}
+                                onClick={() =>
+                                  router.push(
+                                    `/package/${packageDetail._id}/booking`
+                                  )
+                                }
+                              >
+                                Book Now
+                              </button>
+                            </td>
+                            {/* </div> */}
+                          </tr>
+                        </tbody>
+                      ))}
+                    </table>
+                    {/* </table> */}
                   </div>
                 )}
                 <div
                   className="extra-contents"
                   dangerouslySetInnerHTML={{
                     __html: packageDetail?.content,
-                  }}></div>
+                  }}
+                ></div>
                 {packageDetail?.gallery.length !== 0 &&
                   packageDetail?.gallery[0].images.length !== 0 && (
                     <div>
-                      <h4 className="title">
+                      <h4 className="title mt-5">
                         <CollectionsIcon />
                         Video & Photo Gallery
                       </h4>
@@ -505,19 +535,19 @@ export default function PackageDetail() {
                     </div>
                   )}
                 {packageDetail?.faq.length !== 0 && (
-                  <div>
+                  <div className="mt-5">
                     <h4 className="title">
                       <ContactSupportIcon />
                       FAQs
                     </h4>
-                    <div>
+                    <ol>
                       {packageDetail?.faq.map((item) => (
-                        <div>
+                        <li>
                           <p>{item.question}</p>
-                          <p>{item.answer}</p>
-                        </div>
+                          <p className="text-muted">{item.answer}</p>
+                        </li>
                       ))}
-                    </div>
+                    </ol>
                   </div>
                 )}
               </div>

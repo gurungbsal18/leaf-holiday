@@ -9,6 +9,8 @@ import TestimonialContent from "./ContentPages/TestimonialContent";
 import DestinationContent from "./ContentPages/DestinationContent";
 import RegionContent from "./ContentPages/RegionContent";
 import { useRouter } from "next/navigation";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function Contents({ contents, apiName, updateComponent }) {
   const {
@@ -35,9 +37,12 @@ export default function Contents({ contents, apiName, updateComponent }) {
   }
 
   return (
-    <div>
+    <div className="dashboard-table">
       {contents?.map((content) => (
-        <div className="d-flex gap-5" key={content._id}>
+        <div
+          className="d-flex justify-content-between align-items-center gap-5 table-row"
+          key={content._id}
+        >
           {apiName === "package" && <PackageContent content={content} />}
           {apiName === "region" && <RegionContent content={content} />}
           {apiName === "destination" && (
@@ -45,7 +50,7 @@ export default function Contents({ contents, apiName, updateComponent }) {
           )}
           {apiName === "review" && <TestimonialContent content={content} />}
           {/* {apiName === "package" && <PackageContent content={content} />} */}
-          <div>
+          <div className="d-flex gap-3">
             <button
               onClick={() => {
                 // setUpdateForm(content);
@@ -61,10 +66,18 @@ export default function Contents({ contents, apiName, updateComponent }) {
                   setDialogOpen(true);
                   setDialogContent(updateComponent);
                 }
-              }}>
-              Edit
+              }}
+              className="btn btn-sm btn-success"
+            >
+              <EditNoteIcon /> Edit
             </button>
-            <button onClick={() => handleRemove(content._id)}>Remove</button>
+            <button
+              onClick={() => handleRemove(content._id)}
+              className="btn btn-sm btn-danger"
+            >
+              <DeleteIcon />
+              Remove
+            </button>
           </div>
         </div>
       ))}

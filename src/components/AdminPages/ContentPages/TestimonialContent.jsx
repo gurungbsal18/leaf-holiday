@@ -6,11 +6,13 @@ import dayjs from "dayjs";
 export default function TestimonialContent({ content }) {
   return (
     <div className="d-flex gap-3">
-      <p>{content?.userID.name}</p>
-      <p>{content?.comment}</p>
+      <p style={{ width: "150px" }}>{content?.userID.name}</p>
+      <p style={{ width: "150px" }}>{content?.comment}</p>
       <Rating value={content?.stars | 0} readOnly />
-      <p>{content?.packageId?.name}</p>
-      <p>{dayjs(content?.date).format("ddd MMM DD, YYYY")}</p>
+      <p style={{ width: "150px" }}>{content?.packageId?.name}</p>
+      <p style={{ width: "150px" }}>
+        {dayjs(content?.date).format("ddd MMM DD, YYYY")}
+      </p>
     </div>
   );
 }
