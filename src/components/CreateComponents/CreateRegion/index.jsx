@@ -51,9 +51,11 @@ export default function CreateRegion({ nameValue, setNameValue }) {
   };
   return (
     <div className="">
-      <div className="">
-        <div className="d-flex justify-content-between p-3 ">
-          <p>{updateForm ? "Update Region" : "Create Region"}</p>
+      <div className="custom-modal">
+        <div className="d-flex justify-content-between align-items-center bg-success text-light px-4 py-3 mb-4">
+          <p className="m-0">
+            {updateForm ? "Update Region" : "Create Region"}
+          </p>
           <GrClose
             onClick={() => {
               setDialogOpen(false);
@@ -61,7 +63,7 @@ export default function CreateRegion({ nameValue, setNameValue }) {
             }}
           />
         </div>
-        <form>
+        <form className="p-4">
           <div className="d-flex gap-5">
             <div className="d-flex flex-column gap-2">
               <TextField
@@ -87,13 +89,15 @@ export default function CreateRegion({ nameValue, setNameValue }) {
                 <select
                   name="destination"
                   id="destination"
-                  {...register("destination")}>
+                  {...register("destination")}
+                >
                   {destinationList.data?.map((item) => (
                     <option
                       value={item._id}
                       selected={
                         item._id === updateForm?.destination ? true : false
-                      }>
+                      }
+                    >
                       {item.name}
                     </option>
                   ))}
