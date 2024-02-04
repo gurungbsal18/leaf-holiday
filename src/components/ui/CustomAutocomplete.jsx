@@ -4,19 +4,11 @@ import React from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 
-export default function CustomAutocomplete({ options, setValue, name }) {
-  const getPackageId = (packageName) => {
-    for (let i = 0; i < options.length; i++) {
-      if (options[i].name === packageName) {
-        return options[i]._id;
-      }
-    }
-    return "Invalid Package Name";
-  };
+export default function CustomAutocomplete({ options, setValue, formName }) {
   return (
     <Autocomplete
       onChange={(e) => {
-        setValue(name, getPackageId(e.target.innerHTML));
+        setValue(formName, getId(e.target.innerHTML, options, name));
       }}
       autoSelect
       options={options}

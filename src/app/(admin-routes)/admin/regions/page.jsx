@@ -7,7 +7,15 @@ export default function Region() {
   const data = {
     pageName: "Regions",
     createComponent: <CreateRegion />,
-    titles: ["NAME", "DESTINATION", "DESCRIPTION"],
+    headerData: [
+      { Header: "NAME", accessor: "name" },
+      { Header: "DESTINATION", accessor: "destination.name" },
+      { Header: "DESCRIPTION", accessor: "description" },
+    ],
+    showView: true,
+    showEdit: true,
+    showRemove: true,
+    showImage: true,
     apiName: "region",
   };
 

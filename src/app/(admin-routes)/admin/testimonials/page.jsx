@@ -7,7 +7,16 @@ export default function Testimonial() {
   const data = {
     pageName: "Testimonials",
     createComponent: <CreateTestimonial />,
-    titles: ["NAME", "PACKAGE NAME", "COMMENT", "RATING", "DATE"],
+    headerData: [
+      { Header: "NAME", accessor: "userID.name" },
+      { Header: "PACKAGE", accessor: "packageId.name" },
+      { Header: "COMMENT", accessor: "comment" },
+      { Header: "RATING", accessor: "stars" },
+    ],
+    // showView: true,
+    showEdit: true,
+    showRemove: true,
+    // showImage: true,
     apiName: "review",
   };
 

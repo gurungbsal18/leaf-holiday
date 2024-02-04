@@ -9,7 +9,7 @@ import axios from "axios";
 export default function UploadGallery() {
   const { updatePackage } = useContext(GlobalContext);
   const [images, setImages] = useState(updatePackage?.gallery[0]?.images || []);
-  const packageId = updatePackage._id;
+  const packageId = updatePackage?._id;
   const [updateGallery, setUpdateGallery] = useState(
     updatePackage?.gallery && updatePackage?.gallery?.length !== 0
   );

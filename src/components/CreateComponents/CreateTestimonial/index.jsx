@@ -103,6 +103,7 @@ export default function CreateTestimonial() {
                     name={"stars"}
                     onChange={onChange}
                     value={Number(value)}
+                    precision={0.5}
                   />
                 )}
               />

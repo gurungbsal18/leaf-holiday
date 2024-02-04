@@ -1,33 +1,55 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import axios from "axios";
+import { GlobalContext } from "@/context";
+import { toast } from "react-toastify";
+import PageLevelLoader from "@/components/Loader/PageLevelLoader";
+import Table from "@/components/ui/Table";
 
 export default function OrderHistory() {
+  const { pageLevelLoader, setPageLevelLoader } = useContext(GlobalContext);
+  const [userBooking, setUserBooking] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"));
+
   const getAllUserOrders = async () => {
+    setPageLevelLoader(true);
     try {
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/booking/find/?userId=${user._id}&formType=booking`
       );
-      console.log(res);
+      if (res.status === 200) {
+        setUserBooking(res.data.data);
+        setPageLevelLoader(false);
+      } else {
+        setPageLevelLoader(false);
+      }
     } catch (e) {
-      console.log(e);
+      toast.error(e.response.statusText, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setPageLevelLoader(false);
     }
   };
   useEffect(() => {
     getAllUserOrders();
-  });
+  }, []);
+  console.log(userBooking);
   return (
-    <div>
-      <h1>BOOKING HISTORY</h1>
-      <div>
-        <div className="d-flex">
-          <p>PACKAGE</p>
-          <p>DATE</p>
-          <p>PRICE</p>
+    <>
+      {pageLevelLoader ? (
+        <PageLevelLoader loading={pageLevelLoader} />
+      ) : (
+        <div className="history">
+          <h1>BOOKING HISTORY</h1>
+          <Table headerData={COLUMNS} bodyData={userBooking} />
         </div>
-        <div></div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
+
+const COLUMNS = [
+  { Header: "PACKAGE", accessor: "packageId.name" },
+  { Header: "DATE", accessor: "dateOfTravel" },
+  { Header: "PRICE", accessor: "price" },
+];

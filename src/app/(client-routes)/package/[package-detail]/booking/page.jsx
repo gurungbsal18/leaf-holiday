@@ -23,37 +23,60 @@ export default function Booking() {
     isAuthUser,
     bookingFormData,
     setBookingFormData,
-    user,
     pageLevelLoader,
     setPageLevelLoader,
   } = useContext(GlobalContext);
   const router = useRouter();
-  const [countryName, setCountryName] = useState("");
+  const user = JSON.parse(localStorage.getItem("user"));
+  const bookingData = {
+    ...JSON.parse(localStorage.getItem("bookingData")),
+    dateOfTravel: dayjs(
+      JSON.parse(localStorage.getItem("bookingData"))?.dateOfTravel
+    ),
+  };
   const packageId = usePathname()
     .replace("/package/", "")
     .replace("/booking", "");
   const [packageDetail, setPackageDetail] = useState(null);
 
   const { register, control, handleSubmit, watch, setValue } = useForm({
-    defaultValues: bookingFormData || {
-      userId: user?._id || JSON.parse(localStorage.getItem("user"))._id,
-      name: user?.name || JSON.parse(localStorage.getItem("user")).name,
-      email: user?.email || JSON.parse(localStorage.getItem("user")).email,
-      phoneNumber:
-        user?.phoneNumber ||
-        JSON.parse(localStorage.getItem("user")).phoneNumber ||
-        "",
+    defaultValues: bookingData || {
+      packageId: "",
+      userId: user?._id,
+      phoneNumber: user?.phoneNumber || "",
       country: "",
-      tripDate: dayjs(new Date().toDateString()),
-      noOfGuests: 0,
-      total: 0,
+      dateOfTravel: dayjs(new Date().toDateString()),
+      numberOfPeople: 0,
+      price: 0,
       message: "",
+      formType: "booking",
     },
   });
-  const watchAllFields = watch();
 
-  const onSubmit = (data) => {
-    console.log("Booking form submitted: ", data);
+  const onSubmit = async (data) => {
+    setPageLevelLoader(true);
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/booking/add`,
+        data
+      );
+      if (res.status === 200) {
+        toast.success("Package Booked Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        localStorage.removeItem("bookingData");
+        setPageLevelLoader(false);
+      } else {
+        toast.error("Failed to book the package! Please Try Again Later...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+    } catch (e) {
+      toast.error(e.response.statusText, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setPageLevelLoader(false);
+    }
   };
 
   useEffect(() => {
@@ -66,6 +89,7 @@ export default function Booking() {
         if (res.status === 200) {
           setPageLevelLoader(false);
           setPackageDetail(res.data.data);
+          setValue("packageId", res.data.data._id);
         }
         console.log(res);
       } catch (e) {
@@ -96,7 +120,7 @@ export default function Booking() {
                   type="text"
                   variant="outlined"
                   disabled
-                  {...register("name")}
+                  value={user?.name}
                 />
                 <TextField
                   required
@@ -105,7 +129,7 @@ export default function Booking() {
                   type="text"
                   variant="outlined"
                   disabled
-                  {...register("email")}
+                  value={user?.email}
                 />
                 <TextField
                   required
@@ -129,14 +153,23 @@ export default function Booking() {
                   label="Number of People"
                   type="number"
                   variant="outlined"
-                  {...register("noOfGuests", {
-                    valueAsNumber: true,
-                  })}
+                  defaultValue={bookingData?.numberOfPeople || 0}
+                  onChange={(e) => {
+                    console.log(e);
+                    setValue("numberOfPeople", Number(e.target.value));
+                    setValue(
+                      "price",
+                      priceCalculator(
+                        packageDetail?.prices,
+                        Number(e.target.value)
+                      ) * Number(e.target.value)
+                    );
+                  }}
                 />
 
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <Controller
-                    name="tripDate"
+                    name="dateOfTravel"
                     control={control}
                     render={({ field }) => (
                       <MobileDatePicker className="w-100" {...field} />
@@ -159,22 +192,17 @@ export default function Booking() {
               <p>Package Name: {packageDetail.name}</p>
               {mapHelper.map((item) => (
                 <div key={item.id}>
-                  {item.id === "tripDate" ? (
+                  {item.id === "dateOfTravel" ? (
                     <p>{`${item.label}: ${
-                      dayjs(watchAllFields[item.id]).format("MMM DD, YYYY") ||
-                      ""
+                      dayjs(watch(item.id)).format("MMM DD, YYYY") || ""
                     }`}</p>
                   ) : (
-                    <p>{`${item.label}: ${watchAllFields[item.id] || ""}`}</p>
+                    <p>{`${item.label}: ${watch(item.id) || ""}`}</p>
                   )}
                 </div>
               ))}
               <div>
-                <p>
-                  Total Price: USD$
-                  {priceCalculator(packageDetail?.prices, watch("noOfGuests")) *
-                    watch("noOfGuests")}
-                </p>
+                <p>Total Price: USD$ ${watch("price") || ""}</p>
               </div>
             </div>
           </div>
@@ -202,12 +230,12 @@ const mapHelper = [
     label: "Country",
   },
   {
-    id: "noOfGuests",
+    id: "numberOfPeople",
     label: "Number of People",
   },
 
   {
-    id: "tripDate",
+    id: "dateOfTravel",
     label: "Date of Travel",
   },
   {

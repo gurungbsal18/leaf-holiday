@@ -1,13 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Image from "next/image";
 import { adminNavItems } from "@/utils";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import { useRouter } from "next/navigation";
+import { GlobalContext } from "@/context";
 
 export default function AdminNavbar() {
+  const { setPageLevelLoader } = useContext(GlobalContext);
   const [showNavText, setNavText] = useState(true);
+  const router = useRouter();
   return (
     <div className="admin-navbar bg-success d-flex flex-column p-4 border-end">
       {/* <div className="brand">
@@ -25,8 +29,7 @@ export default function AdminNavbar() {
         <span
           role="button"
           className="text-white"
-          onClick={() => setNavText(!showNavText)}
-        >
+          onClick={() => setNavText(!showNavText)}>
           {showNavText ? (
             <KeyboardDoubleArrowLeftIcon />
           ) : (
@@ -34,12 +37,18 @@ export default function AdminNavbar() {
           )}
         </span>
         {adminNavItems.map((item) => (
-          <a href={item.path} className="nav-item d-flex gap-2" key={item.id}>
+          <div
+            onClick={() => {
+              setPageLevelLoader(true);
+              router.push(item.path);
+            }}
+            className="nav-item d-flex gap-2"
+            key={item.id}>
             <div className="nav-icon">{item.icon}</div>
             <p className={`nav-label m-0 ${showNavText ? "" : "d-none"}`}>
               {item.label}
             </p>
-          </a>
+          </div>
         ))}
       </div>
       <div className="brand bg-white w-100">

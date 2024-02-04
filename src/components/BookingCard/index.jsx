@@ -15,25 +15,22 @@ import { toast } from "react-toastify";
 import { priceCalculator } from "@/utils/functions";
 
 const BookingCard = ({ prices, packageId }) => {
-  const { user, setBookingFormData, isAuthUser, setPageLevelLoader } =
-    useContext(GlobalContext);
+  const { isAuthUser, setPageLevelLoader } = useContext(GlobalContext);
+  const user = JSON.parse(localStorage.getItem("user"));
   const router = useRouter();
   const [showGroupPrice, setShowGroupPrice] = useState(false);
   const currentDate = new Date().toDateString();
   const [formData, setFormData] = useState({
-    userId: user?._id,
-    name: user?.name || "",
-    email: user?.email || "",
-    phoneNumber: "",
+    packageId: packageId,
+    userId: user?._id || "",
+    phoneNumber: user?.phoneNumber || "",
     country: "",
-    noOfChildren: 0,
-    tripDate: dayjs(currentDate),
-    noOfGuests: 1,
-    total: prices[0]?.price,
+    dateOfTravel: dayjs(currentDate),
+    numberOfPeople: 1,
+    price: prices[0]?.price,
     message: "",
+    formType: "booking",
   });
-
-  console.log("booking card prices: ", prices);
 
   const handleBook = () => {
     setPageLevelLoader(true);
@@ -46,7 +43,6 @@ const BookingCard = ({ prices, packageId }) => {
       }, 1000);
     } else {
       console.log("Booking card form submitted: ", formData);
-      setBookingFormData(formData);
       localStorage.setItem("bookingData", JSON.stringify(formData));
       setTimeout(() => {
         router.push(`/package/${packageId}/booking`);
@@ -99,7 +95,7 @@ const BookingCard = ({ prices, packageId }) => {
             </span> */}
           </p>
           <p className="price-amount m-0">
-            US ${priceCalculator(prices, formData.noOfGuests)}
+            US ${priceCalculator(prices, formData.numberOfPeople)}
           </p>
         </div>
       </div>
@@ -145,10 +141,10 @@ const BookingCard = ({ prices, packageId }) => {
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    tripDate: e,
+                    dateOfTravel: dayjs(e),
                   })
                 }
-                defaultValue={dayjs(formData.tripDate)}
+                defaultValue={dayjs(formData.dateOfTravel)}
               />
             </LocalizationProvider>
           </div>
@@ -170,25 +166,26 @@ const BookingCard = ({ prices, packageId }) => {
               max={30}
               placeholder={0}
               type={"Number"}
-              value={formData.noOfGuests}
+              value={formData.numberOfPeople}
               onChange={(e) => {
                 setFormData({
                   ...formData,
-                  noOfGuests: e.target.value,
-                  total:
-                    priceCalculator(prices, e.target.value) * e.target.value,
+                  numberOfPeople: Number(e.target.value),
+                  price:
+                    priceCalculator(prices, Number(e.target.value)) *
+                    Number(e.target.value),
                 });
               }}
             />
             <span className="d-flex justify-content-between ">
-              <p>{`$${priceCalculator(prices, formData.noOfGuests)} x ${
-                formData.noOfGuests
+              <p>{`$${priceCalculator(prices, formData.numberOfPeople)} x ${
+                formData.numberOfPeople
               }`}</p>
-              <p>{formData.total}</p>
+              <p>{formData.price}</p>
             </span>
             <span className="d-flex justify-content-between ">
               <p>Total</p>
-              <p>{formData.total}</p>
+              <p>{formData.price}</p>
             </span>
           </div>
         </div>

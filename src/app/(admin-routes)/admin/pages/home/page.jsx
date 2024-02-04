@@ -109,7 +109,7 @@ export default function EditHome() {
                   <CustomAutocomplete
                     setValue={setValue}
                     options={allPackages}
-                    name={`topTabArray[${index}]`}
+                    formName={`topTabArray[${index}]`}
                   />
 
                   {index > 0 && (
@@ -124,54 +124,7 @@ export default function EditHome() {
               ))}
             </div>
           </div>
-          <div>
-            <div>
-              <h4>Middle Level Tab</h4>
-              <div>
-                <TextField
-                  className="mx-0"
-                  label="Title"
-                  sx={{ m: 1, width: "25ch" }}
-                  type="text"
-                  size="small"
-                  {...register("topTabName")}
-                />
-                <Button
-                  disabled={topTabArrayFields.length >= 6}
-                  size="sm"
-                  variant="success"
-                  onClick={() => {
-                    topTabArrayAppend("");
-                    setTopTabCount((prev) => prev + 1);
-                  }}>
-                  <span className="d-flex align-items-center gap-1">
-                    + Add More Package
-                  </span>
-                </Button>
-              </div>
-              {topTabArrayFields.map((topTabArrayField, index) => (
-                <div
-                  className="d-flex flex-column flex-md-row gap-3 align-items-center"
-                  key={topTabArrayField.id}>
-                  {/* <input type="text" {...register(`topTabArray.${index}`)} /> */}
-                  <CustomAutocomplete
-                    setValue={setValue}
-                    options={allPackages}
-                    name={`topTabArray[${index}]`}
-                  />
 
-                  {index > 0 && (
-                    <span
-                      role="button"
-                      className="text-danger"
-                      onClick={() => topTabArrayRemove(index)}>
-                      <RemoveCircleIcon />
-                    </span>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
           <button onClick={handleSubmit(onSubmit)}>Submit</button>
         </div>
       )}

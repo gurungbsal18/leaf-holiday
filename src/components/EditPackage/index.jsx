@@ -14,10 +14,10 @@ export default function EditPackage({ data }) {
 
   async function extractAllContents() {
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/${data.apiName}/package/${updatePackage._id}`
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/${data?.apiName}/package/${updatePackage?._id}`
     );
     if (res.status === 200) {
-      setAllData(res.data.data);
+      setAllData(res?.data?.data);
     }
   }
   useEffect(() => {
@@ -26,12 +26,15 @@ export default function EditPackage({ data }) {
 
   return (
     <div>
-      <Header pageName={data.pageName} createComponent={data.createComponent} />
-      <Title titles={data.titles} />
+      <Header
+        pageName={data?.pageName}
+        createComponent={data?.createComponent}
+      />
+      <Title titles={data?.titles} />
       <Contents
         contents={allData}
-        apiName={data.apiName}
-        updateComponent={data.createComponent}
+        apiName={data?.apiName}
+        updateComponent={data?.createComponent}
       />
     </div>
   );

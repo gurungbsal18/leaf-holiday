@@ -5,11 +5,15 @@ import React from "react";
 export default function Package() {
   const data = {
     pageName: "Package",
-    titles: [
-      { title: "NAME", style: { width: "500px" } },
-      { title: "DESCRIPTION", style: { width: "100px" } },
-    ],
     apiName: "package",
+    headerData: [
+      { Header: "NAME", accessor: "name" },
+      { Header: "DESTINATION", accessor: "destination.name" },
+    ],
+    showView: true,
+    showEdit: true,
+    showRemove: true,
+    showImage: true,
   };
 
   return (

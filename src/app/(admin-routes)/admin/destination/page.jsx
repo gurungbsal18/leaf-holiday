@@ -1,13 +1,21 @@
 import AdminPages from "@/components/AdminPages";
 import CreateDestination from "@/components/CreateComponents/CreateDestination";
+import Table from "@/components/ui/Table";
 import axios from "axios";
 
-export default async function Destination() {
+export default function Destination() {
   const data = {
     pageName: "Destinations",
     apiName: "destination",
     createComponent: <CreateDestination />,
-    titles: ["NAME", "DESCRIPTION"],
+    headerData: [
+      { Header: "NAME", accessor: "name" },
+      { Header: "DESCRIPTION", accessor: "description" },
+    ],
+    showView: true,
+    showEdit: true,
+    showRemove: true,
+    showImage: true,
   };
 
   return (

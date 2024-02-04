@@ -118,7 +118,7 @@ export const averageReview = (reviews) => {
 
 export const priceCalculator = (priceRange, guestNumber) => {
   for (let i = 0; i < priceRange.length; i++) {
-    if (guestNumber <= Number(priceRange[i].numberOfPeople.split("-")[1])) {
+    if (guestNumber <= Number(priceRange[i]?.numberOfPeople?.split("-")[1])) {
       return priceRange[i].price;
     }
   }
@@ -131,4 +131,13 @@ export const isImage = (url) => {
 
   // Test if the URL ends with a recognized image file extension
   return imageRegex.test(url);
+};
+
+export const getId = (searchName, dataArray, searchBy) => {
+  for (let i = 0; i < dataArray.length; i++) {
+    if (dataArray[i][searchBy] === searchName) {
+      return dataArray[i]._id;
+    }
+  }
+  return "Invalid Name";
 };
