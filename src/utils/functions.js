@@ -28,11 +28,15 @@ export const uploadImage = async (formData) => {
   }
 };
 
-export const submitForm = async (data, apiName, updateForm, setNameValue) => {
+export const submitForm = async (data, apiName, updateForm, setNameValue, verify) => {
   try {
     let res = {};
     updateForm
-      ? (res = await axios.put(
+      ?
+      verify ? (res = await axios.put(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/${apiName}/update/${data._id}`,
+        {...data, isVerified: true}
+      )): (res = await axios.put(
           `${process.env.NEXT_PUBLIC_SERVER_URL}/${apiName}/update/${data._id}`,
           data
         ))
@@ -40,6 +44,7 @@ export const submitForm = async (data, apiName, updateForm, setNameValue) => {
           `${process.env.NEXT_PUBLIC_SERVER_URL}/${apiName}/add`,
           data
         ));
+        console.log(res);
 
     if (res.status === 200) {
       toast.success(res.data.message, {
@@ -48,14 +53,15 @@ export const submitForm = async (data, apiName, updateForm, setNameValue) => {
       if (setNameValue) {
         setNameValue(res.data.data._id);
       }
-      res;
+      return res;
     } else {
       toast.error(res.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
+      return res;
     }
   } catch (e) {
-    toast.error(e.response.statusText, {
+    toast.error("Something Went Wrong. Please Try Again!!!", {
       position: toast.POSITION.TOP_RIGHT,
     });
   }
@@ -100,24 +106,24 @@ export const submitPackageForm = async (
 };
 
 export const averageReview = (reviews) => {
-  if (reviews.length === 0) {
+  if (reviews?.length === 0) {
     return 0; // Return 0 if there are no reviews to avoid division by zero
   }
 
   // Calculate the sum of stars
-  const sumStars = reviews.reduce(
-    (accumulator, review) => accumulator + review.stars,
+  const sumStars = reviews?.reduce(
+    (accumulator, review) => accumulator + review?.stars,
     0
   );
 
   // Calculate the average stars
-  const averageStars = sumStars / reviews.length;
+  const averageStars = sumStars / reviews?.length;
 
   return averageStars;
 };
 
 export const priceCalculator = (priceRange, guestNumber) => {
-  for (let i = 0; i < priceRange.length; i++) {
+  for (let i = 0; i < priceRange?.length; i++) {
     if (guestNumber <= Number(priceRange[i]?.numberOfPeople?.split("-")[1])) {
       return priceRange[i].price;
     }
@@ -134,10 +140,22 @@ export const isImage = (url) => {
 };
 
 export const getId = (searchName, dataArray, searchBy) => {
-  for (let i = 0; i < dataArray.length; i++) {
+  for (let i = 0; i < dataArray?.length; i++) {
     if (dataArray[i][searchBy] === searchName) {
-      return dataArray[i]._id;
+      return dataArray[i]?._id;
     }
   }
   return "Invalid Name";
 };
+
+export function toTitleCase(input) {
+  if (typeof input !== 'string') {
+    throw new Error('Input must be a string');
+  }
+
+  return input
+    .toLowerCase()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}

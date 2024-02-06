@@ -197,7 +197,8 @@ export default function PackageDetail() {
                   <Button
                     variant="outline-light"
                     size="sm"
-                    onClick={handleInquiry}>
+                    onClick={handleInquiry}
+                  >
                     Send Inquiry
                   </Button>
                 </div>
@@ -271,7 +272,8 @@ export default function PackageDetail() {
                       }`}
                       dangerouslySetInnerHTML={{
                         __html: packageDetail?.overview,
-                      }}></div>
+                      }}
+                    ></div>
                     <Button size="sm" variant="success" onClick={readMoreBtn}>
                       {contentExpand ? "Read Less" : "Read More"}
                     </Button>
@@ -287,7 +289,8 @@ export default function PackageDetail() {
                       <Button
                         variant="success"
                         size="sm"
-                        onClick={handleExpandCollapse}>
+                        onClick={handleExpandCollapse}
+                      >
                         {expandOrCollapse ? "Collapse All -" : "Expand All +"}
                       </Button>
                     </div>
@@ -308,14 +311,16 @@ export default function PackageDetail() {
                               variant="success"
                               size="sm"
                               className="itinerary-expand-btn"
-                              onClick={() => handleToggle(item._id)}>
+                              onClick={() => handleToggle(item._id)}
+                            >
                               {showItineraryDetails[item._id] ? "-" : "+"}
                             </Button>
                           </div>
                           <div
                             className={`${
                               showItineraryDetails[item._id] ? "" : "d-none "
-                            }`}>
+                            }`}
+                          >
                             <Image
                               src={item.imageUrl}
                               height={500}
@@ -325,7 +330,8 @@ export default function PackageDetail() {
                             <div
                               dangerouslySetInnerHTML={{
                                 __html: item.content,
-                              }}></div>
+                              }}
+                            ></div>
                             <div className="d-flex justify-content-between ">
                               <div className="d-flex">
                                 <TerrainIcon />
@@ -350,7 +356,8 @@ export default function PackageDetail() {
                   packageDetail?.exclusions.length !== 0) && (
                   <div
                     className="cost-IE-container mt-5"
-                    id="costInclueExclude">
+                    id="costInclueExclude"
+                  >
                     <div className="cost-IE-header d-flex align-items-center gap-2">
                       <div
                         size="sm"
@@ -362,7 +369,8 @@ export default function PackageDetail() {
                         onClick={() => {
                           setShowConstInclude(true);
                           setActiveCost(true);
-                        }}>
+                        }}
+                      >
                         <span className="me-1">
                           <CheckCircleOutlineIcon fontSize="small" />
                         </span>
@@ -378,7 +386,8 @@ export default function PackageDetail() {
                         onClick={() => {
                           setShowConstInclude(false);
                           setActiveCost(false);
-                        }}>
+                        }}
+                      >
                         <span className="me-1">
                           <CancelIcon fontSize="small" />
                         </span>
@@ -437,7 +446,8 @@ export default function PackageDetail() {
                 {packageDetail?.departureDate.length !== 0 && (
                   <div
                     className="fix-departure-date-table mt-5"
-                    id="date-price">
+                    id="date-price"
+                  >
                     <h4 className="title">
                       <CalendarMonth />
                       Dates & Price
@@ -480,11 +490,13 @@ export default function PackageDetail() {
                                     ? "btn btn-sm bg-success"
                                     : "btn btn-sm bg-danger text-decoration-line-through"
                                 } text-light`}
-                                onClick={() =>
+                                onClick={() => {
+                                  setPageLevelLoader(true);
                                   router.push(
                                     `/package/${packageDetail._id}/booking`
-                                  )
-                                }>
+                                  );
+                                }}
+                              >
                                 Book Now
                               </button>
                             </td>
@@ -500,7 +512,8 @@ export default function PackageDetail() {
                   className="extra-contents"
                   dangerouslySetInnerHTML={{
                     __html: packageDetail?.content,
-                  }}></div>
+                  }}
+                ></div>
                 {packageDetail?.gallery.length !== 0 &&
                   packageDetail?.gallery[0].images.length !== 0 && (
                     <div>

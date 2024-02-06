@@ -189,7 +189,7 @@ export default function Booking() {
           <div>
             <h1>Booking Detail</h1>
             <div>
-              <p>Package Name: {packageDetail.name}</p>
+              <p>Package Name: {packageDetail?.name}</p>
               {mapHelper.map((item) => (
                 <div key={item.id}>
                   {item.id === "dateOfTravel" ? (

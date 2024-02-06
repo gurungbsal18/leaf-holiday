@@ -5,7 +5,7 @@ import axios from "axios";
 
 export default function Destination() {
   const data = {
-    pageName: "Destinations",
+    pageName: "Destination",
     apiName: "destination",
     createComponent: <CreateDestination />,
     headerData: [

@@ -1,11 +1,12 @@
 "use client";
 import AdminPages from "@/components/AdminPages";
 import CreateTestimonial from "@/components/CreateComponents/CreateTestimonial";
-import React from "react";
+import React, { useState } from "react";
 
 export default function Testimonial() {
+  const [verify, setVerify] = useState(false);
   const data = {
-    pageName: "Testimonials",
+    pageName: "Testimonial",
     createComponent: <CreateTestimonial />,
     headerData: [
       { Header: "NAME", accessor: "userID.name" },
@@ -13,11 +14,12 @@ export default function Testimonial() {
       { Header: "COMMENT", accessor: "comment" },
       { Header: "RATING", accessor: "stars" },
     ],
-    // showView: true,
+    showView: true,
     showEdit: true,
     showRemove: true,
     // showImage: true,
     apiName: "review",
+    checkbox: true,
   };
 
   return (

@@ -56,7 +56,6 @@ export default function AdminPages({ data }) {
       setFilteredData(temp);
     }
   }, [keyword]);
-  console.log(filteredData);
 
   return (
     <>
@@ -85,6 +84,8 @@ export default function AdminPages({ data }) {
             showEdit={data.showEdit}
             showRemove={data.showRemove}
             showImage={data.showImage}
+            checkbox={data.checkbox}
+            setVerify={data.setVerify}
           />
         </div>
       )}

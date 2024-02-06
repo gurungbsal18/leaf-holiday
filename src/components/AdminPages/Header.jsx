@@ -20,6 +20,9 @@ export default function ({ pageName, createComponent, keyword, setKeyword }) {
             if (pageName === "Package") {
               router.push("/admin/packages/create-package");
               setUpdatePackage(null);
+            } else if (pageName === "Blog") {
+              router.push("/admin/blogs/create");
+              setUpdatePackage(null);
             } else {
               setDialogOpen(true);
               setDialogContent(createComponent);
@@ -34,7 +37,7 @@ export default function ({ pageName, createComponent, keyword, setKeyword }) {
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
           className="form-control search-package-input"
-          placeholder="Search Pacakges"
+          placeholder="Search..."
         />
       </div>
     </div>

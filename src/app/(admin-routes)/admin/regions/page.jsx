@@ -5,7 +5,7 @@ import React from "react";
 
 export default function Region() {
   const data = {
-    pageName: "Regions",
+    pageName: "Region",
     createComponent: <CreateRegion />,
     headerData: [
       { Header: "NAME", accessor: "name" },

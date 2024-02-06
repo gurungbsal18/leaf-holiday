@@ -97,7 +97,6 @@ export default function ClientNavbar() {
 
     // Extract the first character of each word and convert to uppercase
     const initials = names.map((word) => word.charAt(0).toUpperCase()).join("");
-    console.log(initials);
     return initials;
   }
 
@@ -135,14 +134,16 @@ export default function ClientNavbar() {
                     setTimeout(() => {
                       router.push("/account");
                     }, 1000)
-                  }>
+                  }
+                >
                   {profileImageMaker()}
                 </div>
               ) : (
                 <a
                   role="button"
                   className="text-success d-flex align-items-center gap-1 log-in-btn"
-                  onClick={() => router.push("/login")}>
+                  onClick={() => router.push("/login")}
+                >
                   <LoginIcon />
                   Log In
                 </a>

@@ -23,6 +23,8 @@ export default function GlobalState({ children }) {
   const [bookingFormData, setBookingFormData] = useState(null);
   const [trackPage, setTrackPage] = useState("/");
   const [packageDetail, setPackageDetail] = useState(null);
+  const [homePageEdit, setHomePageEdit] = useState(null);
+  const [verify, setVerify] = useState(false);
 
   const pathname = usePathname();
   const extractAdminPath = pathname.split("/");
@@ -30,7 +32,6 @@ export default function GlobalState({ children }) {
   useEffect(() => {
     if (pathname !== "/login" && pathname !== "/register") {
       setTrackPage(pathname);
-      console.log(trackPage);
     }
   }, [pathname]);
 
@@ -87,7 +88,12 @@ export default function GlobalState({ children }) {
         setTrackPage,
         packageDetail,
         setPackageDetail,
-      }}>
+        homePageEdit,
+        setHomePageEdit,
+        verify,
+        setVerify,
+      }}
+    >
       {children}
     </GlobalContext.Provider>
   );

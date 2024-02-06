@@ -27,7 +27,7 @@ const BookingCard = ({ prices, packageId }) => {
     country: "",
     dateOfTravel: dayjs(currentDate),
     numberOfPeople: 1,
-    price: prices[0]?.price,
+    price: prices ? prices[0]?.price : 0,
     message: "",
     formType: "booking",
   });
@@ -102,27 +102,31 @@ const BookingCard = ({ prices, packageId }) => {
       <div className="booking-card-body mb-2">
         <div
           className="d-flex align-items-center mb-1"
-          style={{ position: "relative" }}>
+          style={{ position: "relative" }}
+        >
           <Button
             variant="light"
             size="sm"
             onClick={() => setShowGroupPrice(!showGroupPrice)}
-            className="d-flex justify-content-between gap-5 w-100">
+            className="d-flex justify-content-between gap-5 w-100"
+          >
             <p className="m-0">We Offer Group Prices</p>
             <ArrowDropDownIcon />
           </Button>
         </div>
         <div
-          className={`${showGroupPrice ? "" : "d-none"} group-price-dropdown`}>
+          className={`${showGroupPrice ? "" : "d-none"} group-price-dropdown`}
+        >
           <ul className="p-0 m-0">
             <li className="d-flex justify-content-between align-items-center">
               <p className="fs-14">No. of People</p>
               <p className="fs-14">Price per Person</p>
             </li>
-            {prices.map((item) => (
+            {prices?.map((item) => (
               <li
                 key={item.id}
-                className="d-flex justify-content-between align-items-center fs-14">
+                className="d-flex justify-content-between align-items-center fs-14"
+              >
                 <p>{item.numberOfPeople}</p>
                 <p>US$ {item.price}</p>
               </li>
@@ -153,7 +157,8 @@ const BookingCard = ({ prices, packageId }) => {
             <a
               href="#date-price"
               role="button"
-              className="fs-14 text-light text-decoration-none">
+              className="fs-14 text-light text-decoration-none"
+            >
               Fixed Departure Dates
             </a>
           </div>
@@ -202,12 +207,14 @@ const BookingCard = ({ prices, packageId }) => {
         </div>
         <Button
           className="btn btn-theme-secondary w-100"
-          onClick={handleCustomize}>
+          onClick={handleCustomize}
+        >
           Customize Trip
         </Button>
         <Button
           className="d-flex justify-content-center align-items-center gap-2"
-          variant="success">
+          variant="success"
+        >
           <PictureAsPdfIcon fontSize="large" />
           <p className="m-0">Download PDF</p>
         </Button>

@@ -9,66 +9,65 @@ import { GlobalContext } from "@/context";
 import axios from "axios";
 import CustomAutocomplete from "@/components/ui/CustomAutocomplete";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
-import { countries } from "@/utils";
+import HomePageTab from "@/components/ui/HomePageTab";
 
 export default function EditHome() {
-  const { setPageLevelLoader, pageLevelLoader } = useContext(GlobalContext);
+  const {
+    callExtractAll,
+    setCallExtractAll,
+    setPageLevelLoader,
+    pageLevelLoader,
+    homePageEdit,
+    setHomePageEdit,
+    setDialogOpen,
+    dialogContent,
+    setDialogContent,
+  } = useContext(GlobalContext);
   const [topTabCount, setTopTabCount] = useState(0);
   const [middleTabCount, setMiddleTabCount] = useState([0]);
   const [bottomTabCount, setBottomTabCount] = useState(0);
   const [allPackages, setAllPackages] = useState(null);
-  const { register, control, handleSubmit, setValue } = useForm({
-    defaultValues: {
-      topTabName: "",
-      topTabArray: [""],
-    },
-  });
-  const {
-    fields: topTabArrayFields,
-    append: topTabArrayAppend,
-    remove: topTabArrayRemove,
-  } = useFieldArray({
-    name: "topTabArray",
-    control,
-  });
-  console.log("array field", topTabArrayFields);
-
-  const getAllPackages = async () => {
-    setPageLevelLoader(true);
-    try {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/package/`
-      );
-      if (res.status === 200) {
-        setPageLevelLoader(false);
-        setAllPackages(res.data.data);
-      }
-    } catch (e) {
-      setPageLevelLoader(false);
-      console.log(e);
-    }
-  };
+  const [homePageData, setHomePageData] = useState(null);
 
   const onSubmit = (data) => {
     console.log(data);
   };
+
+  const handleRemove = async (id) => {
+    try {
+      const res = await axios.delete(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/tabs/delete/${id}`
+      );
+      console.log(res);
+      if (res.status === 200) {
+        setCallExtractAll(!callExtractAll);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const getHomePageDetail = async () => {
+    setPageLevelLoader(true);
     try {
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/homepage/`
       );
-      console.log("gethomepagedetail", res);
+      if (res.status === 200) {
+        setPageLevelLoader(false);
+        setHomePageData(res.data);
+      }
     } catch (e) {
       console.log(e);
+      setPageLevelLoader(false);
     }
   };
 
   useEffect(() => {
     getHomePageDetail();
-    getAllPackages();
-  }, []);
+  }, [callExtractAll]);
 
-  console.log(allPackages);
+  console.log("Home Page Data: ", homePageData);
   return (
     <>
       {pageLevelLoader ? (
@@ -78,54 +77,160 @@ export default function EditHome() {
           <h1>Edit HOME PAGE</h1>
           <div>
             <div>
-              <h4>Top Level Tab</h4>
               <div>
-                <TextField
-                  className="mx-0"
-                  label="Title"
-                  sx={{ m: 1, width: "25ch" }}
-                  type="text"
-                  size="small"
-                  {...register("topTabName")}
-                />
-                <Button
-                  disabled={topTabArrayFields.length >= 6}
-                  size="sm"
-                  variant="success"
-                  onClick={() => {
-                    topTabArrayAppend("");
-                    setTopTabCount((prev) => prev + 1);
-                  }}>
-                  <span className="d-flex align-items-center gap-1">
-                    + Add More Package
-                  </span>
-                </Button>
+                <h3>Top Level Tabs</h3>
+                {!homePageData?.tabs?.top && (
+                  <button
+                    onClick={() => {
+                      setDialogOpen(true);
+                      setDialogContent(<HomePageTab position={"top"} />);
+                    }}
+                  >
+                    Add New Tab
+                  </button>
+                )}
               </div>
-              {topTabArrayFields.map((topTabArrayField, index) => (
-                <div
-                  className="d-flex flex-column flex-md-row gap-3 align-items-center"
-                  key={topTabArrayField.id}>
-                  {/* <input type="text" {...register(`topTabArray.${index}`)} /> */}
-                  <CustomAutocomplete
-                    setValue={setValue}
-                    options={allPackages}
-                    formName={`topTabArray[${index}]`}
-                  />
+              {homePageData?.tabs?.top?.length > 0 && (
+                <div>
+                  <div>
+                    <h5>{homePageData?.tabs?.top[0]?.title}</h5>
+                    <button
+                      onClick={() => {
+                        setHomePageEdit(homePageData?.tabs?.top[0]);
+                        setDialogOpen(true);
+                        setDialogContent(
+                          <HomePageTab
+                            position={"top"}
+                            valueDefault={homePageData?.tabs?.top[0]}
+                          />
+                        );
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleRemove(homePageData?.tabs?.top[0]?._id)
+                      }
+                    >
+                      Remove
+                    </button>
+                  </div>
 
-                  {index > 0 && (
-                    <span
-                      role="button"
-                      className="text-danger"
-                      onClick={() => topTabArrayRemove(index)}>
-                      <RemoveCircleIcon />
-                    </span>
-                  )}
+                  <div>
+                    {homePageData?.tabs?.top[0] &&
+                      homePageData?.tabs?.top[0].packages.map((item) => (
+                        <p>{item.name}</p>
+                      ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <div>
+              <h3>Middle Level Tabs</h3>
+              <button
+                onClick={() => {
+                  setDialogOpen(true);
+                  setDialogContent(<HomePageTab position={"middle"} />);
+                }}
+              >
+                Add New Tab
+              </button>
+            </div>
+            <div className="d-flex">
+              {homePageData?.tabs?.middle?.map((middleTab) => (
+                <div>
+                  <div>
+                    <h5>{middleTab.title}</h5>
+                    <button
+                      onClick={() => {
+                        setHomePageEdit(middleTab);
+                        setDialogOpen(true);
+                        setDialogContent(
+                          <HomePageTab
+                            position={"middle"}
+                            valueDefault={middleTab}
+                          />
+                        );
+                      }}
+                    >
+                      Edit
+                    </button>
+
+                    <button onClick={() => handleRemove(middleTab?._id)}>
+                      Remove
+                    </button>
+                  </div>
+
+                  <div>
+                    {middleTab &&
+                      middleTab.packages.map((item) => <p>{item.name}</p>)}
+                  </div>
                 </div>
               ))}
             </div>
           </div>
 
-          <button onClick={handleSubmit(onSubmit)}>Submit</button>
+          <div>
+            <div>
+              <div>
+                <h3>Bottom Level Tabs</h3>
+                {!homePageData?.tabs?.bottom && (
+                  <button
+                    onClick={() => {
+                      setDialogOpen(true);
+                      setDialogContent(
+                        <HomePageTab position={"bottom"} url={true} />
+                      );
+                    }}
+                  >
+                    Add New Tab
+                  </button>
+                )}
+              </div>
+              <div></div>
+              {homePageData?.tabs?.bottom?.length > 0 && (
+                <div>
+                  <div>
+                    <h5>{homePageData?.tabs?.bottom[0]?.title}</h5>
+                    <button
+                      onClick={() => {
+                        setHomePageEdit(homePageData?.tabs?.bottom[0]);
+                        setDialogOpen(true);
+                        setDialogContent(
+                          <HomePageTab
+                            position={"bottom"}
+                            valueDefault={homePageData?.tabs?.bottom[0]}
+                            url={true}
+                          />
+                        );
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleRemove(homePageData?.tabs?.bottom[0]?._id)
+                      }
+                    >
+                      Remove
+                    </button>
+                  </div>
+
+                  <div>
+                    <p>{homePageData?.tabs?.bottom[0]?.videoUrl}</p>
+                    {homePageData?.tabs?.bottom[0] &&
+                      homePageData?.tabs?.bottom[0].packages.map((item) => (
+                        <p>{item.name}</p>
+                      ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       )}
     </>

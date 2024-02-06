@@ -17,7 +17,9 @@ export default function Table({
   showRemove,
   updateComponent,
   showImage,
+  checkbox,
 }) {
+  const { setVerify } = useContext(GlobalContext);
   const columns = useMemo(() => headerData, []);
   // const data = useMemo(() => bodyData, []);
   const tableInstance = useTable({ columns, data: bodyData });
@@ -35,6 +37,30 @@ export default function Table({
 
   const router = useRouter();
 
+  const handleSelected = async (data) => {
+    try {
+      const res = await axios.put(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/${apiName}/update/${data._id}`,
+        { ...data, isSelected: !data.isSelected }
+      );
+      if (res.status === 200) {
+        console.log(res);
+        res.data.data.isSelected === false
+          ? toast.error("Removed from the Homepage Successfully", {
+              position: toast.POSITION.TOP_RIGHT,
+            })
+          : toast.success("Added to the Homepage Successfully", {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+        setCallExtractAll(!callExtractAll);
+      }
+    } catch (e) {
+      toast.success("Something Went Wrong. Please Try Again!!!", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+  };
+
   async function handleRemove(id) {
     const res = await axios.delete(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/${apiName}/delete/${id}`
@@ -46,6 +72,7 @@ export default function Table({
       });
     }
   }
+  console.log(bodyData);
   return (
     <table {...getTableProps()}>
       <thead>
@@ -63,6 +90,7 @@ export default function Table({
                   </th>
                 );
               })}
+              {checkbox && <th>SHOW IN HOMEPAGE</th>}
               {showView && <th></th>}
               {showEdit && <th></th>}
               {showRemove && <th></th>}
@@ -81,10 +109,12 @@ export default function Table({
                   <Image
                     src={
                       bodyData[key.split("_")[1]]?.imageUrl ||
-                      bodyData[key.split("_")[1]]?.mainImageUrl
+                      bodyData[key.split("_")[1]]?.mainImageUrl ||
+                      bodyData[key.split("_")[1]]?.imgUrl
                     }
                     height={50}
                     width={50}
+                    alt={`${apiName}-image-${key.split("_")[1]}`}
                   />
                 </td>
               )}
@@ -96,19 +126,38 @@ export default function Table({
                   </td>
                 );
               })}
+              {checkbox && (
+                <td>
+                  <input
+                    type="checkbox"
+                    defaultChecked={bodyData[key.split("_")[1]]?.isSelected}
+                    onClick={() => handleSelected(bodyData[key.split("_")[1]])}
+                  />
+                </td>
+              )}
               {showView && (
                 <td>
-                  <button
-                    onClick={() => {
-                      setPageLevelLoader(true);
-                      setTimeout(() => {
-                        router.push(
-                          `/${apiName}/${bodyData[key.split("_")[1]]._id}`
-                        );
-                      }, 1000);
-                    }}>
-                    View
-                  </button>
+                  {!bodyData[key.split("_")[1]]?.isVerified && (
+                    <button
+                      onClick={() => {
+                        if (apiName === "review") {
+                          setUpdateForm(bodyData[key.split("_")[1]]);
+                          setVerify(true);
+                          setDialogOpen(true);
+                          setDialogContent(updateComponent);
+                        } else {
+                          setPageLevelLoader(true);
+                          setTimeout(() => {
+                            router.push(
+                              `/${apiName}/${bodyData[key.split("_")[1]]._id}`
+                            );
+                          }, 1000);
+                        }
+                      }}
+                    >
+                      {apiName === "review" ? "Verify" : "View"}
+                    </button>
+                  )}
                 </td>
               )}
               {showEdit && (
@@ -118,13 +167,17 @@ export default function Table({
                       if (apiName === "package") {
                         setUpdatePackage(bodyData[key.split("_")[1]]);
                         router.push("/admin/packages/create-package");
+                      } else if (apiName === "blog") {
+                        setUpdatePackage(bodyData[key.split("_")[1]]);
+                        router.push("/admin/blogs/create");
                       } else {
                         setUpdateForm(bodyData[key.split("_")[1]]);
                         setDialogOpen(true);
                         setDialogContent(updateComponent);
                       }
                     }}
-                    className="btn btn-sm btn-success">
+                    className="btn btn-sm btn-success"
+                  >
                     <EditNoteIcon /> Edit
                   </button>
                 </td>
@@ -135,7 +188,8 @@ export default function Table({
                     onClick={() =>
                       handleRemove(bodyData[key.split("_")[1]]._id)
                     }
-                    className="btn btn-sm btn-danger">
+                    className="btn btn-sm btn-danger"
+                  >
                     <DeleteIcon />
                     Remove
                   </button>
