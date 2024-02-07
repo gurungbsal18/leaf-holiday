@@ -7,6 +7,10 @@
     .nav-item {
       color: $white;
       height: 30px;
+      cursor: pointer;
+      &:hover {
+        color: #203333;
+      }
       .nav-icon {
         font-size: 14px !important;
       }

@@ -136,7 +136,7 @@ export default function ClientNavbar() {
                     }, 1000)
                   }
                 >
-                  {profileImageMaker()}
+                  <div className="login-user">{profileImageMaker()}</div>
                 </div>
               ) : (
                 <a

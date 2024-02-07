@@ -227,7 +227,8 @@ export default function CreatePackage() {
                   {pricesFields.map((priceField, index) => (
                     <div
                       className="d-flex flex-column flex-md-row gap-3 align-items-center"
-                      key={priceField.id}>
+                      key={priceField.id}
+                    >
                       <TextField
                         className="mx-0"
                         label="No. of People"
@@ -262,7 +263,8 @@ export default function CreatePackage() {
                         <span
                           role="button"
                           className="text-danger"
-                          onClick={() => pricesRemove(index)}>
+                          onClick={() => pricesRemove(index)}
+                        >
                           <RemoveCircleIcon />
                         </span>
                         // <button
@@ -283,7 +285,8 @@ export default function CreatePackage() {
                         numberOfPeople: "",
                         price: 0,
                       })
-                    }>
+                    }
+                  >
                     <span className="d-flex align-items-center gap-1">
                       <MonetizationOnIcon />
                       Add More Price
@@ -397,7 +400,8 @@ export default function CreatePackage() {
                     <Button
                       variant="primary"
                       size="sm"
-                      onClick={() => highlightsAppend("")}>
+                      onClick={() => highlightsAppend("")}
+                    >
                       + Add Trip Highlights
                     </Button>
                   </div>
@@ -409,7 +413,8 @@ export default function CreatePackage() {
                           <span
                             role="button"
                             className="text-danger"
-                            onClick={() => highlightsRemove(index)}>
+                            onClick={() => highlightsRemove(index)}
+                          >
                             <RemoveCircleIcon />
                           </span>
                         </div>
@@ -424,7 +429,8 @@ export default function CreatePackage() {
                     <Button
                       variant="primary"
                       size="sm"
-                      onClick={() => inclusionsAppend("")}>
+                      onClick={() => inclusionsAppend("")}
+                    >
                       + Add Cost Include
                     </Button>
                   </div>
@@ -448,7 +454,8 @@ export default function CreatePackage() {
                     <Button
                       variant="primary"
                       size="sm"
-                      onClick={() => exclusionsAppend("")}>
+                      onClick={() => exclusionsAppend("")}
+                    >
                       + Add Cost Exclude
                     </Button>
                   </div>
@@ -497,7 +504,7 @@ export default function CreatePackage() {
           <div className="col-auto">
             <div className="d-flex flex-column gap-3">
               <div className="d-flex flex-column ">
-                <div>
+                <div className="d-flex gap-2">
                   <input
                     type="checkbox"
                     id="isTopSelling"
@@ -505,7 +512,7 @@ export default function CreatePackage() {
                   />
                   <label for="isFeatured">Top Selling</label>
                 </div>
-                <div>
+                <div className="d-flex gap-2">
                   <input
                     type="checkbox"
                     id="isFeatured"
@@ -513,7 +520,7 @@ export default function CreatePackage() {
                   />
                   <label for="isFeatured">Featured</label>
                 </div>
-                <div>
+                <div className="d-flex gap-2">
                   <input
                     type="checkbox"
                     id="isTrending"
@@ -521,7 +528,7 @@ export default function CreatePackage() {
                   />
                   <label for="isTrending">Trending</label>
                 </div>
-                <div>
+                <div className="d-flex gap-2">
                   <input
                     type="checkbox"
                     id="isGroupTour"
