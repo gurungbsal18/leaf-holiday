@@ -39,8 +39,8 @@ export default function OrderHistory() {
       {pageLevelLoader ? (
         <PageLevelLoader loading={pageLevelLoader} />
       ) : (
-        <div className="history">
-          <h1>BOOKING HISTORY</h1>
+        <div className="history col-9 px-5 mt-2">
+          <h4 className="mb-3">BOOKING HISTORY</h4>
           <Table headerData={COLUMNS} bodyData={userBooking} />
         </div>
       )}

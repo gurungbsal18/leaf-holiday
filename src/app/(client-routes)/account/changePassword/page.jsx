@@ -32,10 +32,10 @@ export default function ChangePassword() {
     }
   };
   return (
-    <div>
-      <h1>CHANGE PASSWORD</h1>
-      <div>
-        <form>
+    <div className="col-9 px-5 mt-2">
+      <h4>CHANGE PASSWORD</h4>
+      <div className="mt-3">
+        <form className="d-flex flex-column gap-3">
           <TextField
             required
             size="small"
@@ -62,14 +62,18 @@ export default function ChangePassword() {
               }
             }}
           />
-          <button
-            onClick={handleSubmit(handleChangePassword)}
-            disabled={
-              watch("password") === "" ||
-              watch("password") !== confirmPasswordValue
-            }>
-            CHANGE PASSWORD
-          </button>
+          <div className="d-flex justify-content-start">
+            <button
+              onClick={handleSubmit(handleChangePassword)}
+              disabled={
+                watch("password") === "" ||
+                watch("password") !== confirmPasswordValue
+              }
+              className="btn btn-sm btn-success"
+            >
+              CHANGE PASSWORD
+            </button>
+          </div>
         </form>
       </div>
     </div>
