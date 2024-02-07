@@ -9,7 +9,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { submitForm } from "@/utils/functions";
 
-export default function CreateDifficulty({ nameValue, setNameValue }) {
+export default function CreateDifficulty({ nameValue, setNameValue, setVal }) {
   const initialFormData = {
     name: nameValue ? nameValue : "",
     description: "",
@@ -31,6 +31,7 @@ export default function CreateDifficulty({ nameValue, setNameValue }) {
 
   const onSubmit = async (data) => {
     const res = await submitForm(data, "difficulty", updateForm, setNameValue);
+    setVal(data.name);
 
     setCallExtractAll(!callExtractAll);
     setUpdateForm(null);

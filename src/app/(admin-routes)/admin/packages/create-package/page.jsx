@@ -25,6 +25,7 @@ import UploadToCloudinary from "@/components/ui/UploadToCloudinary";
 import Notification from "@/components/Notification";
 import { submitPackageForm } from "@/utils/functions";
 import CallAllEdits from "@/components/EditPackage/CallAllEdits";
+import axios from "axios";
 
 export default function CreatePackage() {
   const {
@@ -171,6 +172,7 @@ export default function CreatePackage() {
   };
 
   const slugHandler = () => {};
+  // console.log(updatePackage);
 
   return (
     <div className="create-edit-package pt-0 p-2">
@@ -210,7 +212,14 @@ export default function CreatePackage() {
                 label="Title"
                 type="text"
                 variant="outlined"
-                {...register("name")}
+                value={watch("name")}
+                onChange={(e) => {
+                  setValue("name", e.target.value);
+                  setValue(
+                    "slug",
+                    e.target.value.toLowerCase().replace(/\s+/g, "-")
+                  );
+                }}
                 className="mb-3"
               />
               <label htmlFor="url">
@@ -218,7 +227,8 @@ export default function CreatePackage() {
               </label>
               <input
                 type="text"
-                value={watch("name").toLowerCase().replace(/\s+/g, "-")}
+                value={watch("slug")}
+                onChange={(e) => setValue("slug", e.target.value)}
               />
 
               <div className="d-flex">
@@ -227,7 +237,8 @@ export default function CreatePackage() {
                   {pricesFields.map((priceField, index) => (
                     <div
                       className="d-flex flex-column flex-md-row gap-3 align-items-center"
-                      key={priceField.id}>
+                      key={priceField.id}
+                    >
                       <TextField
                         className="mx-0"
                         label="No. of People"
@@ -262,7 +273,8 @@ export default function CreatePackage() {
                         <span
                           role="button"
                           className="text-danger"
-                          onClick={() => pricesRemove(index)}>
+                          onClick={() => pricesRemove(index)}
+                        >
                           <RemoveCircleIcon />
                         </span>
                         // <button
@@ -283,7 +295,8 @@ export default function CreatePackage() {
                         numberOfPeople: "",
                         price: 0,
                       })
-                    }>
+                    }
+                  >
                     <span className="d-flex align-items-center gap-1">
                       <MonetizationOnIcon />
                       Add More Price
@@ -379,8 +392,9 @@ export default function CreatePackage() {
                 />
                 <div className="w-50">
                   <CreatableAutocomplete
-                    control={control}
-                    formName="difficulty"
+                    apiName="difficulty"
+                    initialValue={watch("difficulty")}
+                    setValue={setValue}
                   />
                 </div>
               </div>
@@ -397,7 +411,8 @@ export default function CreatePackage() {
                     <Button
                       variant="primary"
                       size="sm"
-                      onClick={() => highlightsAppend("")}>
+                      onClick={() => highlightsAppend("")}
+                    >
                       + Add Trip Highlights
                     </Button>
                   </div>
@@ -409,7 +424,8 @@ export default function CreatePackage() {
                           <span
                             role="button"
                             className="text-danger"
-                            onClick={() => highlightsRemove(index)}>
+                            onClick={() => highlightsRemove(index)}
+                          >
                             <RemoveCircleIcon />
                           </span>
                         </div>
@@ -424,7 +440,8 @@ export default function CreatePackage() {
                     <Button
                       variant="primary"
                       size="sm"
-                      onClick={() => inclusionsAppend("")}>
+                      onClick={() => inclusionsAppend("")}
+                    >
                       + Add Cost Include
                     </Button>
                   </div>
@@ -448,7 +465,8 @@ export default function CreatePackage() {
                     <Button
                       variant="primary"
                       size="sm"
-                      onClick={() => exclusionsAppend("")}>
+                      onClick={() => exclusionsAppend("")}
+                    >
                       + Add Cost Exclude
                     </Button>
                   </div>
@@ -532,7 +550,11 @@ export default function CreatePackage() {
               </div>
 
               <div className="w-100">
-                <CreatableAutocomplete control={control} formName="region" />
+                <CreatableAutocomplete
+                  apiName="region"
+                  initialValue={watch("region")}
+                  setValue={setValue}
+                />
               </div>
 
               <UploadToCloudinary

@@ -7,7 +7,7 @@ import { GlobalContext } from "@/context";
 import { submitForm } from "@/utils/functions";
 import UploadToCloudinary from "@/components/ui/UploadToCloudinary";
 
-export default function CreateRegion({ nameValue, setNameValue }) {
+export default function CreateRegion({ nameValue, setNameValue, setVal }) {
   const {
     callExtractAll,
     setCallExtractAll,
@@ -44,6 +44,7 @@ export default function CreateRegion({ nameValue, setNameValue }) {
 
   const onSubmit = async (data) => {
     const res = await submitForm(data, "region", updateForm, setNameValue);
+    setVal(data.name);
 
     setCallExtractAll(!callExtractAll);
     setUpdateForm(null);
