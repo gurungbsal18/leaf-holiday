@@ -74,14 +74,15 @@ export default function Table({
   }
   console.log(bodyData);
   return (
-    <table {...getTableProps()}>
+    <table {...getTableProps()} className="dashboard-table">
       <thead>
         {headerGroups.map((headerGroup) => {
           const { key, ...restHeaderGroupProps } =
             headerGroup.getHeaderGroupProps();
           return (
             <tr key={key} {...restHeaderGroupProps}>
-              {showImage && <th></th>}
+              {/* {showImage && <th></th>} */}
+              {checkbox && <th>Add</th>}
               {headerGroup.headers.map((column) => {
                 const { key, ...restColumnProps } = column.getHeaderProps();
                 return (
@@ -90,9 +91,8 @@ export default function Table({
                   </th>
                 );
               })}
-              {checkbox && <th>SHOW IN HOMEPAGE</th>}
-              {showView && <th></th>}
-              {showEdit && <th></th>}
+              {/* {showView && <th></th>} */}
+              {/* {showEdit && <th></th>} */}
               {showRemove && <th></th>}
             </tr>
           );
@@ -104,7 +104,7 @@ export default function Table({
           const { key, ...restRowProps } = row.getRowProps();
           return (
             <tr key={key} {...restRowProps}>
-              {showImage && (
+              {/* {showImage && (
                 <td>
                   <Image
                     src={
@@ -117,15 +117,7 @@ export default function Table({
                     alt={`${apiName}-image-${key.split("_")[1]}`}
                   />
                 </td>
-              )}
-              {row.cells.map((cell) => {
-                const { key, ...restCellProps } = cell.getCellProps();
-                return (
-                  <td key={key} {...restCellProps}>
-                    {cell.render("Cell")}
-                  </td>
-                );
-              })}
+              )} */}
               {checkbox && (
                 <td>
                   <input
@@ -135,33 +127,43 @@ export default function Table({
                   />
                 </td>
               )}
-              {showView && (
-                <td>
-                  {!bodyData[key.split("_")[1]]?.isVerified && (
-                    <button
-                      onClick={() => {
-                        if (apiName === "review") {
-                          setUpdateForm(bodyData[key.split("_")[1]]);
-                          setVerify(true);
-                          setDialogOpen(true);
-                          setDialogContent(updateComponent);
-                        } else {
-                          setPageLevelLoader(true);
-                          setTimeout(() => {
-                            router.push(
-                              `/${apiName}/${bodyData[key.split("_")[1]]._id}`
-                            );
-                          }, 1000);
-                        }
-                      }}
-                    >
-                      {apiName === "review" ? "Verify" : "View"}
-                    </button>
-                  )}
-                </td>
-              )}
-              {showEdit && (
-                <td>
+              {row.cells.map((cell) => {
+                const { key, ...restCellProps } = cell.getCellProps();
+                return (
+                  <td key={key} {...restCellProps}>
+                    {cell.render("Cell")}
+                  </td>
+                );
+              })}
+
+              <td className="d-flex gap-3 justify-content-end">
+                {showView && (
+                  <>
+                    {!bodyData[key.split("_")[1]]?.isVerified && (
+                      <button
+                        className="btn btn-sm btn-outline-success"
+                        onClick={() => {
+                          if (apiName === "review") {
+                            setUpdateForm(bodyData[key.split("_")[1]]);
+                            setVerify(true);
+                            setDialogOpen(true);
+                            setDialogContent(updateComponent);
+                          } else {
+                            setPageLevelLoader(true);
+                            setTimeout(() => {
+                              router.push(
+                                `/${apiName}/${bodyData[key.split("_")[1]]._id}`
+                              );
+                            }, 1000);
+                          }
+                        }}
+                      >
+                        {apiName === "review" ? "Verify" : "View"}
+                      </button>
+                    )}
+                  </>
+                )}
+                {showEdit && (
                   <button
                     onClick={() => {
                       if (apiName === "package") {
@@ -180,10 +182,8 @@ export default function Table({
                   >
                     <EditNoteIcon /> Edit
                   </button>
-                </td>
-              )}
-              {showRemove && (
-                <td>
+                )}
+                {showRemove && (
                   <button
                     onClick={() =>
                       handleRemove(bodyData[key.split("_")[1]]._id)
@@ -193,8 +193,8 @@ export default function Table({
                     <DeleteIcon />
                     Remove
                   </button>
-                </td>
-              )}
+                )}
+              </td>
             </tr>
           );
         })}
