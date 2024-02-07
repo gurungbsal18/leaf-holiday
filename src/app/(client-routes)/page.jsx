@@ -5,13 +5,12 @@ import "material-icons/iconfont/material-icons.css";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
-
 import { GlobalContext } from "@/context";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-
 import ExploreDestination from "@/components/HomeTest/ExploreDestination";
 import BlogCard from "@/components/BlogCard";
 import ReviewCarousel from "@/components/ReviewCarousel";
+import { getEmbeddedYouTubeUrl } from "@/utils/functions";
 
 export default function Home() {
   const {
@@ -103,20 +102,13 @@ export default function Home() {
                   <div className="home-video-section d-flex flex-column flex-lg-row gap-3">
                     <div className="col-12 col-lg-6">
                       {homePageData?.tabs?.bottom[0]?.videoUrl && (
-                        // <iframe
-                        //   width="560"
-                        //   height="315"
-                        //   src={homePageData?.tabs?.bottom[0]?.videoUrl}
-                        //   title="YouTube video player"
-                        //   frameborder="0"
-                        //   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        //   allowfullscreen
-                        // ></iframe>
                         <iframe
-                          width="853"
-                          height="480"
-                          src="https://www.youtube.com/embed/m-M1AtrxztU"
-                          title="Rick Astley - Never Gonna Give You Up (Official Music Video)"
+                          width="560"
+                          height="315"
+                          src={getEmbeddedYouTubeUrl(
+                            homePageData?.tabs?.bottom[0]?.videoUrl
+                          )}
+                          title="YouTube video player"
                           frameborder="0"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                           allowfullscreen

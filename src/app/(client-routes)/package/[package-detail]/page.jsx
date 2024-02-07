@@ -530,7 +530,7 @@ export default function PackageDetail() {
                               <CldVideoPlayer
                                 width="640"
                                 height="360"
-                                src="leaf-holiday/xarbztl3saguijhnmtvy"
+                                src={item}
                               />
                             </div>
                           )
