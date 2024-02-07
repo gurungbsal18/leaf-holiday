@@ -12,34 +12,6 @@ import BlogCard from "../BlogCard";
 import ReviewCarousel from "../ReviewCarousel";
 
 const HomeTest = ({ homePageData }) => {
-  const TopSellingPackage = [
-    {
-      imageUrl: "/images/TestImages/ebc-lhasa.jpeg",
-      location: "Lhasa",
-      review: 5,
-      title: "Lhasa, EBC and Mt. Kailash Tour",
-      days: 19,
-      price: 3950,
-    },
-    {
-      imageUrl: "/images/TestImages/kailash-via-lhasa.jpeg",
-      location: "Nepal, Tibet, Lhasa",
-      review: 5,
-      title: "Kailash via Lhasa In Kerung Out",
-      days: 14,
-      price: 3750,
-    },
-    {
-      imageUrl: "/images/TestImages/kailash-overland-tour.jpeg",
-      location: "Nepal, Tibet, Lhasa",
-      review: 5,
-      title: "Mount Kailash Overland Tour",
-      days: 13,
-      price: 2650,
-    },
-  ];
-  console.log(homePageData);
-
   return (
     <>
       <div className="hero-section">
@@ -59,77 +31,87 @@ const HomeTest = ({ homePageData }) => {
         </button>
       </div>
 
-      <div className="py-100">
-        <div className="container">
-          <div className="text-center my-5">
-            <h4 className="home-title">{homePageData?.tabs?.top[0]?.title}</h4>
-          </div>
-          <div className="d-flex gap-3 flex-wrap">
-            {homePageData?.tabs?.top[0]?.packages?.map((item) => (
-              <PackageCard packageDetail={item} />
-            ))}
+      {homePageData?.tabs?.top?.length > 0 && (
+        <div className="py-100">
+          <div className="container">
+            <div className="text-center my-5">
+              <h4 className="home-title">
+                {homePageData?.tabs?.top[0]?.title}
+              </h4>
+            </div>
+            <div className="d-flex gap-3 flex-wrap">
+              {homePageData?.tabs?.top[0]?.packages?.map((item) => (
+                <PackageCard packageDetail={item} />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
-      <ExploreDestination middleTabData={homePageData?.tabs?.middle} />
+      {homePageData?.tabs?.middle?.length > 0 && (
+        <ExploreDestination middleTabData={homePageData?.tabs?.middle} />
+      )}
 
-      <div className="py-100">
-        <div className="container">
-          <div className="text-center my-5">
-            <h2 className="home-title">
-              {homePageData?.tabs?.bottom[0]?.title}
-            </h2>
-          </div>
-
-          <div className="home-video-section d-flex flex-column flex-lg-row gap-3">
-            <div className="col-12 col-lg-6">
-              {homePageData?.tabs?.bottom[0]?.videoUrl && (
-                // <iframe
-                //   width="560"
-                //   height="315"
-                //   src={homePageData?.tabs?.bottom[0]?.videoUrl}
-                //   title="YouTube video player"
-                //   frameborder="0"
-                //   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                //   allowfullscreen
-                // ></iframe>
-                <iframe
-                  width="853"
-                  height="480"
-                  src="https://www.youtube.com/embed/m-M1AtrxztU"
-                  title="Rick Astley - Never Gonna Give You Up (Official Music Video)"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen
-                ></iframe>
-              )}
+      {homePageData?.tabs?.bottom?.length > 0 && (
+        <div className="py-100">
+          <div className="container">
+            <div className="text-center my-5">
+              <h2 className="home-title">
+                {homePageData?.tabs?.bottom[0]?.title}
+              </h2>
             </div>
-            <div className="col-12 col-lg-6">
-              <div className="d-flex gap-3 flex-wrap">
-                {homePageData?.tabs?.bottom[0]?.packages?.map((item) => (
-                  <PackageCard packageDetail={item} />
-                ))}
+
+            <div className="home-video-section d-flex flex-column flex-lg-row gap-3">
+              <div className="col-12 col-lg-6">
+                {homePageData?.tabs?.bottom[0]?.videoUrl && (
+                  // <iframe
+                  //   width="560"
+                  //   height="315"
+                  //   src={homePageData?.tabs?.bottom[0]?.videoUrl}
+                  //   title="YouTube video player"
+                  //   frameborder="0"
+                  //   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  //   allowfullscreen
+                  // ></iframe>
+                  <iframe
+                    width="853"
+                    height="480"
+                    src="https://www.youtube.com/embed/m-M1AtrxztU"
+                    title="Rick Astley - Never Gonna Give You Up (Official Music Video)"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                  ></iframe>
+                )}
+              </div>
+              <div className="col-12 col-lg-6">
+                <div className="d-flex gap-3 flex-wrap">
+                  {homePageData?.tabs?.bottom[0]?.packages?.map((item) => (
+                    <PackageCard packageDetail={item} />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
+        </div>
+      )}
 
-          <div className="container blog-section py-100">
-            <div className="text-center">
-              <h2 className="home-title">Blogs and News</h2>
-            </div>
-            <div>
-              {homePageData?.blogs?.map((item) => (
-                <BlogCard blogDetail={item} />
-              ))}
-            </div>
+      {homePageData?.blogs?.length > 0 && (
+        <div className="container blog-section py-100">
+          <div className="text-center">
+            <h2 className="home-title">Blogs and News</h2>
+          </div>
+          <div>
+            {homePageData?.blogs?.map((item) => (
+              <BlogCard blogDetail={item} />
+            ))}
+          </div>
 
-            <div className="d-flex justify-content-center">
-              <button className="btn btn-success">View all</button>
-            </div>
+          <div className="d-flex justify-content-center">
+            <button className="btn btn-success">View all</button>
           </div>
         </div>
-      </div>
+      )}
 
       <div className="container reccommended-section py-100">
         <div className="text-center my-5">
@@ -141,12 +123,14 @@ const HomeTest = ({ homePageData }) => {
         </div>
       </div>
 
-      <div>
+      {homePageData?.reviews?.length > 0 && (
         <div>
-          <h2 className="home-title">Review from our guests</h2>
+          <div>
+            <h2 className="home-title">Review from our guests</h2>
+          </div>
+          <ReviewCarousel reviews={homePageData?.reviews} />
         </div>
-        <ReviewCarousel reviews={homePageData?.reviews} />
-      </div>
+      )}
     </>
   );
 };

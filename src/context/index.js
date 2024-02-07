@@ -50,9 +50,12 @@ export default function GlobalState({ children }) {
 
   useEffect(() => {
     if (extractAdminPath[1] === "admin") {
+      console.log(isAdminView);
+      console.log(("called is admin view"));
       setAdminView(true);
+      setVerify(false)
     }
-  }, [extractAdminPath]);
+  }, [pathname]);
   return (
     <GlobalContext.Provider
       value={{

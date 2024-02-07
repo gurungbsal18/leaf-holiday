@@ -21,15 +21,14 @@ export default function Settings() {
     updatePackage,
   } = useContext(GlobalContext);
 
-  const [settingDetail, setSettingDetail] = useState(null);
+  const [settingDetail, setSettingDetail] = useState([]);
   const [selectedFile, setSelectedFile] = React.useState(null);
   const initialFormData = {
     email: "",
     phoneNumber: "",
-    options: "",
     location: "",
-    homeFeatureText: "",
-    homeFeatureLink: "",
+    homepageFeatureText: "",
+    homepageFeatureLink: "",
     logo: "",
     facebook: "",
     instagram: "",
@@ -37,6 +36,7 @@ export default function Settings() {
     linkedin: "",
     youtube: "",
   };
+  const isUpdate = settingDetail.length > 0;
 
   const form = useForm({
     defaultValues: initialFormData,
@@ -44,8 +44,8 @@ export default function Settings() {
   const { register, handleSubmit, setValue, reset } = form;
 
   const onSubmit = async (data) => {
-    // const res = await submitForm(data, "setting", updatePackage);
-    console.log(data);
+    const res = await submitForm(data, "setting");
+    // console.log(data);
   };
 
   const getSettingsData = async () => {
@@ -58,7 +58,8 @@ export default function Settings() {
         setSettingDetail(res?.data?.data);
         setSelectedFile(res?.data?.data?.logo);
         setPageLevelLoader(false);
-        reset(res?.data?.data);
+        console.log(res.data.data[0]);
+        reset(res?.data?.data[0]);
       }
     } catch (e) {
       console.log(e);
@@ -66,8 +67,9 @@ export default function Settings() {
     }
   };
   useEffect(() => {
-    // getSettingsData()
+    getSettingsData();
   }, []);
+  console.log(settingDetail);
 
   return (
     <div className="">
@@ -126,8 +128,8 @@ const leftDivData = [
   { id: "email", label: "Email" },
   { id: "phoneNumber", label: "Phone Number" },
   { id: "location", label: "Location" },
-  { id: "homeFeatureText", label: "Homepage Feature Text" },
-  { id: "homeFeatureLink", label: "Homepage Feature Link" },
+  { id: "homepageFeatureText", label: "Homepage Feature Text" },
+  { id: "homepageFeatureLink", label: "Homepage Feature Link" },
 ];
 const rightDivData = [
   { id: "facebook", label: "Facebook" },
