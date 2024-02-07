@@ -13,6 +13,7 @@
 @import "./fix-departure-table";
 @import "./admin/dashboard-table";
 @import "./custom-table";
+@import "./review-slider";
 @import "./client/user-account-dashboard.scss";
 
 $theme-secondary: #f7941d;
@@ -24,6 +25,10 @@ $theme-secondary-dark: #eb8101;
 
 .bg-theme-secondary {
   background: $theme-secondary;
+}
+
+.bg-theme-fade-secondary {
+  background: #ffe7c7;
 }
 
 .btn.btn-theme-secondary {
@@ -41,6 +46,10 @@ $theme-secondary-dark: #eb8101;
 
 .py-100 {
   padding: 100px 0;
+}
+
+.pt-100 {
+  padding-top: 100px;
 }
 
 .pt-50 {
