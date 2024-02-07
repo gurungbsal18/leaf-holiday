@@ -142,7 +142,7 @@ export default function Home() {
                 <div className="text-center">
                   <h2 className="home-title">Blogs and News</h2>
                 </div>
-                <div>
+                <div className="blog-card">
                   {homePageData?.blogs?.map((item) => (
                     <BlogCard blogDetail={item} />
                   ))}
