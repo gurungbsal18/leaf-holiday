@@ -1,110 +1,124 @@
-import React, { useEffect, useState } from "react";
+"use client";
 import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
+import { useContext, useEffect, useState } from "react";
+import { GlobalContext } from "@/context";
 import CreateRegion from "../CreateComponents/CreateRegion";
 import CreateDifficulty from "../CreateComponents/CreateDifficulty";
-import { GlobalContext } from "@/context";
-import { useContext } from "react";
-import { Controller } from "react-hook-form";
+import axios from "axios";
 
 const filter = createFilterOptions();
 
-export default function TestCreatableAutocomplete({ control, formName }) {
-  const { callExtractAll, setDialogOpen, setDialogContent } =
+export default function CreatableAutocomplete({
+  initialValue,
+  setValue,
+  apiName,
+}) {
+  const { setDialogOpen, setDialogContent, callExtractAll } =
     useContext(GlobalContext);
+  const [val, setVal] = useState(initialValue || null);
+  const [optionData, setOptionData] = useState(null);
+  const isRegionField = () => {
+    return apiName === "region";
+  };
 
-  const [optionList, setOptionList] = useState([]);
-
+  const getOptionData = async () => {
+    try {
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/${apiName}/`
+      );
+      if (res.status === 200) {
+        setOptionData(res.data.data);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/${formName}/`)
-      .then((data) => data.json())
-      .then((val) => setOptionList(val.data));
+    getOptionData();
   }, [callExtractAll]);
-
-  function getLabel(value) {
-    // Ensure value is not undefined and find the corresponding option
-    const selectedOption =
-      value !== undefined ? optionList.find((opt) => opt._id === value) : null;
-
-    // Return the name of the selected option or an empty string if not found
-    return selectedOption ? selectedOption.name : "";
-  }
-
+  //   console.log(optionData);
   return (
     <>
-      <Controller
-        name={formName}
-        control={control}
-        render={({ field }) => (
-          <Autocomplete
-            {...field}
-            onChange={(event, newValue) => {
-              if (typeof newValue === "string") {
-                setTimeout(() => {
-                  setDialogOpen(true);
-                  setDialogContent(
-                    formName === "region" ? (
-                      <CreateRegion
-                        nameValue={newValue}
-                        setNameValue={(value) => field.onChange(value)}
-                      />
-                    ) : (
-                      <CreateDifficulty
-                        nameValue={newValue}
-                        setNameValue={(value) => field.onChange(value)}
-                      />
-                    )
-                  );
-                });
-              } else if (newValue && newValue.inputValue) {
-                setDialogOpen(true);
-                setDialogContent(
-                  formName === "region" ? (
-                    <CreateRegion
-                      nameValue={newValue.inputValue}
-                      setNameValue={(value) => field.onChange(value)}
-                    />
-                  ) : (
-                    <CreateDifficulty
-                      nameValue={newValue.inputValue}
-                      setNameValue={(value) => field.onChange(value)}
-                    />
-                  )
-                );
-              } else {
-                field.onChange(newValue?._id || null);
-              }
-            }}
-            filterOptions={(options, params) => {
-              const filtered = filter(options, params);
+      <Autocomplete
+        value={val}
+        onChange={(event, newValue) => {
+          if (typeof newValue === "string") {
+            // timeout to avoid instant validation of the dialog's form.
+            setTimeout(() => {
+              setDialogOpen(true);
+              setDialogContent(
+                isRegionField() ? (
+                  <CreateRegion
+                    nameValue={newValue}
+                    setNameValue={setValue}
+                    setVal={setVal}
+                  />
+                ) : (
+                  <CreateDifficulty
+                    nameValue={newValue}
+                    setNameValue={setValue}
+                    setVal={setVal}
+                  />
+                )
+              );
+            });
+          } else if (newValue && newValue.inputValue) {
+            setDialogOpen(true);
+            setDialogContent(
+              isRegionField() ? (
+                <CreateRegion
+                  nameValue={newValue.inputValue}
+                  setNameValue={setValue}
+                  setVal={setVal}
+                />
+              ) : (
+                <CreateDifficulty
+                  nameValue={newValue.inputValue}
+                  setNameValue={setValue}
+                  setVal={setVal}
+                />
+              )
+            );
+          } else {
+            setVal(newValue);
+            setValue(apiName, newValue?._id);
+          }
+        }}
+        filterOptions={(options, params) => {
+          const filtered = filter(options, params);
 
-              if (params.inputValue !== "") {
-                filtered.push({
-                  inputValue: params.inputValue,
-                  name: `Add "${params.inputValue}"`,
-                });
-              }
+          if (params.inputValue !== "") {
+            filtered.push({
+              inputValue: params.inputValue,
+              name: `Add "${params.inputValue}"`,
+            });
+          }
 
-              return filtered;
-            }}
-            options={optionList}
-            getOptionLabel={(option) => getLabel(option)}
-            renderOption={(props, option) => <li {...props}>{option.name}</li>}
-            selectOnFocus
-            clearOnBlur
-            autoSelect
-            handleHomeEndKeys
-            freeSolo
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                fullWidth
-                size="small"
-                label={
-                  formName === "region" ? "Select Region" : "Select Difficulty"
-                }
-              />
-            )}
+          return filtered;
+        }}
+        id="free-solo-dialog-demo"
+        options={optionData}
+        getOptionLabel={(option) => {
+          // e.g. value selected with enter, right from the input
+          if (typeof option === "string") {
+            return option;
+          }
+          if (option.inputValue) {
+            return option.inputValue;
+          }
+          return option.name;
+        }}
+        selectOnFocus
+        clearOnBlur
+        handleHomeEndKeys
+        renderOption={(props, option) => <li {...props}>{option.name}</li>}
+        sx={{ width: 300 }}
+        freeSolo
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label={isRegionField() ? "Select Region" : "Select Difficulty"}
           />
         )}
       />

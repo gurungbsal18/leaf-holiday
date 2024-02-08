@@ -25,6 +25,7 @@ import UploadToCloudinary from "@/components/ui/UploadToCloudinary";
 import Notification from "@/components/Notification";
 import { submitPackageForm } from "@/utils/functions";
 import CallAllEdits from "@/components/EditPackage/CallAllEdits";
+import axios from "axios";
 
 export default function CreatePackage() {
   const {
@@ -171,6 +172,7 @@ export default function CreatePackage() {
   };
 
   const slugHandler = () => {};
+  // console.log(updatePackage);
 
   return (
     <div className="create-edit-package pt-0 p-2">
@@ -210,7 +212,14 @@ export default function CreatePackage() {
                 label="Title"
                 type="text"
                 variant="outlined"
-                {...register("name")}
+                value={watch("name")}
+                onChange={(e) => {
+                  setValue("name", e.target.value);
+                  setValue(
+                    "slug",
+                    e.target.value.toLowerCase().replace(/\s+/g, "-")
+                  );
+                }}
                 className="mb-3"
               />
               <label htmlFor="url">
@@ -218,7 +227,8 @@ export default function CreatePackage() {
               </label>
               <input
                 type="text"
-                value={watch("name").toLowerCase().replace(/\s+/g, "-")}
+                value={watch("slug")}
+                onChange={(e) => setValue("slug", e.target.value)}
               />
 
               <div className="d-flex">
@@ -382,8 +392,9 @@ export default function CreatePackage() {
                 />
                 <div className="w-50">
                   <CreatableAutocomplete
-                    control={control}
-                    formName="difficulty"
+                    apiName="difficulty"
+                    initialValue={watch("difficulty")}
+                    setValue={setValue}
                   />
                 </div>
               </div>
@@ -539,7 +550,11 @@ export default function CreatePackage() {
               </div>
 
               <div className="w-100">
-                <CreatableAutocomplete control={control} formName="region" />
+                <CreatableAutocomplete
+                  apiName="region"
+                  initialValue={watch("region")}
+                  setValue={setValue}
+                />
               </div>
 
               <UploadToCloudinary

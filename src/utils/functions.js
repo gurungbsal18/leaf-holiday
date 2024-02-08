@@ -159,3 +159,21 @@ export function toTitleCase(input) {
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 }
+
+export function getEmbeddedYouTubeUrl(url) {
+  // Regular expression to match YouTube video ID in the specified URL format
+  const regex = /[?&]v=([^&]+)/;
+
+  // Extract video ID from the URL using the regular expression
+  const match = url.match(regex);
+
+  if (match && match[1]) {
+    const videoId = match[1];
+    // Construct the embedded YouTube URL
+    const embeddedUrl = `https://www.youtube.com/embed/${videoId}`;
+    return embeddedUrl;
+  } else {
+    // Handle invalid YouTube URL
+    return 'Invalid YouTube URL';
+  }
+}
