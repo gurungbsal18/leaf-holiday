@@ -134,7 +134,7 @@ export default function Home() {
                 <div className="text-center">
                   <h2 className="home-title">Blogs and News</h2>
                 </div>
-                <div>
+                <div className="blog-card">
                   {homePageData?.blogs?.map((item) => (
                     <BlogCard blogDetail={item} />
                   ))}
@@ -157,9 +157,11 @@ export default function Home() {
             </div>
 
             {homePageData?.reviews?.length > 0 && (
-              <div>
-                <div>
-                  <h2 className="home-title">Review from our guests</h2>
+              <div className="bg-light py-100">
+                <div className="container">
+                  <h2 className="home-title text-center">
+                    Review from our guests
+                  </h2>
                 </div>
                 <ReviewCarousel reviews={homePageData?.reviews} />
               </div>

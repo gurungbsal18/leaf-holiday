@@ -44,22 +44,26 @@ export default function ClientAccountNavbar() {
     }, 1000);
   }
   return (
-    <div className="d-flex flex-column ">
+    <div className="d-flex flex-column bg-light col p-4 vh-100 gap-4">
       {mapHelper.map((item) => (
         <div
-          className="d-flex justify-content-between"
+          className="d-flex justify-content-between align-items-center user-account-dashboard-item"
           key={item.id}
-          onClick={() => router.push(item.path)}>
-          <div className="d-flex gap-3">
+          onClick={() => router.push(item.path)}
+        >
+          <div className="d-flex gap-2 align-items-center">
             {item.icon}
-            <p>{item.label}</p>
+            <p className="m-0">{item.label}</p>
           </div>
           <MdArrowForwardIos />
         </div>
       ))}
-      <div className="d-flex" onClick={handleLogout}>
-        <LogoutIcon />
-        <p>Log Out</p>
+      <div
+        className="d-flex gap-2 border-top pt-3 logout-btn"
+        onClick={handleLogout}
+      >
+        <LogoutIcon className="text-success" />
+        <p className="m-0 text-success">Log Out</p>
       </div>
     </div>
   );

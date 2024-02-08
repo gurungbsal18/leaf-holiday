@@ -89,74 +89,74 @@ export default function Table({
   }
   console.log(bodyData);
   return (
-    <div>
-      <table {...getTableProps()}>
-        <thead>
-          {headerGroups.map((headerGroup) => {
-            const { key, ...restHeaderGroupProps } =
-              headerGroup.getHeaderGroupProps();
-            return (
-              <tr key={key} {...restHeaderGroupProps}>
-                {showImage && <th></th>}
-                {headerGroup.headers.map((column) => {
-                  const { key, ...restColumnProps } = column.getHeaderProps();
-                  return (
-                    <th key={key} {...restColumnProps}>
-                      {column.render("Header")}
-                    </th>
-                  );
-                })}
-                {checkbox && <th>SHOW IN HOMEPAGE</th>}
-                {showView && <th></th>}
-                {showEdit && <th></th>}
-                {showRemove && <th></th>}
-              </tr>
-            );
-          })}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {page.map((row) => {
-            prepareRow(row);
-            const { key, ...restRowProps } = row.getRowProps();
-            return (
-              <tr key={key} {...restRowProps}>
-                {showImage && (
-                  <td>
-                    <Image
-                      src={
-                        bodyData[key.split("_")[1]]?.imageUrl ||
-                        bodyData[key.split("_")[1]]?.mainImageUrl ||
-                        bodyData[key.split("_")[1]]?.imgUrl
-                      }
-                      height={50}
-                      width={50}
-                      alt={`${apiName}-image-${key.split("_")[1]}`}
-                    />
+    <table {...getTableProps()} className="dashboard-table">
+      <thead>
+        {headerGroups.map((headerGroup) => {
+          const { key, ...restHeaderGroupProps } =
+            headerGroup.getHeaderGroupProps();
+          return (
+            <tr key={key} {...restHeaderGroupProps}>
+              {/* {showImage && <th></th>} */}
+              {checkbox && <th>Add</th>}
+              {headerGroup.headers.map((column) => {
+                const { key, ...restColumnProps } = column.getHeaderProps();
+                return (
+                  <th key={key} {...restColumnProps}>
+                    {column.render("Header")}
+                  </th>
+                );
+              })}
+              {/* {showView && <th></th>} */}
+              {/* {showEdit && <th></th>} */}
+              {showRemove && <th></th>}
+            </tr>
+          );
+        })}
+      </thead>
+      <tbody {...getTableBodyProps()}>
+        {rows.map((row) => {
+          prepareRow(row);
+          const { key, ...restRowProps } = row.getRowProps();
+          return (
+            <tr key={key} {...restRowProps}>
+              {/* {showImage && (
+                <td>
+                  <Image
+                    src={
+                      bodyData[key.split("_")[1]]?.imageUrl ||
+                      bodyData[key.split("_")[1]]?.mainImageUrl ||
+                      bodyData[key.split("_")[1]]?.imgUrl
+                    }
+                    height={50}
+                    width={50}
+                    alt={`${apiName}-image-${key.split("_")[1]}`}
+                  />
+                </td>
+              )} */}
+              {checkbox && (
+                <td>
+                  <input
+                    type="checkbox"
+                    defaultChecked={bodyData[key.split("_")[1]]?.isSelected}
+                    onClick={() => handleSelected(bodyData[key.split("_")[1]])}
+                  />
+                </td>
+              )}
+              {row.cells.map((cell) => {
+                const { key, ...restCellProps } = cell.getCellProps();
+                return (
+                  <td key={key} {...restCellProps}>
+                    {cell.render("Cell")}
                   </td>
-                )}
-                {row.cells.map((cell) => {
-                  const { key, ...restCellProps } = cell.getCellProps();
-                  return (
-                    <td key={key} {...restCellProps}>
-                      {cell.render("Cell")}
-                    </td>
-                  );
-                })}
-                {checkbox && (
-                  <td>
-                    <input
-                      type="checkbox"
-                      defaultChecked={bodyData[key.split("_")[1]]?.isSelected}
-                      onClick={() =>
-                        handleSelected(bodyData[key.split("_")[1]])
-                      }
-                    />
-                  </td>
-                )}
+                );
+              })}
+
+              <td className="d-flex gap-3 justify-content-end">
                 {showView && (
-                  <td>
+                  <>
                     {!bodyData[key.split("_")[1]]?.isVerified && (
                       <button
+                        className="btn btn-sm btn-outline-success"
                         onClick={() => {
                           if (apiName === "review") {
                             setUpdateForm(bodyData[key.split("_")[1]]);
@@ -167,9 +167,7 @@ export default function Table({
                             setPageLevelLoader(true);
                             setTimeout(() => {
                               router.push(
-                                `/${apiName}/${
-                                  bodyData[key.split("_")[1]].slug
-                                }`
+                                `/${apiName}/${bodyData[key.split("_")[1]]._id}`
                               );
                             }, 1000);
                           }
@@ -178,60 +176,44 @@ export default function Table({
                         {apiName === "review" ? "Verify" : "View"}
                       </button>
                     )}
-                  </td>
+                  </>
                 )}
                 {showEdit && (
-                  <td>
-                    <button
-                      onClick={() => {
-                        if (apiName === "package") {
-                          setUpdatePackage(bodyData[key.split("_")[1]]);
-                          router.push("/admin/packages/create-package");
-                        } else if (apiName === "blog") {
-                          setUpdatePackage(bodyData[key.split("_")[1]]);
-                          router.push("/admin/blogs/create");
-                        } else {
-                          setUpdateForm(bodyData[key.split("_")[1]]);
-                          setDialogOpen(true);
-                          setDialogContent(updateComponent);
-                        }
-                      }}
-                      className="btn btn-sm btn-success"
-                    >
-                      <EditNoteIcon /> Edit
-                    </button>
-                  </td>
+                  <button
+                    onClick={() => {
+                      if (apiName === "package") {
+                        setUpdatePackage(bodyData[key.split("_")[1]]);
+                        router.push("/admin/packages/create-package");
+                      } else if (apiName === "blog") {
+                        setUpdatePackage(bodyData[key.split("_")[1]]);
+                        router.push("/admin/blogs/create");
+                      } else {
+                        setUpdateForm(bodyData[key.split("_")[1]]);
+                        setDialogOpen(true);
+                        setDialogContent(updateComponent);
+                      }
+                    }}
+                    className="btn btn-sm btn-success"
+                  >
+                    <EditNoteIcon /> Edits
+                  </button>
                 )}
                 {showRemove && (
-                  <td>
-                    <button
-                      onClick={() =>
-                        handleRemove(bodyData[key.split("_")[1]]._id)
-                      }
-                      className="btn btn-sm btn-danger"
-                    >
-                      <DeleteIcon />
-                      Remove
-                    </button>
-                  </td>
+                  <button
+                    onClick={() =>
+                      handleRemove(bodyData[key.split("_")[1]]._id)
+                    }
+                    className="btn btn-sm btn-danger"
+                  >
+                    <DeleteIcon />
+                    Remove
+                  </button>
                 )}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <div>
-        <span>
-          Page <strong>{pageIndex + 1}</strong>of
-          <strong>{pageOptions.length}</strong>
-        </span>
-        <button disabled={!canPreviousPage} onClick={() => previousPage()}>
-          Previous
-        </button>
-        <button disabled={!canNextPage} onClick={() => nextPage()}>
-          Next
-        </button>
-      </div>
-    </div>
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
   );
 }

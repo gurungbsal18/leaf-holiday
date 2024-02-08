@@ -56,6 +56,18 @@ ul.p-submenu-list.p-megamenu-submenu li {
   }
 }
 
+.login-user {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #e15e1c;
+  color: $white;
+  cursor: pointer;
+}
+
 @media (max-width: 820px) {
   .login-section {
     position: absolute;

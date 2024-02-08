@@ -2,6 +2,8 @@ import React from "react";
 import Image from "next/image";
 import { uploadImage } from "@/utils/functions";
 import { toast } from "react-toastify";
+import DeleteIcon from "@mui/icons-material/Delete";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 
 export default function UploadToCloudinary({
   label,
@@ -15,9 +17,15 @@ export default function UploadToCloudinary({
       {label && <p>{label}</p>}
       {selectedFile &&
         (label === "PDF" ? (
-          <div>
+          <div className="d-flex flex-column pdf-upload">
             <iframe src={selectedFile} height={300} width={300} />
-            <button onClick={() => setSelectedFile(null)}>Remove PDF</button>
+            <button
+              onClick={() => setSelectedFile(null)}
+              className="my-2 btn btn-danger"
+            >
+              <PictureAsPdfIcon className="me-2" />
+              Remove PDF
+            </button>
           </div>
         ) : (
           <div className="d-flex flex-column custom-modal-image">
@@ -32,9 +40,9 @@ export default function UploadToCloudinary({
                 setSelectedFile(null);
                 setValue(formName, "");
               }}
-              className="btn btn-sm btn-success my-3"
+              className="btn btn-sm btn-danger my-3"
             >
-              Remove Image
+              <DeleteIcon /> Remove Image
             </button>
           </div>
         ))}
