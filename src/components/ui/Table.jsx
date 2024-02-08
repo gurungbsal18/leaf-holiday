@@ -180,7 +180,7 @@ export default function Table({
                     }}
                     className="btn btn-sm btn-success"
                   >
-                    <EditNoteIcon /> Edit
+                    <EditNoteIcon /> Edits
                   </button>
                 )}
                 {showRemove && (
