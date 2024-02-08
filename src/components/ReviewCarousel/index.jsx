@@ -1,6 +1,6 @@
 // components/ReviewCarousel.js
 import React, { useEffect, useState } from "react";
-import { FaUserAlt } from "react-icons/fa";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Rating from "@mui/material/Rating";
 
 const ReviewCarousel = ({ reviews }) => {
@@ -25,23 +25,31 @@ const ReviewCarousel = ({ reviews }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       setReviewIndex((prevIndex) => (prevIndex + 1) % reviews.length);
-    }, 3000);
+    }, 3000000);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div>
-      <div key={reviews[reviewIndex]._id}>
-        <FaUserAlt />
-        <p>{reviews[reviewIndex]?.packageId?.name}</p>
+    <div className="review-slider position-relative">
+      <div key={reviews[reviewIndex]._id} className="review-slider-content">
+        <span className="user-icon">
+          <AccountCircleIcon className="mt-5 mb-3" />
+        </span>
+        <h4 className="text-muted fw-bold">
+          {reviews[reviewIndex]?.packageId?.name}
+        </h4>
         <p>{reviews[reviewIndex]?.userName}</p>
         <Rating value={Number(reviews[reviewIndex]?.stars)} readOnly />
-        <p>{reviews[reviewIndex]?.comment}</p>
+        <p className="text-muted">{reviews[reviewIndex]?.comment}</p>
       </div>
-      <div>
-        <button onClick={handlePrev}>{"<<"}</button>
-        <button onClick={handleNext}>{">>"}</button>
+      <div className="review-slider-btn">
+        <button onClick={handlePrev} className="btn btn-sm btn-outline-success">
+          {"<"}
+        </button>
+        <button onClick={handleNext} className="btn btn-sm btn-outline-success">
+          {">"}
+        </button>
       </div>
     </div>
   );

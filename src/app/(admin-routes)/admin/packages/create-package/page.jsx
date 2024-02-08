@@ -526,7 +526,7 @@ export default function CreatePackage() {
           <div className="col-auto">
             <div className="d-flex flex-column gap-3">
               <div className="d-flex flex-column ">
-                <div>
+                <div className="d-flex gap-2">
                   <input
                     type="checkbox"
                     id="isTopSelling"
@@ -534,7 +534,7 @@ export default function CreatePackage() {
                   />
                   <label for="isFeatured">Top Selling</label>
                 </div>
-                <div>
+                <div className="d-flex gap-2">
                   <input
                     type="checkbox"
                     id="isFeatured"
@@ -542,7 +542,7 @@ export default function CreatePackage() {
                   />
                   <label for="isFeatured">Featured</label>
                 </div>
-                <div>
+                <div className="d-flex gap-2">
                   <input
                     type="checkbox"
                     id="isTrending"
@@ -550,7 +550,7 @@ export default function CreatePackage() {
                   />
                   <label for="isTrending">Trending</label>
                 </div>
-                <div>
+                <div className="d-flex gap-2">
                   <input
                     type="checkbox"
                     id="isGroupTour"

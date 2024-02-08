@@ -90,14 +90,15 @@ export default function Table({
   console.log(bodyData);
   return (
     <div>
-      <table {...getTableProps()}>
+      <table {...getTableProps()} className="dashboard-table">
         <thead>
           {headerGroups.map((headerGroup) => {
             const { key, ...restHeaderGroupProps } =
               headerGroup.getHeaderGroupProps();
             return (
               <tr key={key} {...restHeaderGroupProps}>
-                {showImage && <th></th>}
+                {/* {showImage && <th></th>} */}
+                {checkbox && <th>Add</th>}
                 {headerGroup.headers.map((column) => {
                   const { key, ...restColumnProps } = column.getHeaderProps();
                   return (
@@ -106,9 +107,8 @@ export default function Table({
                     </th>
                   );
                 })}
-                {checkbox && <th>SHOW IN HOMEPAGE</th>}
-                {showView && <th></th>}
-                {showEdit && <th></th>}
+                {/* {showView && <th></th>} */}
+                {/* {showEdit && <th></th>} */}
                 {showRemove && <th></th>}
               </tr>
             );
@@ -120,28 +120,20 @@ export default function Table({
             const { key, ...restRowProps } = row.getRowProps();
             return (
               <tr key={key} {...restRowProps}>
-                {showImage && (
-                  <td>
-                    <Image
-                      src={
-                        bodyData[key.split("_")[1]]?.imageUrl ||
-                        bodyData[key.split("_")[1]]?.mainImageUrl ||
-                        bodyData[key.split("_")[1]]?.imgUrl
-                      }
-                      height={50}
-                      width={50}
-                      alt={`${apiName}-image-${key.split("_")[1]}`}
-                    />
-                  </td>
-                )}
-                {row.cells.map((cell) => {
-                  const { key, ...restCellProps } = cell.getCellProps();
-                  return (
-                    <td key={key} {...restCellProps}>
-                      {cell.render("Cell")}
-                    </td>
-                  );
-                })}
+                {/* {showImage && (
+              <td>
+                <Image
+                  src={
+                    bodyData[key.split("_")[1]]?.imageUrl ||
+                    bodyData[key.split("_")[1]]?.mainImageUrl ||
+                    bodyData[key.split("_")[1]]?.imgUrl
+                  }
+                  height={50}
+                  width={50}
+                  alt={`${apiName}-image-${key.split("_")[1]}`}
+                />
+              </td>
+            )} */}
                 {checkbox && (
                   <td>
                     <input
@@ -153,35 +145,45 @@ export default function Table({
                     />
                   </td>
                 )}
-                {showView && (
-                  <td>
-                    {!bodyData[key.split("_")[1]]?.isVerified && (
-                      <button
-                        onClick={() => {
-                          if (apiName === "review") {
-                            setUpdateForm(bodyData[key.split("_")[1]]);
-                            setVerify(true);
-                            setDialogOpen(true);
-                            setDialogContent(updateComponent);
-                          } else {
-                            setPageLevelLoader(true);
-                            setTimeout(() => {
-                              router.push(
-                                `/${apiName}/${
-                                  bodyData[key.split("_")[1]].slug
-                                }`
-                              );
-                            }, 1000);
-                          }
-                        }}
-                      >
-                        {apiName === "review" ? "Verify" : "View"}
-                      </button>
-                    )}
-                  </td>
-                )}
-                {showEdit && (
-                  <td>
+                {row.cells.map((cell) => {
+                  const { key, ...restCellProps } = cell.getCellProps();
+                  return (
+                    <td key={key} {...restCellProps}>
+                      {cell.render("Cell")}
+                    </td>
+                  );
+                })}
+
+                <td className="d-flex gap-3 justify-content-end">
+                  {showView && (
+                    <>
+                      {!bodyData[key.split("_")[1]]?.isVerified && (
+                        <button
+                          className="btn btn-sm btn-outline-success"
+                          onClick={() => {
+                            if (apiName === "review") {
+                              setUpdateForm(bodyData[key.split("_")[1]]);
+                              setVerify(true);
+                              setDialogOpen(true);
+                              setDialogContent(updateComponent);
+                            } else {
+                              setPageLevelLoader(true);
+                              setTimeout(() => {
+                                router.push(
+                                  `/${apiName}/${
+                                    bodyData[key.split("_")[1]]._id
+                                  }`
+                                );
+                              }, 1000);
+                            }
+                          }}
+                        >
+                          {apiName === "review" ? "Verify" : "View"}
+                        </button>
+                      )}
+                    </>
+                  )}
+                  {showEdit && (
                     <button
                       onClick={() => {
                         if (apiName === "package") {
@@ -198,12 +200,10 @@ export default function Table({
                       }}
                       className="btn btn-sm btn-success"
                     >
-                      <EditNoteIcon /> Edit
+                      <EditNoteIcon /> Edits
                     </button>
-                  </td>
-                )}
-                {showRemove && (
-                  <td>
+                  )}
+                  {showRemove && (
                     <button
                       onClick={() =>
                         handleRemove(bodyData[key.split("_")[1]]._id)
@@ -213,8 +213,8 @@ export default function Table({
                       <DeleteIcon />
                       Remove
                     </button>
-                  </td>
-                )}
+                  )}
+                </td>
               </tr>
             );
           })}

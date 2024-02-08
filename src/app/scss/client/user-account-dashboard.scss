@@ -1,0 +1,18 @@
+.user-account-dashboard {
+  &-item {
+    cursor: pointer;
+    &:hover {
+      color: $success;
+    }
+  }
+}
+
+.logout-btn {
+  cursor: pointer;
+  &:hover {
+    svg,
+    p {
+      color: #f7941d !important;
+    }
+  }
+}
