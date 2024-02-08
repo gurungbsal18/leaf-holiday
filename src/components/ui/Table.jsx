@@ -191,7 +191,7 @@ export default function Table({
                     className="btn btn-sm btn-danger"
                   >
                     <DeleteIcon />
-                    Delete
+                    Remove
                   </button>
                 )}
               </td>
