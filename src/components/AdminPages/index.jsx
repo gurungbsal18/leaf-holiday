@@ -29,11 +29,12 @@ export default function AdminPages({ data }) {
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/${data.apiName}/`
       );
+
       if (res.status === 200) {
         setAllData(res.data.data);
         setFilteredData(res.data.data);
-        setPageLevelLoader(false);
       }
+      setPageLevelLoader(false);
     } catch (e) {
       console.log(e);
       setPageLevelLoader(false);
