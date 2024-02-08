@@ -44,8 +44,8 @@ export default function Settings() {
   const { register, handleSubmit, setValue, reset } = form;
 
   const onSubmit = async (data) => {
-    const res = await submitForm(data, "setting");
-    // console.log(data);
+    // const res = await submitForm(data, "setting");
+    console.log(data);
   };
 
   const getSettingsData = async () => {
