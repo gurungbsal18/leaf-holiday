@@ -11,7 +11,7 @@ function PackageCard({ packageDetail }) {
   return (
     <div
       className="trip-card border col-3"
-      onClick={() => router.push(`/package/${packageDetail?._id}`)}
+      onClick={() => router.push(`/package/${packageDetail?.slug}`)}
     >
       <Image
         src={packageDetail?.mainImageUrl}

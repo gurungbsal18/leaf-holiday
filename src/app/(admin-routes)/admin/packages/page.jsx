@@ -8,7 +8,7 @@ export default function Package() {
     apiName: "package",
     headerData: [
       { Header: "NAME", accessor: "name" },
-      { Header: "DESTINATION", accessor: "destination.name" },
+      { Header: "REGION", accessor: "region.name" },
     ],
     showView: true,
     showEdit: true,

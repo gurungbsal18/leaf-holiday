@@ -8,12 +8,16 @@ import axios from "axios";
 
 export default function UploadGallery() {
   const { updatePackage } = useContext(GlobalContext);
-  const [images, setImages] = useState(updatePackage?.gallery[0]?.images || []);
+  const [images, setImages] = useState(
+    (updatePackage?.gallery && updatePackage?.gallery[0]?.images) || []
+  );
   const packageId = updatePackage?._id;
   const [updateGallery, setUpdateGallery] = useState(
     updatePackage?.gallery && updatePackage?.gallery?.length !== 0
   );
-  const [galleryId, setGalleryId] = useState(updatePackage?.gallery[0]?._id);
+  const [galleryId, setGalleryId] = useState(
+    updatePackage?.gallery && updatePackage?.gallery[0]?._id
+  );
 
   const handleRemove = (index) => {
     const updatedImages = [...images];
@@ -54,7 +58,8 @@ export default function UploadGallery() {
         {images?.map((imagelink, index) => (
           <div
             key={imagelink}
-            className="d-flex flex-column align-items-center gap-3 ">
+            className="d-flex flex-column align-items-center gap-3 "
+          >
             <Image src={imagelink} width={50} height={50} />
             <button onClick={() => handleRemove(index)}>Remove Image</button>
           </div>
@@ -64,7 +69,8 @@ export default function UploadGallery() {
         onUpload={(result) => {
           setImages([...images, result.info.secure_url]);
         }}
-        uploadPreset="uploadPreset">
+        uploadPreset="uploadPreset"
+      >
         Upload To Cloudinary
       </CldUploadButton>
       <button type="submit" onClick={handleSubmit}>

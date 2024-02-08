@@ -21,9 +21,6 @@ const BookingCard = ({ prices, packageId }) => {
   const [showGroupPrice, setShowGroupPrice] = useState(false);
   const currentDate = new Date().toDateString();
   const [formData, setFormData] = useState({
-    packageId: packageId,
-    userId: user?._id || "",
-    phoneNumber: user?.phoneNumber || "",
     country: "",
     dateOfTravel: dayjs(currentDate),
     numberOfPeople: 1,
@@ -166,7 +163,6 @@ const BookingCard = ({ prices, packageId }) => {
             <p className="mb-1 mt-3">No. of Guests</p>
             <input
               className="form-control mb-2"
-              defaultValue={1}
               min={1}
               max={30}
               placeholder={0}

@@ -167,7 +167,9 @@ export default function Table({
                             setPageLevelLoader(true);
                             setTimeout(() => {
                               router.push(
-                                `/${apiName}/${bodyData[key.split("_")[1]]._id}`
+                                `/${apiName}/${
+                                  bodyData[key.split("_")[1]].slug
+                                }`
                               );
                             }, 1000);
                           }

@@ -52,6 +52,11 @@ export default function CreatePackage() {
   const [tripMap, setTripMap] = useState(
     updatePackage ? updatePackage.tripMapUrl : null
   );
+  const newUpdatePackage = {
+    ...updatePackage,
+    region: updatePackage?.region?._id,
+    difficulty: updatePackage?.difficulty?._id,
+  };
   const [pdf, setPdf] = useState(updatePackage ? updatePackage.pdfUrl : null);
   const router = useRouter();
 
@@ -101,12 +106,12 @@ export default function CreatePackage() {
         info: "",
       },
     },
-    difficulty: "",
+
     metaTitle: "",
     metaDescription: "",
     overview: "",
     content: "",
-    region: "",
+    videoGallery: [],
     mainImageUrl: "",
     tripMapUrl: "",
     pdfUrl: "",
@@ -117,7 +122,7 @@ export default function CreatePackage() {
   };
 
   const form = useForm({
-    defaultValues: updatePackage ? updatePackage : initialFormData,
+    defaultValues: newUpdatePackage ? newUpdatePackage : initialFormData,
   });
   const { register, control, handleSubmit, setValue, watch } = form;
 
@@ -161,8 +166,17 @@ export default function CreatePackage() {
     control,
   });
 
+  //for video gallery
+  const {
+    fields: videoGalleryFields,
+    append: videoGalleryAppend,
+    remove: videoGalleryRemove,
+  } = useFieldArray({
+    name: "videoGallery",
+    control,
+  });
+
   const onSubmit = async (data) => {
-    console.log("form submitted: ", data);
     const res = submitPackageForm(
       data,
       updatePackage,
@@ -170,9 +184,6 @@ export default function CreatePackage() {
       router
     );
   };
-
-  const slugHandler = () => {};
-  // console.log(updatePackage);
 
   return (
     <div className="create-edit-package pt-0 p-2">
@@ -582,6 +593,36 @@ export default function CreatePackage() {
           </div>
         </div>
       </form>
+      {updatePackage && (
+        <div className="video-gallery border-bottom pb-3">
+          <div className="form-header d-flex justify-content-between ">
+            <h4 className="dashboard-title">Video Gallery Links</h4>
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => videoGalleryAppend("")}
+            >
+              + Add Video Url
+            </Button>
+          </div>
+          <div className="form-content">
+            {videoGalleryFields.map((field, index) => {
+              return (
+                <div className="d-flex align-items-center">
+                  <input {...register(`videoGallery.${index}`)} />
+                  <span
+                    role="button"
+                    className="text-danger"
+                    onClick={() => videoGalleryRemove(index)}
+                  >
+                    <RemoveCircleIcon />
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
       {updatePackage && <CallAllEdits />}
     </div>
   );

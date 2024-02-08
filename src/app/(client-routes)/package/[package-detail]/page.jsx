@@ -37,9 +37,10 @@ import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import CollectionsIcon from "@mui/icons-material/Collections";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import { GlobalContext } from "@/context";
-import { isImage } from "@/utils/functions";
+import { getEmbeddedYouTubeUrl, isImage } from "@/utils/functions";
 import { CldVideoPlayer } from "next-cloudinary";
 import "next-cloudinary/dist/cld-video-player.css";
+import Fancybox from "@/components/FancyappWrapper";
 
 export default function PackageDetail() {
   const [showItineraryDetails, setShowItineraryDetails] = useState({});
@@ -47,7 +48,8 @@ export default function PackageDetail() {
   const [showCostInclude, setShowConstInclude] = useState(true);
   const [activeCost, setActiveCost] = useState(true);
   const [contentExpand, setContentExpand] = useState(false);
-  const packageId = usePathname().replace("/package/", "");
+  const packageId = usePathname().match(/\/package\/([^\/]+)(?:\/|$)/)[1];
+  console.log("slug: ", packageId);
 
   const {
     user,
@@ -65,10 +67,11 @@ export default function PackageDetail() {
     try {
       setPageLevelLoader(true);
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/package/${packageId}`
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/package/slug/${packageId}`
       );
+      console.log(res);
       if (res.status === 200) {
-        setPackageDetail(res.data.data);
+        setPackageDetail(res.data.data[0]);
         setPageLevelLoader(false);
       }
     } catch (e) {
@@ -91,7 +94,7 @@ export default function PackageDetail() {
   };
 
   useEffect(() => {
-    if (packageDetail) {
+    if (packageDetail && packageDetail?.itineraries) {
       if (
         Object.keys(showItineraryDetails).length ===
         packageDetail?.itineraries.length
@@ -183,6 +186,7 @@ export default function PackageDetail() {
               width={1519}
               height={800}
               alt="header image"
+              priority
             />
 
             <div className="container d-flex justify-content-center">
@@ -243,19 +247,21 @@ export default function PackageDetail() {
                           }
                         }
                       )}
-                    <div className="col d-flex">
-                      <div className="trip-fact-icon">
-                        {iconMapping["difficulty"]}
+                    {packageDetail?.difficulty && (
+                      <div className="col d-flex">
+                        <div className="trip-fact-icon">
+                          {iconMapping["difficulty"]}
+                        </div>
+                        <div>
+                          <p className="trip-fact-title m-0 text-muted">
+                            Difficulty
+                          </p>
+                          <p className="trip-fact-detail m-0">
+                            {packageDetail?.difficulty.name}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="trip-fact-title m-0 text-muted">
-                          Difficulty
-                        </p>
-                        <p className="trip-fact-detail m-0">
-                          {packageDetail?.difficulty.name}
-                        </p>
-                      </div>
-                    </div>
+                    )}
                   </div>
                 )}
                 {packageDetail?.overview !== "" && (
@@ -279,79 +285,80 @@ export default function PackageDetail() {
                     </Button>
                   </div>
                 )}
-                {packageDetail?.itineraries.length !== 0 && (
-                  <div className="mt-5" id="itinerary">
-                    <div className="d-flex justify-content-between mb-3 align-items-center">
-                      <h4 className="title ">
-                        <ModeOfTravelIcon />
-                        Itinerary
-                      </h4>
-                      <Button
-                        variant="success"
-                        size="sm"
-                        onClick={handleExpandCollapse}
-                      >
-                        {expandOrCollapse ? "Collapse All -" : "Expand All +"}
-                      </Button>
-                    </div>
-                    <div className="d-flex gap-3 flex-column">
-                      {packageDetail?.itineraries.map((item) => (
-                        <div key={item._id}>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <span className="d-flex align-items-center gap-2">
-                              <span className="text-success">
-                                <LocationOnIcon />
+                {packageDetail?.itineraries &&
+                  packageDetail?.itineraries.length !== 0 && (
+                    <div className="mt-5" id="itinerary">
+                      <div className="d-flex justify-content-between mb-3 align-items-center">
+                        <h4 className="title ">
+                          <ModeOfTravelIcon />
+                          Itinerary
+                        </h4>
+                        <Button
+                          variant="success"
+                          size="sm"
+                          onClick={handleExpandCollapse}
+                        >
+                          {expandOrCollapse ? "Collapse All -" : "Expand All +"}
+                        </Button>
+                      </div>
+                      <div className="d-flex gap-3 flex-column">
+                        {packageDetail?.itineraries.map((item) => (
+                          <div key={item._id}>
+                            <div className="d-flex justify-content-between align-items-center">
+                              <span className="d-flex align-items-center gap-2">
+                                <span className="text-success">
+                                  <LocationOnIcon />
+                                </span>
+                                <p className="m-0 itinerary-title text-success">
+                                  {item.title}
+                                </p>
                               </span>
-                              <p className="m-0 itinerary-title text-success">
-                                {item.title}
-                              </p>
-                            </span>
 
-                            <Button
-                              variant="success"
-                              size="sm"
-                              className="itinerary-expand-btn"
-                              onClick={() => handleToggle(item._id)}
-                            >
-                              {showItineraryDetails[item._id] ? "-" : "+"}
-                            </Button>
-                          </div>
-                          <div
-                            className={`${
-                              showItineraryDetails[item._id] ? "" : "d-none "
-                            }`}
-                          >
-                            <Image
-                              src={item.imageUrl}
-                              height={500}
-                              width={500}
-                              alt={`${item.name}-image`}
-                            />
+                              <Button
+                                variant="success"
+                                size="sm"
+                                className="itinerary-expand-btn"
+                                onClick={() => handleToggle(item._id)}
+                              >
+                                {showItineraryDetails[item._id] ? "-" : "+"}
+                              </Button>
+                            </div>
                             <div
-                              dangerouslySetInnerHTML={{
-                                __html: item.content,
-                              }}
-                            ></div>
-                            <div className="d-flex justify-content-between ">
-                              <div className="d-flex">
-                                <TerrainIcon />
-                                <p>Max Altitude: {item.maxAltitude}</p>
-                              </div>
-                              <div className="d-flex">
-                                <GiMeal />
-                                <p>Meals: {item.meals}</p>
-                              </div>
-                              <div className="d-flex">
-                                <FaBed />
-                                <p>Accomodation: {item.accomodation}</p>
+                              className={`${
+                                showItineraryDetails[item._id] ? "" : "d-none "
+                              }`}
+                            >
+                              <Image
+                                src={item.imageUrl}
+                                height={500}
+                                width={500}
+                                alt={`${item.name}-image`}
+                              />
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html: item.content,
+                                }}
+                              ></div>
+                              <div className="d-flex justify-content-between ">
+                                <div className="d-flex">
+                                  <TerrainIcon />
+                                  <p>Max Altitude: {item.maxAltitude}</p>
+                                </div>
+                                <div className="d-flex">
+                                  <GiMeal />
+                                  <p>Meals: {item.meals}</p>
+                                </div>
+                                <div className="d-flex">
+                                  <FaBed />
+                                  <p>Accomodation: {item.accomodation}</p>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
                 {(packageDetail?.inclusions.length !== 0 ||
                   packageDetail?.exclusions.length !== 0) && (
                   <div
@@ -422,8 +429,8 @@ export default function PackageDetail() {
                 {packageDetail?.highlights.length !== 0 && (
                   <div className="trip-highlights">
                     <h4 className="title pt-50">Trip Highlights</h4>
-                    {packageDetail?.highlights.map((item) => (
-                      <p>{item}</p>
+                    {packageDetail?.highlights.map((item, index) => (
+                      <p key={`trip-highlight-${index}`}>{item}</p>
                     ))}
                   </div>
                 )}
@@ -443,102 +450,136 @@ export default function PackageDetail() {
                     </div>
                   </div>
                 )}
-                {packageDetail?.departureDate.length !== 0 && (
-                  <div
-                    className="fix-departure-date-table mt-5"
-                    id="date-price"
-                  >
-                    <h4 className="title">
-                      <CalendarMonth />
-                      Dates & Price
-                    </h4>
-                    {/* <table> */}
-                    <table className="table table-hover">
-                      {/* <div className="d-flex gap-3"> */}
-                      <thead>
-                        <tr>
-                          <th className="text-success">Start Date</th>
-                          <th className="text-success">End Date</th>
-                          <th className="text-success">Status</th>
-                          <th className="text-success">Price per Person</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      {/* </div> */}
-
-                      {packageDetail?.departureDate.map((item) => (
-                        // <div className="d-flex gap-3">
-                        <tbody>
+                {packageDetail?.departureDate &&
+                  packageDetail?.departureDate.length !== 0 && (
+                    <div
+                      className="fix-departure-date-table mt-5"
+                      id="date-price"
+                    >
+                      <h4 className="title">
+                        <CalendarMonth />
+                        Dates & Price
+                      </h4>
+                      {/* <table> */}
+                      <table className="table table-hover">
+                        {/* <div className="d-flex gap-3"> */}
+                        <thead>
                           <tr>
-                            <td className="text-muted">
-                              {dayjs(item.startDate).format("MMM DD, YYYY")}
-                            </td>
-                            <td className="text-muted">
-                              {dayjs(item.endDate).format("MMM DD, YYYY")}
-                            </td>
-                            <td className="text-muted">
-                              {item.isAvailable ? "Available" : "Unavailable"}
-                            </td>
-                            <td className="text-muted">
-                              {item.pricePerPerson}
-                            </td>
-                            <td>
-                              <button
-                                disabled={!item.isAvailable}
-                                className={`${
-                                  item.isAvailable
-                                    ? "btn btn-sm bg-success"
-                                    : "btn btn-sm bg-danger text-decoration-line-through"
-                                } text-light`}
-                                onClick={() => {
-                                  setPageLevelLoader(true);
-                                  router.push(
-                                    `/package/${packageDetail._id}/booking`
-                                  );
-                                }}
-                              >
-                                Book Now
-                              </button>
-                            </td>
-                            {/* </div> */}
+                            <th className="text-success">Start Date</th>
+                            <th className="text-success">End Date</th>
+                            <th className="text-success">Status</th>
+                            <th className="text-success">Price per Person</th>
+                            <th></th>
                           </tr>
-                        </tbody>
-                      ))}
-                    </table>
-                    {/* </table> */}
-                  </div>
-                )}
+                        </thead>
+                        {/* </div> */}
+
+                        {packageDetail?.departureDate.map((item) => (
+                          // <div className="d-flex gap-3">
+                          <tbody>
+                            <tr>
+                              <td className="text-muted">
+                                {dayjs(item.startDate).format("MMM DD, YYYY")}
+                              </td>
+                              <td className="text-muted">
+                                {dayjs(item.endDate).format("MMM DD, YYYY")}
+                              </td>
+                              <td className="text-muted">
+                                {item.isAvailable ? "Available" : "Unavailable"}
+                              </td>
+                              <td className="text-muted">
+                                {item.pricePerPerson}
+                              </td>
+                              <td>
+                                <button
+                                  disabled={!item.isAvailable}
+                                  className={`${
+                                    item.isAvailable
+                                      ? "btn btn-sm bg-success"
+                                      : "btn btn-sm bg-danger text-decoration-line-through"
+                                  } text-light`}
+                                  onClick={() => {
+                                    setPageLevelLoader(true);
+                                    router.push(
+                                      `/package/${packageDetail._id}/booking`
+                                    );
+                                  }}
+                                >
+                                  Book Now
+                                </button>
+                              </td>
+                              {/* </div> */}
+                            </tr>
+                          </tbody>
+                        ))}
+                      </table>
+                      {/* </table> */}
+                    </div>
+                  )}
                 <div
                   className="extra-contents"
                   dangerouslySetInnerHTML={{
                     __html: packageDetail?.content,
                   }}
                 ></div>
-                {packageDetail?.gallery.length !== 0 &&
+                {packageDetail?.gallery &&
+                  packageDetail?.gallery.length !== 0 &&
                   packageDetail?.gallery[0].images.length !== 0 && (
                     <div>
                       <h4 className="title mt-5">
                         <CollectionsIcon />
-                        Video & Photo Gallery
+                        Photo Gallery
                       </h4>
                       <div>
-                        {packageDetail?.gallery[0].images.map((item) =>
-                          isImage(item) ? (
-                            <Image src={item} height={200} width={200} />
-                          ) : (
-                            <div>
-                              <CldVideoPlayer
-                                width="640"
-                                height="360"
-                                src={item}
-                              />
-                            </div>
-                          )
-                        )}
+                        <Fancybox
+                          options={{
+                            Carousel: {
+                              infinite: false,
+                            },
+                          }}
+                        >
+                          {packageDetail?.gallery[0].images.map((item) => (
+                            <a data-fancybox="gallery" href={item}>
+                              <Image src={item} height={200} width={200} />
+                            </a>
+                          ))}
+                        </Fancybox>
                       </div>
                     </div>
                   )}
-                {packageDetail?.faq.length !== 0 && (
+                {packageDetail?.videoGallery &&
+                  packageDetail?.videoGallery.length !== 0 && (
+                    <div>
+                      <h4 className="title mt-5">
+                        <CollectionsIcon />
+                        Video Gallery
+                      </h4>
+                      <div>
+                        <Fancybox
+                          options={{
+                            Carousel: {
+                              infinite: false,
+                            },
+                          }}
+                        >
+                          {packageDetail?.videoGallery?.map((item) => (
+                            <a data-fancybox="gallery" href={item}>
+                              <iframe
+                                width="150"
+                                height="90"
+                                src={getEmbeddedYouTubeUrl(item)}
+                                title="YouTube video player"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen
+                              ></iframe>
+                            </a>
+                          ))}
+                        </Fancybox>
+                      </div>
+                    </div>
+                  )}
+                {packageDetail?.faq && packageDetail?.faq.length !== 0 && (
                   <div className="mt-5">
                     <h4 className="title">
                       <ContactSupportIcon />
@@ -558,7 +599,7 @@ export default function PackageDetail() {
               <div className="col-12 col-lg-3 booking-card pt-4">
                 <BookingCard
                   prices={packageDetail?.prices}
-                  packageId={packageDetail?._id}
+                  packageId={packageDetail?.slug}
                 />
               </div>
             </div>

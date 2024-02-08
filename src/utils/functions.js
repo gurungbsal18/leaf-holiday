@@ -73,6 +73,7 @@ export const submitPackageForm = async (
   setUpdatePackage,
   router
 ) => {
+  
   try {
     let res = {};
     updatePackage
@@ -84,6 +85,7 @@ export const submitPackageForm = async (
           `${process.env.NEXT_PUBLIC_SERVER_URL}/package/add`,
           data
         ));
+        console.log(res);
 
     if (res.status === 200) {
       toast.success(res.data.message, {
@@ -123,6 +125,10 @@ export const averageReview = (reviews) => {
 };
 
 export const priceCalculator = (priceRange, guestNumber) => {
+  console.log(priceRange);
+  if(priceRange?.length === 0) {
+    return 0
+  }
   for (let i = 0; i < priceRange?.length; i++) {
     if (guestNumber <= Number(priceRange[i]?.numberOfPeople?.split("-")[1])) {
       return priceRange[i].price;
