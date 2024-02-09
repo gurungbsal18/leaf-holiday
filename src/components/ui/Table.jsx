@@ -107,8 +107,8 @@ export default function Table({
                     </th>
                   );
                 })}
-                {/* {showView && <th></th>} */}
-                {/* {showEdit && <th></th>} */}
+                {showView && <th></th>}
+                {showEdit && <th></th>}
                 {showRemove && <th></th>}
               </tr>
             );
