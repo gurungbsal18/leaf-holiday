@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { GrClose } from "react-icons/gr";
 import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { GlobalContext } from "@/context";
 
 import { submitForm } from "@/utils/functions";
@@ -11,6 +11,7 @@ import TextEditor from "@/components/TextEditor";
 import UploadToCloudinary from "@/components/ui/UploadToCloudinary";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 
 export default function Settings() {
   const {
@@ -41,7 +42,7 @@ export default function Settings() {
   const form = useForm({
     defaultValues: initialFormData,
   });
-  const { register, handleSubmit, setValue, reset } = form;
+  const { register, handleSubmit, setValue, control, reset } = form;
 
   const onSubmit = async (data) => {
     const res = await submitForm(data, "setting", isUpdate);
@@ -76,55 +77,69 @@ export default function Settings() {
   console.log(settingDetail);
 
   return (
-    <div className="">
-      <div className="">
-        <div className="d-flex justify-content-between p-3 ">
-          <p>{updatePackage ? "Update Blog" : "Create Blog"}</p>
-          <button type="submit" onClick={handleSubmit(onSubmit)}>
-            {updatePackage ? "Update" : "Create"}
-          </button>
-        </div>
-        <form>
-          <div className="d-flex gap-5">
-            <div className="d-flex flex-column gap-2">
-              {leftDivData.map((item) => (
-                <TextField
-                  key={item.id}
-                  required
-                  fullWidth
-                  size="small"
-                  label={item.label}
-                  type="text"
-                  variant="outlined"
-                  {...register(item.id)}
-                />
-              ))}
-              <UploadToCloudinary
-                selectedFile={selectedFile}
-                setSelectedFile={setSelectedFile}
-                label="Logo"
-                setValue={setValue}
-                formName="logo"
-              />
+    <>
+      {pageLevelLoader ? (
+        <PageLevelLoader loading={true} />
+      ) : (
+        <div className="">
+          <div className="">
+            <div className="d-flex justify-content-between p-3 ">
+              <p>{isUpdate ? "Update Settings" : "Create Settings"}</p>
+              <button type="submit" onClick={handleSubmit(onSubmit)}>
+                {isUpdate ? "Update" : "Create"}
+              </button>
             </div>
-            <div className="d-flex flex-column gap-2">
-              {rightDivData.map((item) => (
-                <TextField
-                  key={item.id}
-                  required
-                  fullWidth
-                  size="small"
-                  label={item.label}
-                  type="text"
-                  variant="outlined"
-                  {...register(item.id)}
-                />
-              ))}
-            </div>
+            <form>
+              <div className="d-flex gap-5">
+                <div className="d-flex flex-column gap-2">
+                  {leftDivData.map((item) => (
+                    <Controller
+                      key={item.id}
+                      name={item.id}
+                      control={control}
+                      render={({ field: { onChange, onBlur, value } }) => (
+                        <TextField
+                          size="small"
+                          label={item.label}
+                          onBlur={onBlur}
+                          onChange={onChange}
+                          value={value}
+                        />
+                      )}
+                    />
+                  ))}
+                  <UploadToCloudinary
+                    selectedFile={selectedFile}
+                    setSelectedFile={setSelectedFile}
+                    label="Logo"
+                    setValue={setValue}
+                    formName="logo"
+                  />
+                </div>
+                <div className="d-flex flex-column gap-2">
+                  {rightDivData.map((item) => (
+                    <Controller
+                      key={item.id}
+                      name={item.id}
+                      control={control}
+                      render={({ field: { onChange, onBlur, value } }) => (
+                        <TextField
+                          size="small"
+                          label={item.label}
+                          onBlur={onBlur}
+                          onChange={onChange}
+                          value={value}
+                        />
+                      )}
+                    />
+                  ))}
+                </div>
+              </div>
+            </form>
           </div>
-        </form>
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 }
 
