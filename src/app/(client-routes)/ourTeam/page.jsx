@@ -1,7 +1,9 @@
 "use client";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
+import TeamCard from "@/components/TeamCard";
 import { GlobalContext } from "@/context";
 import axios from "axios";
+import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
 
 export default function OurTeam() {
@@ -38,7 +40,19 @@ export default function OurTeam() {
         <PageLevelLoader loading={true} />
       ) : (
         <div>
-          <h4>Our Team</h4>
+          <div>
+            <Image
+              src="/images/km.png"
+              width={1511}
+              height={500}
+              alt="our-team-header"
+            />
+            <h4>Our Team</h4>
+          </div>
+          <div className="d-flex">
+            {ourTeamData &&
+              ourTeamData.map((item) => <TeamCard teamDetail={item} />)}
+          </div>
         </div>
       )}
     </>

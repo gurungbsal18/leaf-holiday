@@ -131,6 +131,9 @@ export default function ClientNavbar() {
         <div className="d-block d-lg-flex justify-content-center gap-4 pb-2 align-items-center position-relative">
           <PrimeReactProvider>
             <MegaMenuMain />
+            {user && user.role === "user" && (
+              <Link href="/admin">Admin Dashboard</Link>
+            )}
             <div className="d-flex gap-3 login-section">
               {isAuthUser ? (
                 <div className="d-flex align-items-center gap-2">

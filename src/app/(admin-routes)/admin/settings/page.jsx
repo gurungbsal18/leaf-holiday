@@ -22,7 +22,8 @@ export default function Settings() {
   } = useContext(GlobalContext);
 
   const [settingDetail, setSettingDetail] = useState([]);
-  const [selectedFile, setSelectedFile] = React.useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [isUpdate, setIsUpdate] = useState(false);
   const initialFormData = {
     email: "",
     phoneNumber: "",
@@ -36,7 +37,6 @@ export default function Settings() {
     linkedin: "",
     youtube: "",
   };
-  const isUpdate = settingDetail.length > 0;
 
   const form = useForm({
     defaultValues: initialFormData,
@@ -44,8 +44,7 @@ export default function Settings() {
   const { register, handleSubmit, setValue, reset } = form;
 
   const onSubmit = async (data) => {
-    // const res = await submitForm(data, "setting");
-    console.log(data);
+    const res = await submitForm(data, "setting", isUpdate);
   };
 
   const getSettingsData = async () => {
@@ -54,12 +53,17 @@ export default function Settings() {
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/setting/`
       );
+      console.log(res);
       if (res.status === 200) {
-        setSettingDetail(res?.data?.data);
-        setSelectedFile(res?.data?.data?.logo);
-        setPageLevelLoader(false);
-        console.log(res.data.data[0]);
-        reset(res?.data?.data[0]);
+        const settingData = res.data?.data;
+
+        if (settingData.length > 0) {
+          setIsUpdate(true);
+          setSettingDetail(settingData[0]);
+          setSelectedFile(settingData[0]?.logo);
+          setPageLevelLoader(false);
+          reset(settingData[0]);
+        }
       }
     } catch (e) {
       console.log(e);

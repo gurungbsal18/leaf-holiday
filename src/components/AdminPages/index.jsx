@@ -9,6 +9,7 @@ import Notification from "../Notification";
 import Dialog from "@mui/material/Dialog";
 import Table from "../ui/Table";
 import PageLevelLoader from "../Loader/PageLevelLoader";
+import { toast } from "react-toastify";
 
 export default function AdminPages({ data }) {
   const {
@@ -48,13 +49,19 @@ export default function AdminPages({ data }) {
     if (keyword === "") {
       setFilteredData(allData);
     } else {
-      const temp = [];
-      allData.map((data) => {
-        if (data.name.toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
-          temp.push(data);
-        }
-      });
-      setFilteredData(temp);
+      try {
+        const temp = [];
+        allData.map((data) => {
+          if (data.name.toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
+            temp.push(data);
+          }
+        });
+        setFilteredData(temp);
+      } catch (e) {
+        toast.error("Something went wrong. Please try again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
     }
   }, [keyword]);
 

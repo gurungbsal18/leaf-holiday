@@ -3,16 +3,14 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { GlobalContext } from "@/context";
 import { toast } from "react-toastify";
-import Notification from "@/components/Notification";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import Image from "next/image";
-import Carousel from "@/components/Carousel";
+import Fancybox from "@/components/FancyappWrapper";
 
 export default function AboutUs() {
   const { pageLevelLoader, setPageLevelLoader } = useContext(GlobalContext);
   const [aboutUsData, setAboutUsData] = useState(null);
   const [navigationData, setNavigationData] = useState("ourStory");
-  const [showDocument, setShowDocument] = useState([]);
 
   //helper array to map the similar fields
   const aboutUsNavigation = [
@@ -80,7 +78,8 @@ export default function AboutUs() {
             <div>
               <h1>About Us</h1>
               <div
-                dangerouslySetInnerHTML={{ __html: aboutUsData.aboutUs }}></div>
+                dangerouslySetInnerHTML={{ __html: aboutUsData.aboutUs }}
+              ></div>
             </div>
             <div>
               <div className="d-flex">
@@ -91,7 +90,8 @@ export default function AboutUs() {
                         ? "bg-success text-bg-light "
                         : "bg-white text-success"
                     }`}
-                    onClick={() => setNavigationData(item.name)}>
+                    onClick={() => setNavigationData(item.name)}
+                  >
                     {item.label}
                   </p>
                 ))}
@@ -99,14 +99,32 @@ export default function AboutUs() {
               <div
                 dangerouslySetInnerHTML={{
                   __html: aboutUsData[navigationData],
-                }}></div>
+                }}
+              ></div>
             </div>
           </div>
           <div>
             <h1>Company Documents</h1>
             <div>
               <div>
-                <Carousel images={aboutUsData.document} />
+                <Fancybox
+                  options={{
+                    Carousel: {
+                      infinite: false,
+                    },
+                  }}
+                >
+                  {aboutUsData.document.map((item) => (
+                    <a data-fancybox="gallery" href={item} key={item}>
+                      <Image
+                        src={item}
+                        height={200}
+                        width={200}
+                        alt="document-image"
+                      />
+                    </a>
+                  ))}
+                </Fancybox>
               </div>
             </div>
           </div>
