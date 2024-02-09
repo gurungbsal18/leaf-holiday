@@ -1,14 +1,14 @@
-"use client";
 import AdminPages from "@/components/AdminPages";
-import React from "react";
+import CreateTeam from "@/components/CreateComponents/CreateTeam";
 
-export default function Package() {
+export default function AdminOurTeam() {
   const data = {
-    pageName: "Package",
-    apiName: "package",
+    pageName: "Team Member",
+    apiName: "ourTeam",
+    createComponent: <CreateTeam />,
     headerData: [
       { Header: "NAME", accessor: "name" },
-      { Header: "REGION", accessor: "region.name" },
+      { Header: "POSITION", accessor: "designation" },
     ],
     showView: true,
     showEdit: true,

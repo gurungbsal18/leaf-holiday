@@ -112,10 +112,10 @@ export const adminNavItems = [
     path: "/admin/settings",
   },
   {
-    id: "forms",
+    id: "our-team",
     icon: <AssignmentIcon />,
-    label: "Forms",
-    path: "/admin/forms",
+    label: "Our Team",
+    path: "/admin/our-team",
   },
   {
     id: "profile",

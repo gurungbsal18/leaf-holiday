@@ -18,14 +18,7 @@ import { countries } from "@/utils";
 import { priceCalculator } from "@/utils/functions";
 
 export default function Booking() {
-  const {
-    trackPage,
-    isAuthUser,
-    bookingFormData,
-    setBookingFormData,
-    pageLevelLoader,
-    setPageLevelLoader,
-  } = useContext(GlobalContext);
+  const { pageLevelLoader, setPageLevelLoader } = useContext(GlobalContext);
   const router = useRouter();
   const user = JSON.parse(localStorage.getItem("user"));
   const bookingData = {
@@ -34,26 +27,30 @@ export default function Booking() {
       JSON.parse(localStorage.getItem("bookingData"))?.dateOfTravel
     ),
   };
-  const packageId = usePathname()
-    .replace("/package/", "")
-    .replace("/booking", "");
+  const pathName = usePathname();
+  const packageId = pathName.match(/\/package\/([^\/]+)\//)[1];
+
   const [packageDetail, setPackageDetail] = useState(null);
 
-  const { register, control, handleSubmit, watch, setValue } = useForm({
-    defaultValues: bookingData || {
+  const { register, control, handleSubmit, watch, setValue, reset } = useForm({
+    defaultValues: {
       packageId: "",
-      userId: user?._id,
-      phoneNumber: user?.phoneNumber || "",
+      userId: "",
+      phoneNumber: "",
       country: "",
       dateOfTravel: dayjs(new Date().toDateString()),
       numberOfPeople: 0,
       price: 0,
       message: "",
       formType: "booking",
+      name: "",
+      email: "",
+      packageName: "",
     },
   });
 
   const onSubmit = async (data) => {
+    console.log(data);
     setPageLevelLoader(true);
     try {
       const res = await axios.post(
@@ -70,26 +67,48 @@ export default function Booking() {
         toast.error("Failed to book the package! Please Try Again Later...", {
           position: toast.POSITION.TOP_RIGHT,
         });
+        localStorage.removeItem("bookingData");
       }
     } catch (e) {
-      toast.error(e.response.statusText, {
+      setPageLevelLoader(false);
+      toast.error("Failed to book the package! Please Try Again Later...", {
         position: toast.POSITION.TOP_RIGHT,
       });
-      setPageLevelLoader(false);
+      localStorage.removeItem("bookingData");
     }
   };
 
   useEffect(() => {
+    if (JSON.parse(localStorage.getItem("bookingData"))) {
+      reset({
+        ...JSON.parse(localStorage.getItem("bookingData")),
+        dateOfTravel: dayjs(
+          JSON.parse(localStorage.getItem("bookingData")).dateOfTravel
+        ),
+      });
+    }
+
+    if (JSON.parse(localStorage.getItem("user"))) {
+      setValue("userId", JSON.parse(localStorage.getItem("user"))._id);
+      setValue("email", JSON.parse(localStorage.getItem("user")).email);
+      setValue("name", JSON.parse(localStorage.getItem("user")).name);
+      setValue(
+        "phoneNumber",
+        JSON.parse(localStorage.getItem("user"))?.phoneNumber
+      ) || "";
+    }
+
     const getPackageDetail = async () => {
       setPageLevelLoader(true);
       try {
         const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/package/${packageId}`
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/package/slug/${packageId}`
         );
         if (res.status === 200) {
           setPageLevelLoader(false);
-          setPackageDetail(res.data.data);
-          setValue("packageId", res.data.data._id);
+          setPackageDetail(res.data.data[0]);
+          setValue("packageName", res.data.data[0].name);
+          setValue("packageId", res.data.data[0]._id);
         }
         console.log(res);
       } catch (e) {
@@ -120,7 +139,7 @@ export default function Booking() {
                   type="text"
                   variant="outlined"
                   disabled
-                  value={user?.name}
+                  value={watch("name")}
                 />
                 <TextField
                   required
@@ -129,7 +148,7 @@ export default function Booking() {
                   type="text"
                   variant="outlined"
                   disabled
-                  value={user?.email}
+                  value={watch("email")}
                 />
                 <TextField
                   required
@@ -202,7 +221,7 @@ export default function Booking() {
                 </div>
               ))}
               <div>
-                <p>Total Price: USD$ ${watch("price") || ""}</p>
+                <p>Total Price: USD$ {watch("price") || ""}</p>
               </div>
             </div>
           </div>

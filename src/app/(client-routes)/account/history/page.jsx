@@ -5,6 +5,7 @@ import { GlobalContext } from "@/context";
 import { toast } from "react-toastify";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import Table from "@/components/ui/Table";
+import dayjs from "dayjs";
 
 export default function OrderHistory() {
   const { pageLevelLoader, setPageLevelLoader } = useContext(GlobalContext);
@@ -50,6 +51,12 @@ export default function OrderHistory() {
 
 const COLUMNS = [
   { Header: "PACKAGE", accessor: "packageId.name" },
-  { Header: "DATE", accessor: "dateOfTravel" },
+  {
+    Header: "DATE",
+    accessor: "dateOfTravel",
+    Cell: ({ value }) => {
+      return dayjs(value).format("MMM DD, YYYY");
+    },
+  },
   { Header: "PRICE", accessor: "price" },
 ];

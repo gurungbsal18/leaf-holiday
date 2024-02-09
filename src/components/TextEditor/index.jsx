@@ -1,12 +1,12 @@
 "use client";
-// RichTextEditor.js
-import React, { useRef, useState, useEffect } from "react";
+
+import React, { useRef } from "react";
 import { Controller } from "react-hook-form";
 import { Editor } from "@tinymce/tinymce-react";
 import { uploadImage } from "@/utils/functions";
 import { toast } from "react-toastify";
 
-const TextEditor = ({ initialValue, control, name }) => {
+const TextEditor = ({ control, name }) => {
   const editorRef = useRef(null);
 
   return (
@@ -16,10 +16,10 @@ const TextEditor = ({ initialValue, control, name }) => {
         control={control}
         render={({ field: { onChange, value } }) => (
           <Editor
+            // id="FIXED_ID"
             apiKey={process.env.NEXT_PUBLIC_TEXTEDITOR_API_KEY}
             onInit={(evt, editor) => (editorRef.current = editor)}
             value={value}
-            // value={value}
             onEditorChange={onChange}
             init={{
               height: 250,
@@ -80,7 +80,7 @@ const TextEditor = ({ initialValue, control, name }) => {
                       });
                     }
                   } catch (error) {
-                    toast.error("Failed to Upload Image on Cloudinary", {
+                    toast.error("Failed to Upload Image", {
                       position: toast.POSITION.TOP_RIGHT,
                     });
                   }

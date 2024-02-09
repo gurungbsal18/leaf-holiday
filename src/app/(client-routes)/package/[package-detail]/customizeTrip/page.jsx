@@ -14,56 +14,99 @@ import Autocomplete from "@mui/material/Autocomplete";
 import axios from "axios";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import { countries } from "@/utils";
+import { priceCalculator } from "@/utils/functions";
 
-export default function Inquiry() {
-  const { trackPage, isAuthUser, bookingFormData, setBookingFormData, user } =
+export default function CustomizeTrip() {
+  const { isAuthUser, setPageLevelLoader, pageLevelLoader } =
     useContext(GlobalContext);
   const router = useRouter();
-  const packageId = usePathname()
-    .replace("/package/", "")
-    .replace("/customizeTrip", "");
-  const [packageName, setPackageName] = useState(null);
+  const pathName = usePathname();
+  const packageId = pathName.match(/\/package\/([^\/]+)\//)[1];
+  console.log(packageId);
+
+  const [packageDetail, setPackageDetail] = useState(null);
+  const [user, setUser] = useState(null);
 
   const { register, handleSubmit, setValue, control } = useForm({
     defaultValues: {
-      userId: user?._id || JSON.parse(localStorage.getItem("user"))._id,
-      name: user?.name || JSON.parse(localStorage.getItem("user")).name,
-      email: user?.email || JSON.parse(localStorage.getItem("user")).email,
-      phoneNumber:
-        user?.phoneNumber ||
-        JSON.parse(localStorage.getItem("user")).phoneNumber ||
-        "",
+      formType: "customization",
+      phoneNumber: user?.phoneNumber || "",
       country: "",
-      tripDate: dayjs(new Date().toDateString()),
-      noOfGuests: 0,
+      dateOfTravel: dayjs(new Date().toDateString()),
+      numberOfPeople: 0,
+      price: 0,
       message: "",
     },
   });
-  console.log(user);
 
-  const onSubmit = (data) => {
-    isAuthUser
-      ? console.log("Inquiry form submitted: ", data)
-      : toast.error("Please Log In To Continue", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+  const onSubmit = async (data) => {
+    console.log(data);
+    setPageLevelLoader(true);
+    if (isAuthUser) {
+      try {
+        const res = await axios.post(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/booking/add`,
+          data
+        );
+        if (res.status === 200) {
+          toast.success("Package Customization Requested Successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          localStorage.removeItem("bookingData");
+          setPageLevelLoader(false);
+        } else {
+          toast.error(
+            "Failed to request the customize the package! Please Try Again Later...",
+            {
+              position: toast.POSITION.TOP_RIGHT,
+            }
+          );
+        }
+      } catch (e) {
+        setPageLevelLoader(false);
+        toast.error(
+          "Failed to request the customize the package! Please Try Again Later...",
+          {
+            position: toast.POSITION.TOP_RIGHT,
+          }
+        );
+      }
+    } else {
+      toast.error("Please Log In To Continue", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setTimeout(() => {
+        router.push("/login");
+      }, 1000);
+    }
   };
 
   useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("user")));
+    if (JSON.parse(localStorage.getItem("user"))) {
+      setValue("userId", JSON.parse(localStorage.getItem("user"))._id);
+      setValue("email", JSON.parse(localStorage.getItem("user")).email);
+      setValue("name", JSON.parse(localStorage.getItem("user")).name);
+    }
     const getPackageDetail = async () => {
+      setPageLevelLoader(true);
       try {
         const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/package/${packageId}`
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/package/slug/${packageId}`
         );
-        if (res.status === 200) {
-          setPackageName(res.data.data.name);
-        }
         console.log(res);
+        if (res.status === 200) {
+          setValue("packageId", res.data.data[0]._id);
+          setValue("packageName", res.data.data[0].name);
+          setPackageDetail(res.data.data[0]);
+          setPageLevelLoader(false);
+        }
       } catch (e) {
         toast.error("Package Not Found", {
           position: toast.POSITION.TOP_RIGHT,
         });
-        setPackageName("Package Not Found");
+        setPackageDetail({ name: "Package Not Found" });
+        setPageLevelLoader(false);
       }
     };
     getPackageDetail();
@@ -71,10 +114,12 @@ export default function Inquiry() {
 
   return (
     <>
-      {packageName ? (
+      {pageLevelLoader ? (
+        <PageLevelLoader loading={true} />
+      ) : (
         <div>
           <h1>Customize Trip</h1>
-          <h1>{packageName}</h1>
+          <h1>{packageDetail?.name}</h1>
           <div>
             <form>
               <TextField
@@ -84,7 +129,7 @@ export default function Inquiry() {
                 label="Full Name"
                 type="text"
                 variant="outlined"
-                {...register("name")}
+                defaultValue={user?.name || ""}
               />
               <TextField
                 disabled
@@ -93,7 +138,7 @@ export default function Inquiry() {
                 label="Email"
                 type="text"
                 variant="outlined"
-                {...register("email")}
+                defaultValue={user?.email || ""}
               />
               <TextField
                 required
@@ -117,14 +162,21 @@ export default function Inquiry() {
                 label="Number of Traveller"
                 type="number"
                 variant="outlined"
-                {...register("noOfGuests", {
-                  valueAsNumber: true,
-                })}
+                onChange={(e) => {
+                  setValue("numberOfPeople", Number(e.target.value));
+                  setValue(
+                    "price",
+                    priceCalculator(
+                      packageDetail?.prices,
+                      Number(e.target.value)
+                    ) * Number(e.target.value)
+                  );
+                }}
               />
 
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Controller
-                  name="tripDate"
+                  name="dateOfTravel"
                   control={control}
                   render={({ field }) => (
                     <MobileDatePicker className="w-100" {...field} />
@@ -141,8 +193,6 @@ export default function Inquiry() {
             </form>
           </div>
         </div>
-      ) : (
-        <PageLevelLoader loading={true} />
       )}
     </>
   );

@@ -90,14 +90,15 @@ export default function Table({
   console.log(bodyData);
   return (
     <div>
-      <table {...getTableProps()}>
+      <table {...getTableProps()} className="dashboard-table">
         <thead>
           {headerGroups.map((headerGroup) => {
             const { key, ...restHeaderGroupProps } =
               headerGroup.getHeaderGroupProps();
             return (
               <tr key={key} {...restHeaderGroupProps}>
-                {showImage && <th></th>}
+                {/* {showImage && <th></th>} */}
+                {checkbox && <th>Add</th>}
                 {headerGroup.headers.map((column) => {
                   const { key, ...restColumnProps } = column.getHeaderProps();
                   return (
@@ -106,9 +107,8 @@ export default function Table({
                     </th>
                   );
                 })}
-                {checkbox && <th>SHOW IN HOMEPAGE</th>}
-                {showView && <th></th>}
-                {showEdit && <th></th>}
+                {/* {showView && <th></th>} */}
+                {/* {showEdit && <th></th>} */}
                 {showRemove && <th></th>}
               </tr>
             );
@@ -167,7 +167,9 @@ export default function Table({
                             setPageLevelLoader(true);
                             setTimeout(() => {
                               router.push(
-                                `/${apiName}/${bodyData[key.split("_")[1]]._id}`
+                                `/${apiName}/${
+                                  bodyData[key.split("_")[1]].slug
+                                }`
                               );
                             }, 1000);
                           }
@@ -178,11 +180,15 @@ export default function Table({
                     )}
                   </td>
                 )}
-                {showEdit && (
-                  <td>
+                <td>
+                  {showEdit && (
                     <button
                       onClick={() => {
                         if (apiName === "package") {
+                          localStorage.setItem(
+                            "updatePackage",
+                            bodyData[key.split("_")[1]]
+                          );
                           setUpdatePackage(bodyData[key.split("_")[1]]);
                           router.push("/admin/packages/create-package");
                         } else if (apiName === "blog") {
@@ -196,12 +202,10 @@ export default function Table({
                       }}
                       className="btn btn-sm btn-success"
                     >
-                      <EditNoteIcon /> Edit
+                      <EditNoteIcon /> Edits
                     </button>
-                  </td>
-                )}
-                {showRemove && (
-                  <td>
+                  )}
+                  {showRemove && (
                     <button
                       onClick={() =>
                         handleRemove(bodyData[key.split("_")[1]]._id)
@@ -211,8 +215,8 @@ export default function Table({
                       <DeleteIcon />
                       Remove
                     </button>
-                  </td>
-                )}
+                  )}
+                </td>
               </tr>
             );
           })}

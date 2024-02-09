@@ -13,17 +13,15 @@ import { GlobalContext } from "@/context";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { priceCalculator } from "@/utils/functions";
+import Link from "next/link";
 
-const BookingCard = ({ prices, packageId }) => {
+const BookingCard = ({ prices, packageId, pdfUrl }) => {
   const { isAuthUser, setPageLevelLoader } = useContext(GlobalContext);
   const user = JSON.parse(localStorage.getItem("user"));
   const router = useRouter();
   const [showGroupPrice, setShowGroupPrice] = useState(false);
   const currentDate = new Date().toDateString();
   const [formData, setFormData] = useState({
-    packageId: packageId,
-    userId: user?._id || "",
-    phoneNumber: user?.phoneNumber || "",
     country: "",
     dateOfTravel: dayjs(currentDate),
     numberOfPeople: 1,
@@ -31,6 +29,7 @@ const BookingCard = ({ prices, packageId }) => {
     message: "",
     formType: "booking",
   });
+  console.log("pdfUrl", pdfUrl);
 
   const handleBook = () => {
     setPageLevelLoader(true);
@@ -166,7 +165,6 @@ const BookingCard = ({ prices, packageId }) => {
             <p className="mb-1 mt-3">No. of Guests</p>
             <input
               className="form-control mb-2"
-              defaultValue={1}
               min={1}
               max={30}
               placeholder={0}
@@ -211,13 +209,23 @@ const BookingCard = ({ prices, packageId }) => {
         >
           Customize Trip
         </Button>
-        <Button
-          className="d-flex justify-content-center align-items-center gap-2"
-          variant="success"
-        >
-          <PictureAsPdfIcon fontSize="large" />
-          <p className="m-0">Download PDF</p>
-        </Button>
+        {pdfUrl && (
+          <Button
+            className="d-flex justify-content-center align-items-center gap-2"
+            variant="success"
+          >
+            <PictureAsPdfIcon fontSize="large" />
+            <Link
+              className="m-0"
+              href={pdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              download
+            >
+              Download PDF
+            </Link>
+          </Button>
+        )}
       </div>
     </div>
   );

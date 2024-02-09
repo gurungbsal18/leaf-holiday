@@ -6,6 +6,7 @@ import { GlobalContext } from "@/context";
 import CreateRegion from "../CreateComponents/CreateRegion";
 import CreateDifficulty from "../CreateComponents/CreateDifficulty";
 import axios from "axios";
+import { getId, getNameById } from "@/utils/functions";
 
 const filter = createFilterOptions();
 
@@ -17,7 +18,7 @@ export default function CreatableAutocomplete({
   const { setDialogOpen, setDialogContent, callExtractAll } =
     useContext(GlobalContext);
   const [val, setVal] = useState(initialValue || null);
-  const [optionData, setOptionData] = useState(null);
+  const [optionData, setOptionData] = useState([]);
   const isRegionField = () => {
     return apiName === "region";
   };
@@ -29,6 +30,7 @@ export default function CreatableAutocomplete({
       );
       if (res.status === 200) {
         setOptionData(res.data.data);
+        setVal(() => getNameById(initialValue, res.data.data));
       }
     } catch (e) {
       console.log(e);

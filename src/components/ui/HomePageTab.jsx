@@ -82,27 +82,36 @@ export default function HomePageTab({ position, valueDefault, url }) {
         <PageLevelLoader loading={pageLevelLoader} />
       ) : (
         <div>
-          <div>
-            <TextField
-              className="mx-0"
-              label="Title"
-              sx={{ m: 1, width: "25ch" }}
-              type="text"
-              size="small"
-              {...register("title")}
-            />
-            <Button
-              disabled={packagesFields.length >= 6}
-              size="sm"
-              variant="success"
+          <div className="d-flex justify-content-between">
+            <div>
+              <TextField
+                className="mx-0"
+                label="Title"
+                sx={{ m: 1, width: "25ch" }}
+                type="text"
+                size="small"
+                {...register("title")}
+              />
+              <Button
+                disabled={packagesFields.length >= 6}
+                size="sm"
+                variant="success"
+                onClick={() => {
+                  packagesAppend(allPackages[0]);
+                }}
+              >
+                <span className="d-flex align-items-center gap-1">
+                  + Add More Package
+                </span>
+              </Button>
+            </div>
+            <button
               onClick={() => {
-                packagesAppend(allPackages[0]);
+                setDialogOpen(false);
               }}
             >
-              <span className="d-flex align-items-center gap-1">
-                + Add More Package
-              </span>
-            </Button>
+              close
+            </button>
           </div>
           {url && (
             <TextField

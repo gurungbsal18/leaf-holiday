@@ -8,10 +8,11 @@ import { useRouter } from "next/navigation";
 
 function PackageCard({ packageDetail }) {
   const router = useRouter();
+  console.log(packageDetail);
   return (
     <div
       className="trip-card border col-3"
-      onClick={() => router.push(`/package/${packageDetail?._id}`)}
+      onClick={() => router.push(`/package/${packageDetail?.slug}`)}
     >
       <Image
         src={packageDetail?.mainImageUrl}
@@ -31,7 +32,7 @@ function PackageCard({ packageDetail }) {
               precision={0.5}
               readOnly
             />
-            {packageDetail?.reviews?.length} Reviews
+            {packageDetail?.reviews?.length || 0} Reviews
           </span>
         </div>
         <h4 className="trip-card-title">{packageDetail?.name}</h4>

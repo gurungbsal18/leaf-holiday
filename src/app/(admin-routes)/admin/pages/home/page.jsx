@@ -10,6 +10,8 @@ import axios from "axios";
 import CustomAutocomplete from "@/components/ui/CustomAutocomplete";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import HomePageTab from "@/components/ui/HomePageTab";
+import Link from "next/link";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export default function EditHome() {
   const {
@@ -67,14 +69,18 @@ export default function EditHome() {
     getHomePageDetail();
   }, [callExtractAll]);
 
-  console.log("Home Page Data: ", homePageData);
   return (
     <>
       {pageLevelLoader ? (
         <PageLevelLoader loading={pageLevelLoader} />
       ) : (
         <div>
-          <h1>Edit HOME PAGE</h1>
+          <div>
+            <Link href={"/admin/pages"}>
+              <ArrowBackIcon />
+            </Link>
+            <h1>Edit HOME PAGE</h1>
+          </div>
           <div>
             <div>
               <div>

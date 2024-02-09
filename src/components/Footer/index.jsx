@@ -1,3 +1,4 @@
+"use client";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
@@ -6,10 +7,29 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Image from "next/image";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 function Footer() {
   const date = new Date();
   const year = date.getFullYear();
+  const [leafData, setLeafData] = useState(null);
+  const getLeafData = async () => {
+    try {
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/setting/`
+      );
+      if (res.status === 200) {
+        setLeafData(res.data.data[0]);
+      }
+    } catch (e) {
+      console.log(e);
+      setLeafData({});
+    }
+  };
+  useEffect(() => {
+    getLeafData();
+  }, []);
 
   return (
     <div className="footer bg-success p-5 text-white">

@@ -4,7 +4,7 @@ import PackageCard from "../PackageCard";
 
 const ExploreDestination = ({ middleTabData }) => {
   const [activeExploreBtn, setActiveExploreBtn] = useState(
-    middleTabData ? middleTabData?._id : ""
+    middleTabData ? middleTabData[0]?._id : ""
   );
   const [middleTabIndex, setMiddleTabIndex] = useState(0);
   console.log("middle tab data: ", middleTabData);
