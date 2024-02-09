@@ -29,7 +29,7 @@ function Footer() {
   };
   useEffect(() => {
     getLeafData();
-  });
+  }, []);
 
   return (
     <div className="footer bg-success p-5 text-white">

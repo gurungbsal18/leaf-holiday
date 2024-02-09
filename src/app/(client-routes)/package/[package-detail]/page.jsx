@@ -48,6 +48,9 @@ export default function PackageDetail() {
   const [showCostInclude, setShowConstInclude] = useState(true);
   const [activeCost, setActiveCost] = useState(true);
   const [contentExpand, setContentExpand] = useState(false);
+  const [showAnswer, setShowAnswer] = useState({});
+  const [answerExpand, setAnswerExpand] = useState(false);
+
   const packageId = usePathname().match(/\/package\/([^\/]+)(?:\/|$)/)[1];
   console.log("slug: ", packageId);
 
@@ -105,6 +108,19 @@ export default function PackageDetail() {
       }
     }
   }, [showItineraryDetails, packageDetail]);
+  useEffect(() => {
+    if (packageDetail && packageDetail?.faq) {
+      if (Object.keys(showAnswer).length === packageDetail?.faq.length) {
+        setExpandOrCollapse(Object.values(showAnswer).every((value) => value));
+      }
+    }
+  }, [showAnswer, packageDetail]);
+  const handleFaqToggle = (id) => {
+    setShowAnswer((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
 
   const handleToggle = (id) => {
     setShowItineraryDetails((prevShowItineraryDetails) => ({
@@ -153,7 +169,7 @@ export default function PackageDetail() {
         message: "",
       });
       setTimeout(() => {
-        router.push(`/package/${packageDetail?._id}/booking`);
+        router.push(`/package/${packageDetail?.slug}/booking`);
       }, 1000);
     }
   };
@@ -167,7 +183,7 @@ export default function PackageDetail() {
       }, 1000);
     } else {
       setTimeout(() => {
-        router.push(`/package/${packageDetail?._id}/inquiry`);
+        router.push(`/package/${packageDetail?.slug}/inquiry`);
       }, 1000);
     }
   };
@@ -426,30 +442,32 @@ export default function PackageDetail() {
                     </div>
                   </div>
                 )}
-                {packageDetail?.highlights.length !== 0 && (
-                  <div className="trip-highlights">
-                    <h4 className="title pt-50">Trip Highlights</h4>
-                    {packageDetail?.highlights.map((item, index) => (
-                      <p key={`trip-highlight-${index}`}>{item}</p>
-                    ))}
-                  </div>
-                )}
-                {packageDetail?.tripMapUrl !== "" && (
-                  <div className="map-container mt-5" id="map">
-                    <h4 className="title">
-                      <MapIcon />
-                      Trip Map
-                    </h4>
-                    <div className="map-image">
-                      <Image
-                        src={packageDetail?.tripMapUrl}
-                        width={611}
-                        height={897}
-                        alt="map"
-                      />
+                {packageDetail?.highlights &&
+                  packageDetail?.highlights.length !== 0 && (
+                    <div className="trip-highlights">
+                      <h4 className="title pt-50">Trip Highlights</h4>
+                      {packageDetail?.highlights.map((item, index) => (
+                        <p key={`trip-highlight-${index}`}>{item}</p>
+                      ))}
                     </div>
-                  </div>
-                )}
+                  )}
+                {packageDetail?.tripMapUrl &&
+                  packageDetail?.tripMapUrl !== "" && (
+                    <div className="map-container mt-5" id="map">
+                      <h4 className="title">
+                        <MapIcon />
+                        Trip Map
+                      </h4>
+                      <div className="map-image">
+                        <Image
+                          src={packageDetail?.tripMapUrl}
+                          width={611}
+                          height={897}
+                          alt="map"
+                        />
+                      </div>
+                    </div>
+                  )}
                 {packageDetail?.departureDate &&
                   packageDetail?.departureDate.length !== 0 && (
                     <div
@@ -474,9 +492,9 @@ export default function PackageDetail() {
                         </thead>
                         {/* </div> */}
 
-                        {packageDetail?.departureDate.map((item) => (
+                        {packageDetail?.departureDate.map((item, index) => (
                           // <div className="d-flex gap-3">
-                          <tbody>
+                          <tbody key={`departure-date-${index}`}>
                             <tr>
                               <td className="text-muted">
                                 {dayjs(item.startDate).format("MMM DD, YYYY")}
@@ -501,7 +519,7 @@ export default function PackageDetail() {
                                   onClick={() => {
                                     setPageLevelLoader(true);
                                     router.push(
-                                      `/package/${packageDetail._id}/booking`
+                                      `/package/${packageDetail.slug}/booking`
                                     );
                                   }}
                                 >
@@ -539,8 +557,13 @@ export default function PackageDetail() {
                           }}
                         >
                           {packageDetail?.gallery[0].images.map((item) => (
-                            <a data-fancybox="gallery" href={item}>
-                              <Image src={item} height={200} width={200} />
+                            <a data-fancybox="gallery" href={item} key={item}>
+                              <Image
+                                src={item}
+                                height={200}
+                                width={200}
+                                alt="gallery-image"
+                              />
                             </a>
                           ))}
                         </Fancybox>
@@ -586,10 +609,26 @@ export default function PackageDetail() {
                       FAQs
                     </h4>
                     <ol>
-                      {packageDetail?.faq.map((item) => (
-                        <li>
-                          <p>{item.question}</p>
-                          <p className="text-muted">{item.answer}</p>
+                      {packageDetail?.faq.map((item, index) => (
+                        <li key={`faq-${index}`}>
+                          <div>
+                            <p>{item.question}</p>
+                            <Button
+                              variant="success"
+                              size="sm"
+                              className="itinerary-expand-btn"
+                              onClick={() => handleFaqToggle(item._id)}
+                            >
+                              {showAnswer[item._id] ? "-" : "+"}
+                            </Button>
+                          </div>
+                          <p
+                            className={`text-muted ${
+                              showAnswer[item._id] ? "" : "d-none"
+                            }`}
+                          >
+                            {item.answer}
+                          </p>
                         </li>
                       ))}
                     </ol>
@@ -600,6 +639,7 @@ export default function PackageDetail() {
                 <BookingCard
                   prices={packageDetail?.prices}
                   packageId={packageDetail?.slug}
+                  pdfUrl={packageDetail?.pdfUrl}
                 />
               </div>
             </div>

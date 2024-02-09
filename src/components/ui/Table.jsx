@@ -171,7 +171,7 @@ export default function Table({
                               setTimeout(() => {
                                 router.push(
                                   `/${apiName}/${
-                                    bodyData[key.split("_")[1]]._id
+                                    bodyData[key.split("_")[1]].slug
                                   }`
                                 );
                               }, 1000);
@@ -187,6 +187,10 @@ export default function Table({
                     <button
                       onClick={() => {
                         if (apiName === "package") {
+                          localStorage.setItem(
+                            "updatePackage",
+                            bodyData[key.split("_")[1]]
+                          );
                           setUpdatePackage(bodyData[key.split("_")[1]]);
                           router.push("/admin/packages/create-package");
                         } else if (apiName === "blog") {

@@ -1,9 +1,9 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
-import { CldUploadButton } from "next-cloudinary";
+import { CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
 import { GlobalContext } from "@/context";
-import { submitForm } from "@/utils/functions";
+// import {  submitForm } from "@/utils/functions";
 import axios from "axios";
 
 export default function UploadGallery() {
@@ -27,6 +27,7 @@ export default function UploadGallery() {
     setImages(updatedImages);
   };
 
+  console.log(images);
   const handleSubmit = async () => {
     const data = {
       packageId: packageId,
@@ -60,19 +61,25 @@ export default function UploadGallery() {
             key={imagelink}
             className="d-flex flex-column align-items-center gap-3 "
           >
-            <Image src={imagelink} width={50} height={50} />
+            <Image src={imagelink} width={50} height={50} alt="gallery-image" />
             <button onClick={() => handleRemove(index)}>Remove Image</button>
           </div>
         ))}
       </div>
-      <CldUploadButton
-        onUpload={(result) => {
-          setImages([...images, result.info.secure_url]);
-        }}
+      <CldUploadWidget
+        options={{ sources: ["local"], resourceType: ["image"] }}
         uploadPreset="uploadPreset"
+        onSuccess={(result) => {
+          setImages((prev) => [...prev, result?.info?.secure_url]);
+        }}
       >
-        Upload To Cloudinary
-      </CldUploadButton>
+        {({ open }) => {
+          function handleOnClick() {
+            open();
+          }
+          return <button onClick={handleOnClick}>Upload Gallery</button>;
+        }}
+      </CldUploadWidget>
       <button type="submit" onClick={handleSubmit}>
         {updateGallery ? "Update" : "Submit"}
       </button>

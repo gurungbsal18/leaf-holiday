@@ -137,12 +137,7 @@ export const priceCalculator = (priceRange, guestNumber) => {
 };
 
 export const isImage = (url) => {
-  // Regular expression to match common image file extensions
-  const imageRegex =
-    /\.(jpg|jpeg|png|gif|bmp|tiff|webp|svg|jfif|pjpeg|pjp|ico|heif|bat|raw|indd)$/i;
-
-  // Test if the URL ends with a recognized image file extension
-  return imageRegex.test(url);
+  return url.includes("/image/upload");
 };
 
 export const getId = (searchName, dataArray, searchBy) => {
@@ -182,4 +177,13 @@ export function getEmbeddedYouTubeUrl(url) {
     // Handle invalid YouTube URL
     return 'Invalid YouTube URL';
   }
+}
+export function getNameById(id, array) {
+  for (let i = 0; i < array.length; i++) {
+      if (array[i].id === id) {
+          return array[i].name;
+      }
+  }
+  // Return null or any other default value if the ID is not found
+  return null;
 }

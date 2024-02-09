@@ -40,6 +40,7 @@ export default function CreateDestination() {
   const { register, handleSubmit, setValue } = form;
 
   const onSubmit = async (data) => {
+    data = { ...data, slug: data.name.toLowerCase().replace(/\s+/g, "-") };
     const res = await submitForm(data, "destination", updateForm);
 
     setCallExtractAll(!callExtractAll);

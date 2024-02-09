@@ -31,18 +31,7 @@ export default function ClientAccountNavbar() {
       icon: <FaKey />,
     },
   ];
-  function handleLogout() {
-    toast.success("Logged Out Successfully", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-    setTimeout(() => {
-      setUser(null);
-      Cookies.remove("token");
-      localStorage.clear();
-      setIsAuthUser(false);
-      router.push("/login");
-    }, 1000);
-  }
+
   return (
     <div className="d-flex flex-column bg-light col p-4 vh-100 gap-4">
       {mapHelper.map((item) => (
@@ -67,4 +56,16 @@ export default function ClientAccountNavbar() {
       </div>
     </div>
   );
+}
+export function handleLogout() {
+  toast.success("Logged Out Successfully", {
+    position: toast.POSITION.TOP_RIGHT,
+  });
+  setTimeout(() => {
+    setUser(null);
+    Cookies.remove("token");
+    localStorage.clear();
+    setIsAuthUser(false);
+    router.push("/login");
+  }, 1000);
 }

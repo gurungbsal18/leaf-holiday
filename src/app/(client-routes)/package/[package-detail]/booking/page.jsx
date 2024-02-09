@@ -221,8 +221,7 @@ export default function Booking() {
                 </div>
               ))}
               <div>
-                <p>Total Price: USD$ ${watch("price") || ""}</p>
-                <p>Form Type: {watch("formType")}</p>
+                <p>Total Price: USD$ {watch("price") || ""}</p>
               </div>
             </div>
           </div>

@@ -50,10 +50,11 @@ export default function GlobalState({ children }) {
 
   useEffect(() => {
     if (extractAdminPath[1] === "admin") {
-      console.log(isAdminView);
-      console.log(("called is admin view"));
       setAdminView(true);
       setVerify(false)
+    }
+    if(!pathname.includes("/booking")){
+      localStorage.setItem("bookingData", null)
     }
   }, [pathname]);
   return (
