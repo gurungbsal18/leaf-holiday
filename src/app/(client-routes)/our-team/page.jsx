@@ -33,6 +33,14 @@ export default function OurTeam() {
     getOurTeamData();
   }, []);
   return (
-    <>{pageLevelLoader ? <PageLevelLoader loading={true} /> : <div></div>}</>
+    <>
+      {pageLevelLoader ? (
+        <PageLevelLoader loading={true} />
+      ) : (
+        <div>
+          <h4>Our Team</h4>
+        </div>
+      )}
+    </>
   );
 }
