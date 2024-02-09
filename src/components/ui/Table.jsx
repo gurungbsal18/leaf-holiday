@@ -120,28 +120,17 @@ export default function Table({
             const { key, ...restRowProps } = row.getRowProps();
             return (
               <tr key={key} {...restRowProps}>
-                {/* {showImage && (
-              <td>
-                <Image
-                  src={
-                    bodyData[key.split("_")[1]]?.imageUrl ||
-                    bodyData[key.split("_")[1]]?.mainImageUrl ||
-                    bodyData[key.split("_")[1]]?.imgUrl
-                  }
-                  height={50}
-                  width={50}
-                  alt={`${apiName}-image-${key.split("_")[1]}`}
-                />
-              </td>
-            )} */}
-                {checkbox && (
+                {showImage && (
                   <td>
-                    <input
-                      type="checkbox"
-                      defaultChecked={bodyData[key.split("_")[1]]?.isSelected}
-                      onClick={() =>
-                        handleSelected(bodyData[key.split("_")[1]])
+                    <Image
+                      src={
+                        bodyData[key.split("_")[1]]?.imageUrl ||
+                        bodyData[key.split("_")[1]]?.mainImageUrl ||
+                        bodyData[key.split("_")[1]]?.imgUrl
                       }
+                      height={50}
+                      width={50}
+                      alt={`${apiName}-image-${key.split("_")[1]}`}
                     />
                   </td>
                 )}
@@ -153,37 +142,44 @@ export default function Table({
                     </td>
                   );
                 })}
-
-                <td className="d-flex gap-3 justify-content-end">
-                  {showView && (
-                    <>
-                      {!bodyData[key.split("_")[1]]?.isVerified && (
-                        <button
-                          className="btn btn-sm btn-outline-success"
-                          onClick={() => {
-                            if (apiName === "review") {
-                              setUpdateForm(bodyData[key.split("_")[1]]);
-                              setVerify(true);
-                              setDialogOpen(true);
-                              setDialogContent(updateComponent);
-                            } else {
-                              setPageLevelLoader(true);
-                              setTimeout(() => {
-                                router.push(
-                                  `/${apiName}/${
-                                    bodyData[key.split("_")[1]].slug
-                                  }`
-                                );
-                              }, 1000);
-                            }
-                          }}
-                        >
-                          {apiName === "review" ? "Verify" : "View"}
-                        </button>
-                      )}
-                    </>
-                  )}
-                  {showEdit && (
+                {checkbox && (
+                  <td>
+                    <input
+                      type="checkbox"
+                      defaultChecked={bodyData[key.split("_")[1]]?.isSelected}
+                      onClick={() =>
+                        handleSelected(bodyData[key.split("_")[1]])
+                      }
+                    />
+                  </td>
+                )}
+                {showView && (
+                  <td>
+                    {!bodyData[key.split("_")[1]]?.isVerified && (
+                      <button
+                        onClick={() => {
+                          if (apiName === "review") {
+                            setUpdateForm(bodyData[key.split("_")[1]]);
+                            setVerify(true);
+                            setDialogOpen(true);
+                            setDialogContent(updateComponent);
+                          } else {
+                            setPageLevelLoader(true);
+                            setTimeout(() => {
+                              router.push(
+                                `/${apiName}/${bodyData[key.split("_")[1]]._id}`
+                              );
+                            }, 1000);
+                          }
+                        }}
+                      >
+                        {apiName === "review" ? "Verify" : "View"}
+                      </button>
+                    )}
+                  </td>
+                )}
+                {showEdit && (
+                  <td>
                     <button
                       onClick={() => {
                         if (apiName === "package") {
