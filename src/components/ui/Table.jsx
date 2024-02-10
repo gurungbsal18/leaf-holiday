@@ -90,14 +90,16 @@ export default function Table({
   console.log(bodyData);
   return (
     <div>
-      <table {...getTableProps()}>
+      <table {...getTableProps()} className="dashboard-table">
         <thead>
           {headerGroups.map((headerGroup) => {
             const { key, ...restHeaderGroupProps } =
               headerGroup.getHeaderGroupProps();
             return (
               <tr key={key} {...restHeaderGroupProps}>
-                {showImage && <th></th>}
+                {checkbox && <th>HOMEPAGE</th>}
+
+                {/* {showImage && <th></th>} */}
                 {headerGroup.headers.map((column) => {
                   const { key, ...restColumnProps } = column.getHeaderProps();
                   return (
@@ -106,9 +108,8 @@ export default function Table({
                     </th>
                   );
                 })}
-                {checkbox && <th>SHOW IN HOMEPAGE</th>}
-                {showView && <th></th>}
-                {showEdit && <th></th>}
+                {/* {showView && <th></th>} */}
+                {/* {showEdit && <th></th>} */}
                 {showRemove && <th></th>}
               </tr>
             );
@@ -120,7 +121,18 @@ export default function Table({
             const { key, ...restRowProps } = row.getRowProps();
             return (
               <tr key={key} {...restRowProps}>
-                {showImage && (
+                {checkbox && (
+                  <td>
+                    <input
+                      type="checkbox"
+                      defaultChecked={bodyData[key.split("_")[1]]?.isSelected}
+                      onClick={() =>
+                        handleSelected(bodyData[key.split("_")[1]])
+                      }
+                    />
+                  </td>
+                )}
+                {/* {showImage && (
                   <td>
                     <Image
                       src={
@@ -133,7 +145,7 @@ export default function Table({
                       alt={`${apiName}-image-${key.split("_")[1]}`}
                     />
                   </td>
-                )}
+                )} */}
                 {row.cells.map((cell) => {
                   const { key, ...restCellProps } = cell.getCellProps();
                   return (
@@ -142,77 +154,72 @@ export default function Table({
                     </td>
                   );
                 })}
-                {checkbox && (
-                  <td>
-                    <input
-                      type="checkbox"
-                      defaultChecked={bodyData[key.split("_")[1]]?.isSelected}
-                      onClick={() =>
-                        handleSelected(bodyData[key.split("_")[1]])
-                      }
-                    />
-                  </td>
-                )}
-                {showView && (
-                  <td>
-                    {!bodyData[key.split("_")[1]]?.isVerified && (
+
+                <td className="dashboard-table-btn">
+                  {showView && (
+                    <>
+                      {!bodyData[key.split("_")[1]]?.isVerified && (
+                        <button
+                          className="btn btn-outline-success"
+                          onClick={() => {
+                            if (apiName === "review") {
+                              setUpdateForm(bodyData[key.split("_")[1]]);
+                              setVerify(true);
+                              setDialogOpen(true);
+                              setDialogContent(updateComponent);
+                            } else {
+                              setPageLevelLoader(true);
+                              setTimeout(() => {
+                                router.push(
+                                  `/${apiName}/${
+                                    bodyData[key.split("_")[1]]._id
+                                  }`
+                                );
+                              }, 1000);
+                            }
+                          }}
+                        >
+                          {apiName === "review" ? "Verify" : "View"}
+                        </button>
+                      )}
+                    </>
+                  )}
+                  {showEdit && (
+                    <>
                       <button
                         onClick={() => {
-                          if (apiName === "review") {
+                          if (apiName === "package") {
+                            setUpdatePackage(bodyData[key.split("_")[1]]);
+                            router.push("/admin/packages/create-package");
+                          } else if (apiName === "blog") {
+                            setUpdatePackage(bodyData[key.split("_")[1]]);
+                            router.push("/admin/blogs/create");
+                          } else {
                             setUpdateForm(bodyData[key.split("_")[1]]);
-                            setVerify(true);
                             setDialogOpen(true);
                             setDialogContent(updateComponent);
-                          } else {
-                            setPageLevelLoader(true);
-                            setTimeout(() => {
-                              router.push(
-                                `/${apiName}/${bodyData[key.split("_")[1]]._id}`
-                              );
-                            }, 1000);
                           }
                         }}
+                        className="btn btn-sm btn-success"
                       >
-                        {apiName === "review" ? "Verify" : "View"}
+                        <EditNoteIcon /> Edit
                       </button>
-                    )}
-                  </td>
-                )}
-                {showEdit && (
-                  <td>
-                    <button
-                      onClick={() => {
-                        if (apiName === "package") {
-                          setUpdatePackage(bodyData[key.split("_")[1]]);
-                          router.push("/admin/packages/create-package");
-                        } else if (apiName === "blog") {
-                          setUpdatePackage(bodyData[key.split("_")[1]]);
-                          router.push("/admin/blogs/create");
-                        } else {
-                          setUpdateForm(bodyData[key.split("_")[1]]);
-                          setDialogOpen(true);
-                          setDialogContent(updateComponent);
+                    </>
+                  )}
+                  {showRemove && (
+                    <>
+                      <button
+                        onClick={() =>
+                          handleRemove(bodyData[key.split("_")[1]]._id)
                         }
-                      }}
-                      className="btn btn-sm btn-success"
-                    >
-                      <EditNoteIcon /> Edit
-                    </button>
-                  </td>
-                )}
-                {showRemove && (
-                  <td>
-                    <button
-                      onClick={() =>
-                        handleRemove(bodyData[key.split("_")[1]]._id)
-                      }
-                      className="btn btn-sm btn-danger"
-                    >
-                      <DeleteIcon />
-                      Remove
-                    </button>
-                  </td>
-                )}
+                        className="btn btn-sm btn-danger"
+                      >
+                        <DeleteIcon />
+                        Remove
+                      </button>
+                    </>
+                  )}
+                </td>
               </tr>
             );
           })}

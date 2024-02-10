@@ -30,4 +30,14 @@ table th {
   td {
     text-align: left;
   }
+  .dashboard-table-btn {
+    text-align: right;
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+    button {
+      display: flex;
+      align-items: center;
+    }
+  }
 }
