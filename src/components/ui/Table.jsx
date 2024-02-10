@@ -107,8 +107,8 @@ export default function Table({
                     </th>
                   );
                 })}
-                {/* {showView && <th></th>}
-                {showEdit && <th></th>} */}
+                {/* {showView && <th></th>} */}
+                {/* {showEdit && <th></th>} */}
                 {showRemove && <th></th>}
               </tr>
             );
@@ -153,17 +153,7 @@ export default function Table({
                     </td>
                   );
                 })}
-                {checkbox && (
-                  <td>
-                    <input
-                      type="checkbox"
-                      defaultChecked={bodyData[key.split("_")[1]]?.isSelected}
-                      onClick={() =>
-                        handleSelected(bodyData[key.split("_")[1]])
-                      }
-                    />
-                  </td>
-                )}
+
                 <td className="dashboard-table-btn">
                   {showView && (
                     <>
