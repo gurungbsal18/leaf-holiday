@@ -74,20 +74,24 @@ import { useRouter } from "next/navigation";
 import { GlobalContext } from "@/context";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 import { PrimeReactProvider } from "primereact/api";
 import MegaMenuMain from "./MegaMenu";
 import LoginIcon from "@mui/icons-material/Login";
 import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { handleLogout } from "../ClientAccountNavbar";
 
 export default function ClientNavbar() {
-  const { isAuthUser } = useContext(GlobalContext);
+  const { isAuthUser, user } = useContext(GlobalContext);
   const [showNavbar, setShowNavbar] = useState(false);
   const router = useRouter();
 
   function handleShowNavBar() {
     setShowNavbar(!showNavbar);
   }
+  const [showMenu, setShowMenu] = useState(false);
 
   function profileImageMaker() {
     const { name } = JSON.parse(localStorage.getItem("user"));
@@ -127,16 +131,31 @@ export default function ClientNavbar() {
         <div className="d-block d-lg-flex justify-content-center gap-4 pb-2 align-items-center position-relative">
           <PrimeReactProvider>
             <MegaMenuMain />
+            {user && user.role === "user" && (
+              <Link href="/admin">Admin Dashboard</Link>
+            )}
             <div className="d-flex gap-3 login-section">
               {isAuthUser ? (
-                <div
-                  onClick={() =>
-                    setTimeout(() => {
-                      router.push("/account");
-                    }, 1000)
-                  }
-                >
-                  <div className="login-user">{profileImageMaker()}</div>
+                <div className="d-flex align-items-center gap-2">
+                  <div
+                    onClick={() =>
+                      setTimeout(() => {
+                        router.push("/account");
+                      }, 1000)
+                    }
+                  >
+                    <div className="login-user">{profileImageMaker()}</div>
+                  </div>
+                  <div>
+                    <div onClick={() => setShowMenu((prev) => !prev)}>
+                      {showMenu ? <FaChevronUp /> : <FaChevronDown />}
+                    </div>
+                    <div className={`${showMenu ? "" : "d-none"}`}>
+                      <p>{user && user?.name}</p>
+                      <Link href="/account/">User Information</Link>
+                      <button onClick={handleLogout}>Logout</button>
+                    </div>
+                  </div>
                 </div>
               ) : (
                 <a

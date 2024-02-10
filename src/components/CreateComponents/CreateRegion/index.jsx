@@ -26,6 +26,7 @@ export default function CreateRegion({ nameValue, setNameValue, setVal }) {
     description: "",
     destination: "",
     imgUrl: "",
+    slug: "",
   };
 
   const form = useForm({
@@ -43,8 +44,11 @@ export default function CreateRegion({ nameValue, setNameValue, setVal }) {
   }, []);
 
   const onSubmit = async (data) => {
+    data = { ...data, slug: data.name.toLowerCase().replace(/\s+/g, "-") };
     const res = await submitForm(data, "region", updateForm, setNameValue);
-    setVal(data.name);
+    if (setVal) {
+      setVal(data.name);
+    }
 
     setCallExtractAll(!callExtractAll);
     setUpdateForm(null);

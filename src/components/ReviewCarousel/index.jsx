@@ -25,7 +25,7 @@ const ReviewCarousel = ({ reviews }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       setReviewIndex((prevIndex) => (prevIndex + 1) % reviews.length);
-    }, 3000000);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, []);

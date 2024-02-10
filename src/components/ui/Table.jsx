@@ -97,9 +97,8 @@ export default function Table({
               headerGroup.getHeaderGroupProps();
             return (
               <tr key={key} {...restHeaderGroupProps}>
-                {checkbox && <th>HOMEPAGE</th>}
-
                 {/* {showImage && <th></th>} */}
+                {checkbox && <th>Add</th>}
                 {headerGroup.headers.map((column) => {
                   const { key, ...restColumnProps } = column.getHeaderProps();
                   return (
@@ -108,8 +107,8 @@ export default function Table({
                     </th>
                   );
                 })}
-                {/* {showView && <th></th>} */}
-                {/* {showEdit && <th></th>} */}
+                {/* {showView && <th></th>}
+                {showEdit && <th></th>} */}
                 {showRemove && <th></th>}
               </tr>
             );
@@ -154,7 +153,17 @@ export default function Table({
                     </td>
                   );
                 })}
-
+                {checkbox && (
+                  <td>
+                    <input
+                      type="checkbox"
+                      defaultChecked={bodyData[key.split("_")[1]]?.isSelected}
+                      onClick={() =>
+                        handleSelected(bodyData[key.split("_")[1]])
+                      }
+                    />
+                  </td>
+                )}
                 <td className="dashboard-table-btn">
                   {showView && (
                     <>
@@ -172,7 +181,7 @@ export default function Table({
                               setTimeout(() => {
                                 router.push(
                                   `/${apiName}/${
-                                    bodyData[key.split("_")[1]]._id
+                                    bodyData[key.split("_")[1]].slug
                                   }`
                                 );
                               }, 1000);
@@ -184,40 +193,41 @@ export default function Table({
                       )}
                     </>
                   )}
+
                   {showEdit && (
-                    <>
-                      <button
-                        onClick={() => {
-                          if (apiName === "package") {
-                            setUpdatePackage(bodyData[key.split("_")[1]]);
-                            router.push("/admin/packages/create-package");
-                          } else if (apiName === "blog") {
-                            setUpdatePackage(bodyData[key.split("_")[1]]);
-                            router.push("/admin/blogs/create");
-                          } else {
-                            setUpdateForm(bodyData[key.split("_")[1]]);
-                            setDialogOpen(true);
-                            setDialogContent(updateComponent);
-                          }
-                        }}
-                        className="btn btn-sm btn-success"
-                      >
-                        <EditNoteIcon /> Edit
-                      </button>
-                    </>
+                    <button
+                      onClick={() => {
+                        if (apiName === "package") {
+                          localStorage.setItem(
+                            "updatePackage",
+                            bodyData[key.split("_")[1]]
+                          );
+                          setUpdatePackage(bodyData[key.split("_")[1]]);
+                          router.push("/admin/packages/create-package");
+                        } else if (apiName === "blog") {
+                          setUpdatePackage(bodyData[key.split("_")[1]]);
+                          router.push("/admin/blogs/create");
+                        } else {
+                          setUpdateForm(bodyData[key.split("_")[1]]);
+                          setDialogOpen(true);
+                          setDialogContent(updateComponent);
+                        }
+                      }}
+                      className="btn btn-sm btn-success"
+                    >
+                      <EditNoteIcon /> Edits
+                    </button>
                   )}
                   {showRemove && (
-                    <>
-                      <button
-                        onClick={() =>
-                          handleRemove(bodyData[key.split("_")[1]]._id)
-                        }
-                        className="btn btn-sm btn-danger"
-                      >
-                        <DeleteIcon />
-                        Remove
-                      </button>
-                    </>
+                    <button
+                      onClick={() =>
+                        handleRemove(bodyData[key.split("_")[1]]._id)
+                      }
+                      className="btn btn-sm btn-danger"
+                    >
+                      <DeleteIcon />
+                      Remove
+                    </button>
                   )}
                 </td>
               </tr>

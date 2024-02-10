@@ -36,6 +36,7 @@ export default function CreateBlog() {
   const { register, handleSubmit, setValue, control, watch } = form;
 
   const onSubmit = async (data) => {
+    data = { ...data, slug: data.title.toLowerCase().replace(/\s+/g, "-") };
     const res = await submitForm(data, "blog", updatePackage);
     if (res.status === 200) {
       setCallExtractAll(!callExtractAll);
