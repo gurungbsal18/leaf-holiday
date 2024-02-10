@@ -199,8 +199,19 @@ export default function Booking() {
                   <label>Message</label>
                   <TextareaAutosize {...register("message")} />
                 </div>
-                <button type="submit" onClick={handleSubmit(onSubmit)}>
-                  Submit
+                <button
+                  className="btn btn-outline-success"
+                  type="submit"
+                  onClick={handleSubmit(onSubmit)}
+                >
+                  Book and pay later
+                </button>
+                <button
+                  className="btn btn-success"
+                  type="submit"
+                  onClick={handleSubmit(onSubmit)}
+                >
+                  Proced to payment
                 </button>
               </form>
             </div>
