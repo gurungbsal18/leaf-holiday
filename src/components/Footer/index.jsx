@@ -32,7 +32,7 @@ function Footer() {
   }, []);
 
   return (
-    <div className="footer bg-success p-5 text-white">
+    <div className="footer bg-success p-5 pb-2 text-white">
       <div className="footer-content d-flex justify-content-between flex-column flex-md-row">
         <div className="d-flex flex-column footer-content-contact">
           <h4>Contact Us</h4>

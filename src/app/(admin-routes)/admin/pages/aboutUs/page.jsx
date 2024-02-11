@@ -7,6 +7,7 @@ import axios from "axios";
 import Link from "next/link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import EditPageGallery from "@/components/ui/EditPageGallery";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
 
 export default function EditAboutUs() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -110,7 +111,7 @@ export default function EditAboutUs() {
           onClick={handleSubmit(onSubmit)}
           className="btn btn-success"
         >
-          Publish
+          <FileUploadIcon /> Publish
         </button>
       </div>
       <div className="d-flex justify-content-between">
