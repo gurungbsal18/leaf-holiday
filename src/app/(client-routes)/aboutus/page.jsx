@@ -104,7 +104,7 @@ export default function AboutUs() {
             </div>
           </div>
           <div>
-            <h1>Company Documents</h1>
+            <h4>Company Documents</h4>
             <div>
               <div>
                 <Fancybox

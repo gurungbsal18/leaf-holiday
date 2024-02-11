@@ -96,27 +96,35 @@ export default function EditAboutUs() {
     getData();
   }, []);
   return (
-    <div>
+    <div className="dashboard-content-section p-4">
       <div className="d-flex justify-content-between ">
-        <Link href="/admin/pages">
-          <ArrowBackIcon />
-        </Link>
-        <h1>Edit About Us Page</h1>
+        <div className="d-flex align-items-center gap-2 mb-4">
+          <Link href="/admin/pages">
+            <ArrowBackIcon />
+          </Link>
+          <h4 className="m-0">Edit About Us Page</h4>
+        </div>
 
-        <button type="submit" onClick={handleSubmit(onSubmit)}>
+        <button
+          type="submit"
+          onClick={handleSubmit(onSubmit)}
+          className="btn btn-success"
+        >
           Publish
         </button>
       </div>
-      <div className="d-flex">
-        <div>
+      <div className="d-flex justify-content-between">
+        <div className="col-8 pe-4">
           {mapFormItems.map((item) => (
-            <div>
-              <label htmlFor={item.name}>{item.label}</label>
+            <div className="mb-5">
+              <label htmlFor={item.name} className="mb-3">
+                {item.label}
+              </label>
               <TextEditor control={control} name={item.name} />
             </div>
           ))}
         </div>
-        <div>
+        <div className="col-4">
           <UploadToCloudinary
             selectedFile={selectedImage}
             setSelectedFile={setSelectedImage}
