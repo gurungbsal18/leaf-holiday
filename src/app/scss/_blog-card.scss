@@ -17,3 +17,9 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 }
+
+@media (max-width: 576px) {
+  .blog-card {
+    flex-direction: column;
+  }
+}
