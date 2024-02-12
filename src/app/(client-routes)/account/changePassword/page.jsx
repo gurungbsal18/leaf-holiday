@@ -1,16 +1,18 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import TextField from "@mui/material/TextField";
 import { toast } from "react-toastify";
 
 import axios from "axios";
+import { GlobalContext } from "@/context";
 
 export default function ChangePassword() {
+  const { user } = useContext(GlobalContext);
   const [confirmPassword, setConfirmPassword] = useState(false);
   const [confirmPasswordValue, setConfirmPasswordValue] = useState("");
   const { register, watch, handleSubmit } = useForm({
-    defaultValues: JSON.parse(localStorage.getItem("user")),
+    defaultValues: user || {},
   });
 
   const handleChangePassword = async (data) => {
@@ -69,8 +71,7 @@ export default function ChangePassword() {
                 watch("password") === "" ||
                 watch("password") !== confirmPasswordValue
               }
-              className="btn btn-sm btn-success"
-            >
+              className="btn btn-sm btn-success">
               CHANGE PASSWORD
             </button>
           </div>

@@ -9,11 +9,11 @@ import axios from "axios";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 
 export default function UserDetail() {
-  const { isAuthUser, pageLevelLoader, setPageLevelLoader } =
+  const { user, isAuthUser, pageLevelLoader, setPageLevelLoader } =
     useContext(GlobalContext);
   setPageLevelLoader(false);
   const { register, handleSubmit } = useForm({
-    defaultValues: JSON.parse(localStorage.getItem("user")),
+    defaultValues: user,
   });
   const router = useRouter();
 
@@ -94,8 +94,7 @@ export default function UserDetail() {
               <div className="d-flex justify-content-start">
                 <button
                   onClick={handleSubmit(submitForm)}
-                  className="btn btn-sm btn-success"
-                >
+                  className="btn btn-sm btn-success">
                   UPDATE
                 </button>
               </div>

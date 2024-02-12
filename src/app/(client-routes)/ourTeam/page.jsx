@@ -51,7 +51,9 @@ export default function OurTeam() {
           </div>
           <div className="d-flex">
             {ourTeamData &&
-              ourTeamData.map((item) => <TeamCard teamDetail={item} />)}
+              ourTeamData.map((item) => (
+                <TeamCard key={item._id} teamDetail={item} />
+              ))}
           </div>
         </div>
       )}

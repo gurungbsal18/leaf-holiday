@@ -74,7 +74,6 @@ export default function Settings() {
   useEffect(() => {
     getSettingsData();
   }, []);
-  console.log(settingDetail);
 
   return (
     <>

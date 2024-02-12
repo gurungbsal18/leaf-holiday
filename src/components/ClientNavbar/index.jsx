@@ -75,7 +75,6 @@ import { GlobalContext } from "@/context";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import Link from "next/link";
-
 import { PrimeReactProvider } from "primereact/api";
 import MegaMenuMain from "./MegaMenu";
 import LoginIcon from "@mui/icons-material/Login";
@@ -84,7 +83,20 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { handleLogout } from "../ClientAccountNavbar";
 
 export default function ClientNavbar() {
-  const { isAuthUser, user } = useContext(GlobalContext);
+  const { isAuthUser, user, setUser, setIsAuthUser } =
+    useContext(GlobalContext);
+  function handleLogout() {
+    toast.success("Logged Out Successfully", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+    setTimeout(() => {
+      setUser(null);
+      Cookies.remove("token");
+      localStorage.clear();
+      setIsAuthUser(false);
+      router.push("/login");
+    }, 1000);
+  }
   const [showNavbar, setShowNavbar] = useState(false);
   const router = useRouter();
 
@@ -142,8 +154,7 @@ export default function ClientNavbar() {
                       setTimeout(() => {
                         router.push("/account");
                       }, 1000)
-                    }
-                  >
+                    }>
                     <div className="login-user">{profileImageMaker()}</div>
                   </div>
                   <div>
@@ -161,8 +172,7 @@ export default function ClientNavbar() {
                 <a
                   role="button"
                   className="text-success d-flex align-items-center gap-1 log-in-btn"
-                  onClick={() => router.push("/login")}
-                >
+                  onClick={() => router.push("/login")}>
                   <LoginIcon />
                   Log In
                 </a>

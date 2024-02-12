@@ -59,7 +59,7 @@ export default function DestinationPage() {
             {allDestinations && (
               <div className="d-flex">
                 {allDestinations.map((item) => (
-                  <div>
+                  <div key={item._id}>
                     <Image
                       onClick={() => router.push(`/destination/${item.slug}`)}
                       src={item.imageUrl}

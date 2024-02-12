@@ -1,7 +1,7 @@
 "use client";
 
 import { loginFormControls } from "@/utils";
-import React, { useContext, useEffect } from "react";
+import React, { Suspense, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "react-bootstrap";
 import Image from "next/image";
@@ -9,11 +9,22 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
-
 import TextField from "@mui/material/TextField";
 import { GlobalContext } from "@/context";
-import Notification from "@/components/Notification";
 
+function IsVerified() {
+  const searchParams = useSearchParams();
+  const isVerified = searchParams.get("verified");
+  useEffect(() => {
+    if (isVerified) {
+      toast.success("Account Verified Successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+  }, []);
+
+  return <></>;
+}
 export default function Login() {
   const {
     trackPage,
@@ -47,8 +58,6 @@ export default function Login() {
       password: "",
     },
   });
-
-  const isVerified = useSearchParams().get("verified");
   const router = useRouter();
   const { register, handleSubmit } = form;
 
@@ -84,23 +93,17 @@ export default function Login() {
 
   useEffect(() => {
     if (isAuthUser) {
-      console.log("routing page ... to", trackPage);
       setTimeout(() => {
         router.push(trackPage);
       }, [1000]);
     }
   }, [isAuthUser]);
 
-  useEffect(() => {
-    if (isVerified) {
-      toast.success("Account Verified Successfully", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-    }
-  }, []);
-
   return (
     <div className="container d-flex flex-column-reverse flex-md-row justify-content-between my-5 gap-5 align-items-center">
+      <Suspense>
+        <IsVerified />
+      </Suspense>
       <div className="register-container">
         <div className="register-text">
           <h4>Login To Leaf Holiday</h4>
@@ -111,6 +114,7 @@ export default function Login() {
           <div className="form-container d-flex flex-column gap-3">
             {loginFormControls.map((formControl) => (
               <TextField
+                key={formControl.id}
                 required
                 fullWidth
                 size="small"
@@ -137,7 +141,7 @@ export default function Login() {
         </form>
         <div className="register-router">
           <span className="d-flex mt-3">
-            <p className="m-0">Don't Have An Account?</p>
+            <p className="m-0">Don&apos;t Have An Account?</p>
             <span className="ms-2">
               <a href="/register">Register</a>
             </span>
@@ -145,7 +149,12 @@ export default function Login() {
         </div>
       </div>
       <div className="register-image">
-        <Image src="/images/login-page.png" width={537} height={350} />
+        <Image
+          src="/images/login-page.png"
+          width={537}
+          height={350}
+          alt="login-image"
+        />
       </div>
     </div>
   );

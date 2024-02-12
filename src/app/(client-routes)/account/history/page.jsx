@@ -8,9 +8,9 @@ import Table from "@/components/ui/Table";
 import dayjs from "dayjs";
 
 export default function OrderHistory() {
-  const { pageLevelLoader, setPageLevelLoader } = useContext(GlobalContext);
+  const { user, pageLevelLoader, setPageLevelLoader } =
+    useContext(GlobalContext);
   const [userBooking, setUserBooking] = useState([]);
-  const user = JSON.parse(localStorage.getItem("user"));
 
   const getAllUserOrders = async () => {
     setPageLevelLoader(true);
@@ -34,7 +34,6 @@ export default function OrderHistory() {
   useEffect(() => {
     getAllUserOrders();
   }, []);
-  console.log(userBooking);
   return (
     <>
       {pageLevelLoader ? (

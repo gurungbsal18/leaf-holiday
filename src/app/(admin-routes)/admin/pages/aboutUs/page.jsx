@@ -109,15 +109,14 @@ export default function EditAboutUs() {
         <button
           type="submit"
           onClick={handleSubmit(onSubmit)}
-          className="btn btn-success"
-        >
+          className="btn btn-success">
           <FileUploadIcon /> Publish
         </button>
       </div>
       <div className="d-flex justify-content-between">
         <div className="col-8 pe-4">
           {mapFormItems.map((item) => (
-            <div className="mb-5">
+            <div key={item.name} className="mb-5">
               <label htmlFor={item.name} className="mb-3">
                 {item.label}
               </label>

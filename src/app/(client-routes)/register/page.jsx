@@ -80,6 +80,7 @@ export default function Register() {
           <div className="form-container d-flex flex-column gap-3">
             {registrationFormControls.map((formControl) => (
               <TextField
+                key={formControl.id}
                 required
                 fullWidth
                 size="small"

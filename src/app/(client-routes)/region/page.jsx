@@ -59,7 +59,7 @@ export default function RegionPage() {
             {allRegions && (
               <div className="d-flex">
                 {allRegions.map((item) => (
-                  <div>
+                  <div key={item._id}>
                     <Image
                       onClick={() => router.push(`/region/${item.slug}`)}
                       src={item.imgUrl}

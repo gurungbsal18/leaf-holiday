@@ -18,15 +18,9 @@ import { countries } from "@/utils";
 import { priceCalculator } from "@/utils/functions";
 
 export default function Booking() {
-  const { pageLevelLoader, setPageLevelLoader } = useContext(GlobalContext);
+  const { pageLevelLoader, setPageLevelLoader, user, bookingData } =
+    useContext(GlobalContext);
   const router = useRouter();
-  const user = JSON.parse(localStorage.getItem("user"));
-  const bookingData = {
-    ...JSON.parse(localStorage.getItem("bookingData")),
-    dateOfTravel: dayjs(
-      JSON.parse(localStorage.getItem("bookingData"))?.dateOfTravel
-    ),
-  };
   const pathName = usePathname();
   const packageId = pathName.match(/\/package\/([^\/]+)\//)[1];
 
@@ -202,15 +196,13 @@ export default function Booking() {
                 <button
                   className="btn btn-outline-success"
                   type="submit"
-                  onClick={handleSubmit(onSubmit)}
-                >
+                  onClick={handleSubmit(onSubmit)}>
                   Book and pay later
                 </button>
                 <button
                   className="btn btn-success"
                   type="submit"
-                  onClick={handleSubmit(onSubmit)}
-                >
+                  onClick={handleSubmit(onSubmit)}>
                   Proced to payment
                 </button>
               </form>

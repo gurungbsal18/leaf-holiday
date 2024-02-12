@@ -7,10 +7,11 @@ import { useContext, useEffect, useState } from "react";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import { GlobalContext } from "@/context";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import ExploreDestination from "@/components/HomeTest/ExploreDestination";
+import ExploreDestination from "@/components/ExploreDestination";
 import BlogCard from "@/components/BlogCard";
 import ReviewCarousel from "@/components/ReviewCarousel";
 import { getEmbeddedYouTubeUrl } from "@/utils/functions";
+import Image from "next/image";
 
 export default function Home() {
   const {
@@ -79,7 +80,7 @@ export default function Home() {
                   </div>
                   <div className="d-flex gap-3 flex-wrap">
                     {homePageData?.tabs?.top[0]?.packages?.map((item) => (
-                      <PackageCard packageDetail={item} />
+                      <PackageCard key={item._id} packageDetail={item} />
                     ))}
                   </div>
                 </div>
@@ -111,15 +112,14 @@ export default function Home() {
                           title="YouTube video player"
                           frameborder="0"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                          allowfullscreen
-                        ></iframe>
+                          allowfullscreen></iframe>
                       )}
                     </div>
                     <div className="col-12 col-lg-6">
                       <div className="d-flex gap-3 flex-wrap">
                         {homePageData?.tabs?.bottom[0]?.packages?.map(
                           (item) => (
-                            <PackageCard packageDetail={item} />
+                            <PackageCard key={item._id} packageDetail={item} />
                           )
                         )}
                       </div>
@@ -136,7 +136,7 @@ export default function Home() {
                 </div>
                 <div className="blog-card">
                   {homePageData?.blogs?.map((item) => (
-                    <BlogCard blogDetail={item} />
+                    <BlogCard key={item._id} blogDetail={item} />
                   ))}
                 </div>
 
@@ -152,7 +152,12 @@ export default function Home() {
               </div>
 
               <div className="d-flex justify-content-center">
-                <img src="/images/TestImages/tripadvisor.png" alt="" />
+                <Image
+                  src="/images/TestImages/tripadvisor.png"
+                  width={170}
+                  height={200}
+                  alt="recommended-at-image"
+                />
               </div>
             </div>
 

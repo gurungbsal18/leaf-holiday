@@ -72,26 +72,30 @@ export default function AboutUs() {
       ) : aboutUsData ? (
         <div>
           <div>
-            <Image src={aboutUsData.imageUrl} width={1024} height={500} />
+            <Image
+              src={aboutUsData.imageUrl}
+              width={1024}
+              height={500}
+              alt="about-us-header-image"
+            />
           </div>
           <div>
             <div>
               <h1>About Us</h1>
               <div
-                dangerouslySetInnerHTML={{ __html: aboutUsData.aboutUs }}
-              ></div>
+                dangerouslySetInnerHTML={{ __html: aboutUsData.aboutUs }}></div>
             </div>
             <div>
               <div className="d-flex">
                 {aboutUsNavigation.map((item) => (
                   <p
+                    key={item.name}
                     className={`border border-success p-3 pt-0 pb-0 ${
                       item.name === navigationData
                         ? "bg-success text-bg-light "
                         : "bg-white text-success"
                     }`}
-                    onClick={() => setNavigationData(item.name)}
-                  >
+                    onClick={() => setNavigationData(item.name)}>
                     {item.label}
                   </p>
                 ))}
@@ -99,8 +103,7 @@ export default function AboutUs() {
               <div
                 dangerouslySetInnerHTML={{
                   __html: aboutUsData[navigationData],
-                }}
-              ></div>
+                }}></div>
             </div>
           </div>
           <div>
@@ -112,8 +115,7 @@ export default function AboutUs() {
                     Carousel: {
                       infinite: false,
                     },
-                  }}
-                >
+                  }}>
                   {aboutUsData.document.map((item) => (
                     <a data-fancybox="gallery" href={item} key={item}>
                       <Image

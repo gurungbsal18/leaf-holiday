@@ -97,15 +97,14 @@ export default function CreateRegion({ nameValue, setNameValue, setVal }) {
                   name="destination"
                   id="destination"
                   {...register("destination")}
-                  className="form-control"
-                >
+                  className="form-control">
                   {destinationList.data?.map((item) => (
                     <option
+                      key={item._id}
                       value={item._id}
                       selected={
                         item._id === updateForm?.destination ? true : false
-                      }
-                    >
+                      }>
                       {item.name}
                     </option>
                   ))}
@@ -115,8 +114,7 @@ export default function CreateRegion({ nameValue, setNameValue, setVal }) {
                 <button
                   type="submit"
                   onClick={handleSubmit(onSubmit)}
-                  className="btn btn-success"
-                >
+                  className="btn btn-success">
                   {updateForm ? "Update" : "Create"}
                 </button>
               </div>
