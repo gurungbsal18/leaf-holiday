@@ -22,7 +22,7 @@ const ExploreDestination = ({ middleTabData }) => {
             {middleTabData.map((item, index) => (
               <button
                 key={item._id}
-                className={`btn ${
+                className={`btn btn-sm ${
                   activeExploreBtn === item._id
                     ? "btn-success"
                     : "btn-outline-success"
@@ -30,7 +30,8 @@ const ExploreDestination = ({ middleTabData }) => {
                 onClick={() => {
                   setActiveExploreBtn(item._id);
                   setMiddleTabIndex(index);
-                }}>
+                }}
+              >
                 {item.title}
               </button>
             ))}

@@ -6,7 +6,7 @@ export default function BlogCard({ blogDetail }) {
   const router = useRouter();
   return (
     <div
-      className="col-4 border pb-3"
+      className="col-12 col-md-4 border pb-3"
       onClick={() => router.push(`/blog/${blogDetail?.slug}`)}
     >
       <Image
