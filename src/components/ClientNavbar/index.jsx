@@ -148,23 +148,34 @@ export default function ClientNavbar() {
             )}
             <div className="d-flex gap-3 login-section">
               {isAuthUser ? (
-                <div className="d-flex align-items-center gap-2">
+                <div className="d-flex align-items-center gap-2 login-section-user">
                   <div
                     onClick={() =>
                       setTimeout(() => {
                         router.push("/account");
                       }, 1000)
-                    }>
+                    }
+                  >
                     <div className="login-user">{profileImageMaker()}</div>
                   </div>
                   <div>
                     <div onClick={() => setShowMenu((prev) => !prev)}>
                       {showMenu ? <FaChevronUp /> : <FaChevronDown />}
                     </div>
-                    <div className={`${showMenu ? "" : "d-none"}`}>
-                      <p>{user && user?.name}</p>
-                      <Link href="/account/">User Information</Link>
-                      <button onClick={handleLogout}>Logout</button>
+                    <div
+                      className={`login-dropdown ${showMenu ? "" : "d-none"}`}
+                    >
+                      <p className="m-0">{user && user?.name}</p>
+                      <hr />
+                      <Link href="/account/" className="mb-2">
+                        User Information
+                      </Link>
+                      <button
+                        className="btn btn-sm btn-success"
+                        onClick={handleLogout}
+                      >
+                        Logout
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -172,7 +183,8 @@ export default function ClientNavbar() {
                 <a
                   role="button"
                   className="text-success d-flex align-items-center gap-1 log-in-btn"
-                  onClick={() => router.push("/login")}>
+                  onClick={() => router.push("/login")}
+                >
                   <LoginIcon />
                   Log In
                 </a>
