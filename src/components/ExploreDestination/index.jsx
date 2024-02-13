@@ -36,7 +36,7 @@ const ExploreDestination = ({ middleTabData }) => {
               </button>
             ))}
           </div>
-          <div className="d-flex gap-3 flex-wrap">
+          <div className="d-flex gap-3 flex-wrap mt-3">
             {middleTabData[middleTabIndex]?.packages?.map((item) => (
               <PackageCard key={item._id} packageDetail={item} />
             ))}
