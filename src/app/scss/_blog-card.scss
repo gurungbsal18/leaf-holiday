@@ -1,0 +1,25 @@
+.blog-card {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+  gap: 30px;
+  img {
+    width: 100%;
+    height: 300px;
+    image-rendering: -webkit-optimize-contrast;
+  }
+}
+
+.blog-card-content {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+@media (max-width: 576px) {
+  .blog-card {
+    flex-direction: column;
+  }
+}

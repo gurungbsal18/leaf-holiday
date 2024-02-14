@@ -1,3 +1,4 @@
+"use client";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
@@ -6,18 +7,37 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Image from "next/image";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 function Footer() {
   const date = new Date();
   const year = date.getFullYear();
+  const [leafData, setLeafData] = useState(null);
+  const getLeafData = async () => {
+    try {
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/setting/`
+      );
+      if (res.status === 200) {
+        setLeafData(res.data.data[0]);
+      }
+    } catch (e) {
+      console.log(e);
+      setLeafData({});
+    }
+  };
+  useEffect(() => {
+    getLeafData();
+  }, []);
 
   return (
-    <div className="footer bg-success p-5 text-white">
-      <div className="footer-content d-flex justify-content-between ">
-        <div className="d-flex flex-column ">
+    <div className="footer bg-success p-5 pb-2 text-white">
+      <div className="footer-content d-flex justify-content-between flex-column flex-md-row">
+        <div className="d-flex flex-column footer-content-contact">
           <h4>Contact Us</h4>
           <a href="tel:+9771234567890">
-            <LocalPhoneIcon />
+            <WhatsAppIcon />
             +977 1234567890
           </a>
           <a href="mailto:info@thenepaltrekking.com">
@@ -51,8 +71,8 @@ function Footer() {
           <a href="">Covid Protocol</a>
         </div>
       </div>
-      <div className="association d-flex flex-column  justify-content-center  align-items-center ">
-        <p>Associated With</p>
+      <div className="footer-association d-flex flex-column justify-content-center align-items-center mt-5">
+        <h4>Associated With</h4>
         <div className="d-flex bg-white p-2 rounded-5 gap-3 ">
           <Image src="/images/akton.png" width={25} height={25} alt="akton" />
           <Image src="/images/ntb.png" width={25} height={25} alt="ntb" />
@@ -66,9 +86,9 @@ function Footer() {
           />
         </div>
       </div>
-      <div className="social d-flex justify-content-between ">
-        <p>© Leaf Holiday {year}</p>
-        <div className="">
+      <div className="d-flex justify-content-between mt-5">
+        <p className="m-0 fs-12">© Leaf Holiday {year}</p>
+        <div className="footer-social d-flex gap-2">
           <a href="" className="text-white">
             <FacebookIcon />
           </a>

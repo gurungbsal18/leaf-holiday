@@ -1,0 +1,75 @@
+.hero-section {
+  background: linear-gradient(
+      (0deg, rgba(0, 0, 0, 1) 1%, rgba(0, 212, 255, 0) 50%)
+    ),
+    url(../../../public/images/home-page-image.jpg);
+  height: calc(100vh - 145px);
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+
+  h1 {
+    position: absolute;
+    bottom: 40px;
+    text-align: center;
+    color: $white;
+  }
+}
+
+.hero-search-bar {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  align-items: center;
+  width: 60%;
+  margin-top: -30px;
+  position: relative;
+  z-index: 1;
+  @media (max-width: 576px) {
+    width: 90%;
+  }
+  input {
+    height: 50px;
+    &:focus {
+      border-color: transparent;
+      box-shadow: none;
+    }
+  }
+  .search-btn {
+    position: absolute;
+    right: 10px;
+    // top: 10px;
+  }
+}
+
+.home-video-section {
+  iframe {
+    height: 100%;
+    width: 100%;
+  }
+
+  .trip-card {
+    width: 315px;
+    cursor: pointer;
+    @media (max-width: 820px) {
+      width: 100%;
+    }
+    img {
+      height: 160px;
+    }
+    &-location,
+    &-review {
+      font-size: 10px;
+    }
+    &-title {
+      font-size: 16px;
+    }
+  }
+}
+
+.reccommended-section {
+  img {
+    height: 70px;
+    width: auto;
+  }
+}

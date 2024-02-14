@@ -1,7 +1,58 @@
 @import "~bootstrap/scss/bootstrap";
 @import "material-icons/iconfont/material-icons.css";
+@import "./admin/custom-style.scss";
 @import "custom-typography";
 @import "navbar";
 @import "./trip-card";
 @import "./home";
 @import "./single-trip";
+@import "./footer";
+@import "./register-page";
+@import "./home-test";
+@import "./mega-menu";
+@import "./fix-departure-table";
+@import "./admin/dashboard-table";
+@import "./custom-table";
+@import "./review-slider";
+@import "./blog-card";
+@import "./client/user-account-dashboard.scss";
+
+$theme-secondary: #f7941d;
+$theme-secondary-dark: #eb8101;
+
+.text-theme-secondary {
+  color: $theme-secondary;
+}
+
+.bg-theme-secondary {
+  background: $theme-secondary;
+}
+
+.bg-theme-fade-secondary {
+  background: #ffe7c7;
+}
+
+.btn.btn-theme-secondary {
+  background: $theme-secondary;
+  border-color: $theme-secondary-dark;
+  color: $black;
+  &:hover {
+    background: $theme-secondary-dark;
+  }
+}
+
+.text-decoration-none {
+  text-decoration: none;
+}
+
+.py-100 {
+  padding: 100px 0;
+}
+
+.pt-100 {
+  padding-top: 100px;
+}
+
+.pt-50 {
+  padding-top: 50px;
+}

@@ -11,7 +11,7 @@ const ToggleDivsExample = () => {
       ...prevDivStates,
       [divId]: !prevDivStates[divId],
     }));
-    console.log(divStates);
+    divStates;
   };
 
   return (

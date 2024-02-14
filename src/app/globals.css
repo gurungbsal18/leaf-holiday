@@ -9,3 +9,8 @@
 main {
   padding-top: 140px;
 }
+
+a {
+  text-decoration: none !important;
+}
+

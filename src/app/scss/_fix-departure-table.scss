@@ -1,0 +1,30 @@
+.fix-departure-date-table {
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+}
+
+@media (max-width: 576px) {
+  .fix-departure-date-table {
+    thead {
+      display: none;
+    }
+    tbody {
+      tr {
+        td {
+          display: block;
+          width: 50%;
+          box-sizing: border-box;
+          float: left;
+          &:nth-child(5) {
+            width: 100%;
+            button {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
