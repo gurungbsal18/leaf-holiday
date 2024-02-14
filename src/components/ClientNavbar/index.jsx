@@ -163,7 +163,9 @@ export default function ClientNavbar() {
                     </div>
                     <div className={`${showMenu ? "" : "d-none"}`}>
                       <p>{user && user?.name}</p>
-                      <Link href="/account/">User Information</Link>
+                      <Link href="/account/" onClick={() => setShowMenu(false)}>
+                        User Information
+                      </Link>
                       <button onClick={handleLogout}>Logout</button>
                     </div>
                   </div>
