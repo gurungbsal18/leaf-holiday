@@ -9,6 +9,8 @@ import { GlobalContext } from "@/context";
 import axios from "axios";
 import CustomAutocomplete from "@/components/ui/CustomAutocomplete";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
+import { toast } from "react-toastify";
+
 export default function HomePageTab({ position, valueDefault, url }) {
   const {
     pageLevelLoader,
@@ -36,6 +38,7 @@ export default function HomePageTab({ position, valueDefault, url }) {
   });
 
   const onSubmit = async (data) => {
+    setPageLevelLoader(true);
     try {
       let res;
       valueDefault
@@ -50,9 +53,18 @@ export default function HomePageTab({ position, valueDefault, url }) {
       if (res.status === 200) {
         setDialogOpen(false);
         setCallExtractAll(!callExtractAll);
+        setPageLevelLoader(false);
+      } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setPageLevelLoader(false);
       }
     } catch (e) {
-      console.log(e);
+      toast.error("Something Went Wrong. Please Try Again...", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setPageLevelLoader(false);
     }
   };
 
@@ -63,12 +75,19 @@ export default function HomePageTab({ position, valueDefault, url }) {
         `${process.env.NEXT_PUBLIC_SERVER_URL}/package/`
       );
       if (res.status === 200) {
-        setPageLevelLoader(false);
         setAllPackages(res.data.data);
+        setPageLevelLoader(false);
+      } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setPageLevelLoader(false);
       }
     } catch (e) {
+      toast.error("Something Went Wrong. Please Try Again...", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       setPageLevelLoader(false);
-      console.log(e);
     }
   };
 
@@ -79,7 +98,7 @@ export default function HomePageTab({ position, valueDefault, url }) {
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={pageLevelLoader} />
+        <PageLevelLoader />
       ) : (
         <div>
           <div className="d-flex justify-content-between">
@@ -98,8 +117,7 @@ export default function HomePageTab({ position, valueDefault, url }) {
                 variant="success"
                 onClick={() => {
                   packagesAppend(allPackages[0]);
-                }}
-              >
+                }}>
                 <span className="d-flex align-items-center gap-1">
                   + Add More Package
                 </span>
@@ -108,8 +126,7 @@ export default function HomePageTab({ position, valueDefault, url }) {
             <button
               onClick={() => {
                 setDialogOpen(false);
-              }}
-            >
+              }}>
               close
             </button>
           </div>
@@ -124,8 +141,7 @@ export default function HomePageTab({ position, valueDefault, url }) {
             return (
               <div
                 className="d-flex flex-column flex-md-row gap-3 align-items-center"
-                key={packagesField.id}
-              >
+                key={packagesField.id}>
                 <CustomAutocomplete
                   fieldName={packagesField}
                   setValue={setValue}
@@ -137,8 +153,7 @@ export default function HomePageTab({ position, valueDefault, url }) {
                   <span
                     role="button"
                     className="text-danger"
-                    onClick={() => packagesRemove(index)}
-                  >
+                    onClick={() => packagesRemove(index)}>
                     <RemoveCircleIcon />
                   </span>
                 )}
@@ -151,8 +166,7 @@ export default function HomePageTab({ position, valueDefault, url }) {
               watch("packages[0]") === "" ||
               watch("packages[0]") === null ||
               watch("packages[0]") === undefined
-            }
-          >
+            }>
             {valueDefault ? "UPDATE" : "CREATE"}
           </button>
         </div>

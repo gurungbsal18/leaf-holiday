@@ -5,7 +5,7 @@ import { uploadImage } from "@/utils/functions";
 import { toast } from "react-toastify";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-import { DotLoader } from "react-spinners";
+import { BeatLoader } from "react-spinners";
 
 export default function UploadToCloudinary({
   label,
@@ -20,7 +20,7 @@ export default function UploadToCloudinary({
       {label && <p>{label}</p>}
       {loading ? (
         <div>
-          <DotLoader
+          <BeatLoader
             color="#198754"
             loading={true}
             size={30}
@@ -35,8 +35,7 @@ export default function UploadToCloudinary({
             <iframe src={selectedFile} height={300} width={300} />
             <button
               onClick={() => setSelectedFile(null)}
-              className="my-2 btn btn-danger"
-            >
+              className="my-2 btn btn-danger">
               <PictureAsPdfIcon className="me-2" />
               Remove PDF
             </button>
@@ -54,8 +53,7 @@ export default function UploadToCloudinary({
                 setSelectedFile(null);
                 setValue(formName, "");
               }}
-              className="btn btn-sm btn-danger my-3"
-            >
+              className="btn btn-sm btn-danger my-3">
               <DeleteIcon /> Remove Image
             </button>
           </div>
@@ -68,7 +66,7 @@ export default function UploadToCloudinary({
         onChange={async (e) => {
           // Handle selected file here
           const file = e.target.files[0];
-          console.log(file);
+          file;
           try {
             setLoading(true);
             const formData = new FormData();
@@ -79,13 +77,13 @@ export default function UploadToCloudinary({
               setSelectedFile(res.imageUrl);
               setLoading(false);
             } else {
-              toast.error(res.message, {
+              toast.error("Failed to Upload Image", {
                 position: toast.POSITION.TOP_RIGHT,
               });
               setLoading(false);
             }
           } catch (e) {
-            toast.error("Failed to Upload Image on Cloudinary", {
+            toast.error("Failed to Upload Image", {
               position: toast.POSITION.TOP_RIGHT,
             });
             setLoading(false);

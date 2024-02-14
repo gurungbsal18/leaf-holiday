@@ -27,7 +27,7 @@ export default function UploadGallery() {
     setImages(updatedImages);
   };
 
-  console.log(images);
+  images;
   const handleSubmit = async () => {
     const data = {
       packageId: packageId,
@@ -59,8 +59,7 @@ export default function UploadGallery() {
         {images?.map((imagelink, index) => (
           <div
             key={imagelink}
-            className="d-flex flex-column align-items-center gap-3 "
-          >
+            className="d-flex flex-column align-items-center gap-3 ">
             <Image src={imagelink} width={50} height={50} alt="gallery-image" />
             <button onClick={() => handleRemove(index)}>Remove Image</button>
           </div>
@@ -71,8 +70,7 @@ export default function UploadGallery() {
         uploadPreset="uploadPreset"
         onSuccess={(result) => {
           setImages((prev) => [...prev, result?.info?.secure_url]);
-        }}
-      >
+        }}>
         {({ open }) => {
           function handleOnClick() {
             open();

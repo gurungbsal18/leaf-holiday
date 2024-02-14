@@ -5,22 +5,14 @@ import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { Controller, useForm } from "react-hook-form";
 import { GlobalContext } from "@/context";
-
+import { toast } from "react-toastify";
 import { submitForm } from "@/utils/functions";
-import TextEditor from "@/components/TextEditor";
 import UploadToCloudinary from "@/components/ui/UploadToCloudinary";
-import { useRouter } from "next/navigation";
 import axios from "axios";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 
 export default function Settings() {
-  const {
-    setPageLevelLoader,
-    pageLevelLoader,
-    callExtractAll,
-    setCallExtractAll,
-    updatePackage,
-  } = useContext(GlobalContext);
+  const { setPageLevelLoader, pageLevelLoader } = useContext(GlobalContext);
 
   const [settingDetail, setSettingDetail] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -54,7 +46,7 @@ export default function Settings() {
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/setting/`
       );
-      console.log(res);
+      res;
       if (res.status === 200) {
         const settingData = res.data?.data;
 
@@ -65,9 +57,16 @@ export default function Settings() {
           setPageLevelLoader(false);
           reset(settingData[0]);
         }
+      } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setPageLevelLoader(false);
       }
     } catch (e) {
-      console.log(e);
+      toast.error("Something Went Wrong. Please Try Again...", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       setPageLevelLoader(false);
     }
   };
@@ -78,7 +77,7 @@ export default function Settings() {
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={true} />
+        <PageLevelLoader />
       ) : (
         <div className="">
           <div className="">

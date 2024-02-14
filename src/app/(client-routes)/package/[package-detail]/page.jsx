@@ -52,7 +52,7 @@ export default function PackageDetail() {
   const [answerExpand, setAnswerExpand] = useState(false);
 
   const packageId = usePathname().match(/\/package\/([^\/]+)(?:\/|$)/)[1];
-  console.log("slug: ", packageId);
+  "slug: ", packageId;
 
   const {
     user,
@@ -72,16 +72,21 @@ export default function PackageDetail() {
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/package/slug/${packageId}`
       );
-      console.log(res);
+      res;
       if (res.status === 200) {
         setPackageDetail(res.data.data[0]);
         setPageLevelLoader(false);
+      } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setPageLevelLoader(false);
       }
     } catch (e) {
-      setPageLevelLoader(false);
-      toast.error(e.response.data.error, {
+      toast.error("Something Went Wrong. Please Try Again...", {
         position: toast.POSITION.TOP_RIGHT,
       });
+      setPageLevelLoader(false);
     }
   };
 
@@ -137,14 +142,14 @@ export default function PackageDetail() {
       }))
     );
   };
-  console.log(showItineraryDetails);
+  showItineraryDetails;
   const readMoreBtn = () => {
     setContentExpand(!contentExpand);
   };
 
   useEffect(() => {
     getPackageDetail();
-    console.log("called useeffect");
+    ("called useeffect");
   }, []);
 
   const handleBook = () => {
@@ -188,12 +193,12 @@ export default function PackageDetail() {
     }
   };
 
-  console.log("package details: ", packageDetail);
+  "package details: ", packageDetail;
 
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={pageLevelLoader} />
+        <PageLevelLoader />
       ) : (
         <div className="main-div">
           <div className="single-trip-hero">

@@ -21,9 +21,15 @@ function Footer() {
       );
       if (res.status === 200) {
         setLeafData(res.data.data[0]);
+      } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       }
     } catch (e) {
-      console.log(e);
+      toast.error("Something Went Wrong. Please Try Again...", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       setLeafData({});
     }
   };

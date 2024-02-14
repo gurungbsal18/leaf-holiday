@@ -7,7 +7,7 @@ const ExploreDestination = ({ middleTabData }) => {
     middleTabData ? middleTabData[0]?._id : ""
   );
   const [middleTabIndex, setMiddleTabIndex] = useState(0);
-  console.log("middle tab data: ", middleTabData);
+  "middle tab data: ", middleTabData;
 
   return (
     <>
@@ -30,8 +30,7 @@ const ExploreDestination = ({ middleTabData }) => {
                 onClick={() => {
                   setActiveExploreBtn(item._id);
                   setMiddleTabIndex(index);
-                }}
-              >
+                }}>
                 {item.title}
               </button>
             ))}

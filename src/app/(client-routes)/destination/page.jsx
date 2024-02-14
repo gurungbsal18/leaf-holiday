@@ -16,7 +16,7 @@ export default function DestinationPage() {
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/destination/`
       );
-      console.log(res);
+      res;
       if (res.status === 200) {
         setAllDestinations(res.data?.data);
         setPageLevelLoader(false);
@@ -24,7 +24,7 @@ export default function DestinationPage() {
         setPageLevelLoader(false);
       }
     } catch (e) {
-      console.log(e);
+      e;
       setPageLevelLoader(false);
     }
   };
@@ -34,7 +34,7 @@ export default function DestinationPage() {
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={true} />
+        <PageLevelLoader />
       ) : (
         <div>
           <div>

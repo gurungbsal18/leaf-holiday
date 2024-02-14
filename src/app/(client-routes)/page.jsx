@@ -35,9 +35,16 @@ export default function Home() {
       if (res.status === 200) {
         setPageLevelLoader(false);
         setHomePageData(res.data);
+      } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setPageLevelLoader(false);
       }
     } catch (e) {
-      console.log(e);
+      toast.error("Something Went Wrong. Please Try Again...", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       setPageLevelLoader(false);
     }
   };
@@ -49,7 +56,7 @@ export default function Home() {
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={true} />
+        <PageLevelLoader />
       ) : (
         <div>
           <>
@@ -112,8 +119,7 @@ export default function Home() {
                           title="YouTube video player"
                           frameborder="0"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                          allowfullscreen
-                        ></iframe>
+                          allowfullscreen></iframe>
                       )}
                     </div>
                     <div className="col-12 col-lg-6">

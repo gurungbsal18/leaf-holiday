@@ -24,20 +24,20 @@ export default function OurTeam() {
       } else {
         setPageLevelLoader(false);
       }
-      console.log(res);
+      res;
     } catch (e) {
-      console.log(e);
+      e;
       setPageLevelLoader(false);
     }
   };
-  console.log("our team data:", ourTeamData);
+  "our team data:", ourTeamData;
   useEffect(() => {
     getOurTeamData();
   }, []);
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={true} />
+        <PageLevelLoader />
       ) : (
         <div>
           <div>
