@@ -12,6 +12,7 @@ import BlogCard from "@/components/BlogCard";
 import ReviewCarousel from "@/components/ReviewCarousel";
 import { getEmbeddedYouTubeUrl } from "@/utils/functions";
 import Image from "next/image";
+import { toast } from "react-toastify";
 
 export default function Home() {
   const {

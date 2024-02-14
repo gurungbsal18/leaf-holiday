@@ -9,7 +9,6 @@ import { GlobalContext } from "@/context";
 import axios from "axios";
 import CustomAutocomplete from "@/components/ui/CustomAutocomplete";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
-import { toast } from "react-toastify";
 
 export default function HomePageTab({ position, valueDefault, url }) {
   const {
