@@ -59,7 +59,7 @@ export default function Table({
         { ...data, isSelected: !data.isSelected }
       );
       if (res.status === 200) {
-        console.log(res);
+        res;
         res.data.data.isSelected === false
           ? toast.error("Removed from the Homepage Successfully", {
               position: toast.POSITION.TOP_RIGHT,
@@ -68,9 +68,13 @@ export default function Table({
               position: toast.POSITION.TOP_RIGHT,
             });
         setCallExtractAll(!callExtractAll);
+      } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       }
     } catch (e) {
-      toast.success("Something Went Wrong. Please Try Again!!!", {
+      toast.error("Something Went Wrong. Please Try Again...", {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
@@ -87,7 +91,7 @@ export default function Table({
       });
     }
   }
-  console.log(bodyData);
+  bodyData;
   return (
     <div>
       <table {...getTableProps()} className="dashboard-table">
@@ -176,8 +180,7 @@ export default function Table({
                                 );
                               }, 1000);
                             }
-                          }}
-                        >
+                          }}>
                           {apiName === "review" ? "Verify" : "View"}
                         </button>
                       )}
@@ -203,8 +206,7 @@ export default function Table({
                           setDialogContent(updateComponent);
                         }
                       }}
-                      className="btn btn-sm btn-success"
-                    >
+                      className="btn btn-sm btn-success">
                       <EditNoteIcon /> Edits
                     </button>
                   )}
@@ -213,8 +215,7 @@ export default function Table({
                       onClick={() =>
                         handleRemove(bodyData[key.split("_")[1]]._id)
                       }
-                      className="btn btn-sm btn-danger"
-                    >
+                      className="btn btn-sm btn-danger">
                       <DeleteIcon />
                       Remove
                     </button>

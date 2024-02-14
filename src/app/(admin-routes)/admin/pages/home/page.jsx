@@ -32,7 +32,7 @@ export default function EditHome() {
   const [homePageData, setHomePageData] = useState(null);
 
   const onSubmit = (data) => {
-    console.log(data);
+    data;
   };
 
   const handleRemove = async (id) => {
@@ -40,12 +40,21 @@ export default function EditHome() {
       const res = await axios.delete(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/tabs/delete/${id}`
       );
-      console.log(res);
+      res;
       if (res.status === 200) {
         setCallExtractAll(!callExtractAll);
+        toast.success("Tab Deleted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       }
     } catch (e) {
-      console.log(e);
+      toast.error("Something Went Wrong. Please Try Again...", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     }
   };
 
@@ -58,9 +67,15 @@ export default function EditHome() {
       if (res.status === 200) {
         setPageLevelLoader(false);
         setHomePageData(res.data);
+      } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       }
     } catch (e) {
-      console.log(e);
+      toast.error("Something Went Wrong. Please Try Again...", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       setPageLevelLoader(false);
     }
   };
@@ -72,7 +87,7 @@ export default function EditHome() {
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={pageLevelLoader} />
+        <PageLevelLoader />
       ) : (
         <div>
           <div>

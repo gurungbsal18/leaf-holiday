@@ -47,13 +47,13 @@ export default function AboutUs() {
         setAboutUsData(res.data.data[0]);
         setPageLevelLoader(false);
       } else {
-        toast.error("No About Us Data Found", {
+        toast.error("Something Went Wrong. Please Try Again...", {
           position: toast.POSITION.TOP_RIGHT,
         });
         setPageLevelLoader(false);
       }
     } catch (e) {
-      toast.error(e.response.statusText, {
+      toast.error("Something Went Wrong. Please Try Again...", {
         position: toast.POSITION.TOP_RIGHT,
       });
       setPageLevelLoader(false);
@@ -68,7 +68,7 @@ export default function AboutUs() {
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={pageLevelLoader} />
+        <PageLevelLoader />
       ) : aboutUsData ? (
         <div>
           <div>

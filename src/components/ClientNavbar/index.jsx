@@ -78,12 +78,10 @@ import Link from "next/link";
 import { PrimeReactProvider } from "primereact/api";
 import MegaMenuMain from "./MegaMenu";
 import LoginIcon from "@mui/icons-material/Login";
-import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
-import { handleLogout } from "../ClientAccountNavbar";
 
 export default function ClientNavbar() {
-  const { isAuthUser, user, setUser, setIsAuthUser } =
+  const { isAuthUser, user, setUser, setIsAuthUser, setPageLevelLoader } =
     useContext(GlobalContext);
   function handleLogout() {
     toast.success("Logged Out Successfully", {
@@ -121,7 +119,7 @@ export default function ClientNavbar() {
       <div className="container">
         <div className="d-flex justify-content-between align-items-center">
           <div className="image-container">
-            <a href="/">
+            <Link href="/" onClick={() => setPageLevelLoader(true)}>
               <Image
                 src="/images/logo.png"
                 width={191}
@@ -129,7 +127,7 @@ export default function ClientNavbar() {
                 alt="leaf-holiday-logo"
                 priority={true}
               />
-            </a>
+            </Link>
           </div>
 
           <div className="d-flex flex-column">
@@ -144,17 +142,20 @@ export default function ClientNavbar() {
           <PrimeReactProvider>
             <MegaMenuMain />
             {user && user.role === "user" && (
-              <Link href="/admin">Admin Dashboard</Link>
+              <Link href="/admin" onClick={() => setPageLevelLoader(true)}>
+                Admin Dashboard
+              </Link>
             )}
             <div className="d-flex gap-3 login-section">
               {isAuthUser ? (
                 <div className="d-flex align-items-center gap-2 login-section-user">
                   <div
-                    onClick={() =>
+                    onClick={() => {
+                      setPageLevelLoader(true);
                       setTimeout(() => {
                         router.push("/account");
-                      }, 1000)
-                    }>
+                      }, 1000);
+                    }}>
                     <div className="login-user">{profileImageMaker()}</div>
                   </div>
                   <div>
@@ -165,7 +166,13 @@ export default function ClientNavbar() {
                       className={`login-dropdown ${showMenu ? "" : "d-none"}`}>
                       <p className="m-0">{user && user?.name}</p>
                       <hr />
-                      <Link href="/account/" className="mb-2">
+                      <Link
+                        href="/account/"
+                        className="mb-2"
+                        onClick={() => {
+                          setPageLevelLoader(true);
+                          setShowMenu(false);
+                        }}>
                         User Information
                       </Link>
                       <button

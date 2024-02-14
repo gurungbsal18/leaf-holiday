@@ -11,6 +11,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 import TextField from "@mui/material/TextField";
 import { GlobalContext } from "@/context";
+import ComponentLevelLoader from "@/components/Loader/ComponentLevelLoader";
 
 function IsVerified() {
   const searchParams = useSearchParams();
@@ -62,6 +63,7 @@ export default function Login() {
   const { register, handleSubmit } = form;
 
   const onSubmit = async (data) => {
+    setComponentLevelLoader(true);
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/login`,
@@ -76,18 +78,19 @@ export default function Login() {
         setUser(res?.data?.data?.user);
         Cookies.set("token", res?.data?.data?.token);
         localStorage.setItem("user", JSON.stringify(res?.data?.data?.user));
-        setComponentLevelLoader({ loading: false, id: "" });
+        setComponentLevelLoader(false);
       } else {
         toast.error(res.message, {
           position: toast.POSITION.TOP_RIGHT,
         });
         setIsAuthUser(false);
-        setComponentLevelLoader({ loading: false, id: "" });
+        setComponentLevelLoader(false);
       }
     } catch (e) {
       toast.error(e.response.data.error, {
         position: toast.POSITION.TOP_RIGHT,
       });
+      setComponentLevelLoader(false);
     }
   };
 
@@ -131,7 +134,11 @@ export default function Login() {
                 variant="success"
                 className="flex-grow-1"
                 onClick={handleSubmit(onSubmit)}>
-                Login
+                {componentLevelLoader ? (
+                  <ComponentLevelLoader text={"Logging In"} />
+                ) : (
+                  "Login"
+                )}
               </Button>
               <Button variant="secondary" className="flex-grow-1">
                 Cancel

@@ -5,6 +5,7 @@ import axios from "axios";
 import { usePathname } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
+import { toast } from "react-toastify";
 
 export default function RegionDetail() {
   const [regionDetail, setRegionDetail] = useState(null);
@@ -24,14 +25,19 @@ export default function RegionDetail() {
         }
         setPageLevelLoader(false);
       } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
         setPageLevelLoader(false);
       }
     } catch (e) {
-      console.log(e);
+      toast.error("Something Went Wrong. Please Try Again...", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       setPageLevelLoader(false);
     }
   };
-  console.log(regionDetail);
+  regionDetail;
   useEffect(() => {
     getRegionDetail();
   }, []);
@@ -39,7 +45,7 @@ export default function RegionDetail() {
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={true} />
+        <PageLevelLoader />
       ) : (
         <>
           {regionDetail && (

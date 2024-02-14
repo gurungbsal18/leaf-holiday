@@ -31,10 +31,17 @@ export default function AdminPages({ data }) {
       if (res.status === 200) {
         setAllData(res.data.data);
         setFilteredData(res.data.data);
+        setPageLevelLoader(false);
+      } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setPageLevelLoader(false);
       }
-      setPageLevelLoader(false);
     } catch (e) {
-      console.log(e);
+      toast.error("Something Went Wrong. Please Try Again...", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       setPageLevelLoader(false);
     }
   }
@@ -65,7 +72,7 @@ export default function AdminPages({ data }) {
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={pageLevelLoader} />
+        <PageLevelLoader />
       ) : (
         <div className="">
           <Header
