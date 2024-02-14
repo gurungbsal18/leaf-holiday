@@ -112,7 +112,8 @@ export default function Home() {
                           title="YouTube video player"
                           frameborder="0"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                          allowfullscreen></iframe>
+                          allowfullscreen
+                        ></iframe>
                       )}
                     </div>
                     <div className="col-12 col-lg-6">
@@ -134,10 +135,12 @@ export default function Home() {
                 <div className="text-center">
                   <h2 className="home-title">Blogs and News</h2>
                 </div>
-                <div className="blog-card">
-                  {homePageData?.blogs?.map((item) => (
-                    <BlogCard key={item._id} blogDetail={item} />
-                  ))}
+                <div className="container">
+                  <div className="blog-card">
+                    {homePageData?.blogs?.map((item) => (
+                      <BlogCard key={item._id} blogDetail={item} />
+                    ))}
+                  </div>
                 </div>
 
                 <div className="d-flex justify-content-center">

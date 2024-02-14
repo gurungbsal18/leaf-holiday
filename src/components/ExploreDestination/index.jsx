@@ -22,7 +22,7 @@ const ExploreDestination = ({ middleTabData }) => {
             {middleTabData.map((item, index) => (
               <button
                 key={item._id}
-                className={`btn ${
+                className={`btn btn-sm ${
                   activeExploreBtn === item._id
                     ? "btn-success"
                     : "btn-outline-success"
@@ -30,12 +30,13 @@ const ExploreDestination = ({ middleTabData }) => {
                 onClick={() => {
                   setActiveExploreBtn(item._id);
                   setMiddleTabIndex(index);
-                }}>
+                }}
+              >
                 {item.title}
               </button>
             ))}
           </div>
-          <div className="d-flex gap-3 flex-wrap">
+          <div className="d-flex gap-3 flex-wrap mt-3">
             {middleTabData[middleTabIndex]?.packages?.map((item) => (
               <PackageCard key={item._id} packageDetail={item} />
             ))}

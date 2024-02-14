@@ -148,7 +148,7 @@ export default function ClientNavbar() {
             )}
             <div className="d-flex gap-3 login-section">
               {isAuthUser ? (
-                <div className="d-flex align-items-center gap-2">
+                <div className="d-flex align-items-center gap-2 login-section-user">
                   <div
                     onClick={() =>
                       setTimeout(() => {
@@ -161,12 +161,18 @@ export default function ClientNavbar() {
                     <div onClick={() => setShowMenu((prev) => !prev)}>
                       {showMenu ? <FaChevronUp /> : <FaChevronDown />}
                     </div>
-                    <div className={`${showMenu ? "" : "d-none"}`}>
-                      <p>{user && user?.name}</p>
-                      <Link href="/account/" onClick={() => setShowMenu(false)}>
+                    <div
+                      className={`login-dropdown ${showMenu ? "" : "d-none"}`}>
+                      <p className="m-0">{user && user?.name}</p>
+                      <hr />
+                      <Link href="/account/" className="mb-2">
                         User Information
                       </Link>
-                      <button onClick={handleLogout}>Logout</button>
+                      <button
+                        className="btn btn-sm btn-success"
+                        onClick={handleLogout}>
+                        Logout
+                      </button>
                     </div>
                   </div>
                 </div>
