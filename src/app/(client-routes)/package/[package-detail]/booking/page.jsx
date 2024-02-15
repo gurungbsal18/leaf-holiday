@@ -39,34 +39,39 @@ export default function Booking() {
       formType: "booking",
       name: "",
       email: "",
-      packageName: "",
-    },
+      packageName: ""
+    }
   });
 
-  const onSubmit = async (data) => {
-    data;
+  const onSubmit = async (data, e) => {
+    const isPayNow = e?.target?.id === "payNowBtn"
     setPageLevelLoader(true);
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/booking/add`,
-        data
+        {...data, isPayNow}
       );
       if (res.status === 200) {
         toast.success("Package Booked Successfully", {
-          position: toast.POSITION.TOP_RIGHT,
+          position: toast.POSITION.TOP_RIGHT
         });
         localStorage.removeItem("bookingData");
         setPageLevelLoader(false);
+        if (isPayNow) {
+          const redirectUrl =
+            res.data?.data?.payment?.response?.paymentPage?.paymentPageURL;
+          window.location.href = redirectUrl;
+        }
       } else {
         toast.error("Failed to book the package! Please Try Again Later...", {
-          position: toast.POSITION.TOP_RIGHT,
+          position: toast.POSITION.TOP_RIGHT
         });
         localStorage.removeItem("bookingData");
         setPageLevelLoader(false);
       }
     } catch (e) {
       toast.error("Failed to book the package! Please Try Again Later...", {
-        position: toast.POSITION.TOP_RIGHT,
+        position: toast.POSITION.TOP_RIGHT
       });
       localStorage.removeItem("bookingData");
       setPageLevelLoader(false);
@@ -79,7 +84,7 @@ export default function Booking() {
         ...JSON.parse(localStorage.getItem("bookingData")),
         dateOfTravel: dayjs(
           JSON.parse(localStorage.getItem("bookingData")).dateOfTravel
-        ),
+        )
       });
     }
 
@@ -113,7 +118,7 @@ export default function Booking() {
         }
       } catch (e) {
         toast.error("Package Not Found", {
-          position: toast.POSITION.TOP_RIGHT,
+          position: toast.POSITION.TOP_RIGHT
         });
         setPackageDetail({ name: "Package Not Found" });
         setPageLevelLoader(false);
@@ -206,10 +211,11 @@ export default function Booking() {
                   Book and pay later
                 </button>
                 <button
+                  id="payNowBtn"
                   className="btn btn-success"
                   type="submit"
                   onClick={handleSubmit(onSubmit)}>
-                  Proced to payment
+                  Book and Pay Now
                 </button>
               </form>
             </div>
@@ -243,31 +249,31 @@ export default function Booking() {
 const mapHelper = [
   {
     id: "name",
-    label: "Full Name",
+    label: "Full Name"
   },
   {
     id: "email",
-    label: "Email Address",
+    label: "Email Address"
   },
   {
     id: "phoneNumber",
-    label: "Phone Number",
+    label: "Phone Number"
   },
   {
     id: "country",
-    label: "Country",
+    label: "Country"
   },
   {
     id: "numberOfPeople",
-    label: "Number of People",
+    label: "Number of People"
   },
 
   {
     id: "dateOfTravel",
-    label: "Date of Travel",
+    label: "Date of Travel"
   },
   {
     id: "message",
-    label: "Message",
-  },
+    label: "Message"
+  }
 ];
