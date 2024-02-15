@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { GrClose } from "react-icons/gr";
 import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
@@ -12,13 +12,17 @@ import UploadToCloudinary from "@/components/ui/UploadToCloudinary";
 import { useRouter } from "next/navigation";
 
 export default function CreateBlog() {
-  const { setUpdatePackage, callExtractAll, setCallExtractAll, updatePackage } =
-    useContext(GlobalContext);
+  const {
+    user,
+    setUpdatePackage,
+    callExtractAll,
+    setCallExtractAll,
+    updatePackage,
+  } = useContext(GlobalContext);
   const [selectedFile, setSelectedFile] = React.useState(
     updatePackage ? updatePackage.imageUrl : null
   );
   const router = useRouter();
-  const user = JSON.parse(localStorage.getItem("user"));
   const initialFormData = {
     title: "",
     content: "",

@@ -15,9 +15,11 @@ import { toast } from "react-toastify";
 import Notification from "@/components/Notification";
 import { GlobalContext } from "@/context";
 import { useRouter } from "next/navigation";
+import ComponentLevelLoader from "@/components/Loader/ComponentLevelLoader";
 
 export default function Register() {
-  const { isAuthUser } = useContext(GlobalContext);
+  const { isAuthUser, componentLevelLoader, setComponentLevelLoader } =
+    useContext(GlobalContext);
   const form = useForm({
     defaultValues: {
       name: "",
@@ -32,6 +34,7 @@ export default function Register() {
 
   const onSubmit = async (data) => {
     try {
+      setComponentLevelLoader(true);
       const res = await axios.post("http://localhost:5001/auth/register", data);
       if (res.status === 200) {
         toast.success(
@@ -40,6 +43,7 @@ export default function Register() {
             position: toast.POSITION.TOP_RIGHT,
           }
         );
+        setComponentLevelLoader(false);
         setTimeout(() => {
           router.push("/login");
         }, 1000);
@@ -47,8 +51,8 @@ export default function Register() {
         toast.error("Failed To Register User", {
           position: toast.POSITION.TOP_RIGHT,
         });
+        setComponentLevelLoader(false);
       }
-      res;
     } catch (e) {
       toast.error(
         e.response.data.error ||
@@ -57,7 +61,7 @@ export default function Register() {
           position: toast.POSITION.TOP_RIGHT,
         }
       );
-      e;
+      setComponentLevelLoader(false);
     }
   };
   useEffect(() => {
@@ -80,6 +84,7 @@ export default function Register() {
           <div className="form-container d-flex flex-column gap-3">
             {registrationFormControls.map((formControl) => (
               <TextField
+                key={formControl.id}
                 required
                 fullWidth
                 size="small"
@@ -100,7 +105,11 @@ export default function Register() {
               label="I agree to Terms and Conditions."
             />
             <Button variant="success" onClick={handleSubmit(onSubmit)}>
-              Register
+              {componentLevelLoader ? (
+                <ComponentLevelLoader text={"Registering User"} />
+              ) : (
+                "Register"
+              )}
             </Button>
           </div>
         </form>

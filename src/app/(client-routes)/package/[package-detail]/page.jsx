@@ -52,7 +52,7 @@ export default function PackageDetail() {
   const [answerExpand, setAnswerExpand] = useState(false);
 
   const packageId = usePathname().match(/\/package\/([^\/]+)(?:\/|$)/)[1];
-  console.log("slug: ", packageId);
+  "slug: ", packageId;
 
   const {
     user,
@@ -72,16 +72,21 @@ export default function PackageDetail() {
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/package/slug/${packageId}`
       );
-      console.log(res);
+      res;
       if (res.status === 200) {
         setPackageDetail(res.data.data[0]);
         setPageLevelLoader(false);
+      } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setPageLevelLoader(false);
       }
     } catch (e) {
-      setPageLevelLoader(false);
-      toast.error(e.response.data.error, {
+      toast.error("Something Went Wrong. Please Try Again...", {
         position: toast.POSITION.TOP_RIGHT,
       });
+      setPageLevelLoader(false);
     }
   };
 
@@ -137,14 +142,14 @@ export default function PackageDetail() {
       }))
     );
   };
-  console.log(showItineraryDetails);
+  showItineraryDetails;
   const readMoreBtn = () => {
     setContentExpand(!contentExpand);
   };
 
   useEffect(() => {
     getPackageDetail();
-    console.log("called useeffect");
+    ("called useeffect");
   }, []);
 
   const handleBook = () => {
@@ -188,12 +193,12 @@ export default function PackageDetail() {
     }
   };
 
-  console.log("package details: ", packageDetail);
+  "package details: ", packageDetail;
 
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={pageLevelLoader} />
+        <PageLevelLoader />
       ) : (
         <div className="main-div">
           <div className="single-trip-hero">
@@ -217,8 +222,7 @@ export default function PackageDetail() {
                   <Button
                     variant="outline-light"
                     size="sm"
-                    onClick={handleInquiry}
-                  >
+                    onClick={handleInquiry}>
                     Send Inquiry
                   </Button>
                 </div>
@@ -294,8 +298,7 @@ export default function PackageDetail() {
                       }`}
                       dangerouslySetInnerHTML={{
                         __html: packageDetail?.overview,
-                      }}
-                    ></div>
+                      }}></div>
                     <Button size="sm" variant="success" onClick={readMoreBtn}>
                       {contentExpand ? "Read Less" : "Read More"}
                     </Button>
@@ -312,8 +315,7 @@ export default function PackageDetail() {
                         <Button
                           variant="success"
                           size="sm"
-                          onClick={handleExpandCollapse}
-                        >
+                          onClick={handleExpandCollapse}>
                           {expandOrCollapse ? "Collapse All -" : "Expand All +"}
                         </Button>
                       </div>
@@ -334,16 +336,14 @@ export default function PackageDetail() {
                                 variant="success"
                                 size="sm"
                                 className="itinerary-expand-btn"
-                                onClick={() => handleToggle(item._id)}
-                              >
+                                onClick={() => handleToggle(item._id)}>
                                 {showItineraryDetails[item._id] ? "-" : "+"}
                               </Button>
                             </div>
                             <div
                               className={`${
                                 showItineraryDetails[item._id] ? "" : "d-none "
-                              }`}
-                            >
+                              }`}>
                               <Image
                                 src={item.imageUrl}
                                 height={500}
@@ -353,8 +353,7 @@ export default function PackageDetail() {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html: item.content,
-                                }}
-                              ></div>
+                                }}></div>
                               <div className="d-flex justify-content-between ">
                                 <div className="d-flex">
                                   <TerrainIcon />
@@ -379,8 +378,7 @@ export default function PackageDetail() {
                   packageDetail?.exclusions.length !== 0) && (
                   <div
                     className="cost-IE-container mt-5"
-                    id="costInclueExclude"
-                  >
+                    id="costInclueExclude">
                     <div className="cost-IE-header d-flex align-items-center gap-2">
                       <div
                         size="sm"
@@ -392,8 +390,7 @@ export default function PackageDetail() {
                         onClick={() => {
                           setShowConstInclude(true);
                           setActiveCost(true);
-                        }}
-                      >
+                        }}>
                         <span className="me-1">
                           <CheckCircleOutlineIcon fontSize="small" />
                         </span>
@@ -409,8 +406,7 @@ export default function PackageDetail() {
                         onClick={() => {
                           setShowConstInclude(false);
                           setActiveCost(false);
-                        }}
-                      >
+                        }}>
                         <span className="me-1">
                           <CancelIcon fontSize="small" />
                         </span>
@@ -472,8 +468,7 @@ export default function PackageDetail() {
                   packageDetail?.departureDate.length !== 0 && (
                     <div
                       className="fix-departure-date-table mt-5"
-                      id="date-price"
-                    >
+                      id="date-price">
                       <h4 className="title">
                         <CalendarMonth />
                         Dates & Price
@@ -521,8 +516,7 @@ export default function PackageDetail() {
                                     router.push(
                                       `/package/${packageDetail.slug}/booking`
                                     );
-                                  }}
-                                >
+                                  }}>
                                   Book Now
                                 </button>
                               </td>
@@ -538,8 +532,7 @@ export default function PackageDetail() {
                   className="extra-contents"
                   dangerouslySetInnerHTML={{
                     __html: packageDetail?.content,
-                  }}
-                ></div>
+                  }}></div>
                 {packageDetail?.gallery &&
                   packageDetail?.gallery.length !== 0 &&
                   packageDetail?.gallery[0].images.length !== 0 && (
@@ -554,8 +547,7 @@ export default function PackageDetail() {
                             Carousel: {
                               infinite: false,
                             },
-                          }}
-                        >
+                          }}>
                           {packageDetail?.gallery[0].images.map((item) => (
                             <a data-fancybox="gallery" href={item} key={item}>
                               <Image
@@ -583,10 +575,9 @@ export default function PackageDetail() {
                             Carousel: {
                               infinite: false,
                             },
-                          }}
-                        >
+                          }}>
                           {packageDetail?.videoGallery?.map((item) => (
-                            <a data-fancybox="gallery" href={item}>
+                            <a key={item} data-fancybox="gallery" href={item}>
                               <iframe
                                 width="150"
                                 height="90"
@@ -594,8 +585,7 @@ export default function PackageDetail() {
                                 title="YouTube video player"
                                 frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen
-                              ></iframe>
+                                allowfullscreen></iframe>
                             </a>
                           ))}
                         </Fancybox>
@@ -617,16 +607,14 @@ export default function PackageDetail() {
                               variant="success"
                               size="sm"
                               className="itinerary-expand-btn"
-                              onClick={() => handleFaqToggle(item._id)}
-                            >
+                              onClick={() => handleFaqToggle(item._id)}>
                               {showAnswer[item._id] ? "-" : "+"}
                             </Button>
                           </div>
                           <p
                             className={`text-muted ${
                               showAnswer[item._id] ? "" : "d-none"
-                            }`}
-                          >
+                            }`}>
                             {item.answer}
                           </p>
                         </li>

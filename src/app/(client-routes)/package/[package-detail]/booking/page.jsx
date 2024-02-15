@@ -18,15 +18,9 @@ import { countries } from "@/utils";
 import { priceCalculator } from "@/utils/functions";
 
 export default function Booking() {
-  const { pageLevelLoader, setPageLevelLoader } = useContext(GlobalContext);
+  const { pageLevelLoader, setPageLevelLoader, user, bookingData } =
+    useContext(GlobalContext);
   const router = useRouter();
-  const user = JSON.parse(localStorage.getItem("user"));
-  const bookingData = {
-    ...JSON.parse(localStorage.getItem("bookingData")),
-    dateOfTravel: dayjs(
-      JSON.parse(localStorage.getItem("bookingData"))?.dateOfTravel
-    )
-  };
   const pathName = usePathname();
   const packageId = pathName.match(/\/package\/([^\/]+)\//)[1];
 
@@ -73,13 +67,14 @@ export default function Booking() {
           position: toast.POSITION.TOP_RIGHT
         });
         localStorage.removeItem("bookingData");
+        setPageLevelLoader(false);
       }
     } catch (e) {
-      setPageLevelLoader(false);
       toast.error("Failed to book the package! Please Try Again Later...", {
         position: toast.POSITION.TOP_RIGHT
       });
       localStorage.removeItem("bookingData");
+      setPageLevelLoader(false);
     }
   };
 
@@ -110,18 +105,23 @@ export default function Booking() {
           `${process.env.NEXT_PUBLIC_SERVER_URL}/package/slug/${packageId}`
         );
         if (res.status === 200) {
-          setPageLevelLoader(false);
           setPackageDetail(res.data.data[0]);
           setValue("packageName", res.data.data[0].name);
           setValue("packageId", res.data.data[0]._id);
+          setPageLevelLoader(false);
+        } else {
+          toast.error("Package Not Found", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          setPackageDetail({ name: "Package Not Found" });
+          setPageLevelLoader(false);
         }
-        console.log(res);
       } catch (e) {
-        setPageLevelLoader(false);
         toast.error("Package Not Found", {
           position: toast.POSITION.TOP_RIGHT
         });
         setPackageDetail({ name: "Package Not Found" });
+        setPageLevelLoader(false);
       }
     };
     getPackageDetail();
@@ -130,7 +130,7 @@ export default function Booking() {
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={pageLevelLoader} />
+        <PageLevelLoader />
       ) : (
         <div className="d-flex">
           <div>
@@ -179,7 +179,7 @@ export default function Booking() {
                   variant="outlined"
                   defaultValue={bookingData?.numberOfPeople || 0}
                   onChange={(e) => {
-                    console.log(e);
+                    e;
                     setValue("numberOfPeople", Number(e.target.value));
                     setValue(
                       "price",

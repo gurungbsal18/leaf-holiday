@@ -4,7 +4,7 @@ import Dialog from "@mui/material/Dialog";
 import { GlobalContext } from "@/context";
 import { useRouter } from "next/navigation";
 
-export default function ({ pageName, createComponent }) {
+export default function Header({ pageName, createComponent }) {
   const { dialogOpen, setDialogOpen, dialogContent, setDialogContent } =
     useContext(GlobalContext);
 

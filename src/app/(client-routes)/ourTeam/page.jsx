@@ -24,20 +24,20 @@ export default function OurTeam() {
       } else {
         setPageLevelLoader(false);
       }
-      console.log(res);
+      res;
     } catch (e) {
-      console.log(e);
+      e;
       setPageLevelLoader(false);
     }
   };
-  console.log("our team data:", ourTeamData);
+  "our team data:", ourTeamData;
   useEffect(() => {
     getOurTeamData();
   }, []);
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={true} />
+        <PageLevelLoader />
       ) : (
         <div>
           <div>
@@ -51,7 +51,9 @@ export default function OurTeam() {
           </div>
           <div className="d-flex">
             {ourTeamData &&
-              ourTeamData.map((item) => <TeamCard teamDetail={item} />)}
+              ourTeamData.map((item) => (
+                <TeamCard key={item._id} teamDetail={item} />
+              ))}
           </div>
         </div>
       )}

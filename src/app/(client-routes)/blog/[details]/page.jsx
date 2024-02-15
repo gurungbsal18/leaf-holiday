@@ -17,6 +17,7 @@ export default function BlogDetail() {
   const blogName = usePathname().match(/\/blog\/([^\/]+)(?:\/|$)/)[1];
 
   const getBlogDetail = async () => {
+    setPageLevelLoader(true);
     try {
       const res = await axios(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/blog/slug/${blogName}`
@@ -29,14 +30,19 @@ export default function BlogDetail() {
         }
         setPageLevelLoader(false);
       } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
         setPageLevelLoader(false);
       }
     } catch (e) {
-      console.log(e);
+      toast.error("Something Went Wrong. Please Try Again...", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       setPageLevelLoader(false);
     }
   };
-  console.log(blogDetail);
+  blogDetail;
   useEffect(() => {
     getBlogDetail();
   }, []);
@@ -44,7 +50,7 @@ export default function BlogDetail() {
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={true} />
+        <PageLevelLoader />
       ) : (
         <>
           {blogDetail && (
@@ -60,8 +66,9 @@ export default function BlogDetail() {
               </div>
               <div>
                 <div
-                  dangerouslySetInnerHTML={{ __html: blogDetail?.content }}
-                ></div>
+                  dangerouslySetInnerHTML={{
+                    __html: blogDetail?.content,
+                  }}></div>
                 <div>
                   <p>Author: {blogDetail?.authorId?.name}</p>
                   <div>

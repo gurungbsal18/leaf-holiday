@@ -27,11 +27,11 @@ export default function TeamDetail() {
         setPageLevelLoader(false);
       }
     } catch (e) {
-      console.log(e);
+      e;
       setPageLevelLoader(false);
     }
   };
-  console.log(teamDetail);
+  teamDetail;
   useEffect(() => {
     getTeamDetail();
   }, []);
@@ -39,7 +39,7 @@ export default function TeamDetail() {
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={true} />
+        <PageLevelLoader />
       ) : (
         <>
           {teamDetail && (
@@ -66,8 +66,9 @@ export default function TeamDetail() {
                   </div>
                 </div>
                 <div
-                  dangerouslySetInnerHTML={{ __html: teamDetail?.content }}
-                ></div>
+                  dangerouslySetInnerHTML={{
+                    __html: teamDetail?.content,
+                  }}></div>
               </div>
               <div></div>
             </div>

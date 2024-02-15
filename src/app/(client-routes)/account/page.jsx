@@ -9,11 +9,11 @@ import axios from "axios";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 
 export default function UserDetail() {
-  const { isAuthUser, pageLevelLoader, setPageLevelLoader } =
+  const { user, isAuthUser, pageLevelLoader, setPageLevelLoader } =
     useContext(GlobalContext);
   setPageLevelLoader(false);
   const { register, handleSubmit } = useForm({
-    defaultValues: JSON.parse(localStorage.getItem("user")),
+    defaultValues: user,
   });
   const router = useRouter();
 
@@ -37,9 +37,14 @@ export default function UserDetail() {
           toast.success("Personal Data Updated successfully", {
             position: toast.POSITION.TOP_RIGHT,
           });
+        } else {
+          toast.error("Something Went Wrong. Please Try Again...", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          setPageLevelLoader(false);
         }
       } catch (e) {
-        toast.error(e?.response?.statusText, {
+        toast.error("Something Went Wrong. Please Try Again...", {
           position: toast.POSITION.TOP_RIGHT,
         });
         setPageLevelLoader(false);
@@ -49,7 +54,7 @@ export default function UserDetail() {
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={pageLevelLoader} />
+        <PageLevelLoader />
       ) : (
         <div className="col-9 px-5 mt-2">
           <h4>PERSONAL INFORMATION</h4>
@@ -94,8 +99,7 @@ export default function UserDetail() {
               <div className="d-flex justify-content-start">
                 <button
                   onClick={handleSubmit(submitForm)}
-                  className="btn btn-sm btn-success"
-                >
+                  className="btn btn-sm btn-success">
                   UPDATE
                 </button>
               </div>

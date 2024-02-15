@@ -9,6 +9,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Image from "next/image";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 function Footer() {
   const date = new Date();
@@ -21,9 +22,15 @@ function Footer() {
       );
       if (res.status === 200) {
         setLeafData(res.data.data[0]);
+      } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       }
     } catch (e) {
-      console.log(e);
+      toast.error("Something Went Wrong. Please Try Again...", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       setLeafData({});
     }
   };
@@ -32,7 +39,7 @@ function Footer() {
   }, []);
 
   return (
-    <div className="footer bg-success p-5 text-white">
+    <div className="footer bg-success p-5 pb-2 text-white">
       <div className="footer-content d-flex justify-content-between flex-column flex-md-row">
         <div className="d-flex flex-column footer-content-contact">
           <h4>Contact Us</h4>

@@ -32,7 +32,7 @@ export default function EditHome() {
   const [homePageData, setHomePageData] = useState(null);
 
   const onSubmit = (data) => {
-    console.log(data);
+    data;
   };
 
   const handleRemove = async (id) => {
@@ -40,12 +40,21 @@ export default function EditHome() {
       const res = await axios.delete(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/tabs/delete/${id}`
       );
-      console.log(res);
+      res;
       if (res.status === 200) {
         setCallExtractAll(!callExtractAll);
+        toast.success("Tab Deleted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       }
     } catch (e) {
-      console.log(e);
+      toast.error("Something Went Wrong. Please Try Again...", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     }
   };
 
@@ -58,9 +67,15 @@ export default function EditHome() {
       if (res.status === 200) {
         setPageLevelLoader(false);
         setHomePageData(res.data);
+      } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       }
     } catch (e) {
-      console.log(e);
+      toast.error("Something Went Wrong. Please Try Again...", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       setPageLevelLoader(false);
     }
   };
@@ -72,7 +87,7 @@ export default function EditHome() {
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={pageLevelLoader} />
+        <PageLevelLoader />
       ) : (
         <div>
           <div>
@@ -90,8 +105,7 @@ export default function EditHome() {
                     onClick={() => {
                       setDialogOpen(true);
                       setDialogContent(<HomePageTab position={"top"} />);
-                    }}
-                  >
+                    }}>
                     Add New Tab
                   </button>
                 )}
@@ -110,15 +124,13 @@ export default function EditHome() {
                             valueDefault={homePageData?.tabs?.top[0]}
                           />
                         );
-                      }}
-                    >
+                      }}>
                       Edit
                     </button>
                     <button
                       onClick={() =>
                         handleRemove(homePageData?.tabs?.top[0]?._id)
-                      }
-                    >
+                      }>
                       Remove
                     </button>
                   </div>
@@ -126,7 +138,7 @@ export default function EditHome() {
                   <div>
                     {homePageData?.tabs?.top[0] &&
                       homePageData?.tabs?.top[0].packages.map((item) => (
-                        <p>{item.name}</p>
+                        <p key={item._id}>{item.name}</p>
                       ))}
                   </div>
                 </div>
@@ -141,14 +153,13 @@ export default function EditHome() {
                 onClick={() => {
                   setDialogOpen(true);
                   setDialogContent(<HomePageTab position={"middle"} />);
-                }}
-              >
+                }}>
                 Add New Tab
               </button>
             </div>
             <div className="d-flex">
               {homePageData?.tabs?.middle?.map((middleTab) => (
-                <div>
+                <div key={middleTab._id}>
                   <div>
                     <h5>{middleTab.title}</h5>
                     <button
@@ -161,8 +172,7 @@ export default function EditHome() {
                             valueDefault={middleTab}
                           />
                         );
-                      }}
-                    >
+                      }}>
                       Edit
                     </button>
 
@@ -173,7 +183,9 @@ export default function EditHome() {
 
                   <div>
                     {middleTab &&
-                      middleTab.packages.map((item) => <p>{item.name}</p>)}
+                      middleTab.packages.map((item) => (
+                        <p key={item._id}>{item.name}</p>
+                      ))}
                   </div>
                 </div>
               ))}
@@ -191,8 +203,7 @@ export default function EditHome() {
                       setDialogContent(
                         <HomePageTab position={"bottom"} url={true} />
                       );
-                    }}
-                  >
+                    }}>
                     Add New Tab
                   </button>
                 )}
@@ -213,15 +224,13 @@ export default function EditHome() {
                             url={true}
                           />
                         );
-                      }}
-                    >
+                      }}>
                       Edit
                     </button>
                     <button
                       onClick={() =>
                         handleRemove(homePageData?.tabs?.bottom[0]?._id)
-                      }
-                    >
+                      }>
                       Remove
                     </button>
                   </div>
@@ -230,7 +239,7 @@ export default function EditHome() {
                     <p>{homePageData?.tabs?.bottom[0]?.videoUrl}</p>
                     {homePageData?.tabs?.bottom[0] &&
                       homePageData?.tabs?.bottom[0].packages.map((item) => (
-                        <p>{item.name}</p>
+                        <p key={item._id}>{item.name}</p>
                       ))}
                   </div>
                 </div>

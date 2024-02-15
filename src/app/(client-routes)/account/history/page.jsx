@@ -8,9 +8,9 @@ import Table from "@/components/ui/Table";
 import dayjs from "dayjs";
 
 export default function OrderHistory() {
-  const { pageLevelLoader, setPageLevelLoader } = useContext(GlobalContext);
+  const { user, pageLevelLoader, setPageLevelLoader } =
+    useContext(GlobalContext);
   const [userBooking, setUserBooking] = useState([]);
-  const user = JSON.parse(localStorage.getItem("user"));
 
   const getAllUserOrders = async () => {
     setPageLevelLoader(true);
@@ -22,10 +22,13 @@ export default function OrderHistory() {
         setUserBooking(res.data.data);
         setPageLevelLoader(false);
       } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
         setPageLevelLoader(false);
       }
     } catch (e) {
-      toast.error(e.response.statusText, {
+      toast.error("Something Went Wrong. Please Try Again...", {
         position: toast.POSITION.TOP_RIGHT,
       });
       setPageLevelLoader(false);
@@ -34,11 +37,10 @@ export default function OrderHistory() {
   useEffect(() => {
     getAllUserOrders();
   }, []);
-  console.log(userBooking);
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={pageLevelLoader} />
+        <PageLevelLoader />
       ) : (
         <div className="history col-9 px-5 mt-2">
           <h4 className="mb-3">BOOKING HISTORY</h4>

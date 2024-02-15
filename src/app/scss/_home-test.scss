@@ -21,12 +21,12 @@
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
   align-items: center;
-  width: 800px;
+  width: 60%;
   margin-top: -30px;
   position: relative;
   z-index: 1;
   @media (max-width: 576px) {
-    width: 100%;
+    width: 90%;
   }
   input {
     height: 50px;
@@ -70,5 +70,6 @@
 .reccommended-section {
   img {
     height: 70px;
+    width: auto;
   }
 }

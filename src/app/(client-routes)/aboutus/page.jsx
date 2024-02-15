@@ -47,13 +47,13 @@ export default function AboutUs() {
         setAboutUsData(res.data.data[0]);
         setPageLevelLoader(false);
       } else {
-        toast.error("No About Us Data Found", {
+        toast.error("Something Went Wrong. Please Try Again...", {
           position: toast.POSITION.TOP_RIGHT,
         });
         setPageLevelLoader(false);
       }
     } catch (e) {
-      toast.error(e.response.statusText, {
+      toast.error("Something Went Wrong. Please Try Again...", {
         position: toast.POSITION.TOP_RIGHT,
       });
       setPageLevelLoader(false);
@@ -68,30 +68,34 @@ export default function AboutUs() {
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={pageLevelLoader} />
+        <PageLevelLoader />
       ) : aboutUsData ? (
         <div>
           <div>
-            <Image src={aboutUsData.imageUrl} width={1024} height={500} />
+            <Image
+              src={aboutUsData.imageUrl}
+              width={1024}
+              height={500}
+              alt="about-us-header-image"
+            />
           </div>
           <div>
             <div>
               <h1>About Us</h1>
               <div
-                dangerouslySetInnerHTML={{ __html: aboutUsData.aboutUs }}
-              ></div>
+                dangerouslySetInnerHTML={{ __html: aboutUsData.aboutUs }}></div>
             </div>
             <div>
               <div className="d-flex">
                 {aboutUsNavigation.map((item) => (
                   <p
+                    key={item.name}
                     className={`border border-success p-3 pt-0 pb-0 ${
                       item.name === navigationData
                         ? "bg-success text-bg-light "
                         : "bg-white text-success"
                     }`}
-                    onClick={() => setNavigationData(item.name)}
-                  >
+                    onClick={() => setNavigationData(item.name)}>
                     {item.label}
                   </p>
                 ))}
@@ -99,12 +103,11 @@ export default function AboutUs() {
               <div
                 dangerouslySetInnerHTML={{
                   __html: aboutUsData[navigationData],
-                }}
-              ></div>
+                }}></div>
             </div>
           </div>
           <div>
-            <h1>Company Documents</h1>
+            <h4>Company Documents</h4>
             <div>
               <div>
                 <Fancybox
@@ -112,8 +115,7 @@ export default function AboutUs() {
                     Carousel: {
                       infinite: false,
                     },
-                  }}
-                >
+                  }}>
                   {aboutUsData.document.map((item) => (
                     <a data-fancybox="gallery" href={item} key={item}>
                       <Image

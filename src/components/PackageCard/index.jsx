@@ -5,15 +5,20 @@ import Image from "next/image";
 import FmdGoodOutlinedIcon from "@mui/icons-material/FmdGoodOutlined";
 import { averageReview } from "@/utils/functions";
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import { GlobalContext } from "@/context";
 
 function PackageCard({ packageDetail }) {
+  const { setPageLevelLoader } = useContext(GlobalContext);
   const router = useRouter();
-  console.log(packageDetail);
+  packageDetail;
   return (
     <div
-      className="trip-card border col-3"
-      onClick={() => router.push(`/package/${packageDetail?.slug}`)}
-    >
+      className="trip-card border col-12 col-md-3"
+      onClick={() => {
+        setPageLevelLoader(true);
+        router.push(`/package/${packageDetail?.slug}`);
+      }}>
       <Image
         src={packageDetail?.mainImageUrl}
         height={200}

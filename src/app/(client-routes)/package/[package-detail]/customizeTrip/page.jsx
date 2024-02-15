@@ -22,7 +22,7 @@ export default function CustomizeTrip() {
   const router = useRouter();
   const pathName = usePathname();
   const packageId = pathName.match(/\/package\/([^\/]+)\//)[1];
-  console.log(packageId);
+  packageId;
 
   const [packageDetail, setPackageDetail] = useState(null);
   const [user, setUser] = useState(null);
@@ -40,7 +40,7 @@ export default function CustomizeTrip() {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
+    data;
     setPageLevelLoader(true);
     if (isAuthUser) {
       try {
@@ -61,20 +61,22 @@ export default function CustomizeTrip() {
               position: toast.POSITION.TOP_RIGHT,
             }
           );
+          setPageLevelLoader(false);
         }
       } catch (e) {
-        setPageLevelLoader(false);
         toast.error(
           "Failed to request the customize the package! Please Try Again Later...",
           {
             position: toast.POSITION.TOP_RIGHT,
           }
         );
+        setPageLevelLoader(false);
       }
     } else {
       toast.error("Please Log In To Continue", {
         position: toast.POSITION.TOP_RIGHT,
       });
+      setPageLevelLoader(true);
       setTimeout(() => {
         router.push("/login");
       }, 1000);
@@ -94,11 +96,17 @@ export default function CustomizeTrip() {
         const res = await axios.get(
           `${process.env.NEXT_PUBLIC_SERVER_URL}/package/slug/${packageId}`
         );
-        console.log(res);
+        res;
         if (res.status === 200) {
           setValue("packageId", res.data.data[0]._id);
           setValue("packageName", res.data.data[0].name);
           setPackageDetail(res.data.data[0]);
+          setPageLevelLoader(false);
+        } else {
+          toast.error("Package Not Found", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          setPackageDetail({ name: "Package Not Found" });
           setPageLevelLoader(false);
         }
       } catch (e) {
@@ -115,7 +123,7 @@ export default function CustomizeTrip() {
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={true} />
+        <PageLevelLoader />
       ) : (
         <div>
           <h1>Customize Trip</h1>

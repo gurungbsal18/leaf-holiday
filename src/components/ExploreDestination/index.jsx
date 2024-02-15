@@ -7,7 +7,7 @@ const ExploreDestination = ({ middleTabData }) => {
     middleTabData ? middleTabData[0]?._id : ""
   );
   const [middleTabIndex, setMiddleTabIndex] = useState(0);
-  console.log("middle tab data: ", middleTabData);
+  "middle tab data: ", middleTabData;
 
   return (
     <>
@@ -21,7 +21,8 @@ const ExploreDestination = ({ middleTabData }) => {
           <div className="explore-section-btn d-flex justify-content-center gap-2">
             {middleTabData.map((item, index) => (
               <button
-                className={`btn ${
+                key={item._id}
+                className={`btn btn-sm ${
                   activeExploreBtn === item._id
                     ? "btn-success"
                     : "btn-outline-success"
@@ -29,15 +30,14 @@ const ExploreDestination = ({ middleTabData }) => {
                 onClick={() => {
                   setActiveExploreBtn(item._id);
                   setMiddleTabIndex(index);
-                }}
-              >
+                }}>
                 {item.title}
               </button>
             ))}
           </div>
-          <div className="d-flex gap-3 flex-wrap">
+          <div className="d-flex gap-3 flex-wrap mt-3">
             {middleTabData[middleTabIndex]?.packages?.map((item) => (
-              <PackageCard packageDetail={item} />
+              <PackageCard key={item._id} packageDetail={item} />
             ))}
           </div>
         </div>

@@ -1,15 +1,12 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
 import Header from "./Header";
-import Title from "./Title";
-import Contents from "./Contents";
 import { GlobalContext } from "@/context";
 import axios from "axios";
 import Notification from "../Notification";
-import Dialog from "@mui/material/Dialog";
-import Table from "../ui/Table";
 import PageLevelLoader from "../Loader/PageLevelLoader";
 import { toast } from "react-toastify";
+import Table from "../ui/Table";
 
 export default function AdminPages({ data }) {
   const {
@@ -34,10 +31,17 @@ export default function AdminPages({ data }) {
       if (res.status === 200) {
         setAllData(res.data.data);
         setFilteredData(res.data.data);
+        setPageLevelLoader(false);
+      } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setPageLevelLoader(false);
       }
-      setPageLevelLoader(false);
     } catch (e) {
-      console.log(e);
+      toast.error("Something Went Wrong. Please Try Again...", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       setPageLevelLoader(false);
     }
   }
@@ -68,7 +72,7 @@ export default function AdminPages({ data }) {
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={pageLevelLoader} />
+        <PageLevelLoader />
       ) : (
         <div className="">
           <Header
@@ -77,12 +81,6 @@ export default function AdminPages({ data }) {
             keyword={keyword}
             setKeyword={setKeyword}
           />
-          {/* <Title titles={data.titles} />
-      <Contents
-        contents={filteredData}
-        apiName={data.apiName}
-        updateComponent={data.createComponent}
-      /> */}
           <Table
             headerData={data.headerData}
             bodyData={filteredData}

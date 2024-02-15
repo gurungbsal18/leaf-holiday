@@ -29,11 +29,11 @@ export default function DestinationDetail() {
         setPageLevelLoader(false);
       }
     } catch (e) {
-      console.log(e);
+      e;
       setPageLevelLoader(false);
     }
   };
-  console.log(destinationDetail);
+  destinationDetail;
   useEffect(() => {
     getDestinationDetail();
   }, []);
@@ -41,7 +41,7 @@ export default function DestinationDetail() {
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={true} />
+        <PageLevelLoader />
       ) : (
         <>
           {destinationDetail && (

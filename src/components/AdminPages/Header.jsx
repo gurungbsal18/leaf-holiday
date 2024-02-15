@@ -5,7 +5,12 @@ import { GlobalContext } from "@/context";
 import { useRouter } from "next/navigation";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 
-export default function ({ pageName, createComponent, keyword, setKeyword }) {
+export default function Header({
+  pageName,
+  createComponent,
+  keyword,
+  setKeyword,
+}) {
   const { setDialogOpen, setDialogContent, setUpdatePackage } =
     useContext(GlobalContext);
   const router = useRouter();
@@ -27,8 +32,7 @@ export default function ({ pageName, createComponent, keyword, setKeyword }) {
               setDialogOpen(true);
               setDialogContent(createComponent);
             }
-          }}
-        >
+          }}>
           <PostAddIcon className="me-1" />
           {`Create New ${pageName}`}
         </button>

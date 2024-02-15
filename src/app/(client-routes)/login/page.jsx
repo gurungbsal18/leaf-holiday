@@ -1,7 +1,7 @@
 "use client";
 
 import { loginFormControls } from "@/utils";
-import React, { useContext, useEffect } from "react";
+import React, { Suspense, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "react-bootstrap";
 import Image from "next/image";
@@ -9,11 +9,23 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
-
 import TextField from "@mui/material/TextField";
 import { GlobalContext } from "@/context";
-import Notification from "@/components/Notification";
+import ComponentLevelLoader from "@/components/Loader/ComponentLevelLoader";
 
+function IsVerified() {
+  const searchParams = useSearchParams();
+  const isVerified = searchParams.get("verified");
+  useEffect(() => {
+    if (isVerified) {
+      toast.success("Account Verified Successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+  }, []);
+
+  return <></>;
+}
 export default function Login() {
   const {
     trackPage,
@@ -47,12 +59,11 @@ export default function Login() {
       password: "",
     },
   });
-
-  const isVerified = useSearchParams().get("verified");
   const router = useRouter();
   const { register, handleSubmit } = form;
 
   const onSubmit = async (data) => {
+    setComponentLevelLoader(true);
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/login`,
@@ -67,40 +78,35 @@ export default function Login() {
         setUser(res?.data?.data?.user);
         Cookies.set("token", res?.data?.data?.token);
         localStorage.setItem("user", JSON.stringify(res?.data?.data?.user));
-        setComponentLevelLoader({ loading: false, id: "" });
+        setComponentLevelLoader(false);
       } else {
         toast.error(res.message, {
           position: toast.POSITION.TOP_RIGHT,
         });
         setIsAuthUser(false);
-        setComponentLevelLoader({ loading: false, id: "" });
+        setComponentLevelLoader(false);
       }
     } catch (e) {
       toast.error(e.response.data.error, {
         position: toast.POSITION.TOP_RIGHT,
       });
+      setComponentLevelLoader(false);
     }
   };
 
   useEffect(() => {
     if (isAuthUser) {
-      console.log("routing page ... to", trackPage);
       setTimeout(() => {
         router.push(trackPage);
       }, [1000]);
     }
   }, [isAuthUser]);
 
-  useEffect(() => {
-    if (isVerified) {
-      toast.success("Account Verified Successfully", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-    }
-  }, []);
-
   return (
     <div className="container d-flex flex-column-reverse flex-md-row justify-content-between my-5 gap-5 align-items-center">
+      <Suspense>
+        <IsVerified />
+      </Suspense>
       <div className="register-container">
         <div className="register-text">
           <h4>Login To Leaf Holiday</h4>
@@ -111,6 +117,7 @@ export default function Login() {
           <div className="form-container d-flex flex-column gap-3">
             {loginFormControls.map((formControl) => (
               <TextField
+                key={formControl.id}
                 required
                 fullWidth
                 size="small"
@@ -127,7 +134,11 @@ export default function Login() {
                 variant="success"
                 className="flex-grow-1"
                 onClick={handleSubmit(onSubmit)}>
-                Login
+                {componentLevelLoader ? (
+                  <ComponentLevelLoader text={"Logging In"} />
+                ) : (
+                  "Login"
+                )}
               </Button>
               <Button variant="secondary" className="flex-grow-1">
                 Cancel
@@ -137,7 +148,7 @@ export default function Login() {
         </form>
         <div className="register-router">
           <span className="d-flex mt-3">
-            <p className="m-0">Don't Have An Account?</p>
+            <p className="m-0">Don&apos;t Have An Account?</p>
             <span className="ms-2">
               <a href="/register">Register</a>
             </span>
@@ -145,7 +156,12 @@ export default function Login() {
         </div>
       </div>
       <div className="register-image">
-        <Image src="/images/login-page.png" width={537} height={350} />
+        <Image
+          src="/images/login-page.png"
+          width={537}
+          height={350}
+          alt="login-image"
+        />
       </div>
     </div>
   );
