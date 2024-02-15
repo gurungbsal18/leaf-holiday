@@ -1,7 +1,6 @@
 "use client";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import { GlobalContext } from "@/context";
-import axios from "axios";
 import { usePathname } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
@@ -10,6 +9,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import TwitterIcon from "@mui/icons-material/Twitter";
+import axios from "@/utils/axios";
 
 export default function BlogDetail() {
   const [blogDetail, setBlogDetail] = useState(null);
@@ -19,9 +19,7 @@ export default function BlogDetail() {
   const getBlogDetail = async () => {
     setPageLevelLoader(true);
     try {
-      const res = await axios(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/blog/slug/${blogName}`
-      );
+      const res = await axios(`/blog/slug/${blogName}`);
       if (res.status === 200) {
         const blogData = res.data?.data;
 

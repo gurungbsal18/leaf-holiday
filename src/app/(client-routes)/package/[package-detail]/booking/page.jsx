@@ -12,10 +12,10 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import Autocomplete from "@mui/material/Autocomplete";
-import axios from "axios";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import { countries } from "@/utils";
 import { priceCalculator } from "@/utils/functions";
+import axios from "@/utils/axios";
 
 export default function Booking() {
   const { pageLevelLoader, setPageLevelLoader, user, bookingData } =
@@ -101,9 +101,7 @@ export default function Booking() {
     const getPackageDetail = async () => {
       setPageLevelLoader(true);
       try {
-        const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/package/slug/${packageId}`
-        );
+        const res = await axios.get(`/package/slug/${packageId}`);
         if (res.status === 200) {
           setPackageDetail(res.data.data[0]);
           setValue("packageName", res.data.data[0].name);

@@ -5,26 +5,39 @@ import Image from "next/image";
 import { adminNavItems } from "@/utils";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { GlobalContext } from "@/context";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 export default function AdminNavbar() {
-  const { setPageLevelLoader } = useContext(GlobalContext);
+  const { setUser, setIsAuthUser, setPageLevelLoader } =
+    useContext(GlobalContext);
+  let activeNav = "";
+  const pathName = usePathname();
+  if (pathName !== "/admin") {
+    activeNav = pathName.match(/admin\/([^\/]*)/)[1];
+  }
   const [showNavText, setNavText] = useState(true);
   const router = useRouter();
+
+  function handleLogout() {
+    toast.success("Logged Out Successfully", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+    setPageLevelLoader(true);
+    setTimeout(() => {
+      setUser(null);
+      Cookies.remove("token");
+      localStorage.clear();
+      setIsAuthUser(false);
+      router.push("/login");
+    }, 1000);
+  }
+
   return (
     <div className="admin-navbar bg-success d-flex flex-column p-4 border-end">
-      {/* <div className="brand">
-        <a href="/">
-          <Image
-            src="/images/logo.png"
-            width={showNavText ? 150 : 38}
-            height={showNavText ? 59 : 15}
-            alt="leaf-holiday-logo"
-            priority={true}
-          />
-        </a>
-      </div> */}
       <div className="admin-nav-items d-flex flex-column gap-4">
         <span
           role="button"
@@ -40,16 +53,32 @@ export default function AdminNavbar() {
           <div
             onClick={() => {
               setPageLevelLoader(true);
-              router.push(item.path);
+              router.push(`/admin/${item.path}`);
             }}
             className="nav-item d-flex gap-2"
             key={item.id}>
             <div className="nav-icon">{item.icon}</div>
-            <p className={`nav-label m-0 ${showNavText ? "" : "d-none"}`}>
+            <p
+              className={`nav-label m-0 ${showNavText ? "" : "d-none"} ${
+                activeNav === item.path ? "text-danger" : ""
+              }`}>
               {item.label}
             </p>
           </div>
         ))}
+        <div
+          onClick={() => {
+            // setPageLevelLoader(true);
+            handleLogout();
+          }}
+          className="nav-item d-flex gap-2">
+          <div className="nav-icon">
+            <LogoutIcon />
+          </div>
+          <p className={`nav-label m-0 ${showNavText ? "" : "d-none"}`}>
+            Log Out
+          </p>
+        </div>
       </div>
       <div className="brand bg-white w-100">
         <a href="/">

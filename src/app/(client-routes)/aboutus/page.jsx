@@ -1,11 +1,11 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
 import { GlobalContext } from "@/context";
 import { toast } from "react-toastify";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import Image from "next/image";
 import Fancybox from "@/components/FancyappWrapper";
+import axios from "@/utils/axios";
 
 export default function AboutUs() {
   const { pageLevelLoader, setPageLevelLoader } = useContext(GlobalContext);
@@ -39,9 +39,7 @@ export default function AboutUs() {
   const getData = async () => {
     setPageLevelLoader(true);
     try {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/aboutUs/`
-      );
+      const res = await axios.get(`/aboutUs/`);
 
       if (res?.data?.data?.length > 0) {
         setAboutUsData(res.data.data[0]);

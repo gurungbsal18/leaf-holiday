@@ -3,11 +3,11 @@ import TextEditor from "@/components/TextEditor";
 import UploadToCloudinary from "@/components/ui/UploadToCloudinary";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import Link from "next/link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import EditPageGallery from "@/components/ui/EditPageGallery";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
+import axios from "@/utils/axios";
 
 export default function EditAboutUs() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -63,14 +63,8 @@ export default function EditAboutUs() {
   const onSubmit = async (data) => {
     let res;
     callUpdate
-      ? (res = await axios.put(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/aboutUs/update/${data._id}`,
-          data
-        ))
-      : (res = await axios.post(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/aboutUs/add`,
-          data
-        ));
+      ? (res = await axios.put(`/aboutUs/update/${data._id}`, data))
+      : (res = await axios.post(`/aboutUs/add`, data));
     if (res.status === 200) {
       getData();
     }
@@ -78,9 +72,7 @@ export default function EditAboutUs() {
 
   //get form values from server
   const getData = async () => {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/aboutUs/`
-    );
+    const res = await axios.get(`/aboutUs/`);
 
     if (res?.data?.data?.length > 0) {
       setSelectedImage(res.data.data[0].imageUrl);

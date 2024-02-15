@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form";
 import { GlobalContext } from "@/context";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import axios from "axios";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
+import axios from "@/utils/axios";
 
 export default function UserDetail() {
   const { user, isAuthUser, pageLevelLoader, setPageLevelLoader } =
@@ -28,10 +28,7 @@ export default function UserDetail() {
       }, 1000);
     } else {
       try {
-        const res = await axios.put(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/user/update/${data._id}`,
-          data
-        );
+        const res = await axios.put(`/user/update/${data._id}`, data);
         if (res.status === 200) {
           localStorage.setItem("user", JSON.stringify(res?.data?.data));
           toast.success("Personal Data Updated successfully", {

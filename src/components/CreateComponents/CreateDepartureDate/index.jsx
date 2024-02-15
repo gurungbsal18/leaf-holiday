@@ -2,18 +2,13 @@
 import React, { useContext, useRef } from "react";
 import { GrClose } from "react-icons/gr";
 import TextField from "@mui/material/TextField";
-import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { useForm, Controller } from "react-hook-form";
 import { GlobalContext } from "@/context";
-import axios from "axios";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import TurnedInNotIcon from "@mui/icons-material/TurnedInNot";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { toast } from "react-toastify";
 import { submitForm } from "@/utils/functions";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 export default function CreateDepartureDate() {
   const {

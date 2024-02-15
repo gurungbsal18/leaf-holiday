@@ -1,11 +1,11 @@
 "use client";
 import React, { useContext, useState } from "react";
 import Image from "next/image";
-import axios from "axios";
 import { GlobalContext } from "@/context";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import axios from "@/utils/axios";
 
 export default function RegionPage() {
   const { pageLevelLoader, setPageLevelLoader } = useContext(GlobalContext);
@@ -14,9 +14,7 @@ export default function RegionPage() {
   const getAllRegions = async () => {
     setPageLevelLoader(true);
     try {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/region/`
-      );
+      const res = await axios.get(`/region/`);
       res;
       if (res.status === 200) {
         setAllRegions(res.data?.data);

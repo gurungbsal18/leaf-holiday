@@ -21,7 +21,6 @@ import { FaBed } from "react-icons/fa";
 import { FaCar } from "react-icons/fa6";
 import { MdGroups } from "react-icons/md";
 import { usePathname, useRouter } from "next/navigation";
-import axios from "axios";
 import { toast } from "react-toastify";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import dayjs from "dayjs";
@@ -41,6 +40,7 @@ import { getEmbeddedYouTubeUrl, isImage } from "@/utils/functions";
 import { CldVideoPlayer } from "next-cloudinary";
 import "next-cloudinary/dist/cld-video-player.css";
 import Fancybox from "@/components/FancyappWrapper";
+import axios from "@/utils/axios";
 
 export default function PackageDetail() {
   const [showItineraryDetails, setShowItineraryDetails] = useState({});
@@ -69,9 +69,7 @@ export default function PackageDetail() {
   const getPackageDetail = async () => {
     try {
       setPageLevelLoader(true);
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/package/slug/${packageId}`
-      );
+      const res = await axios.get(`/package/slug/${packageId}`);
       res;
       if (res.status === 200) {
         setPackageDetail(res.data.data[0]);

@@ -3,10 +3,9 @@ import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import TextField from "@mui/material/TextField";
 import { toast } from "react-toastify";
-
-import axios from "axios";
 import { GlobalContext } from "@/context";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
+import axios from "@/utils/axios";
 
 export default function ChangePassword() {
   const { user, pageLevelLoader, setPageLevelLoader } =
@@ -20,10 +19,7 @@ export default function ChangePassword() {
   const handleChangePassword = async (data) => {
     setPageLevelLoader(true);
     try {
-      const res = await axios.put(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/user/update/${data._id}`,
-        data
-      );
+      const res = await axios.put(`/user/update/${data._id}`, data);
       if (res.status === 200) {
         localStorage.setItem("user", JSON.stringify(res?.data?.data));
         toast.success("Password Changed successfully", {

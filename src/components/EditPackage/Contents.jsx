@@ -1,12 +1,12 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
 import { GlobalContext } from "@/context";
 import { toast } from "react-toastify";
 import ReviewContent from "./ContentPages/ReviewContent";
 import ItineriesContent from "./ContentPages/ItineriesContent";
 import FAQContent from "./ContentPages/FAQContent";
 import DepartureDateContent from "./ContentPages/DepartureDateContent";
+import axios from "@/utils/axios";
 
 export default function Contents({ contents, apiName, updateComponent }) {
   const {
@@ -18,9 +18,7 @@ export default function Contents({ contents, apiName, updateComponent }) {
   } = useContext(GlobalContext);
 
   async function handleRemove(id) {
-    const res = await axios.delete(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/${apiName}/delete/${id}`
-    );
+    const res = await axios.delete(`/${apiName}/delete/${id}`);
     if (res.status === 200) {
       setCallExtractAll(!callExtractAll);
       toast.success(res.data.message, {

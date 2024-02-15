@@ -6,9 +6,9 @@ import { Button } from "react-bootstrap";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import TextField from "@mui/material/TextField";
 import { GlobalContext } from "@/context";
-import axios from "axios";
 import CustomAutocomplete from "@/components/ui/CustomAutocomplete";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
+import axios from "@/utils/axios";
 
 export default function HomePageTab({ position, valueDefault, url }) {
   const {
@@ -41,14 +41,8 @@ export default function HomePageTab({ position, valueDefault, url }) {
     try {
       let res;
       valueDefault
-        ? (res = await axios.put(
-            `${process.env.NEXT_PUBLIC_SERVER_URL}/tabs/update/${data._id}`,
-            data
-          ))
-        : (res = await axios.post(
-            `${process.env.NEXT_PUBLIC_SERVER_URL}/tabs/add`,
-            data
-          ));
+        ? (res = await axios.put(`/tabs/update/${data._id}`, data))
+        : (res = await axios.post(`/tabs/add`, data));
       if (res.status === 200) {
         setDialogOpen(false);
         setCallExtractAll(!callExtractAll);
@@ -70,9 +64,7 @@ export default function HomePageTab({ position, valueDefault, url }) {
   const getAllPackages = async () => {
     setPageLevelLoader(true);
     try {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/package/`
-      );
+      const res = await axios.get(`/package/`);
       if (res.status === 200) {
         setAllPackages(res.data.data);
         setPageLevelLoader(false);

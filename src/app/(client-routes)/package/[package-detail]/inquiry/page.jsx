@@ -11,10 +11,10 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import Autocomplete from "@mui/material/Autocomplete";
-import axios from "axios";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import { countries } from "@/utils";
 import { priceCalculator } from "@/utils/functions";
+import axios from "@/utils/axios";
 
 export default function Inquiry() {
   const { isAuthUser, setPageLevelLoader, pageLevelLoader } =
@@ -44,10 +44,7 @@ export default function Inquiry() {
     setPageLevelLoader(true);
     if (isAuthUser) {
       try {
-        const res = await axios.post(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/booking/add`,
-          data
-        );
+        const res = await axios.post(`/booking/add`, data);
         if (res.status === 200) {
           toast.success("Package Inquiry Requested Successfully", {
             position: toast.POSITION.TOP_RIGHT,
@@ -92,9 +89,7 @@ export default function Inquiry() {
     const getPackageDetail = async () => {
       setPageLevelLoader(true);
       try {
-        const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/package/slug/${packageId}`
-        );
+        const res = await axios.get(`/package/slug/${packageId}`);
         res;
         if (res.status === 200) {
           setValue("packageId", res.data.data[0]._id);

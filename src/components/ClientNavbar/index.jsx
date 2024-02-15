@@ -62,7 +62,7 @@
 // }
 
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import Image from "next/image";
@@ -79,6 +79,7 @@ import { PrimeReactProvider } from "primereact/api";
 import MegaMenuMain from "./MegaMenu";
 import LoginIcon from "@mui/icons-material/Login";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import axios from "@/utils/axios";
 
 export default function ClientNavbar() {
   const { isAuthUser, user, setUser, setIsAuthUser, setPageLevelLoader } =
@@ -141,7 +142,7 @@ export default function ClientNavbar() {
         <div className="d-block d-lg-flex justify-content-center gap-4 pb-2 align-items-center position-relative">
           <PrimeReactProvider>
             <MegaMenuMain />
-            {user && user.role === "user" && (
+            {user && user.role === "admin" && (
               <Link href="/admin" onClick={() => setPageLevelLoader(true)}>
                 Admin Dashboard
               </Link>
