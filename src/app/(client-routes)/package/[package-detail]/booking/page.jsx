@@ -126,12 +126,12 @@ export default function Booking() {
   }, []);
 
   return (
-    <>
+    <div className="container">
       {pageLevelLoader ? (
         <PageLevelLoader />
       ) : (
-        <div className="d-flex">
-          <div>
+        <div className="row">
+          <div className="col-8">
             <h1>Booking Form</h1>
             <div>
               <form>
@@ -205,20 +205,22 @@ export default function Booking() {
                 <button
                   className="btn btn-outline-success"
                   type="submit"
-                  onClick={handleSubmit(onSubmit)}>
+                  onClick={handleSubmit(onSubmit)}
+                >
                   Book and pay later
                 </button>
                 <button
                   id="payNowBtn"
                   className="btn btn-success"
                   type="submit"
-                  onClick={handleSubmit(onSubmit)}>
+                  onClick={handleSubmit(onSubmit)}
+                >
                   Book and Pay Now
                 </button>
               </form>
             </div>
           </div>
-          <div>
+          <div className="col">
             <h1>Booking Detail</h1>
             <div>
               <p>Package Name: {packageDetail?.name}</p>
@@ -240,7 +242,7 @@ export default function Booking() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 
