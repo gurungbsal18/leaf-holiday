@@ -4,8 +4,8 @@ import Header from "./Header";
 import Title from "./Title";
 import Contents from "./Contents";
 import { GlobalContext } from "@/context";
-import axios from "axios";
 import Notification from "../Notification";
+import axios from "@/utils/axios";
 
 export default function EditPackage({ data }) {
   const { callExtractAll, updatePackage } = useContext(GlobalContext);
@@ -14,7 +14,7 @@ export default function EditPackage({ data }) {
 
   async function extractAllContents() {
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/${data?.apiName}/package/${updatePackage?._id}`
+      `/${data?.apiName}/package/${updatePackage?._id}`
     );
     if (res.status === 200) {
       setAllData(res?.data?.data);

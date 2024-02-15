@@ -6,12 +6,12 @@ import { Button } from "react-bootstrap";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import TextField from "@mui/material/TextField";
 import { GlobalContext } from "@/context";
-import axios from "axios";
 import CustomAutocomplete from "@/components/ui/CustomAutocomplete";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import HomePageTab from "@/components/ui/HomePageTab";
 import Link from "next/link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import axios from "@/utils/axios";
 
 export default function EditHome() {
   const {
@@ -37,9 +37,7 @@ export default function EditHome() {
 
   const handleRemove = async (id) => {
     try {
-      const res = await axios.delete(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/tabs/delete/${id}`
-      );
+      const res = await axios.delete(`/tabs/delete/${id}`);
       res;
       if (res.status === 200) {
         setCallExtractAll(!callExtractAll);
@@ -61,9 +59,7 @@ export default function EditHome() {
   const getHomePageDetail = async () => {
     setPageLevelLoader(true);
     try {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/homepage/`
-      );
+      const res = await axios.get(`/homepage/`);
       if (res.status === 200) {
         setPageLevelLoader(false);
         setHomePageData(res.data);

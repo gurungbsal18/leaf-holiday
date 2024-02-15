@@ -8,7 +8,7 @@ import ArticleIcon from "@mui/icons-material/Article";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import LogoutIcon from "@mui/icons-material/Logout";
+
 import RouteIcon from "@mui/icons-material/Route";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
@@ -67,67 +67,61 @@ export const adminNavItems = [
     id: "dashboard",
     icon: <DashboardIcon />,
     label: "Dashboard",
-    path: "/admin",
+    path: "",
   },
   {
     id: "pages",
     icon: <AutoStoriesIcon />,
     label: "Pages",
-    path: "/admin/pages",
+    path: "pages",
   },
   {
     id: "packages",
     icon: <AirplanemodeActiveIcon />,
     label: "Packages",
-    path: "/admin/packages",
+    path: "packages",
   },
   {
     id: "destination",
     icon: <LocationOnIcon />,
     label: "Destination",
-    path: "/admin/destination",
+    path: "destination",
   },
   {
     id: "regions",
     icon: <MapIcon />,
     label: "Regions",
-    path: "/admin/regions",
+    path: "regions",
   },
   {
     id: "testimonials",
     icon: <RateReviewIcon />,
     label: "Testimonials",
-    path: "/admin/testimonials",
+    path: "testimonials",
   },
   {
     id: "blogs",
     icon: <ArticleIcon />,
     label: "Blogs",
-    path: "/admin/blogs",
+    path: "blogs",
   },
   {
     id: "settings",
     icon: <SettingsIcon />,
     label: "Settings",
-    path: "/admin/settings",
+    path: "settings",
   },
   {
     id: "our-team",
     icon: <AssignmentIcon />,
     label: "Our Team",
-    path: "/admin/our-team",
+    path: "our-team",
   },
   {
     id: "profile",
     icon: <AccountCircleIcon />,
     label: "Profile",
-    path: "/admin/profile",
-  },
-  {
-    id: "logout",
-    icon: <LogoutIcon />,
-    label: "Log Out",
-    path: "/",
+    path: "profile",
   },
 ];
 export const registrationFormControls = [

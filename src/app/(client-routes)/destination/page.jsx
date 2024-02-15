@@ -1,10 +1,10 @@
 "use client";
 import React, { useContext, useState } from "react";
 import Image from "next/image";
-import axios from "axios";
 import { GlobalContext } from "@/context";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import { useRouter } from "next/navigation";
+import axios from "@/utils/axios";
 
 export default function DestinationPage() {
   const { pageLevelLoader, setPageLevelLoader } = useContext(GlobalContext);
@@ -13,9 +13,7 @@ export default function DestinationPage() {
   const getAllDestinations = async () => {
     setPageLevelLoader(true);
     try {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/destination/`
-      );
+      const res = await axios.get(`/destination/`);
       res;
       if (res.status === 200) {
         setAllDestinations(res.data?.data);

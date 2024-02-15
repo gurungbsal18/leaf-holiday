@@ -6,8 +6,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useRouter } from "next/navigation";
 import { GlobalContext } from "@/context";
 import { toast } from "react-toastify";
-import axios from "axios";
-import Image from "next/image";
+import axios from "@/utils/axios";
 
 export default function Table({
   headerData,
@@ -54,12 +53,11 @@ export default function Table({
 
   const handleSelected = async (data) => {
     try {
-      const res = await axios.put(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/${apiName}/update/${data._id}`,
-        { ...data, isSelected: !data.isSelected }
-      );
+      const res = await axios.put(`/${apiName}/update/${data._id}`, {
+        ...data,
+        isSelected: !data.isSelected,
+      });
       if (res.status === 200) {
-        res;
         res.data.data.isSelected === false
           ? toast.error("Removed from the Homepage Successfully", {
               position: toast.POSITION.TOP_RIGHT,
@@ -81,14 +79,29 @@ export default function Table({
   };
 
   async function handleRemove(id) {
-    const res = await axios.delete(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/${apiName}/delete/${id}`
-    );
-    if (res.status === 200) {
-      setCallExtractAll(!callExtractAll);
-      toast.success(res.data.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+    try {
+      setPageLevelLoader(true);
+      const res = await axios.delete(`/${apiName}/delete/${id}`);
+      if (res.status === 200) {
+        setCallExtractAll(!callExtractAll);
+        toast.success(res.data.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setPageLevelLoader(false);
+      } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setPageLevelLoader(false);
+      }
+    } catch (e) {
+      toast.error(
+        e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
+        {
+          position: toast.POSITION.TOP_RIGHT,
+        }
+      );
+      setPageLevelLoader(false);
     }
   }
   bodyData;
@@ -207,7 +220,7 @@ export default function Table({
                         }
                       }}
                       className="btn btn-sm btn-success">
-                      <EditNoteIcon /> Edits
+                      <EditNoteIcon /> Edit
                     </button>
                   )}
                   {showRemove && (

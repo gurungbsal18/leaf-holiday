@@ -2,7 +2,7 @@
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import TeamCard from "@/components/TeamCard";
 import { GlobalContext } from "@/context";
-import axios from "axios";
+import axios from "@/utils/axios";
 import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
 
@@ -12,9 +12,7 @@ export default function OurTeam() {
   const getOurTeamData = async () => {
     setPageLevelLoader(true);
     try {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/ourTeam/`
-      );
+      const res = await axios.get(`/ourTeam/`);
       if (res.status === 200) {
         const ourTeam = res.data?.data;
         if (ourTeam.length > 0) {
@@ -30,7 +28,6 @@ export default function OurTeam() {
       setPageLevelLoader(false);
     }
   };
-  "our team data:", ourTeamData;
   useEffect(() => {
     getOurTeamData();
   }, []);

@@ -1,11 +1,11 @@
 "use client";
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import axios from "axios";
 import { GlobalContext } from "@/context";
 import { toast } from "react-toastify";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import Table from "@/components/ui/Table";
 import dayjs from "dayjs";
+import axios from "@/utils/axios";
 
 export default function OrderHistory() {
   const { user, pageLevelLoader, setPageLevelLoader } =
@@ -16,7 +16,7 @@ export default function OrderHistory() {
     setPageLevelLoader(true);
     try {
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/booking/find/?userId=${user._id}&formType=booking`
+        `/booking/find/?userId=${user._id}&formType=booking`
       );
       if (res.status === 200) {
         setUserBooking(res.data.data);

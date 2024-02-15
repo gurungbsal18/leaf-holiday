@@ -5,13 +5,13 @@ import React, { Suspense, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "react-bootstrap";
 import Image from "next/image";
-import axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 import TextField from "@mui/material/TextField";
 import { GlobalContext } from "@/context";
 import ComponentLevelLoader from "@/components/Loader/ComponentLevelLoader";
+import axios from "@/utils/axios";
 
 function IsVerified() {
   const searchParams = useSearchParams();
@@ -65,10 +65,7 @@ export default function Login() {
   const onSubmit = async (data) => {
     setComponentLevelLoader(true);
     try {
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/login`,
-        data
-      );
+      const res = await axios.post(`/auth/login`, data);
 
       if (res.status === 200) {
         toast.success("Logged in Successfully", {

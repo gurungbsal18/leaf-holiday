@@ -1,10 +1,10 @@
 "use client";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import { GlobalContext } from "@/context";
-import axios from "axios";
 import { usePathname } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
+import axios from "@/utils/axios";
 
 export default function TeamDetail() {
   const [teamDetail, setTeamDetail] = useState(null);
@@ -13,9 +13,7 @@ export default function TeamDetail() {
 
   const getTeamDetail = async () => {
     try {
-      const res = await axios(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/ourTeam/slug/${teamName}`
-      );
+      const res = await axios(`/ourTeam/slug/${teamName}`);
       if (res.status === 200) {
         const teamData = res.data?.data;
 

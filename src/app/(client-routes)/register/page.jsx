@@ -10,12 +10,12 @@ import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import TextField from "@mui/material/TextField";
 import { Button } from "react-bootstrap";
 import Image from "next/image";
-import axios from "axios";
 import { toast } from "react-toastify";
 import Notification from "@/components/Notification";
 import { GlobalContext } from "@/context";
 import { useRouter } from "next/navigation";
 import ComponentLevelLoader from "@/components/Loader/ComponentLevelLoader";
+import axios from "@/utils/axios";
 
 export default function Register() {
   const { isAuthUser, componentLevelLoader, setComponentLevelLoader } =
@@ -35,7 +35,7 @@ export default function Register() {
   const onSubmit = async (data) => {
     try {
       setComponentLevelLoader(true);
-      const res = await axios.post("http://localhost:5001/auth/register", data);
+      const res = await axios.post("/auth/register", data);
       if (res.status === 200) {
         toast.success(
           "User Registered Successfully. Please Check Your Email for Verification",

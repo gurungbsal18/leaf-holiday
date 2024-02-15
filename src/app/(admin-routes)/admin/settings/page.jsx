@@ -8,8 +8,8 @@ import { GlobalContext } from "@/context";
 import { toast } from "react-toastify";
 import { submitForm } from "@/utils/functions";
 import UploadToCloudinary from "@/components/ui/UploadToCloudinary";
-import axios from "axios";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
+import axios from "@/utils/axios";
 
 export default function Settings() {
   const { setPageLevelLoader, pageLevelLoader } = useContext(GlobalContext);
@@ -43,9 +43,7 @@ export default function Settings() {
   const getSettingsData = async () => {
     setPageLevelLoader(true);
     try {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/setting/`
-      );
+      const res = await axios.get(`/setting/`);
       res;
       if (res.status === 200) {
         const settingData = res.data?.data;

@@ -4,33 +4,25 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Image from "next/image";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import axios from "@/utils/axios";
 
-function Footer() {
+export default function Footer() {
   const date = new Date();
   const year = date.getFullYear();
   const [leafData, setLeafData] = useState(null);
   const getLeafData = async () => {
     try {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/setting/`
-      );
+      const res = await axios.get(`/setting/`);
       if (res.status === 200) {
         setLeafData(res.data.data[0]);
-      } else {
-        toast.error("Something Went Wrong. Please Try Again...", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
       }
     } catch (e) {
-      toast.error("Something Went Wrong. Please Try Again...", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
       setLeafData({});
     }
   };
@@ -45,15 +37,15 @@ function Footer() {
           <h4>Contact Us</h4>
           <a href="tel:+9771234567890">
             <WhatsAppIcon />
-            +977 1234567890
+            {leafData?.phoneNumber}
           </a>
           <a href="mailto:info@thenepaltrekking.com">
             <EmailIcon />
-            info@thenepaltrekking.com
+            {leafData?.email}
           </a>
           <a>
             <LocationOnIcon />
-            Thamel, Kathmandu, Nepal
+            {leafData?.location}
           </a>
         </div>
         <div className="d-flex flex-column">
@@ -96,16 +88,28 @@ function Footer() {
       <div className="d-flex justify-content-between mt-5">
         <p className="m-0 fs-12">© Leaf Holiday {year}</p>
         <div className="footer-social d-flex gap-2">
-          <a href="" className="text-white">
+          <a
+            href={leafData?.facebook || "#"}
+            target="_blank"
+            className="text-white">
             <FacebookIcon />
           </a>
-          <a href="" className="text-white">
+          <a
+            href={leafData?.instagram || "#"}
+            target="_blank"
+            className="text-white">
             <InstagramIcon />
           </a>
-          <a href="" className="text-white">
-            <WhatsAppIcon />
+          <a
+            href={leafData?.linkedin || "#"}
+            target="_blank"
+            className="text-white">
+            <LinkedInIcon />
           </a>
-          <a href="" className="text-white">
+          <a
+            href={leafData?.twitter || "#"}
+            target="_blank"
+            className="text-white">
             <TwitterIcon />
           </a>
         </div>
@@ -113,5 +117,3 @@ function Footer() {
     </div>
   );
 }
-
-export default Footer;

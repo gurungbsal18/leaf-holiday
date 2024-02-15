@@ -7,9 +7,9 @@ import { useForm, Controller } from "react-hook-form";
 import { GlobalContext } from "@/context";
 import { submitForm } from "@/utils/functions";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
-import axios from "axios";
 import CustomAutocomplete from "@/components/ui/CustomAutocomplete";
 import { toast } from "react-toastify";
+import axios from "@/utils/axios";
 
 export default function CreateTestimonial() {
   const {
@@ -57,9 +57,7 @@ export default function CreateTestimonial() {
   const getAllPackages = async () => {
     setPageLevelLoader(true);
     try {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/package/`
-      );
+      const res = await axios.get(`/package/`);
       if (res.status === 200) {
         if (!updateForm && !updatePackage) {
           reset({ ...initialFormData, packageId: res.data.data[0]._id });

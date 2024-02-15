@@ -2,11 +2,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import Header from "./Header";
 import { GlobalContext } from "@/context";
-import axios from "axios";
-import Notification from "../Notification";
 import PageLevelLoader from "../Loader/PageLevelLoader";
 import { toast } from "react-toastify";
 import Table from "../ui/Table";
+import axios from "@/utils/axios";
 
 export default function AdminPages({ data }) {
   const {
@@ -24,10 +23,8 @@ export default function AdminPages({ data }) {
   async function extractAllContents() {
     setPageLevelLoader(true);
     try {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/${data.apiName}/`
-      );
-
+      const res = await axios.get(`/${data.apiName}/`);
+      console.log(res);
       if (res.status === 200) {
         setAllData(res.data.data);
         setFilteredData(res.data.data);
