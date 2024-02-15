@@ -20,6 +20,11 @@
 $theme-secondary: #f7941d;
 $theme-secondary-dark: #eb8101;
 
+.main-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 .text-theme-secondary {
   color: $theme-secondary;
 }
