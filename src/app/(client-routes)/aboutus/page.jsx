@@ -69,7 +69,7 @@ export default function AboutUs() {
         <PageLevelLoader />
       ) : aboutUsData ? (
         <div>
-          <div>
+          <div className="common-banner">
             <Image
               src={aboutUsData.imageUrl}
               width={1024}
@@ -77,54 +77,62 @@ export default function AboutUs() {
               alt="about-us-header-image"
             />
           </div>
-          <div>
+          <div className="container">
             <div>
-              <h1>About Us</h1>
-              <div
-                dangerouslySetInnerHTML={{ __html: aboutUsData.aboutUs }}></div>
-            </div>
-            <div>
-              <div className="d-flex">
-                {aboutUsNavigation.map((item) => (
-                  <p
-                    key={item.name}
-                    className={`border border-success p-3 pt-0 pb-0 ${
-                      item.name === navigationData
-                        ? "bg-success text-bg-light "
-                        : "bg-white text-success"
-                    }`}
-                    onClick={() => setNavigationData(item.name)}>
-                    {item.label}
-                  </p>
-                ))}
+              <div className="pt-100">
+                <h4 className="title fw-bold">About Us</h4>
+                <div
+                  className="text-justify"
+                  dangerouslySetInnerHTML={{ __html: aboutUsData.aboutUs }}
+                ></div>
               </div>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: aboutUsData[navigationData],
-                }}></div>
-            </div>
-          </div>
-          <div>
-            <h4>Company Documents</h4>
-            <div>
-              <div>
-                <Fancybox
-                  options={{
-                    Carousel: {
-                      infinite: false,
-                    },
-                  }}>
-                  {aboutUsData.document.map((item) => (
-                    <a data-fancybox="gallery" href={item} key={item}>
-                      <Image
-                        src={item}
-                        height={200}
-                        width={200}
-                        alt="document-image"
-                      />
-                    </a>
+              <div className="pt-100">
+                <div className="d-flex mb-3 gap-2 border-bottom pb-3">
+                  {aboutUsNavigation.map((item) => (
+                    <button
+                      key={item.name}
+                      className={`btn btn-md border border-success ${
+                        item.name === navigationData
+                          ? "bg-success text-light "
+                          : "bg-white text-success"
+                      }`}
+                      onClick={() => setNavigationData(item.name)}
+                    >
+                      {item.label}
+                    </button>
                   ))}
-                </Fancybox>
+                </div>
+                <div
+                  className="text-justify"
+                  dangerouslySetInnerHTML={{
+                    __html: aboutUsData[navigationData],
+                  }}
+                ></div>
+              </div>
+            </div>
+            <div className="pt-100 pb-5">
+              <h4 className="title fw-bold">Company Documents</h4>
+              <div>
+                <div>
+                  <Fancybox
+                    options={{
+                      Carousel: {
+                        infinite: false,
+                      },
+                    }}
+                  >
+                    {aboutUsData.document.map((item) => (
+                      <a data-fancybox="gallery" href={item} key={item}>
+                        <Image
+                          src={item}
+                          height={200}
+                          width={200}
+                          alt="document-image"
+                        />
+                      </a>
+                    ))}
+                  </Fancybox>
+                </div>
               </div>
             </div>
           </div>
