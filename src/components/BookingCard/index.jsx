@@ -17,7 +17,6 @@ import Link from "next/link";
 
 const BookingCard = ({ prices, packageId, pdfUrl }) => {
   const { isAuthUser, setPageLevelLoader } = useContext(GlobalContext);
-  const user = JSON.parse(localStorage.getItem("user"));
   const router = useRouter();
   const [showGroupPrice, setShowGroupPrice] = useState(false);
   const currentDate = new Date().toDateString();
