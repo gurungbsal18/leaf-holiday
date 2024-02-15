@@ -47,7 +47,7 @@ export default function AdminDashboard() {
           <div className="d-flex gap-5">
             {dashboardData &&
               Object.entries(dashboardData).map(([key, value]) => (
-                <div className="d-flex">
+                <div key={key} className="d-flex">
                   <div>
                     <p>{adminDataMapper[key]?.label}</p>
                     <h4>{value}</h4>

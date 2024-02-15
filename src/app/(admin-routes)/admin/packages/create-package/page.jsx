@@ -238,7 +238,11 @@ export default function CreatePackage() {
                     className="mb-3"
                   />
                   <label htmlFor="url">
-                    URL: {process.env.NEXT_PUBLIC_WEBSITE_URL}/package/
+                    URL:{" "}
+                    {process.env.NEXT_PUBLIC_NODE_ENV === "development"
+                      ? "http://localhost:3000/"
+                      : process.env.NEXT_PUBLIC_WEBSITE_URL}
+                    /package/
                   </label>
                   <input
                     type="text"
