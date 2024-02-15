@@ -132,7 +132,7 @@ export default function Booking() {
       ) : (
         <div className="row">
           <div className="col-8">
-            <h1>Booking Form</h1>
+            <h1>Booking Form </h1>
             <div>
               <form>
                 <TextField
