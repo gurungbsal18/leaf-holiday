@@ -43,17 +43,25 @@ export default function Booking() {
     },
   });
 
-  const onSubmit = async (data) => {
-    data;
+  const onSubmit = async (data, e) => {
+    const isPayNow = e?.target?.id === "payNowBtn";
     setPageLevelLoader(true);
     try {
-      const res = await axios.post(`/booking/add`, data);
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/booking/add`,
+        { ...data, isPayNow }
+      );
       if (res.status === 200) {
         toast.success("Package Booked Successfully", {
           position: toast.POSITION.TOP_RIGHT,
         });
         localStorage.removeItem("bookingData");
         setPageLevelLoader(false);
+        if (isPayNow) {
+          const redirectUrl =
+            res.data?.data?.payment?.response?.paymentPage?.paymentPageURL;
+          window.location.href = redirectUrl;
+        }
       } else {
         toast.error("Failed to book the package! Please Try Again Later...", {
           position: toast.POSITION.TOP_RIGHT,
@@ -201,10 +209,11 @@ export default function Booking() {
                   Book and pay later
                 </button>
                 <button
+                  id="payNowBtn"
                   className="btn btn-success"
                   type="submit"
                   onClick={handleSubmit(onSubmit)}>
-                  Proced to payment
+                  Book and Pay Now
                 </button>
               </form>
             </div>
