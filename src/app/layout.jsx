@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./scss/variable.scss";
 import "./scss/custom-style.scss";
 import GlobalState from "@/context";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 
@@ -20,7 +21,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <GlobalState>
-          <div>{children}</div>
+          <div>
+            {children}
+            <SpeedInsights />
+          </div>
         </GlobalState>
       </body>
     </html>
