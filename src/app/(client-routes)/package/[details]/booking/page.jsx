@@ -126,15 +126,15 @@ export default function Booking() {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container pb-100">
       {pageLevelLoader ? (
         <PageLevelLoader />
       ) : (
-        <div className="row">
-          <div className="col-8">
-            <h1>Booking Form </h1>
+        <div className="row gap-5">
+          <div className="col-5">
+            <h4 className="title my-5">Booking Form </h4>
             <div>
-              <form>
+              <form className="d-flex flex-column gap-4">
                 <TextField
                   required
                   size="small"
@@ -199,29 +199,35 @@ export default function Booking() {
                   />
                 </LocalizationProvider>
                 <div className="d-flex flex-column ">
-                  <label>Message</label>
-                  <TextareaAutosize {...register("message")} />
+                  <label className="form-label">Message</label>
+                  <TextareaAutosize
+                    minRows={3}
+                    {...register("message")}
+                    className="form-control"
+                  />
                 </div>
-                <button
-                  className="btn btn-outline-success"
-                  type="submit"
-                  onClick={handleSubmit(onSubmit)}
-                >
-                  Book and pay later
-                </button>
-                <button
-                  id="payNowBtn"
-                  className="btn btn-success"
-                  type="submit"
-                  onClick={handleSubmit(onSubmit)}
-                >
-                  Book and Pay Now
-                </button>
+                <div className="d-flex justify-content-end gap-4">
+                  <button
+                    className="btn btn-outline-success"
+                    type="submit"
+                    onClick={handleSubmit(onSubmit)}
+                  >
+                    Book and pay later
+                  </button>
+                  <button
+                    id="payNowBtn"
+                    className="btn btn-success"
+                    type="submit"
+                    onClick={handleSubmit(onSubmit)}
+                  >
+                    Book and Pay Now
+                  </button>
+                </div>
               </form>
             </div>
           </div>
           <div className="col">
-            <h1>Booking Detail</h1>
+            <h4 className="title my-5">Booking Detail</h4>
             <div>
               <p>Package Name: {packageDetail?.name}</p>
               {mapHelper.map((item) => (
