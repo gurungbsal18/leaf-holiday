@@ -172,8 +172,16 @@
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
+  @media (max-width: 576px) {
+    display: block;
+  }
   img {
     object-fit: cover;
+    @media (max-width: 576px) {
+      margin: 10px 0;
+      width: 100%;
+      height: auto;
+    }
   }
   .itinerary-img-container {
     position: relative;

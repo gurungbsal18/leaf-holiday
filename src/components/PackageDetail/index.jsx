@@ -605,7 +605,7 @@ export default function PackageDetail({ packageDetail }) {
                 <ol>
                   {packageDetail?.faq.map((item, index) => (
                     <li key={`faq-${index}`}>
-                      <div>
+                      <div className="d-flex justify-content-between align-items-center">
                         <p>{item.question}</p>
                         <Button
                           variant="success"
