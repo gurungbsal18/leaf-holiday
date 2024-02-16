@@ -193,7 +193,7 @@ export default function PackageDetail({ packageDetail }) {
   "package details: ", packageDetail;
 
   return (
-    <div className="main-div">
+    <div className="main-div mb-5">
       <div className="single-trip-hero">
         <Image
           src={packageDetail?.mainImageUrl}
@@ -273,9 +273,9 @@ export default function PackageDetail({ packageDetail }) {
             )}
             {packageDetail?.overview !== "" && (
               <div id="overview">
-                <h4 className="title">
+                <h2 className="title">
                   Experience The Allure Of {packageDetail?.name}
-                </h4>
+                </h2>
                 {/* <div className="overview-content-collapse overview-content-expand"> */}
                 <div
                   className={`${
@@ -538,7 +538,7 @@ export default function PackageDetail({ packageDetail }) {
                     <CollectionsIcon />
                     Photo Gallery
                   </h4>
-                  <div>
+                  <div className="">
                     <Fancybox
                       options={{
                         Carousel: {
@@ -548,12 +548,15 @@ export default function PackageDetail({ packageDetail }) {
                     >
                       {packageDetail?.gallery[0].images.map((item) => (
                         <a data-fancybox="gallery" href={item} key={item}>
-                          <Image
-                            src={item}
-                            height={200}
-                            width={200}
-                            alt="gallery-image"
-                          />
+                          <div className="itinerary-img-container">
+                            <Image
+                              src={item}
+                              height={200}
+                              width={200}
+                              alt="gallery-image"
+                            />
+                            <span className="img-overlay"></span>
+                          </div>
                         </a>
                       ))}
                     </Fancybox>
@@ -578,6 +581,7 @@ export default function PackageDetail({ packageDetail }) {
                       {packageDetail?.videoGallery?.map((item) => (
                         <a key={item} data-fancybox="gallery" href={item}>
                           <iframe
+                            className="w-100"
                             width="150"
                             height="90"
                             src={getEmbeddedYouTubeUrl(item)}
