@@ -131,7 +131,7 @@ export default function Booking() {
         <PageLevelLoader />
       ) : (
         <div className="row gap-5">
-          <div className="col-5">
+          <div className="col-12 col-md-5">
             <h4 className="title my-5">Booking Form </h4>
             <div>
               <form className="d-flex flex-column gap-4">
@@ -226,7 +226,7 @@ export default function Booking() {
               </form>
             </div>
           </div>
-          <div className="col">
+          <div className="col-12 col-md">
             <h4 className="title my-5">Booking Detail</h4>
             <div>
               <p>Package Name: {packageDetail?.name}</p>

@@ -353,7 +353,9 @@ export default function PackageDetail({ packageDetail }) {
                           <div className="d-flex justify-content-between ">
                             <div className="d-flex align-items-center gap-1">
                               <TerrainIcon className="text-muted" />
-                              <p>Max Altitude: {item.maxAltitude}</p>
+                              <p className="m-0">
+                                Max Altitude: {item.maxAltitude}
+                              </p>
                             </div>
                             <div className="d-flex align-items-center gap-1">
                               <GiMeal className="text-muted" />

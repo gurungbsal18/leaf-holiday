@@ -118,8 +118,8 @@ export default function ClientNavbar() {
   return (
     <>
       <div className="container">
-        <div className="d-flex justify-content-between align-items-center">
-          <div className="image-container">
+        <div className="d-flex justify-content-between align-items-center flex-column flex-md-row header">
+          <div className="logo-img">
             <Link href="/" onClick={() => setPageLevelLoader(true)}>
               <Image
                 src="/images/logo.png"
@@ -139,7 +139,7 @@ export default function ClientNavbar() {
             </Button>
           </div>
         </div>
-        <div className="d-block d-lg-flex justify-content-center gap-4 pb-2 align-items-center position-relative">
+        <div className="d-block d-lg-flex justify-content-center gap-4 pb-2 align-items-center position-relative mt-2">
           <PrimeReactProvider>
             <MegaMenuMain />
             {user && user.role === "admin" && (
