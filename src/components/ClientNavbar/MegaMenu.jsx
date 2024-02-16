@@ -24,10 +24,17 @@ export default function MegaMenuMain() {
         ],
       ],
     },
+
     {
       label: "About us",
-      url: "/aboutUs",
+      url: "/aboutus",
     },
+
+    {
+      label: "Contact",
+      url: "/contact",
+    },
+
     // {
     //   label: "Trekking",
     //   items: [
