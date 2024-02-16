@@ -156,6 +156,18 @@
   }
 }
 
+.detail-itinerary {
+  .itinerary-img {
+    width: 100%;
+    object-fit: cover;
+    height: 400px;
+    margin: 20px 0;
+    @media (max-width: 576px) {
+      height: 200px;
+    }
+  }
+}
+
 @media (max-width: 567px) {
   .single-trip {
     &-nav {
