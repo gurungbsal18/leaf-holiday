@@ -351,7 +351,7 @@ export default function PackageDetail({ packageDetail }) {
                             }}
                           ></div>
                           <div className="d-flex justify-content-between ">
-                            <div className="d-flex">
+                            <div className="d-flex align-items-center gap-1">
                               <TerrainIcon className="text-muted" />
                               <p>Max Altitude: {item.maxAltitude}</p>
                             </div>
@@ -359,7 +359,7 @@ export default function PackageDetail({ packageDetail }) {
                               <GiMeal className="text-muted" />
                               <p className="m-0">Meals: {item.meals}</p>
                             </div>
-                            <div className="d-flex">
+                            <div className="d-flex align-items-center gap-1">
                               <FaBed className="text-muted" />
                               <p className="m-0">
                                 Accomodation: {item.accomodation}
