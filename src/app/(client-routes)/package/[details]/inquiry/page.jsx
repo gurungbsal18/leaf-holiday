@@ -115,11 +115,11 @@ export default function Inquiry() {
   }, []);
 
   return (
-    <>
+    <div className="container">
       {pageLevelLoader ? (
         <PageLevelLoader />
       ) : (
-        <div className="container py-100">
+        <div className="py-100">
           <h4 className="title">Inquiry</h4>
           <h4 className="title mb-4">{packageDetail?.name}</h4>
           <div>
@@ -214,6 +214,6 @@ export default function Inquiry() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
