@@ -60,7 +60,9 @@ export default function Booking() {
         if (isPayNow) {
           const redirectUrl =
             res.data?.data?.payment?.response?.paymentPage?.paymentPageURL;
-          window.location.href = redirectUrl;
+          if(redirectUrl){
+            window.location.href = redirectUrl;
+          }
         }
       } else {
         toast.error("Failed to book the package! Please Try Again Later...", {
