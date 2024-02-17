@@ -1,9 +1,9 @@
 .common-banner {
-  height: calc(100vh - 143px);
+  height: calc(100vh - 50vh);
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: bottom;
+    object-position: center;
   }
 }
