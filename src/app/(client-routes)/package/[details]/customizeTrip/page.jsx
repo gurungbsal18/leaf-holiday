@@ -120,37 +120,62 @@ export default function CustomizeTrip() {
       {pageLevelLoader ? (
         <PageLevelLoader />
       ) : (
-        <div>
-          <h1>Customize Trip</h1>
-          <h1>{packageDetail?.name}</h1>
+        <div className="container py-100">
+          <h4 className="title">Customize Trip</h4>
+          <h4 className="title mb-4">{packageDetail?.name}</h4>
           <div>
-            <form>
-              <TextField
-                disabled
-                required
-                size="small"
-                label="Full Name"
-                type="text"
-                variant="outlined"
-                defaultValue={user?.name || ""}
-              />
-              <TextField
-                disabled
-                required
-                size="small"
-                label="Email"
-                type="text"
-                variant="outlined"
-                defaultValue={user?.email || ""}
-              />
-              <TextField
-                required
-                size="small"
-                label="Phone Number / Whatsapp / Wechat"
-                type="text"
-                variant="outlined"
-                {...register("phoneNumber")}
-              />
+            <form className="d-flex flex-column gap-4">
+              <div className="d-flex gap-3">
+                <TextField
+                  fullWidth
+                  disabled
+                  required
+                  size="small"
+                  label="Full Name"
+                  type="text"
+                  variant="outlined"
+                  defaultValue={user?.name || ""}
+                />
+                <TextField
+                  fullWidth
+                  disabled
+                  required
+                  size="small"
+                  label="Email"
+                  type="text"
+                  variant="outlined"
+                  defaultValue={user?.email || ""}
+                />
+              </div>
+              <div className="d-flex gap-3">
+                <TextField
+                  fullWidth
+                  required
+                  size="small"
+                  label="Phone Number / Whatsapp / Wechat"
+                  type="text"
+                  variant="outlined"
+                  {...register("phoneNumber")}
+                />
+                <TextField
+                  fullWidth
+                  required
+                  size="small"
+                  label="Number of Traveller"
+                  type="number"
+                  variant="outlined"
+                  onChange={(e) => {
+                    setValue("numberOfPeople", Number(e.target.value));
+                    setValue(
+                      "price",
+                      priceCalculator(
+                        packageDetail?.prices,
+                        Number(e.target.value)
+                      ) * Number(e.target.value)
+                    );
+                  }}
+                />
+              </div>
               <Autocomplete
                 disablePortal
                 options={countries}
@@ -158,23 +183,6 @@ export default function CustomizeTrip() {
                 renderInput={(params) => (
                   <TextField {...params} label="Select Country" />
                 )}
-              />
-              <TextField
-                required
-                size="small"
-                label="Number of Traveller"
-                type="number"
-                variant="outlined"
-                onChange={(e) => {
-                  setValue("numberOfPeople", Number(e.target.value));
-                  setValue(
-                    "price",
-                    priceCalculator(
-                      packageDetail?.prices,
-                      Number(e.target.value)
-                    ) * Number(e.target.value)
-                  );
-                }}
               />
 
               <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -188,11 +196,21 @@ export default function CustomizeTrip() {
               </LocalizationProvider>
               <div className="d-flex flex-column ">
                 <label>Message</label>
-                <TextareaAutosize {...register("message")} />
+                <TextareaAutosize
+                  {...register("message")}
+                  minRows={5}
+                  className="form-control"
+                />
               </div>
-              <button type="submit" onClick={handleSubmit(onSubmit)}>
-                Submit
-              </button>
+              <div className="d-flex justify-content-end">
+                <button
+                  type="submit"
+                  onClick={handleSubmit(onSubmit)}
+                  className="btn btn-success"
+                >
+                  Submit
+                </button>
+              </div>
             </form>
           </div>
         </div>
