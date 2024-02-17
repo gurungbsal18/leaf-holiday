@@ -88,6 +88,7 @@ export default function ClientNavbar() {
     toast.success("Logged Out Successfully", {
       position: toast.POSITION.TOP_RIGHT,
     });
+    setShowMenu(false);
     setTimeout(() => {
       setUser(null);
       Cookies.remove("token");

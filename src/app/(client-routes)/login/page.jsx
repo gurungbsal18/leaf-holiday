@@ -74,6 +74,7 @@ export default function Login() {
         setIsAuthUser(true);
         setUser(res?.data?.data?.user);
         Cookies.set("token", res?.data?.data?.token);
+        axios.defaults.headers.Authorization = `Bearer ${res?.data?.data?.token}`;
         localStorage.setItem("user", JSON.stringify(res?.data?.data?.user));
         setComponentLevelLoader(false);
       } else {

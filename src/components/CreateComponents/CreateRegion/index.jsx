@@ -2,10 +2,12 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { GrClose } from "react-icons/gr";
 import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { GlobalContext } from "@/context";
 import { submitForm } from "@/utils/functions";
 import UploadToCloudinary from "@/components/ui/UploadToCloudinary";
+import axios from "@/utils/axios";
+import { toast } from "react-toastify";
 
 export default function CreateRegion({ nameValue, setNameValue, setVal }) {
   const {
@@ -14,34 +16,27 @@ export default function CreateRegion({ nameValue, setNameValue, setVal }) {
     updateForm,
     setUpdateForm,
     setDialogOpen,
+    destinationList,
   } = useContext(GlobalContext);
 
   const [selectedFile, setSelectedFile] = React.useState(
     updateForm ? updateForm.imgUrl : null
   );
-  const [destinationList, setDestinationList] = useState([]);
 
   const initialRegionForm = {
     name: nameValue ? nameValue : "",
     description: "",
-    destination: "",
+    destination: destinationList[0]._id,
     imgUrl: "",
     slug: "",
   };
 
   const form = useForm({
-    defaultValues: updateForm ? updateForm : initialRegionForm,
+    defaultValues: updateForm
+      ? { ...updateForm, destination: updateForm.destination._id }
+      : initialRegionForm,
   });
-  const { register, handleSubmit, setValue } = form;
-
-  useEffect(() => {
-    fetch("http://localhost:5001/destination/")
-      .then((data) => data.json())
-      .then((val) => {
-        setDestinationList(val);
-        setValue("destination", val.data[0]._id);
-      });
-  }, []);
+  const { register, handleSubmit, setValue, control, reset, watch } = form;
 
   const onSubmit = async (data) => {
     data = { ...data, slug: data.name.toLowerCase().replace(/\s+/g, "-") };
@@ -92,19 +87,15 @@ export default function CreateRegion({ nameValue, setNameValue, setVal }) {
               </div>
 
               <div>
-                <label for="destination">Choose a Destination:</label>
+                <label htmlFor="destination">Choose a Destination:</label>
                 <select
                   name="destination"
                   id="destination"
-                  {...register("destination")}
-                  className="form-control">
-                  {destinationList.data?.map((item) => (
-                    <option
-                      key={item._id}
-                      value={item._id}
-                      selected={
-                        item._id === updateForm?.destination ? true : false
-                      }>
+                  className="form-control"
+                  value={watch("destination")}
+                  onChange={(e) => setValue("destination", e.target.value)}>
+                  {destinationList?.map((item) => (
+                    <option key={item._id} value={item._id}>
                       {item.name}
                     </option>
                   ))}

@@ -14,6 +14,7 @@ export default function AdminPages({ data }) {
     dialogContent,
     pageLevelLoader,
     setPageLevelLoader,
+    setDestinationList,
   } = useContext(GlobalContext);
 
   const [allData, setAllData] = useState([]);
@@ -24,7 +25,6 @@ export default function AdminPages({ data }) {
     setPageLevelLoader(true);
     try {
       const res = await axios.get(`/${data.apiName}/`);
-      console.log(res);
       if (res.status === 200) {
         setAllData(res.data.data);
         setFilteredData(res.data.data);
@@ -65,6 +65,31 @@ export default function AdminPages({ data }) {
       }
     }
   }, [keyword]);
+
+  useEffect(() => {
+    if (data.apiName === "region") {
+      const fetchData = async () => {
+        try {
+          const res = await axios.get("/destination/");
+
+          if (res?.status === 200) {
+            setDestinationList(res?.data?.data);
+          } else {
+            toast.error("else Error getting Destinations...", {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+          }
+        } catch (error) {
+          console.log(error);
+          toast.error("Error getting Destinations...", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        }
+      };
+
+      fetchData();
+    }
+  }, []);
 
   return (
     <>

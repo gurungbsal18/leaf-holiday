@@ -16,6 +16,7 @@ export async function generateMetadata({ params }) {
 export default async function IndividualPackage({ params }) {
   const res = await axios.get(`/package/slug/${params.details}`);
   const packageDetail = res?.data?.data[0];
+
   return (
     <>
       {packageDetail ? (

@@ -59,43 +59,19 @@ export default function PackageDetail({ packageDetail }) {
     isAuthUser,
     pageLevelLoader,
     setPageLevelLoader,
-    // packageDetail,
-    // setPackageDetail,
   } = useContext(GlobalContext);
 
   const router = useRouter();
 
-  //   const getPackageDetail = async () => {
-  //     try {
-  //       setPageLevelLoader(true);
-  //       const res = await axios.get(`/package/slug/${packageId}`);
-  //       res;
-  //       if (res.status === 200) {
-  //         setPackageDetail(res.data.data[0]);
-  //         setPageLevelLoader(false);
-  //       } else {
-  //         toast.error("Something Went Wrong. Please Try Again...", {
-  //           position: toast.POSITION.TOP_RIGHT,
-  //         });
-  //         setPageLevelLoader(false);
-  //       }
-  //     } catch (e) {
-  //       toast.error("Something Went Wrong. Please Try Again...", {
-  //         position: toast.POSITION.TOP_RIGHT,
-  //       });
-  //       setPageLevelLoader(false);
-  //     }
-  //   };
-
   const iconMapping = {
-    duration: <CalendarMonthIcon />,
-    difficulty: <HikingIcon />,
-    maxAltitude: <TerrainIcon />,
-    bestWeater: <ThunderstormIcon />,
-    meals: <GiMeal />,
-    accomodation: <FaBed />,
-    transportation: <FaCar />,
-    group: <MdGroups />,
+    duration: { icon: <CalendarMonthIcon />, label: "Duration" },
+    difficulty: { icon: <HikingIcon />, label: "Difficulty" },
+    maxAltitude: { icon: <TerrainIcon />, label: "Max Altitude" },
+    bestWeater: { icon: <ThunderstormIcon />, label: "Best Weather" },
+    meals: { icon: <GiMeal />, label: "Meals" },
+    accomodation: { icon: <FaBed />, label: "Accomodation" },
+    transportation: { icon: <FaCar />, label: "Transportation" },
+    group: { icon: <MdGroups />, label: "Group" },
   };
 
   useEffect(() => {
@@ -143,11 +119,6 @@ export default function PackageDetail({ packageDetail }) {
   const readMoreBtn = () => {
     setContentExpand(!contentExpand);
   };
-
-  //   useEffect(() => {
-  //     getPackageDetail();
-  //     ("called useeffect");
-  //   }, []);
 
   const handleBook = () => {
     if (!isAuthUser) {
@@ -237,13 +208,13 @@ export default function PackageDetail({ packageDetail }) {
                     ([key, value]) => {
                       if (value.info !== "" && value.info !== 0) {
                         return (
-                          <div key={value.id} className="col d-flex">
+                          <div key={key} className="col d-flex">
                             <div className="trip-fact-icon">
-                              {iconMapping[value.id]}
+                              {iconMapping[key].icon}
                             </div>
                             <div>
                               <p className="trip-fact-title m-0 text-muted">
-                                {value.label}
+                                {iconMapping[key].label}
                               </p>
                               <p className="trip-fact-detail m-0">
                                 {value.info}
@@ -257,7 +228,7 @@ export default function PackageDetail({ packageDetail }) {
                 {packageDetail?.difficulty && (
                   <div className="col d-flex">
                     <div className="trip-fact-icon">
-                      {iconMapping["difficulty"]}
+                      {iconMapping["difficulty"].icon}
                     </div>
                     <div>
                       <p className="trip-fact-title m-0 text-muted">
@@ -563,9 +534,7 @@ export default function PackageDetail({ packageDetail }) {
                             height="90"
                             src={getEmbeddedYouTubeUrl(item)}
                             title="YouTube video player"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen></iframe>
+                            allowFullScreen></iframe>
                         </a>
                       ))}
                     </Fancybox>

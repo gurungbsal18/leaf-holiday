@@ -1,4 +1,8 @@
 import axios from "axios";
+import Cookies from "js-cookie";
+
+const token = Cookies.get("token");
+console.log(token);
 
 export default axios.create({
   baseURL:
@@ -6,6 +10,6 @@ export default axios.create({
       ? "http://localhost:5001/"
       : "https://leaf-backend.sushilbalami.com.np/",
   headers: {
-    Authorization: "",
+    Authorization: `Bearer ${token}`,
   },
 });
