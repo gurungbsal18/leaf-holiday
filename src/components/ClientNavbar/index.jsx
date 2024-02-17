@@ -119,8 +119,8 @@ export default function ClientNavbar() {
   return (
     <>
       <div className="container">
-        <div className="d-flex justify-content-between align-items-center">
-          <div className="image-container">
+        <div className="d-flex justify-content-between align-items-center flex-column flex-md-row header">
+          <div className="logo-img">
             <Link href="/" onClick={() => setPageLevelLoader(true)}>
               <Image
                 src="/images/logo.png"
@@ -140,11 +140,15 @@ export default function ClientNavbar() {
             </Button>
           </div>
         </div>
-        <div className="d-block d-lg-flex justify-content-center gap-4 pb-2 align-items-center position-relative">
+        <div className="d-block d-lg-flex justify-content-center gap-4 pb-2 align-items-center position-relative mt-2">
           <PrimeReactProvider>
             <MegaMenuMain />
             {user && user.role === "admin" && (
-              <Link href="/admin" onClick={() => setPageLevelLoader(true)}>
+              <Link
+                href="/admin"
+                onClick={() => setPageLevelLoader(true)}
+                className="d-none d-md-block"
+              >
                 Admin Dashboard
               </Link>
             )}
@@ -157,7 +161,8 @@ export default function ClientNavbar() {
                       setTimeout(() => {
                         router.push("/account");
                       }, 1000);
-                    }}>
+                    }}
+                  >
                     <div className="login-user">{profileImageMaker()}</div>
                   </div>
                   <div>
@@ -165,7 +170,8 @@ export default function ClientNavbar() {
                       {showMenu ? <FaChevronUp /> : <FaChevronDown />}
                     </div>
                     <div
-                      className={`login-dropdown ${showMenu ? "" : "d-none"}`}>
+                      className={`login-dropdown ${showMenu ? "" : "d-none"}`}
+                    >
                       <p className="m-0">{user && user?.name}</p>
                       <hr />
                       <Link
@@ -174,12 +180,14 @@ export default function ClientNavbar() {
                         onClick={() => {
                           setPageLevelLoader(true);
                           setShowMenu(false);
-                        }}>
+                        }}
+                      >
                         User Information
                       </Link>
                       <button
                         className="btn btn-sm btn-success"
-                        onClick={handleLogout}>
+                        onClick={handleLogout}
+                      >
                         Logout
                       </button>
                     </div>
@@ -189,7 +197,8 @@ export default function ClientNavbar() {
                 <a
                   role="button"
                   className="text-success d-flex align-items-center gap-1 log-in-btn"
-                  onClick={() => router.push("/login")}>
+                  onClick={() => router.push("/login")}
+                >
                   <LoginIcon />
                   Log In
                 </a>

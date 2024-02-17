@@ -21,7 +21,11 @@ function Fancybox(props) {
     };
   });
 
-  return <div ref={containerRef}>{props.children}</div>;
+  return (
+    <div ref={containerRef} className="itinerary-gallery">
+      {props.children}
+    </div>
+  );
 }
 
 export default Fancybox;

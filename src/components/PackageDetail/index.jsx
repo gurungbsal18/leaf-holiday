@@ -164,7 +164,7 @@ export default function PackageDetail({ packageDetail }) {
   "package details: ", packageDetail;
 
   return (
-    <div className="main-div">
+    <div className="main-div mb-5">
       <div className="single-trip-hero">
         <Image
           src={packageDetail?.mainImageUrl}
@@ -244,9 +244,9 @@ export default function PackageDetail({ packageDetail }) {
             )}
             {packageDetail?.overview !== "" && (
               <div id="overview">
-                <h4 className="title">
+                <h2 className="title">
                   Experience The Allure Of {packageDetail?.name}
-                </h4>
+                </h2>
                 {/* <div className="overview-content-collapse overview-content-expand"> */}
                 <div
                   className={`${
@@ -300,30 +300,38 @@ export default function PackageDetail({ packageDetail }) {
                         </div>
                         <div
                           className={`${
-                            showItineraryDetails[item._id] ? "" : "d-none "
+                            showItineraryDetails[item._id]
+                              ? "detail-itinerary"
+                              : "d-none "
                           }`}>
-                          <Image
-                            src={item.imageUrl}
-                            height={500}
-                            width={500}
-                            alt={`${item.name}-image`}
-                          />
+                          <div className="itinerary-img">
+                            <Image
+                              src={item.imageUrl}
+                              height={500}
+                              width={500}
+                              alt={`${item.name}-image`}
+                            />
+                          </div>
                           <div
                             dangerouslySetInnerHTML={{
                               __html: item.content,
                             }}></div>
                           <div className="d-flex justify-content-between ">
-                            <div className="d-flex">
-                              <TerrainIcon />
-                              <p>Max Altitude: {item.maxAltitude}</p>
+                            <div className="d-flex align-items-center gap-1">
+                              <TerrainIcon className="text-muted" />
+                              <p className="m-0">
+                                Max Altitude: {item.maxAltitude}
+                              </p>
                             </div>
-                            <div className="d-flex">
-                              <GiMeal />
-                              <p>Meals: {item.meals}</p>
+                            <div className="d-flex align-items-center gap-1">
+                              <GiMeal className="text-muted" />
+                              <p className="m-0">Meals: {item.meals}</p>
                             </div>
-                            <div className="d-flex">
-                              <FaBed />
-                              <p>Accomodation: {item.accomodation}</p>
+                            <div className="d-flex align-items-center gap-1">
+                              <FaBed className="text-muted" />
+                              <p className="m-0">
+                                Accomodation: {item.accomodation}
+                              </p>
                             </div>
                           </div>
                         </div>
@@ -492,7 +500,7 @@ export default function PackageDetail({ packageDetail }) {
                     <CollectionsIcon />
                     Photo Gallery
                   </h4>
-                  <div>
+                  <div className="">
                     <Fancybox
                       options={{
                         Carousel: {
@@ -501,12 +509,15 @@ export default function PackageDetail({ packageDetail }) {
                       }}>
                       {packageDetail?.gallery[0].images.map((item) => (
                         <a data-fancybox="gallery" href={item} key={item}>
-                          <Image
-                            src={item}
-                            height={200}
-                            width={200}
-                            alt="gallery-image"
-                          />
+                          <div className="itinerary-img-container">
+                            <Image
+                              src={item}
+                              height={200}
+                              width={200}
+                              alt="gallery-image"
+                            />
+                            <span className="img-overlay"></span>
+                          </div>
                         </a>
                       ))}
                     </Fancybox>
@@ -530,6 +541,7 @@ export default function PackageDetail({ packageDetail }) {
                       {packageDetail?.videoGallery?.map((item) => (
                         <a key={item} data-fancybox="gallery" href={item}>
                           <iframe
+                            className="w-100"
                             width="150"
                             height="90"
                             src={getEmbeddedYouTubeUrl(item)}
@@ -550,7 +562,7 @@ export default function PackageDetail({ packageDetail }) {
                 <ol>
                   {packageDetail?.faq.map((item, index) => (
                     <li key={`faq-${index}`}>
-                      <div>
+                      <div className="d-flex justify-content-between align-items-center">
                         <p>{item.question}</p>
                         <Button
                           variant="success"

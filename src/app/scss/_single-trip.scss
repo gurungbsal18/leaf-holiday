@@ -156,6 +156,55 @@
   }
 }
 
+.detail-itinerary {
+  .itinerary-img img {
+    width: 100%;
+    object-fit: cover;
+    height: 400px;
+    margin: 20px 0;
+    @media (max-width: 576px) {
+      height: 200px;
+    }
+  }
+}
+
+.itinerary-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  @media (max-width: 576px) {
+    display: block;
+  }
+  img {
+    object-fit: cover;
+    @media (max-width: 576px) {
+      margin: 10px 0;
+      width: 100%;
+      height: auto;
+    }
+  }
+  .itinerary-img-container {
+    position: relative;
+    &:hover .img-overlay {
+      opacity: 1;
+      cursor: zoom-in;
+    }
+  }
+
+  .img-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: 0.5s;
+  }
+}
+
 @media (max-width: 567px) {
   .single-trip {
     &-nav {
