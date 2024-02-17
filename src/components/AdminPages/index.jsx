@@ -20,8 +20,16 @@ export default function AdminPages({ data }) {
     try {
       const res = await axios.get(`/${data.apiName}/`);
       if (res.status === 200) {
-        setAllData(res.data.data);
-        setFilteredData(res.data.data);
+        if (data.apiName === "user") {
+          const adminUsers = res.data.data.filter(
+            (user) => user.role === "admin"
+          );
+          setAllData(adminUsers);
+          setFilteredData(adminUsers);
+        } else {
+          setAllData(res.data.data);
+          setFilteredData(res.data.data);
+        }
         setPageLevelLoader(false);
       } else {
         toast.error("Something Went Wrong. Please Try Again...", {

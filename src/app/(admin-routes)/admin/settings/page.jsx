@@ -1,8 +1,6 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
-import { GrClose } from "react-icons/gr";
 import TextField from "@mui/material/TextField";
-import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { Controller, useForm } from "react-hook-form";
 import { GlobalContext } from "@/context";
 import { toast } from "react-toastify";
@@ -12,9 +10,13 @@ import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import axios from "@/utils/axios";
 
 export default function Settings() {
-  const { setPageLevelLoader, pageLevelLoader } = useContext(GlobalContext);
+  const {
+    setPageLevelLoader,
+    pageLevelLoader,
+    callExtractAll,
+    setCallExtractAll,
+  } = useContext(GlobalContext);
 
-  const [settingDetail, setSettingDetail] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
   const [isUpdate, setIsUpdate] = useState(false);
   const initialFormData = {
@@ -34,43 +36,73 @@ export default function Settings() {
   const form = useForm({
     defaultValues: initialFormData,
   });
-  const { register, handleSubmit, setValue, control, reset } = form;
+  const { handleSubmit, setValue, control, reset } = form;
 
   const onSubmit = async (data) => {
-    const res = await submitForm(data, "setting", isUpdate);
-  };
-
-  const getSettingsData = async () => {
     setPageLevelLoader(true);
     try {
-      const res = await axios.get(`/setting/`);
-      res;
-      if (res.status === 200) {
-        const settingData = res.data?.data;
+      let res = {};
+      isUpdate
+        ? (res = await axios.put(`/setting/update/${data._id}`, data))
+        : (res = await axios.post(`/setting/add`, data));
+      console.log(res);
 
-        if (settingData.length > 0) {
-          setIsUpdate(true);
-          setSettingDetail(settingData[0]);
-          setSelectedFile(settingData[0]?.logo);
-          setPageLevelLoader(false);
-          reset(settingData[0]);
-        }
+      if (res.status === 200) {
+        toast.success(res.data.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setCallExtractAll(!callExtractAll);
       } else {
+        toast.error(
+          res?.message || "Something Went Wrong. Please Try Again...",
+          {
+            position: toast.POSITION.TOP_RIGHT,
+          }
+        );
+        setPageLevelLoader(false);
+      }
+    } catch (e) {
+      toast.error(
+        e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
+        {
+          position: toast.POSITION.TOP_RIGHT,
+        }
+      );
+      setPageLevelLoader(false);
+    }
+  };
+
+  useEffect(() => {
+    const getSettingsData = async () => {
+      setPageLevelLoader(true);
+      try {
+        const res = await axios.get(
+          "https://leaf-backend.sushilbalami.com.np/setting/"
+        );
+        console.log(res);
+        if (res.status === 200) {
+          const settingData = res.data?.data;
+          if (settingData.length > 0) {
+            setIsUpdate(true);
+            setSelectedFile(settingData[0]?.logo);
+            reset(settingData[0]);
+          }
+          setPageLevelLoader(false);
+        } else {
+          toast.error("Something Went Wrong. Please Try Again...", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          setPageLevelLoader(false);
+        }
+      } catch (e) {
         toast.error("Something Went Wrong. Please Try Again...", {
           position: toast.POSITION.TOP_RIGHT,
         });
         setPageLevelLoader(false);
       }
-    } catch (e) {
-      toast.error("Something Went Wrong. Please Try Again...", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      setPageLevelLoader(false);
-    }
-  };
-  useEffect(() => {
+    };
     getSettingsData();
-  }, []);
+  }, [callExtractAll]);
 
   return (
     <>

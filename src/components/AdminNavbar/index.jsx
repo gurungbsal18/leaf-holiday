@@ -52,7 +52,9 @@ export default function AdminNavbar() {
         {adminNavItems.map((item) => (
           <div
             onClick={() => {
-              setPageLevelLoader(true);
+              if (activeNav !== item.path) {
+                setPageLevelLoader(true);
+              }
               router.push(`/admin/${item.path}`);
             }}
             className="nav-item d-flex gap-2"

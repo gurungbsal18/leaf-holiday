@@ -8,6 +8,7 @@ import ArticleIcon from "@mui/icons-material/Article";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import BookOnlineIcon from "@mui/icons-material/BookOnline";
 
 import RouteIcon from "@mui/icons-material/Route";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
@@ -118,10 +119,16 @@ export const adminNavItems = [
     path: "our-team",
   },
   {
-    id: "profile",
+    id: "bookings",
+    icon: <BookOnlineIcon />,
+    label: "Bookings",
+    path: "bookings",
+  },
+  {
+    id: "admins",
     icon: <AccountCircleIcon />,
-    label: "Profile",
-    path: "profile",
+    label: "Admins",
+    path: "admins",
   },
 ];
 export const registrationFormControls = [

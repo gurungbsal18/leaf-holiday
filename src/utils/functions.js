@@ -62,6 +62,7 @@ export const submitForm = async (
       return res;
     }
   } catch (e) {
+    console.log(e);
     toast.error(
       e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
       {

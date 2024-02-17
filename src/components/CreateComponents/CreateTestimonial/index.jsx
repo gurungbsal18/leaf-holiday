@@ -36,8 +36,7 @@ export default function CreateTestimonial() {
     stars: 1,
     comment: "",
     isSelected: false,
-    // isVerified: user?.role === "admin" ? true : false,
-    isVerified: false,
+    isVerified: user?.role === "admin" ? true : false,
   };
 
   const form = useForm({
@@ -106,7 +105,7 @@ export default function CreateTestimonial() {
           </div>
           <form>
             <div className="d-flex flex-column gap-2">
-              {user?.role === "user" && (
+              {user?.role === "admin" && (
                 <div>
                   <TextField
                     required

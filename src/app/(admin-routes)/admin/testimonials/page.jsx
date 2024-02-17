@@ -9,7 +9,7 @@ export default function Testimonial() {
     pageName: "Testimonial",
     createComponent: <CreateTestimonial />,
     headerData: [
-      { Header: "NAME", accessor: "userID.name" },
+      { Header: "NAME", accessor: "userName" },
       { Header: "PACKAGE", accessor: "packageId.name" },
       { Header: "COMMENT", accessor: "comment" },
       { Header: "RATING", accessor: "stars" },
