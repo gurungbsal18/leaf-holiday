@@ -16,9 +16,8 @@ export default function CreateRegion({ nameValue, setNameValue, setVal }) {
     updateForm,
     setUpdateForm,
     setDialogOpen,
-    destinationList,
   } = useContext(GlobalContext);
-
+  const [destinationList, setDestinationList] = useState([]);
   const [selectedFile, setSelectedFile] = React.useState(
     updateForm ? updateForm.imgUrl : null
   );
@@ -26,7 +25,7 @@ export default function CreateRegion({ nameValue, setNameValue, setVal }) {
   const initialRegionForm = {
     name: nameValue ? nameValue : "",
     description: "",
-    destination: destinationList[0]._id,
+    destination: "",
     imgUrl: "",
     slug: "",
   };
@@ -36,7 +35,7 @@ export default function CreateRegion({ nameValue, setNameValue, setVal }) {
       ? { ...updateForm, destination: updateForm.destination._id }
       : initialRegionForm,
   });
-  const { register, handleSubmit, setValue, control, reset, watch } = form;
+  const { register, handleSubmit, setValue, watch } = form;
 
   const onSubmit = async (data) => {
     data = { ...data, slug: data.name.toLowerCase().replace(/\s+/g, "-") };
@@ -49,6 +48,33 @@ export default function CreateRegion({ nameValue, setNameValue, setVal }) {
     setUpdateForm(null);
     setDialogOpen(false);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("/destination/");
+
+        if (res?.status === 200) {
+          setDestinationList(res?.data?.data);
+          if (!updateForm && res?.data?.data?.length !== 0) {
+            setValue("destination", res?.data?.data[0]?._id);
+          }
+        } else {
+          toast.error("else Error getting Destinations...", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("Error getting Destinations...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className="">
       <div className="custom-modal">

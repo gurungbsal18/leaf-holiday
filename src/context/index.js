@@ -26,7 +26,6 @@ export default function GlobalState({ children }) {
   const [packageDetail, setPackageDetail] = useState(null);
   const [homePageEdit, setHomePageEdit] = useState(null);
   const [verify, setVerify] = useState(false);
-  const [destinationList, setDestinationList] = useState(null);
 
   const pathname = usePathname();
   const extractAdminPath = pathname.split("/");
@@ -100,8 +99,6 @@ export default function GlobalState({ children }) {
         setHomePageEdit,
         verify,
         setVerify,
-        destinationList,
-        setDestinationList,
       }}>
       {children}
     </GlobalContext.Provider>

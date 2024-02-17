@@ -8,14 +8,8 @@ import Table from "../ui/Table";
 import axios from "@/utils/axios";
 
 export default function AdminPages({ data }) {
-  const {
-    callExtractAll,
-    dialogOpen,
-    dialogContent,
-    pageLevelLoader,
-    setPageLevelLoader,
-    setDestinationList,
-  } = useContext(GlobalContext);
+  const { callExtractAll, pageLevelLoader, setPageLevelLoader } =
+    useContext(GlobalContext);
 
   const [allData, setAllData] = useState([]);
   const [keyword, setKeyword] = useState("");
@@ -65,31 +59,6 @@ export default function AdminPages({ data }) {
       }
     }
   }, [keyword]);
-
-  useEffect(() => {
-    if (data.apiName === "region") {
-      const fetchData = async () => {
-        try {
-          const res = await axios.get("/destination/");
-
-          if (res?.status === 200) {
-            setDestinationList(res?.data?.data);
-          } else {
-            toast.error("else Error getting Destinations...", {
-              position: toast.POSITION.TOP_RIGHT,
-            });
-          }
-        } catch (error) {
-          console.log(error);
-          toast.error("Error getting Destinations...", {
-            position: toast.POSITION.TOP_RIGHT,
-          });
-        }
-      };
-
-      fetchData();
-    }
-  }, []);
 
   return (
     <>
