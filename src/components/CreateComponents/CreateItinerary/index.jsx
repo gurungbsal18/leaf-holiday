@@ -76,7 +76,6 @@ export default function CreateItinerary() {
               </div>
               <div>
                 <TextField
-                  // required
                   size="small"
                   label="Max Altitude"
                   type="number"
@@ -84,7 +83,6 @@ export default function CreateItinerary() {
                   {...register("maxAltitude")}
                 />
                 <TextField
-                  // required
                   size="small"
                   label="Meals"
                   type="text"
@@ -92,7 +90,6 @@ export default function CreateItinerary() {
                   {...register("meals")}
                 />
                 <TextField
-                  // required
                   size="small"
                   label="Accomodation"
                   type="text"
