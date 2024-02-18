@@ -60,7 +60,7 @@ export default function Booking() {
         if (isPayNow) {
           const redirectUrl =
             res.data?.data?.payment?.response?.paymentPage?.paymentPageURL;
-          if(redirectUrl){
+          if (redirectUrl) {
             window.location.href = redirectUrl;
           }
         }
@@ -209,13 +209,13 @@ export default function Booking() {
                   />
                 </div>
                 <div className="d-flex justify-content-end gap-4">
-                  <button
+                  {/* <button
                     className="btn btn-outline-success"
                     type="submit"
                     onClick={handleSubmit(onSubmit)}
                   >
                     Book and pay later
-                  </button>
+                  </button> */}
                   <button
                     id="payNowBtn"
                     className="btn btn-success"
