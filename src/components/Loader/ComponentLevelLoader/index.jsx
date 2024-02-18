@@ -4,7 +4,7 @@ import { BeatLoader } from "react-spinners";
 
 export default function ComponentLevelLoader({ text }) {
   return (
-    <span className="flex gap-1 items-center">
+    <span className="d-flex justify-content-center align-items-center mx-0 my-auto">
       {text}
       <BeatLoader
         color="#198754"
