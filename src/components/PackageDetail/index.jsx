@@ -208,7 +208,7 @@ export default function PackageDetail({ packageDetail }) {
                     ([key, value]) => {
                       if (value.info !== "" && value.info !== 0) {
                         return (
-                          <div key={key} className="col-3 d-flex my-2">
+                          <div key={key} className="col-6 col-md-3 d-flex my-2">
                             <div className="trip-fact-icon text-muted">
                               {iconMapping[key].icon}
                             </div>
@@ -280,7 +280,12 @@ export default function PackageDetail({ packageDetail }) {
                   <div className="d-flex gap-3 flex-column">
                     {packageDetail?.itineraries.map((item) => (
                       <div key={item._id}>
-                        <div className="d-flex justify-content-between align-items-center">
+                        <div
+                          className="d-flex justify-content-between align-items-center bg-light p-2"
+                          onClick={() => handleToggle(item._id)}
+                          style={{ cursor: "pointer" }}
+                        >
+                          {showItineraryDetails[item._id]}
                           <span className="d-flex align-items-center gap-2">
                             <span className="text-success">
                               <LocationOnIcon />
