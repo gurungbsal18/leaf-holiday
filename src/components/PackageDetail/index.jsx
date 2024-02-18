@@ -324,7 +324,7 @@ export default function PackageDetail({ packageDetail }) {
                               __html: item.content,
                             }}
                           ></div>
-                          <div className="d-flex justify-content-between ">
+                          <div className="d-flex justify-content-between itinerary-fact">
                             <div className="d-flex align-items-center gap-1">
                               <TerrainIcon className="text-muted" />
                               <p className="m-0">

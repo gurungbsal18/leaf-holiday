@@ -209,5 +209,13 @@
     &-nav {
       overflow: auto;
     }
+    .itinerary-fact {
+      font-size: 14px;
+      flex-direction: column;
+      gap: 10px;
+      svg {
+        font-size: 14px;
+      }
+    }
   }
 }
