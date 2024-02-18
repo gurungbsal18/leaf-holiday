@@ -208,8 +208,8 @@ export default function PackageDetail({ packageDetail }) {
                     ([key, value]) => {
                       if (value.info !== "" && value.info !== 0) {
                         return (
-                          <div key={key} className="col d-flex">
-                            <div className="trip-fact-icon">
+                          <div key={key} className="col-3 d-flex my-2">
+                            <div className="trip-fact-icon text-muted">
                               {iconMapping[key].icon}
                             </div>
                             <div>
@@ -226,8 +226,8 @@ export default function PackageDetail({ packageDetail }) {
                     }
                   )}
                 {packageDetail?.difficulty && (
-                  <div className="col-3 d-flex my-3">
-                    <div className="trip-fact-icon">
+                  <div className="col d-flex my-2">
+                    <div className="trip-fact-icon text-muted">
                       {iconMapping["difficulty"].icon}
                     </div>
                     <div>
