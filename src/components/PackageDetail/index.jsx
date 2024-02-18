@@ -244,9 +244,7 @@ export default function PackageDetail({ packageDetail }) {
             )}
             {packageDetail?.overview !== "" && (
               <div id="overview">
-                <h2 className="title">
-                  Experience The Allure Of {packageDetail?.name}
-                </h2>
+                <h2 className="title">{packageDetail?.name}</h2>
                 {/* <div className="overview-content-collapse overview-content-expand"> */}
                 <div
                   className={`${
