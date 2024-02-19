@@ -19,21 +19,11 @@ export default function EditHome() {
     setCallExtractAll,
     setPageLevelLoader,
     pageLevelLoader,
-    homePageEdit,
     setHomePageEdit,
     setDialogOpen,
-    dialogContent,
     setDialogContent,
   } = useContext(GlobalContext);
-  const [topTabCount, setTopTabCount] = useState(0);
-  const [middleTabCount, setMiddleTabCount] = useState([0]);
-  const [bottomTabCount, setBottomTabCount] = useState(0);
-  const [allPackages, setAllPackages] = useState(null);
   const [homePageData, setHomePageData] = useState(null);
-
-  const onSubmit = (data) => {
-    data;
-  };
 
   const handleRemove = async (id) => {
     try {

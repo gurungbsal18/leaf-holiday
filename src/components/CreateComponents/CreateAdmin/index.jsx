@@ -25,8 +25,6 @@ export default function CreateAdmin() {
     name: "",
     email: "",
     password: "",
-    role: "admin",
-    isVerified: true,
   };
 
   const form = useForm({
@@ -38,8 +36,8 @@ export default function CreateAdmin() {
     try {
       let res = {};
       updateForm
-        ? (res = await axios.put(`/user/update/${data._id}`, data))
-        : (res = await axios.post(`/auth/register`, data));
+        ? (res = await axios.put(`/admin/update/${data._id}`, data))
+        : (res = await axios.post(`/admin/add`, data));
       console.log(res);
 
       if (res.status === 200) {

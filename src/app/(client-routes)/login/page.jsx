@@ -12,6 +12,7 @@ import TextField from "@mui/material/TextField";
 import { GlobalContext } from "@/context";
 import ComponentLevelLoader from "@/components/Loader/ComponentLevelLoader";
 import axios from "@/utils/axios";
+import Link from "next/link";
 
 function IsVerified() {
   const searchParams = useSearchParams();
@@ -148,7 +149,12 @@ export default function Login() {
           <span className="d-flex mt-3">
             <p className="m-0">Don&apos;t Have An Account?</p>
             <span className="ms-2">
-              <a href="/register">Register</a>
+              <Link href="/register">Register</Link>
+            </span>
+          </span>
+          <span className="d-flex mt-3">
+            <span className="ms-2">
+              <Link href="/forgot-password">Forgot Your Password?</Link>
             </span>
           </span>
         </div>

@@ -44,6 +44,12 @@ export default function HomePageTab({ position, valueDefault, url }) {
         ? (res = await axios.put(`/tabs/update/${data._id}`, data))
         : (res = await axios.post(`/tabs/add`, data));
       if (res.status === 200) {
+        toast.success(
+          `Tab ${valueDefault ? "Updated" : "Created"} Successfully!!!`,
+          {
+            position: toast.POSITION.TOP_RIGHT,
+          }
+        );
         setDialogOpen(false);
         setCallExtractAll(!callExtractAll);
         setPageLevelLoader(false);

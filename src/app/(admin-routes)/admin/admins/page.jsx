@@ -4,7 +4,7 @@ import CreateAdmin from "@/components/CreateComponents/CreateAdmin";
 export default function Admins() {
   const data = {
     pageName: "Admin",
-    apiName: "user",
+    apiName: "admin",
     createComponent: <CreateAdmin />,
     headerData: [
       { Header: "NAME", accessor: "name" },

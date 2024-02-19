@@ -3,7 +3,9 @@ import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import Table from "@/components/ui/Table";
 import { GlobalContext } from "@/context";
 import axios from "@/utils/axios";
+import dayjs from "dayjs";
 import React, { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function AdminBookings() {
   const { setPageLevelLoader, pageLevelLoader } = useContext(GlobalContext);
@@ -14,7 +16,15 @@ export default function AdminBookings() {
   const headerData = [
     { Header: "USER NAME", accessor: "userId.name" },
     { Header: "PACKAGE", accessor: "packageId.name" },
-    { Header: "DATE", accessor: "dateOfTravel" },
+    { Header: "MESSAGE", accessor: "message" },
+    {
+      Header: "DATE",
+      accessor: "dateOfTravel",
+      Cell: ({ value }) => {
+        return dayjs(value).format("MMM DD, YYYY");
+      },
+    },
+    ,
     { Header: "PRICE", accessor: "price" },
   ];
 
@@ -25,7 +35,7 @@ export default function AdminBookings() {
       const res = await axios.get(`/booking/find/?formType=${activeTable}`);
       console.log(res);
       if (res.status === 200) {
-        setTableData(res?.data?.data);
+        setTableData(res?.data?.data?.reverse());
         setPageLevelLoader(false);
       } else {
         toast.error("Something Went Wrong. Please Try Again...", {
@@ -73,6 +83,7 @@ export default function AdminBookings() {
             bodyData={tableData}
             apiName={"booking"}
             showRemove={true}
+            sizeOfPage={10}
           />
         )
       )}

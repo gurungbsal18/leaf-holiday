@@ -18,11 +18,13 @@ export default function Table({
   updateComponent,
   showImage,
   checkbox,
+  sizeOfPage,
+  noPagination,
 }) {
   const { setVerify } = useContext(GlobalContext);
   const columns = useMemo(() => headerData, []);
   const tableInstance = useTable(
-    { columns, data: bodyData, initialState: { pageSize: 8 } },
+    { columns, data: bodyData, initialState: { pageSize: sizeOfPage || 8 } },
     usePagination
   );
   const {
@@ -239,18 +241,20 @@ export default function Table({
           })}
         </tbody>
       </table>
-      <div>
-        <span>
-          Page <strong>{pageIndex + 1}</strong>of
-          <strong>{pageOptions.length}</strong>
-        </span>
-        <button disabled={!canPreviousPage} onClick={() => previousPage()}>
-          Previous
-        </button>
-        <button disabled={!canNextPage} onClick={() => nextPage()}>
-          Next
-        </button>
-      </div>
+      {!noPagination && (
+        <div>
+          <span>
+            Page <strong>{pageIndex + 1}</strong>of
+            <strong>{pageOptions.length}</strong>
+          </span>
+          <button disabled={!canPreviousPage} onClick={() => previousPage()}>
+            Previous
+          </button>
+          <button disabled={!canNextPage} onClick={() => nextPage()}>
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 }
