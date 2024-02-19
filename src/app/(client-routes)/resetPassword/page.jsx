@@ -2,21 +2,31 @@
 import ComponentLevelLoader from "@/components/Loader/ComponentLevelLoader";
 import { GlobalContext } from "@/context";
 import axios from "axios";
-import { usePathname } from "next/navigation";
-import React, { useContext, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import React, { Suspense, useContext, useState } from "react";
 import { toast } from "react-toastify";
+
+function Token({ setToken }) {
+  const token = useSearchParams().get("token");
+  setToken(token);
+
+  return <></>;
+}
 
 export default function ResetPassword() {
   const { componentLevelLoader, setComponentLevelLoader } =
     useContext(GlobalContext);
-  const token = usePathname().replace("/resetPassword/", "");
+  const [token, setToken] = useState(null);
   const [password, setPassword] = useState("");
 
   const handleSubmit = async () => {
     const data = { token: token, password: password };
     setComponentLevelLoader(true);
     try {
-      const res = await axios.post("/auth/passwordReset", data);
+      const res = await axios.post(
+        "https://leaf-backend.sushilbalami.com.np/auth/passwordReset",
+        data
+      );
       if (res.status === 200) {
         toast.success(
           res?.data?.message || "Something went wrong. Please try again !!!",
@@ -41,6 +51,9 @@ export default function ResetPassword() {
   };
   return (
     <div>
+      <Suspense>
+        <Token setToken={setToken} />
+      </Suspense>
       <div>
         <h4>Reset Password</h4>
       </div>

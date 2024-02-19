@@ -18,8 +18,7 @@ import { priceCalculator } from "@/utils/functions";
 import axios from "@/utils/axios";
 
 export default function Booking() {
-  const { pageLevelLoader, setPageLevelLoader, user, bookingData } =
-    useContext(GlobalContext);
+  const { pageLevelLoader, setPageLevelLoader } = useContext(GlobalContext);
   const router = useRouter();
   const pathName = usePathname();
   const packageId = pathName.match(/\/package\/([^\/]+)\//)[1];
@@ -81,12 +80,11 @@ export default function Booking() {
   };
 
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem("bookingData"))) {
+    const bookingData = JSON.parse(localStorage.getItem("bookingData"));
+    if (bookingData) {
       reset({
-        ...JSON.parse(localStorage.getItem("bookingData")),
-        dateOfTravel: dayjs(
-          JSON.parse(localStorage.getItem("bookingData")).dateOfTravel
-        ),
+        ...bookingData,
+        dateOfTravel: dayjs(bookingData.dateOfTravel),
       });
     }
 
@@ -177,9 +175,8 @@ export default function Booking() {
                   label="Number of People"
                   type="number"
                   variant="outlined"
-                  defaultValue={bookingData?.numberOfPeople || 0}
+                  value={watch("numberOfPeople")}
                   onChange={(e) => {
-                    e;
                     setValue("numberOfPeople", Number(e.target.value));
                     setValue(
                       "price",
@@ -220,8 +217,7 @@ export default function Booking() {
                     id="payNowBtn"
                     className="btn btn-success"
                     type="submit"
-                    onClick={handleSubmit(onSubmit)}
-                  >
+                    onClick={handleSubmit(onSubmit)}>
                     Book and Pay Now
                   </button>
                 </div>
