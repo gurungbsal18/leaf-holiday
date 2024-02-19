@@ -1,9 +1,13 @@
-.register-image img {
-  object-fit: cover;
+.register-image,
+.booking-cancel-image {
+  img {
+    object-fit: cover;
+  }
 }
 
 @media (max-width: 576px) {
-  .register-image {
+  .register-image,
+  .booking-cancel-image {
     img {
       width: 100vw;
       height: auto;
@@ -12,8 +16,11 @@
 }
 
 @media (max-width: 820px) {
-  .register-image img {
-    width: 300px;
-    height: auto;
+  .register-image,
+  .booking-cancel-image {
+    img {
+      width: 300px;
+      height: auto;
+    }
   }
 }
