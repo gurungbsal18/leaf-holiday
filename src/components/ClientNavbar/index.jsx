@@ -147,7 +147,7 @@ export default function ClientNavbar() {
               <Link
                 href="/admin"
                 onClick={() => setPageLevelLoader(true)}
-                className="d-none d-md-block"
+                className="d-none d-md-block text-success"
               >
                 Admin Dashboard
               </Link>
@@ -162,11 +162,15 @@ export default function ClientNavbar() {
                         router.push("/account");
                       }, 1000);
                     }}
+                    style={{ cursor: "pointer" }}
                   >
                     <div className="login-user">{profileImageMaker()}</div>
                   </div>
                   <div>
-                    <div onClick={() => setShowMenu((prev) => !prev)}>
+                    <div
+                      onClick={() => setShowMenu((prev) => !prev)}
+                      style={{ cursor: "pointer" }}
+                    >
                       {showMenu ? <FaChevronUp /> : <FaChevronDown />}
                     </div>
                     <div

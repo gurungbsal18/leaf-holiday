@@ -53,7 +53,7 @@ export default function UserDetail() {
       {pageLevelLoader ? (
         <PageLevelLoader />
       ) : (
-        <div className="col-9 px-5 mt-2">
+        <div className="col-9 px-2 mt-2">
           <h4>PERSONAL INFORMATION</h4>
           <div className="mt-5">
             <form className="d-flex flex-column gap-3">
@@ -96,7 +96,8 @@ export default function UserDetail() {
               <div className="d-flex justify-content-start">
                 <button
                   onClick={handleSubmit(submitForm)}
-                  className="btn btn-sm btn-success">
+                  className="btn btn-sm btn-success"
+                >
                   UPDATE
                 </button>
               </div>

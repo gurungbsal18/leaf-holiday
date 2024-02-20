@@ -44,7 +44,7 @@ export default function ChangePassword() {
       {pageLevelLoader ? (
         <PageLevelLoader />
       ) : (
-        <div className="col-9 px-5 mt-2">
+        <div className="col-9 px-2 mt-2">
           <h4>CHANGE PASSWORD</h4>
           <div className="mt-3">
             <form className="d-flex flex-column gap-3">
@@ -81,7 +81,8 @@ export default function ChangePassword() {
                     watch("password") === "" ||
                     watch("password") !== confirmPasswordValue
                   }
-                  className="btn btn-sm btn-success">
+                  className="btn btn-sm btn-success"
+                >
                   CHANGE PASSWORD
                 </button>
               </div>

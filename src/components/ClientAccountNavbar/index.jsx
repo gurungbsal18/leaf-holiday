@@ -45,12 +45,13 @@ export default function ClientAccountNavbar() {
   ];
 
   return (
-    <div className="d-flex flex-column bg-light col p-4 vh-100 gap-4">
+    <div className="d-flex flex-column bg-success-subtle col p-4 vh-100 gap-4">
       {mapHelper.map((item) => (
         <div
           className="d-flex justify-content-between align-items-center user-account-dashboard-item"
           key={item.id}
-          onClick={() => router.push(item.path)}>
+          onClick={() => router.push(item.path)}
+        >
           <div className="d-flex gap-2 align-items-center">
             {item.icon}
             <p className="m-0">{item.label}</p>
@@ -60,7 +61,8 @@ export default function ClientAccountNavbar() {
       ))}
       <div
         className="d-flex gap-2 border-top pt-3 logout-btn"
-        onClick={handleLogout}>
+        onClick={handleLogout}
+      >
         <LogoutIcon className="text-success" />
         <p className="m-0 text-success">Log Out</p>
       </div>
