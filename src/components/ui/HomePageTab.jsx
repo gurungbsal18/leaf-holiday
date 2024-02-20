@@ -9,6 +9,7 @@ import { GlobalContext } from "@/context";
 import CustomAutocomplete from "@/components/ui/CustomAutocomplete";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import axios from "@/utils/axios";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function HomePageTab({ position, valueDefault, url }) {
   const {
@@ -97,38 +98,45 @@ export default function HomePageTab({ position, valueDefault, url }) {
       {pageLevelLoader ? (
         <PageLevelLoader />
       ) : (
-        <div>
-          <div className="d-flex justify-content-between">
-            <div>
-              <TextField
-                className="mx-0"
-                label="Title"
-                sx={{ m: 1, width: "25ch" }}
-                type="text"
-                size="small"
-                {...register("title")}
-              />
-              <Button
-                disabled={packagesFields.length >= 6}
-                size="sm"
-                variant="success"
+        <div className="custom-dialog">
+          <div className="mb-2">
+            <div className="d-flex justify-content-between">
+              <div className="d-flex align-items-cente gap-2">
+                <TextField
+                  className="m-0"
+                  label="Title"
+                  sx={{ m: 1, width: "25ch" }}
+                  type="text"
+                  size="small"
+                  {...register("title")}
+                />
+                <button
+                  className="btn btn-sm btn-success"
+                  disabled={packagesFields.length >= 6}
+                  onClick={() => {
+                    packagesAppend(allPackages[0]);
+                  }}
+                >
+                  <span className="d-flex align-items-center gap-1">
+                    + Add More Package
+                  </span>
+                </button>
+              </div>
+
+              <span
                 onClick={() => {
-                  packagesAppend(allPackages[0]);
-                }}>
-                <span className="d-flex align-items-center gap-1">
-                  + Add More Package
-                </span>
-              </Button>
+                  setDialogOpen(false);
+                }}
+                style={{ cursor: "pointer" }}
+              >
+                <CloseIcon />
+              </span>
             </div>
-            <button
-              onClick={() => {
-                setDialogOpen(false);
-              }}>
-              close
-            </button>
           </div>
           {url && (
             <TextField
+              className="m-0 me-2"
+              size="small"
               label="Video URL"
               defaultValue={valueDefault?.videoUrl || ""}
               {...register("videoUrl")}
@@ -138,7 +146,8 @@ export default function HomePageTab({ position, valueDefault, url }) {
             return (
               <div
                 className="d-flex flex-column flex-md-row gap-3 align-items-center"
-                key={packagesField.id}>
+                key={packagesField.id}
+              >
                 <CustomAutocomplete
                   fieldName={packagesField}
                   setValue={setValue}
@@ -150,7 +159,8 @@ export default function HomePageTab({ position, valueDefault, url }) {
                   <span
                     role="button"
                     className="text-danger"
-                    onClick={() => packagesRemove(index)}>
+                    onClick={() => packagesRemove(index)}
+                  >
                     <RemoveCircleIcon />
                   </span>
                 )}
@@ -158,12 +168,14 @@ export default function HomePageTab({ position, valueDefault, url }) {
             );
           })}
           <button
+            className="btn btn-sm btn-success mt-2"
             onClick={handleSubmit(onSubmit)}
             disabled={
               watch("packages[0]") === "" ||
               watch("packages[0]") === null ||
               watch("packages[0]") === undefined
-            }>
+            }
+          >
             {valueDefault ? "UPDATE" : "CREATE"}
           </button>
         </div>
