@@ -71,61 +71,74 @@ export default function EditHome() {
   }, [callExtractAll]);
 
   return (
-    <>
+    <div className="dashboard-content-section p-4">
       {pageLevelLoader ? (
         <PageLevelLoader />
       ) : (
         <div>
-          <div>
+          <div className="d-flex gap-2 mb-2">
             <Link href={"/admin/pages"}>
               <ArrowBackIcon />
             </Link>
-            <h1>Edit HOME PAGE</h1>
+            <h4 className="title fw-bold">Edit HOME PAGE</h4>
           </div>
           <div>
             <div>
               <div>
-                <h3>Top Level Tabs</h3>
+                <h4 className="title fw-bold">Top Level Tabs</h4>
                 {!homePageData?.tabs?.top && (
                   <button
                     onClick={() => {
                       setDialogOpen(true);
                       setDialogContent(<HomePageTab position={"top"} />);
-                    }}>
+                    }}
+                  >
                     Add New Tab
                   </button>
                 )}
               </div>
               {homePageData?.tabs?.top?.length > 0 && (
-                <div>
-                  <div>
-                    <h5>{homePageData?.tabs?.top[0]?.title}</h5>
-                    <button
-                      onClick={() => {
-                        setHomePageEdit(homePageData?.tabs?.top[0]);
-                        setDialogOpen(true);
-                        setDialogContent(
-                          <HomePageTab
-                            position={"top"}
-                            valueDefault={homePageData?.tabs?.top[0]}
-                          />
-                        );
-                      }}>
-                      Edit
-                    </button>
-                    <button
-                      onClick={() =>
-                        handleRemove(homePageData?.tabs?.top[0]?._id)
-                      }>
-                      Remove
-                    </button>
+                <div className="bg-light p-2 my-3">
+                  <div className="d-flex justify-content-between align-items-end border-bottom py-3">
+                    <h4 className="title">
+                      {homePageData?.tabs?.top[0]?.title}
+                    </h4>
+                    <div className="d-flex gap-2">
+                      <button
+                        className="btn btn-md btn-success"
+                        onClick={() => {
+                          setHomePageEdit(homePageData?.tabs?.top[0]);
+                          setDialogOpen(true);
+                          setDialogContent(
+                            <HomePageTab
+                              position={"top"}
+                              valueDefault={homePageData?.tabs?.top[0]}
+                            />
+                          );
+                        }}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="btn btn-md btn-danger"
+                        onClick={() =>
+                          handleRemove(homePageData?.tabs?.top[0]?._id)
+                        }
+                      >
+                        Remove
+                      </button>
+                    </div>
                   </div>
 
                   <div>
-                    {homePageData?.tabs?.top[0] &&
-                      homePageData?.tabs?.top[0].packages.map((item) => (
-                        <p key={item._id}>{item.name}</p>
-                      ))}
+                    <ol>
+                      {homePageData?.tabs?.top[0] &&
+                        homePageData?.tabs?.top[0].packages.map((item) => (
+                          <li key={item._id} className="p-3 border-bottom">
+                            {item.name}
+                          </li>
+                        ))}
+                    </ol>
                   </div>
                 </div>
               )}
@@ -139,7 +152,8 @@ export default function EditHome() {
                 onClick={() => {
                   setDialogOpen(true);
                   setDialogContent(<HomePageTab position={"middle"} />);
-                }}>
+                }}
+              >
                 Add New Tab
               </button>
             </div>
@@ -158,7 +172,8 @@ export default function EditHome() {
                             valueDefault={middleTab}
                           />
                         );
-                      }}>
+                      }}
+                    >
                       Edit
                     </button>
 
@@ -189,7 +204,8 @@ export default function EditHome() {
                       setDialogContent(
                         <HomePageTab position={"bottom"} url={true} />
                       );
-                    }}>
+                    }}
+                  >
                     Add New Tab
                   </button>
                 )}
@@ -210,13 +226,15 @@ export default function EditHome() {
                             url={true}
                           />
                         );
-                      }}>
+                      }}
+                    >
                       Edit
                     </button>
                     <button
                       onClick={() =>
                         handleRemove(homePageData?.tabs?.bottom[0]?._id)
-                      }>
+                      }
+                    >
                       Remove
                     </button>
                   </div>
@@ -234,6 +252,6 @@ export default function EditHome() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
