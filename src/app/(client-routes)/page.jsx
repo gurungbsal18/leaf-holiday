@@ -2,7 +2,6 @@
 import PackageCard from "@/components/PackageCard";
 import "../scss/_home.scss";
 import "material-icons/iconfont/material-icons.css";
-import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import { GlobalContext } from "@/context";
@@ -12,6 +11,8 @@ import BlogCard from "@/components/BlogCard";
 import ReviewCarousel from "@/components/ReviewCarousel";
 import { getEmbeddedYouTubeUrl } from "@/utils/functions";
 import Image from "next/image";
+import { toast } from "react-toastify";
+import axios from "@/utils/axios";
 
 export default function Home() {
   const {
@@ -29,15 +30,20 @@ export default function Home() {
   const getHomePageDetail = async () => {
     setPageLevelLoader(true);
     try {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/homepage/`
-      );
+      const res = await axios.get(`/homepage/`);
       if (res.status === 200) {
         setPageLevelLoader(false);
         setHomePageData(res.data);
+      } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setPageLevelLoader(false);
       }
     } catch (e) {
-      console.log(e);
+      toast.error("Something Went Wrong. Please Try Again...", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       setPageLevelLoader(false);
     }
   };
@@ -49,7 +55,7 @@ export default function Home() {
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={true} />
+        <PageLevelLoader />
       ) : (
         <div>
           <>
@@ -110,10 +116,7 @@ export default function Home() {
                             homePageData?.tabs?.bottom[0]?.videoUrl
                           )}
                           title="YouTube video player"
-                          frameborder="0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                          allowfullscreen
-                        ></iframe>
+                          allowFullScreen></iframe>
                       )}
                     </div>
                     <div className="col-12 col-lg-6">

@@ -27,7 +27,7 @@ const Contact = () => {
               <input type="text" className="form-control" />
             </span>
             <span>
-              <label htmlFor="phonenumber">Phone/WhatsApp Number</label>
+              <label htmlFor="phonenumber">Phone/WhatsApp</label>
               <input type="number" className="form-control" />
             </span>
             <span>

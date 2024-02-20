@@ -11,10 +11,10 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import Autocomplete from "@mui/material/Autocomplete";
-import axios from "axios";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import { countries } from "@/utils";
 import { priceCalculator } from "@/utils/functions";
+import axios from "@/utils/axios";
 
 export default function CustomizeTrip() {
   const { isAuthUser, setPageLevelLoader, pageLevelLoader } =
@@ -22,7 +22,7 @@ export default function CustomizeTrip() {
   const router = useRouter();
   const pathName = usePathname();
   const packageId = pathName.match(/\/package\/([^\/]+)\//)[1];
-  console.log(packageId);
+  packageId;
 
   const [packageDetail, setPackageDetail] = useState(null);
   const [user, setUser] = useState(null);
@@ -40,14 +40,11 @@ export default function CustomizeTrip() {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
+    data;
     setPageLevelLoader(true);
     if (isAuthUser) {
       try {
-        const res = await axios.post(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/booking/add`,
-          data
-        );
+        const res = await axios.post(`/booking/add`, data);
         if (res.status === 200) {
           toast.success("Package Customization Requested Successfully", {
             position: toast.POSITION.TOP_RIGHT,
@@ -61,20 +58,22 @@ export default function CustomizeTrip() {
               position: toast.POSITION.TOP_RIGHT,
             }
           );
+          setPageLevelLoader(false);
         }
       } catch (e) {
-        setPageLevelLoader(false);
         toast.error(
           "Failed to request the customize the package! Please Try Again Later...",
           {
             position: toast.POSITION.TOP_RIGHT,
           }
         );
+        setPageLevelLoader(false);
       }
     } else {
       toast.error("Please Log In To Continue", {
         position: toast.POSITION.TOP_RIGHT,
       });
+      setPageLevelLoader(true);
       setTimeout(() => {
         router.push("/login");
       }, 1000);
@@ -91,14 +90,18 @@ export default function CustomizeTrip() {
     const getPackageDetail = async () => {
       setPageLevelLoader(true);
       try {
-        const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/package/slug/${packageId}`
-        );
-        console.log(res);
+        const res = await axios.get(`/package/slug/${packageId}`);
+        res;
         if (res.status === 200) {
           setValue("packageId", res.data.data[0]._id);
           setValue("packageName", res.data.data[0].name);
           setPackageDetail(res.data.data[0]);
+          setPageLevelLoader(false);
+        } else {
+          toast.error("Package Not Found", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          setPackageDetail({ name: "Package Not Found" });
           setPageLevelLoader(false);
         }
       } catch (e) {
@@ -113,41 +116,66 @@ export default function CustomizeTrip() {
   }, []);
 
   return (
-    <>
+    <div className="container">
       {pageLevelLoader ? (
-        <PageLevelLoader loading={true} />
+        <PageLevelLoader />
       ) : (
-        <div>
-          <h1>Customize Trip</h1>
-          <h1>{packageDetail?.name}</h1>
+        <div className="py-100">
+          <h4 className="title">Customize Trip</h4>
+          <h4 className="title mb-4">{packageDetail?.name}</h4>
           <div>
-            <form>
-              <TextField
-                disabled
-                required
-                size="small"
-                label="Full Name"
-                type="text"
-                variant="outlined"
-                defaultValue={user?.name || ""}
-              />
-              <TextField
-                disabled
-                required
-                size="small"
-                label="Email"
-                type="text"
-                variant="outlined"
-                defaultValue={user?.email || ""}
-              />
-              <TextField
-                required
-                size="small"
-                label="Phone Number / Whatsapp / Wechat"
-                type="text"
-                variant="outlined"
-                {...register("phoneNumber")}
-              />
+            <form className="d-flex flex-column gap-4">
+              <div className="d-flex gap-3">
+                <TextField
+                  fullWidth
+                  disabled
+                  required
+                  size="small"
+                  label="Full Name"
+                  type="text"
+                  variant="outlined"
+                  defaultValue={user?.name || ""}
+                />
+                <TextField
+                  fullWidth
+                  disabled
+                  required
+                  size="small"
+                  label="Email"
+                  type="text"
+                  variant="outlined"
+                  defaultValue={user?.email || ""}
+                />
+              </div>
+              <div className="d-flex gap-3">
+                <TextField
+                  fullWidth
+                  required
+                  size="small"
+                  label="Phone Number / Whatsapp / Wechat"
+                  type="text"
+                  variant="outlined"
+                  {...register("phoneNumber")}
+                />
+                <TextField
+                  fullWidth
+                  required
+                  size="small"
+                  label="Number of Traveller"
+                  type="number"
+                  variant="outlined"
+                  onChange={(e) => {
+                    setValue("numberOfPeople", Number(e.target.value));
+                    setValue(
+                      "price",
+                      priceCalculator(
+                        packageDetail?.prices,
+                        Number(e.target.value)
+                      ) * Number(e.target.value)
+                    );
+                  }}
+                />
+              </div>
               <Autocomplete
                 disablePortal
                 options={countries}
@@ -155,23 +183,6 @@ export default function CustomizeTrip() {
                 renderInput={(params) => (
                   <TextField {...params} label="Select Country" />
                 )}
-              />
-              <TextField
-                required
-                size="small"
-                label="Number of Traveller"
-                type="number"
-                variant="outlined"
-                onChange={(e) => {
-                  setValue("numberOfPeople", Number(e.target.value));
-                  setValue(
-                    "price",
-                    priceCalculator(
-                      packageDetail?.prices,
-                      Number(e.target.value)
-                    ) * Number(e.target.value)
-                  );
-                }}
               />
 
               <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -185,15 +196,25 @@ export default function CustomizeTrip() {
               </LocalizationProvider>
               <div className="d-flex flex-column ">
                 <label>Message</label>
-                <TextareaAutosize {...register("message")} />
+                <TextareaAutosize
+                  {...register("message")}
+                  minRows={5}
+                  className="form-control"
+                />
               </div>
-              <button type="submit" onClick={handleSubmit(onSubmit)}>
-                Submit
-              </button>
+              <div className="d-flex justify-content-end">
+                <button
+                  type="submit"
+                  onClick={handleSubmit(onSubmit)}
+                  className="btn btn-success"
+                >
+                  Submit
+                </button>
+              </div>
             </form>
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }

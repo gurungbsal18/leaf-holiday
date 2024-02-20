@@ -7,8 +7,9 @@ import { useForm, Controller } from "react-hook-form";
 import { GlobalContext } from "@/context";
 import { submitForm } from "@/utils/functions";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
-import axios from "axios";
 import CustomAutocomplete from "@/components/ui/CustomAutocomplete";
+import { toast } from "react-toastify";
+import axios from "@/utils/axios";
 
 export default function CreateTestimonial() {
   const {
@@ -27,7 +28,7 @@ export default function CreateTestimonial() {
   const [allPackages, setAllPackages] = useState(null);
 
   const user = JSON.parse(localStorage.getItem("user"));
-  // console.log(user);
+  // (user);
   const initialFormData = {
     packageId: updatePackage?._id || {},
     userID: user?._id || "",
@@ -35,8 +36,7 @@ export default function CreateTestimonial() {
     stars: 1,
     comment: "",
     isSelected: false,
-    // isVerified: user?.role === "admin" ? true : false,
-    isVerified: false,
+    isVerified: user?.role === "admin" ? true : false,
   };
 
   const form = useForm({
@@ -56,19 +56,24 @@ export default function CreateTestimonial() {
   const getAllPackages = async () => {
     setPageLevelLoader(true);
     try {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/package/`
-      );
+      const res = await axios.get(`/package/`);
       if (res.status === 200) {
-        setPageLevelLoader(false);
-        setAllPackages(res.data.data);
         if (!updateForm && !updatePackage) {
           reset({ ...initialFormData, packageId: res.data.data[0]._id });
         }
+        setAllPackages(res.data.data);
+        setPageLevelLoader(false);
+      } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setPageLevelLoader(false);
       }
     } catch (e) {
+      toast.error("Something Went Wrong. Please Try Again...", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       setPageLevelLoader(false);
-      console.log(e);
     }
   };
 
@@ -79,7 +84,7 @@ export default function CreateTestimonial() {
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={pageLevelLoader} />
+        <PageLevelLoader />
       ) : (
         <div className="">
           <div className="d-flex justify-content-between p-3 ">
@@ -100,7 +105,7 @@ export default function CreateTestimonial() {
           </div>
           <form>
             <div className="d-flex flex-column gap-2">
-              {user?.role === "user" && (
+              {user?.role === "admin" && (
                 <div>
                   <TextField
                     required

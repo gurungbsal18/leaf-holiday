@@ -2,10 +2,12 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { GrClose } from "react-icons/gr";
 import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { GlobalContext } from "@/context";
 import { submitForm } from "@/utils/functions";
 import UploadToCloudinary from "@/components/ui/UploadToCloudinary";
+import axios from "@/utils/axios";
+import { toast } from "react-toastify";
 
 export default function CreateRegion({ nameValue, setNameValue, setVal }) {
   const {
@@ -15,11 +17,10 @@ export default function CreateRegion({ nameValue, setNameValue, setVal }) {
     setUpdateForm,
     setDialogOpen,
   } = useContext(GlobalContext);
-
+  const [destinationList, setDestinationList] = useState([]);
   const [selectedFile, setSelectedFile] = React.useState(
     updateForm ? updateForm.imgUrl : null
   );
-  const [destinationList, setDestinationList] = useState([]);
 
   const initialRegionForm = {
     name: nameValue ? nameValue : "",
@@ -30,18 +31,11 @@ export default function CreateRegion({ nameValue, setNameValue, setVal }) {
   };
 
   const form = useForm({
-    defaultValues: updateForm ? updateForm : initialRegionForm,
+    defaultValues: updateForm
+      ? { ...updateForm, destination: updateForm.destination._id }
+      : initialRegionForm,
   });
-  const { register, handleSubmit, setValue } = form;
-
-  useEffect(() => {
-    fetch("http://localhost:5001/destination/")
-      .then((data) => data.json())
-      .then((val) => {
-        setDestinationList(val);
-        setValue("destination", val.data[0]._id);
-      });
-  }, []);
+  const { register, handleSubmit, setValue, watch } = form;
 
   const onSubmit = async (data) => {
     data = { ...data, slug: data.name.toLowerCase().replace(/\s+/g, "-") };
@@ -54,6 +48,33 @@ export default function CreateRegion({ nameValue, setNameValue, setVal }) {
     setUpdateForm(null);
     setDialogOpen(false);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("/destination/");
+
+        if (res?.status === 200) {
+          setDestinationList(res?.data?.data);
+          if (!updateForm && res?.data?.data?.length !== 0) {
+            setValue("destination", res?.data?.data[0]?._id);
+          }
+        } else {
+          toast.error("else Error getting Destinations...", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("Error getting Destinations...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className="">
       <div className="custom-modal">
@@ -92,19 +113,15 @@ export default function CreateRegion({ nameValue, setNameValue, setVal }) {
               </div>
 
               <div>
-                <label for="destination">Choose a Destination:</label>
+                <label htmlFor="destination">Choose a Destination:</label>
                 <select
                   name="destination"
                   id="destination"
-                  {...register("destination")}
-                  className="form-control">
-                  {destinationList.data?.map((item) => (
-                    <option
-                      key={item._id}
-                      value={item._id}
-                      selected={
-                        item._id === updateForm?.destination ? true : false
-                      }>
+                  className="form-control"
+                  value={watch("destination")}
+                  onChange={(e) => setValue("destination", e.target.value)}>
+                  {destinationList?.map((item) => (
+                    <option key={item._id} value={item._id}>
                       {item.name}
                     </option>
                   ))}

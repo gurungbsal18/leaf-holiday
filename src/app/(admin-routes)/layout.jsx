@@ -8,15 +8,17 @@ import Dialog from "@mui/material/Dialog";
 export default function AdminLayout({ children }) {
   const { dialogOpen, dialogContent } = useContext(GlobalContext);
   return (
-    <div className="d-flex main-container">
-      <AdminNavbar />
-      {children}
+    <div className="main-container">
+      <div className="d-flex">
+        <AdminNavbar />
+        {children}
 
-      <Dialog open={dialogOpen} className="custom-dialog">
-        {dialogContent}
-      </Dialog>
+        <Dialog open={dialogOpen} className="custom-dialog">
+          {dialogContent}
+        </Dialog>
 
-      <Notification />
+        <Notification />
+      </div>
     </div>
   );
 }

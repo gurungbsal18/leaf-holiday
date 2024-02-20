@@ -9,23 +9,13 @@ import TextEditor from "@/components/TextEditor";
 import { useFieldArray, useForm } from "react-hook-form";
 import GroupsIcon from "@mui/icons-material/Groups";
 import InputAdornment from "@mui/material/InputAdornment";
-import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
-import FormLabel from "@mui/material/FormLabel";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import CreatableAutocomplete from "@/components/ui/CreatableAutocomplete";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
-import Dialog from "@mui/material/Dialog";
-import { DevTool } from "@hookform/devtools";
 import { GlobalContext } from "@/context";
 import UploadToCloudinary from "@/components/ui/UploadToCloudinary";
-import Notification from "@/components/Notification";
 import { submitPackageForm } from "@/utils/functions";
 import CallAllEdits from "@/components/EditPackage/CallAllEdits";
-import axios from "axios";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 
 export default function CreatePackage() {
@@ -195,7 +185,7 @@ export default function CreatePackage() {
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={true} />
+        <PageLevelLoader />
       ) : (
         <div className="create-edit-package pt-0 p-2">
           <div className="d-flex flex-column flex-md-row justify-content-start justify-content-md-between sticky-top bg-white py-2 align-itmes-start align-items-md-center border-bottom mb-2">
@@ -248,7 +238,11 @@ export default function CreatePackage() {
                     className="mb-3"
                   />
                   <label htmlFor="url">
-                    URL: {process.env.NEXT_PUBLIC_WEBSITE_URL}/package/
+                    URL:{" "}
+                    {process.env.NEXT_PUBLIC_NODE_ENV === "development"
+                      ? "http://localhost:3000/"
+                      : process.env.NEXT_PUBLIC_WEBSITE_URL}
+                    /package/
                   </label>
                   <input
                     type="text"

@@ -1,5 +1,5 @@
-import axios from "axios";
 import { toast } from "react-toastify";
+import axios from "./axios";
 
 export const uploadImage = async (formData) => {
   formData.append("upload_preset", "uploadPreset");
@@ -28,23 +28,24 @@ export const uploadImage = async (formData) => {
   }
 };
 
-export const submitForm = async (data, apiName, updateForm, setNameValue, verify) => {
+export const submitForm = async (
+  data,
+  apiName,
+  updateForm,
+  setNameValue,
+  verify
+) => {
   try {
     let res = {};
     updateForm
-      ?
-      verify ? (res = await axios.put(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/${apiName}/update/${data._id}`,
-        {...data, isVerified: true}
-      )): (res = await axios.put(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/${apiName}/update/${data._id}`,
-          data
-        ))
-      : (res = await axios.post(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/${apiName}/add`,
-          data
-        ));
-        console.log(res);
+      ? verify
+        ? (res = await axios.put(`/${apiName}/update/${data._id}`, {
+            ...data,
+            isVerified: true,
+          }))
+        : (res = await axios.put(`/${apiName}/update/${data._id}`, data))
+      : (res = await axios.post(`/${apiName}/add`, data));
+    console.log(res);
 
     if (res.status === 200) {
       toast.success(res.data.message, {
@@ -61,9 +62,13 @@ export const submitForm = async (data, apiName, updateForm, setNameValue, verify
       return res;
     }
   } catch (e) {
-    toast.error("Something Went Wrong. Please Try Again!!!", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
+    console.log(e);
+    toast.error(
+      e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
+      {
+        position: toast.POSITION.TOP_RIGHT,
+      }
+    );
   }
 };
 
@@ -73,19 +78,12 @@ export const submitPackageForm = async (
   setUpdatePackage,
   router
 ) => {
-  
   try {
     let res = {};
     updatePackage
-      ? (res = await axios.put(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/package/update/${updatePackage._id}`,
-          data
-        ))
-      : (res = await axios.post(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/package/add`,
-          data
-        ));
-        console.log(res);
+      ? (res = await axios.put(`/package/update/${updatePackage._id}`, data))
+      : (res = await axios.post(`/package/add`, data));
+    console.log(res);
 
     if (res.status === 200) {
       toast.success(res.data.message, {
@@ -96,7 +94,7 @@ export const submitPackageForm = async (
         : setUpdatePackage(res.data.data);
       res;
     } else {
-      toast.error(res.message, {
+      toast.error(res?.message || "Something went wrong. Please try again!!!", {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
@@ -125,9 +123,8 @@ export const averageReview = (reviews) => {
 };
 
 export const priceCalculator = (priceRange, guestNumber) => {
-  console.log(priceRange);
-  if(priceRange?.length === 0) {
-    return 0
+  if (priceRange?.length === 0) {
+    return 0;
   }
   for (let i = 0; i < priceRange?.length; i++) {
     if (guestNumber <= Number(priceRange[i]?.numberOfPeople?.split("-")[1])) {
@@ -150,15 +147,15 @@ export const getId = (searchName, dataArray, searchBy) => {
 };
 
 export function toTitleCase(input) {
-  if (typeof input !== 'string') {
-    throw new Error('Input must be a string');
+  if (typeof input !== "string") {
+    throw new Error("Input must be a string");
   }
 
   return input
     .toLowerCase()
-    .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 }
 
 export function getEmbeddedYouTubeUrl(url) {
@@ -175,14 +172,14 @@ export function getEmbeddedYouTubeUrl(url) {
     return embeddedUrl;
   } else {
     // Handle invalid YouTube URL
-    return 'Invalid YouTube URL';
+    return "Invalid YouTube URL";
   }
 }
 export function getNameById(id, array) {
   for (let i = 0; i < array.length; i++) {
-      if (array[i].id === id) {
-          return array[i].name;
-      }
+    if (array[i].id === id) {
+      return array[i].name;
+    }
   }
   // Return null or any other default value if the ID is not found
   return null;

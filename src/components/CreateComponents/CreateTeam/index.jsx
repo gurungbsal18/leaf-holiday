@@ -6,7 +6,6 @@ import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import { useForm } from "react-hook-form";
 import { GlobalContext } from "@/context";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { submitForm } from "@/utils/functions";
 import Notification from "@/components/Notification";
@@ -63,7 +62,7 @@ export default function CreateTeam() {
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={true} />
+        <PageLevelLoader />
       ) : (
         <div className="">
           <div className="custom-modal">
@@ -107,8 +106,7 @@ export default function CreateTeam() {
                     <button
                       type="submit"
                       onClick={handleSubmit(onSubmit)}
-                      className="btn btn-success"
-                    >
+                      className="btn btn-success">
                       {updateForm ? "Update" : "Create"}
                     </button>
                   </div>

@@ -6,8 +6,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useRouter } from "next/navigation";
 import { GlobalContext } from "@/context";
 import { toast } from "react-toastify";
-import axios from "axios";
-import Image from "next/image";
+import axios from "@/utils/axios";
 
 export default function Table({
   headerData,
@@ -19,11 +18,13 @@ export default function Table({
   updateComponent,
   showImage,
   checkbox,
+  sizeOfPage,
+  noPagination,
 }) {
   const { setVerify } = useContext(GlobalContext);
   const columns = useMemo(() => headerData, []);
   const tableInstance = useTable(
-    { columns, data: bodyData, initialState: { pageSize: 8 } },
+    { columns, data: bodyData, initialState: { pageSize: sizeOfPage || 8 } },
     usePagination
   );
   const {
@@ -54,12 +55,11 @@ export default function Table({
 
   const handleSelected = async (data) => {
     try {
-      const res = await axios.put(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/${apiName}/update/${data._id}`,
-        { ...data, isSelected: !data.isSelected }
-      );
+      const res = await axios.put(`/${apiName}/update/${data._id}`, {
+        ...data,
+        isSelected: !data.isSelected,
+      });
       if (res.status === 200) {
-        console.log(res);
         res.data.data.isSelected === false
           ? toast.error("Removed from the Homepage Successfully", {
               position: toast.POSITION.TOP_RIGHT,
@@ -68,26 +68,45 @@ export default function Table({
               position: toast.POSITION.TOP_RIGHT,
             });
         setCallExtractAll(!callExtractAll);
+      } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       }
     } catch (e) {
-      toast.success("Something Went Wrong. Please Try Again!!!", {
+      toast.error("Something Went Wrong. Please Try Again...", {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
   };
 
   async function handleRemove(id) {
-    const res = await axios.delete(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/${apiName}/delete/${id}`
-    );
-    if (res.status === 200) {
-      setCallExtractAll(!callExtractAll);
-      toast.success(res.data.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+    try {
+      setPageLevelLoader(true);
+      const res = await axios.delete(`/${apiName}/delete/${id}`);
+      if (res.status === 200) {
+        setCallExtractAll(!callExtractAll);
+        toast.success(res.data.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setPageLevelLoader(false);
+      } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setPageLevelLoader(false);
+      }
+    } catch (e) {
+      toast.error(
+        e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
+        {
+          position: toast.POSITION.TOP_RIGHT,
+        }
+      );
+      setPageLevelLoader(false);
     }
   }
-  console.log(bodyData);
+  bodyData;
   return (
     <div>
       <table {...getTableProps()} className="dashboard-table">
@@ -176,8 +195,7 @@ export default function Table({
                                 );
                               }, 1000);
                             }
-                          }}
-                        >
+                          }}>
                           {apiName === "review" ? "Verify" : "View"}
                         </button>
                       )}
@@ -203,9 +221,8 @@ export default function Table({
                           setDialogContent(updateComponent);
                         }
                       }}
-                      className="btn btn-sm btn-success"
-                    >
-                      <EditNoteIcon /> Edits
+                      className="btn btn-sm btn-success">
+                      <EditNoteIcon /> Edit
                     </button>
                   )}
                   {showRemove && (
@@ -213,8 +230,7 @@ export default function Table({
                       onClick={() =>
                         handleRemove(bodyData[key.split("_")[1]]._id)
                       }
-                      className="btn btn-sm btn-danger"
-                    >
+                      className="btn btn-sm btn-danger">
                       <DeleteIcon />
                       Remove
                     </button>
@@ -225,18 +241,20 @@ export default function Table({
           })}
         </tbody>
       </table>
-      <div>
-        <span>
-          Page <strong>{pageIndex + 1}</strong>of
-          <strong>{pageOptions.length}</strong>
-        </span>
-        <button disabled={!canPreviousPage} onClick={() => previousPage()}>
-          Previous
-        </button>
-        <button disabled={!canNextPage} onClick={() => nextPage()}>
-          Next
-        </button>
-      </div>
+      {!noPagination && (
+        <div>
+          <span>
+            Page <strong>{pageIndex + 1}</strong>of
+            <strong>{pageOptions.length}</strong>
+          </span>
+          <button disabled={!canPreviousPage} onClick={() => previousPage()}>
+            Previous
+          </button>
+          <button disabled={!canNextPage} onClick={() => nextPage()}>
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 }

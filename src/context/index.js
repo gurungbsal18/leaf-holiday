@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { createContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import axios from "@/utils/axios";
 
 export const GlobalContext = createContext(null);
 
@@ -36,8 +37,10 @@ export default function GlobalState({ children }) {
   }, [pathname]);
 
   useEffect(() => {
-    if (Cookies.get("token") !== undefined) {
+    const token = Cookies.get("token");
+    if (token !== undefined) {
       setIsAuthUser(true);
+      axios.defaults.headers.Authorization = `Bearer ${token}`;
       const userData = JSON.parse(localStorage.getItem("user")) || {};
       const bookingData = JSON.parse(localStorage.getItem("bookingData")) || {};
       setUser(userData);
@@ -51,10 +54,10 @@ export default function GlobalState({ children }) {
   useEffect(() => {
     if (extractAdminPath[1] === "admin") {
       setAdminView(true);
-      setVerify(false)
+      setVerify(false);
     }
-    if(!pathname.includes("/booking")){
-      localStorage.setItem("bookingData", null)
+    if (!pathname.includes("/booking")) {
+      localStorage.setItem("bookingData", null);
     }
   }, [pathname]);
   return (
@@ -96,8 +99,7 @@ export default function GlobalState({ children }) {
         setHomePageEdit,
         verify,
         setVerify,
-      }}
-    >
+      }}>
       {children}
     </GlobalContext.Provider>
   );

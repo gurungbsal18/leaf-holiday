@@ -5,12 +5,14 @@ import React, { Suspense, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "react-bootstrap";
 import Image from "next/image";
-import axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 import TextField from "@mui/material/TextField";
 import { GlobalContext } from "@/context";
+import ComponentLevelLoader from "@/components/Loader/ComponentLevelLoader";
+import axios from "@/utils/axios";
+import Link from "next/link";
 
 function IsVerified() {
   const searchParams = useSearchParams();
@@ -62,11 +64,9 @@ export default function Login() {
   const { register, handleSubmit } = form;
 
   const onSubmit = async (data) => {
+    setComponentLevelLoader(true);
     try {
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/login`,
-        data
-      );
+      const res = await axios.post(`/auth/login`, data);
 
       if (res.status === 200) {
         toast.success("Logged in Successfully", {
@@ -75,19 +75,21 @@ export default function Login() {
         setIsAuthUser(true);
         setUser(res?.data?.data?.user);
         Cookies.set("token", res?.data?.data?.token);
+        axios.defaults.headers.Authorization = `Bearer ${res?.data?.data?.token}`;
         localStorage.setItem("user", JSON.stringify(res?.data?.data?.user));
-        setComponentLevelLoader({ loading: false, id: "" });
+        setComponentLevelLoader(false);
       } else {
         toast.error(res.message, {
           position: toast.POSITION.TOP_RIGHT,
         });
         setIsAuthUser(false);
-        setComponentLevelLoader({ loading: false, id: "" });
+        setComponentLevelLoader(false);
       }
     } catch (e) {
       toast.error(e.response.data.error, {
         position: toast.POSITION.TOP_RIGHT,
       });
+      setComponentLevelLoader(false);
     }
   };
 
@@ -131,7 +133,11 @@ export default function Login() {
                 variant="success"
                 className="flex-grow-1"
                 onClick={handleSubmit(onSubmit)}>
-                Login
+                {componentLevelLoader ? (
+                  <ComponentLevelLoader text={"Logging In"} />
+                ) : (
+                  "Login"
+                )}
               </Button>
               <Button variant="secondary" className="flex-grow-1">
                 Cancel
@@ -143,7 +149,12 @@ export default function Login() {
           <span className="d-flex mt-3">
             <p className="m-0">Don&apos;t Have An Account?</p>
             <span className="ms-2">
-              <a href="/register">Register</a>
+              <Link href="/register">Register</Link>
+            </span>
+          </span>
+          <span className="d-flex mt-3">
+            <span className="ms-2">
+              <Link href="/forgot-password">Forgot Your Password?</Link>
             </span>
           </span>
         </div>

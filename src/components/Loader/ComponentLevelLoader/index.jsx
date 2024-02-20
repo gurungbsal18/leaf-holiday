@@ -1,15 +1,15 @@
 "use client";
 
-import { SyncLoader } from "react-spinners";
+import { BeatLoader } from "react-spinners";
 
-export default function ComponentLevelLoader({ text, color, loading, size }) {
+export default function ComponentLevelLoader({ text }) {
   return (
-    <span className="flex gap-1 items-center">
+    <span className="d-flex justify-content-center align-items-center mx-0 my-auto">
       {text}
-      <SyncLoader 
-        color={color}
-        loading={loading}
-        size={size || 10}
+      <BeatLoader
+        color="#198754"
+        loading={true}
+        size={10}
         data-testid="loader"
       />
     </span>

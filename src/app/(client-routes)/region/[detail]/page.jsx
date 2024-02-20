@@ -1,10 +1,11 @@
 "use client";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import { GlobalContext } from "@/context";
-import axios from "axios";
 import { usePathname } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
+import { toast } from "react-toastify";
+import axios from "@/utils/axios";
 
 export default function RegionDetail() {
   const [regionDetail, setRegionDetail] = useState(null);
@@ -13,9 +14,7 @@ export default function RegionDetail() {
 
   const getRegionDetail = async () => {
     try {
-      const res = await axios(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/region/slug/${regionName}`
-      );
+      const res = await axios(`/region/slug/${regionName}`);
       if (res.status === 200) {
         const regionData = res.data?.data;
 
@@ -24,14 +23,19 @@ export default function RegionDetail() {
         }
         setPageLevelLoader(false);
       } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
         setPageLevelLoader(false);
       }
     } catch (e) {
-      console.log(e);
+      toast.error("Something Went Wrong. Please Try Again...", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       setPageLevelLoader(false);
     }
   };
-  console.log(regionDetail);
+  regionDetail;
   useEffect(() => {
     getRegionDetail();
   }, []);
@@ -39,7 +43,7 @@ export default function RegionDetail() {
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={true} />
+        <PageLevelLoader />
       ) : (
         <>
           {regionDetail && (

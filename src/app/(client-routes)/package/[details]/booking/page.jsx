@@ -12,14 +12,13 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import Autocomplete from "@mui/material/Autocomplete";
-import axios from "axios";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import { countries } from "@/utils";
 import { priceCalculator } from "@/utils/functions";
+import axios from "@/utils/axios";
 
 export default function Booking() {
-  const { pageLevelLoader, setPageLevelLoader, user, bookingData } =
-    useContext(GlobalContext);
+  const { pageLevelLoader, setPageLevelLoader } = useContext(GlobalContext);
   const router = useRouter();
   const pathName = usePathname();
   const packageId = pathName.match(/\/package\/([^\/]+)\//)[1];
@@ -43,13 +42,13 @@ export default function Booking() {
     },
   });
 
-  const onSubmit = async (data) => {
-    console.log(data);
+  const onSubmit = async (data, e) => {
+    const isPayNow = e?.target?.id === "payNowBtn";
     setPageLevelLoader(true);
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/booking/add`,
-        data
+        { ...data, isPayNow }
       );
       if (res.status === 200) {
         toast.success("Package Booked Successfully", {
@@ -57,28 +56,35 @@ export default function Booking() {
         });
         localStorage.removeItem("bookingData");
         setPageLevelLoader(false);
+        if (isPayNow) {
+          const redirectUrl =
+            res.data?.data?.payment?.response?.paymentPage?.paymentPageURL;
+          if (redirectUrl) {
+            window.location.href = redirectUrl;
+          }
+        }
       } else {
         toast.error("Failed to book the package! Please Try Again Later...", {
           position: toast.POSITION.TOP_RIGHT,
         });
         localStorage.removeItem("bookingData");
+        setPageLevelLoader(false);
       }
     } catch (e) {
-      setPageLevelLoader(false);
       toast.error("Failed to book the package! Please Try Again Later...", {
         position: toast.POSITION.TOP_RIGHT,
       });
       localStorage.removeItem("bookingData");
+      setPageLevelLoader(false);
     }
   };
 
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem("bookingData"))) {
+    const bookingData = JSON.parse(localStorage.getItem("bookingData"));
+    if (bookingData) {
       reset({
-        ...JSON.parse(localStorage.getItem("bookingData")),
-        dateOfTravel: dayjs(
-          JSON.parse(localStorage.getItem("bookingData")).dateOfTravel
-        ),
+        ...bookingData,
+        dateOfTravel: dayjs(bookingData.dateOfTravel),
       });
     }
 
@@ -95,37 +101,40 @@ export default function Booking() {
     const getPackageDetail = async () => {
       setPageLevelLoader(true);
       try {
-        const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/package/slug/${packageId}`
-        );
+        const res = await axios.get(`/package/slug/${packageId}`);
         if (res.status === 200) {
-          setPageLevelLoader(false);
           setPackageDetail(res.data.data[0]);
           setValue("packageName", res.data.data[0].name);
           setValue("packageId", res.data.data[0]._id);
+          setPageLevelLoader(false);
+        } else {
+          toast.error("Package Not Found", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          setPackageDetail({ name: "Package Not Found" });
+          setPageLevelLoader(false);
         }
-        console.log(res);
       } catch (e) {
-        setPageLevelLoader(false);
         toast.error("Package Not Found", {
           position: toast.POSITION.TOP_RIGHT,
         });
         setPackageDetail({ name: "Package Not Found" });
+        setPageLevelLoader(false);
       }
     };
     getPackageDetail();
   }, []);
 
   return (
-    <>
+    <div className="container pb-100">
       {pageLevelLoader ? (
-        <PageLevelLoader loading={pageLevelLoader} />
+        <PageLevelLoader />
       ) : (
-        <div className="d-flex">
-          <div>
-            <h1>Booking Form</h1>
+        <div className="row gap-5">
+          <div className="col-12 col-md-5">
+            <h4 className="title my-5">Booking Form </h4>
             <div>
-              <form>
+              <form className="d-flex flex-column gap-4">
                 <TextField
                   required
                   size="small"
@@ -166,9 +175,8 @@ export default function Booking() {
                   label="Number of People"
                   type="number"
                   variant="outlined"
-                  defaultValue={bookingData?.numberOfPeople || 0}
+                  value={watch("numberOfPeople")}
                   onChange={(e) => {
-                    console.log(e);
                     setValue("numberOfPeople", Number(e.target.value));
                     setValue(
                       "price",
@@ -190,26 +198,34 @@ export default function Booking() {
                   />
                 </LocalizationProvider>
                 <div className="d-flex flex-column ">
-                  <label>Message</label>
-                  <TextareaAutosize {...register("message")} />
+                  <label className="form-label">Message</label>
+                  <TextareaAutosize
+                    minRows={3}
+                    {...register("message")}
+                    className="form-control"
+                  />
                 </div>
-                <button
-                  className="btn btn-outline-success"
-                  type="submit"
-                  onClick={handleSubmit(onSubmit)}>
-                  Book and pay later
-                </button>
-                <button
-                  className="btn btn-success"
-                  type="submit"
-                  onClick={handleSubmit(onSubmit)}>
-                  Proced to payment
-                </button>
+                <div className="d-flex justify-content-end gap-4">
+                  {/* <button
+                    className="btn btn-outline-success"
+                    type="submit"
+                    onClick={handleSubmit(onSubmit)}
+                  >
+                    Book and pay later
+                  </button> */}
+                  <button
+                    id="payNowBtn"
+                    className="btn btn-success"
+                    type="submit"
+                    onClick={handleSubmit(onSubmit)}>
+                    Book and Pay Now
+                  </button>
+                </div>
               </form>
             </div>
           </div>
-          <div>
-            <h1>Booking Detail</h1>
+          <div className="col-12 col-md">
+            <h4 className="title my-5">Booking Detail</h4>
             <div>
               <p>Package Name: {packageDetail?.name}</p>
               {mapHelper.map((item) => (
@@ -230,7 +246,7 @@ export default function Booking() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 

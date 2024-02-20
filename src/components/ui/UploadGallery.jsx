@@ -3,8 +3,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
 import { GlobalContext } from "@/context";
+import axios from "@/utils/axios";
 // import {  submitForm } from "@/utils/functions";
-import axios from "axios";
 
 export default function UploadGallery() {
   const { updatePackage } = useContext(GlobalContext);
@@ -27,7 +27,7 @@ export default function UploadGallery() {
     setImages(updatedImages);
   };
 
-  console.log(images);
+  images;
   const handleSubmit = async () => {
     const data = {
       packageId: packageId,
@@ -36,15 +36,9 @@ export default function UploadGallery() {
     let res;
 
     if (updateGallery) {
-      res = await axios.put(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/gallery/update/${galleryId}`,
-        data
-      );
+      res = await axios.put(`/gallery/update/${galleryId}`, data);
     } else {
-      res = await axios.post(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/gallery/add`,
-        data
-      );
+      res = await axios.post(`/gallery/add`, data);
       if (res.status === 200) {
         setGalleryId(res.data.data._id);
         setUpdateGallery(true);
@@ -59,8 +53,7 @@ export default function UploadGallery() {
         {images?.map((imagelink, index) => (
           <div
             key={imagelink}
-            className="d-flex flex-column align-items-center gap-3 "
-          >
+            className="d-flex flex-column align-items-center gap-3 ">
             <Image src={imagelink} width={50} height={50} alt="gallery-image" />
             <button onClick={() => handleRemove(index)}>Remove Image</button>
           </div>
@@ -71,8 +64,7 @@ export default function UploadGallery() {
         uploadPreset="uploadPreset"
         onSuccess={(result) => {
           setImages((prev) => [...prev, result?.info?.secure_url]);
-        }}
-      >
+        }}>
         {({ open }) => {
           function handleOnClick() {
             open();

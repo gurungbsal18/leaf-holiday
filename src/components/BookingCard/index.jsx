@@ -17,7 +17,6 @@ import Link from "next/link";
 
 const BookingCard = ({ prices, packageId, pdfUrl }) => {
   const { isAuthUser, setPageLevelLoader } = useContext(GlobalContext);
-  const user = JSON.parse(localStorage.getItem("user"));
   const router = useRouter();
   const [showGroupPrice, setShowGroupPrice] = useState(false);
   const currentDate = new Date().toDateString();
@@ -29,7 +28,7 @@ const BookingCard = ({ prices, packageId, pdfUrl }) => {
     message: "",
     formType: "booking",
   });
-  console.log("pdfUrl", pdfUrl);
+  "pdfUrl", pdfUrl;
 
   const handleBook = () => {
     setPageLevelLoader(true);
@@ -41,7 +40,7 @@ const BookingCard = ({ prices, packageId, pdfUrl }) => {
         router.push("/login");
       }, 1000);
     } else {
-      console.log("Booking card form submitted: ", formData);
+      "Booking card form submitted: ", formData;
       localStorage.setItem("bookingData", JSON.stringify(formData));
       setTimeout(() => {
         router.push(`/package/${packageId}/booking`);
@@ -216,7 +215,7 @@ const BookingCard = ({ prices, packageId, pdfUrl }) => {
           >
             <PictureAsPdfIcon fontSize="large" />
             <Link
-              className="m-0"
+              className="m-0 text-light"
               href={pdfUrl}
               target="_blank"
               rel="noopener noreferrer"

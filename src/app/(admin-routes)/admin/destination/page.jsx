@@ -1,7 +1,5 @@
 import AdminPages from "@/components/AdminPages";
 import CreateDestination from "@/components/CreateComponents/CreateDestination";
-import Table from "@/components/ui/Table";
-import axios from "axios";
 
 export default function Destination() {
   const data = {

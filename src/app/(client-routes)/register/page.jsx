@@ -10,14 +10,16 @@ import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import TextField from "@mui/material/TextField";
 import { Button } from "react-bootstrap";
 import Image from "next/image";
-import axios from "axios";
 import { toast } from "react-toastify";
 import Notification from "@/components/Notification";
 import { GlobalContext } from "@/context";
 import { useRouter } from "next/navigation";
+import ComponentLevelLoader from "@/components/Loader/ComponentLevelLoader";
+import axios from "@/utils/axios";
 
 export default function Register() {
-  const { isAuthUser } = useContext(GlobalContext);
+  const { isAuthUser, componentLevelLoader, setComponentLevelLoader } =
+    useContext(GlobalContext);
   const form = useForm({
     defaultValues: {
       name: "",
@@ -32,7 +34,8 @@ export default function Register() {
 
   const onSubmit = async (data) => {
     try {
-      const res = await axios.post("http://localhost:5001/auth/register", data);
+      setComponentLevelLoader(true);
+      const res = await axios.post("/auth/register", data);
       if (res.status === 200) {
         toast.success(
           "User Registered Successfully. Please Check Your Email for Verification",
@@ -40,6 +43,7 @@ export default function Register() {
             position: toast.POSITION.TOP_RIGHT,
           }
         );
+        setComponentLevelLoader(false);
         setTimeout(() => {
           router.push("/login");
         }, 1000);
@@ -47,8 +51,8 @@ export default function Register() {
         toast.error("Failed To Register User", {
           position: toast.POSITION.TOP_RIGHT,
         });
+        setComponentLevelLoader(false);
       }
-      res;
     } catch (e) {
       toast.error(
         e.response.data.error ||
@@ -57,7 +61,7 @@ export default function Register() {
           position: toast.POSITION.TOP_RIGHT,
         }
       );
-      e;
+      setComponentLevelLoader(false);
     }
   };
   useEffect(() => {
@@ -101,7 +105,11 @@ export default function Register() {
               label="I agree to Terms and Conditions."
             />
             <Button variant="success" onClick={handleSubmit(onSubmit)}>
-              Register
+              {componentLevelLoader ? (
+                <ComponentLevelLoader text={"Registering User"} />
+              ) : (
+                "Register"
+              )}
             </Button>
           </div>
         </form>

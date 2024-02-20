@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { GlobalContext } from "@/context";
 
 export default function BlogCard({ blogDetail }) {
+  const { setPageLevelLoader } = useContext(GlobalContext);
   const router = useRouter();
   return (
     <div
       className="col-12 col-lg-4 border pb-3"
-      onClick={() => router.push(`/blog/${blogDetail?.slug}`)}
-    >
+      onClick={() => {
+        setPageLevelLoader(true);
+        router.push(`/blog/${blogDetail?.slug}`);
+      }}>
       <Image
         src={blogDetail?.imageUrl}
         width={800}
@@ -19,8 +23,7 @@ export default function BlogCard({ blogDetail }) {
         <h4 className="my-4 title">{blogDetail?.title}</h4>
         <div
           dangerouslySetInnerHTML={{ __html: blogDetail?.content }}
-          className="blog-card-content"
-        ></div>
+          className="blog-card-content"></div>
       </div>
     </div>
   );

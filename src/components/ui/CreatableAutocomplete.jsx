@@ -5,8 +5,9 @@ import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "@/context";
 import CreateRegion from "../CreateComponents/CreateRegion";
 import CreateDifficulty from "../CreateComponents/CreateDifficulty";
-import axios from "axios";
-import { getId, getNameById } from "@/utils/functions";
+import { getNameById } from "@/utils/functions";
+import { toast } from "react-toastify";
+import axios from "@/utils/axios";
 
 const filter = createFilterOptions();
 
@@ -25,21 +26,25 @@ export default function CreatableAutocomplete({
 
   const getOptionData = async () => {
     try {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/${apiName}/`
-      );
+      const res = await axios.get(`/${apiName}/`);
       if (res.status === 200) {
         setOptionData(res.data.data);
         setVal(() => getNameById(initialValue, res.data.data));
+      } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       }
     } catch (e) {
-      console.log(e);
+      toast.error("Something Went Wrong. Please Try Again...", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     }
   };
   useEffect(() => {
     getOptionData();
   }, [callExtractAll]);
-  //   console.log(optionData);
+  //   (optionData);
   return (
     <>
       <Autocomplete

@@ -2,20 +2,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import Header from "./Header";
 import { GlobalContext } from "@/context";
-import axios from "axios";
-import Notification from "../Notification";
 import PageLevelLoader from "../Loader/PageLevelLoader";
 import { toast } from "react-toastify";
 import Table from "../ui/Table";
+import axios from "@/utils/axios";
 
 export default function AdminPages({ data }) {
-  const {
-    callExtractAll,
-    dialogOpen,
-    dialogContent,
-    pageLevelLoader,
-    setPageLevelLoader,
-  } = useContext(GlobalContext);
+  const { callExtractAll, pageLevelLoader, setPageLevelLoader } =
+    useContext(GlobalContext);
 
   const [allData, setAllData] = useState([]);
   const [keyword, setKeyword] = useState("");
@@ -24,17 +18,21 @@ export default function AdminPages({ data }) {
   async function extractAllContents() {
     setPageLevelLoader(true);
     try {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/${data.apiName}/`
-      );
-
+      const res = await axios.get(`/${data.apiName}/`);
       if (res.status === 200) {
         setAllData(res.data.data);
         setFilteredData(res.data.data);
+        setPageLevelLoader(false);
+      } else {
+        toast.error("Something Went Wrong. Please Try Again...", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setPageLevelLoader(false);
       }
-      setPageLevelLoader(false);
     } catch (e) {
-      console.log(e);
+      toast.error("Something Went Wrong. Please Try Again...", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       setPageLevelLoader(false);
     }
   }
@@ -65,7 +63,7 @@ export default function AdminPages({ data }) {
   return (
     <>
       {pageLevelLoader ? (
-        <PageLevelLoader loading={pageLevelLoader} />
+        <PageLevelLoader />
       ) : (
         <div className="">
           <Header
