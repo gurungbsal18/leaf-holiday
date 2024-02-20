@@ -154,7 +154,7 @@ export default function Home() {
 
             <div className="container reccommended-section py-100">
               <div className="text-center my-5">
-                <h2 className="home-title">Reccommended on</h2>
+                <h2 className="home-title">Recommended on</h2>
               </div>
 
               <div className="d-flex justify-content-center">

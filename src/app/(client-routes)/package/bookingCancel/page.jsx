@@ -7,7 +7,7 @@ const page = () => {
     <div className="container py-100">
       <div className="d-flex justify-content-center gap-5 flex-column flex-lg-row align-items-center">
         <span className="d-flex flex-column">
-          <h4 className="title text-danger">Your booking has been canceled</h4>
+          <h4 className="title text-danger">Your booking has been cancelled</h4>
           <button className="btn btn-success">
             <ArrowBackIcon className="me-1" />
             Back to homepage
