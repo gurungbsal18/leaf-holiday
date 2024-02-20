@@ -42,19 +42,27 @@ export default function AdminDashboard() {
       ) : (
         <div className="dashboard-content-section p-4">
           <div>
-            <h2>Admin Dashboard</h2>
+            <h4 className="title fw-bold">Admin Dashboard</h4>
           </div>
-          <div className="d-flex gap-5">
+          <div className="row mt-4">
             {dashboardData &&
               Object.entries(dashboardData).map(([key, value]) => (
-                <div key={key} className="d-flex">
-                  <div>
-                    <p>{adminDataMapper[key]?.label}</p>
-                    <h4>{value}</h4>
-                    <Link
-                      href={`/admin/${adminDataMapper[key]?.path}`}>{`View All ${adminDataMapper[key]?.label}`}</Link>
+                <div className="col-3">
+                  <div
+                    key={key}
+                    className="d-flex py-3 bg-light flex-column-reverse justify-content-center align-items-center"
+                  >
+                    <div className="d-flex justify-content-center flex-column align-items-center py-2">
+                      <p>{adminDataMapper[key]?.label}</p>
+                      <h1 className="title text-success">{value}</h1>
+                      <Link href={`/admin/${adminDataMapper[key]?.path}`}>
+                        <button className="btn btn-sm btn-success">{`View All ${adminDataMapper[key]?.label}`}</button>
+                      </Link>
+                    </div>
+                    <div className="text-success">
+                      {adminDataMapper[key]?.icon}
+                    </div>
                   </div>
-                  <div>{adminDataMapper[key]?.icon}</div>
                 </div>
               ))}
           </div>
