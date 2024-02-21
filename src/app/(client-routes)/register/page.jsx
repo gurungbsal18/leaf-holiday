@@ -2,7 +2,7 @@
 
 import { registrationFormControls } from "@/utils";
 import Checkbox from "@mui/material/Checkbox";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
@@ -11,7 +11,6 @@ import TextField from "@mui/material/TextField";
 import { Button } from "react-bootstrap";
 import Image from "next/image";
 import { toast } from "react-toastify";
-import Notification from "@/components/Notification";
 import { GlobalContext } from "@/context";
 import { useRouter } from "next/navigation";
 import ComponentLevelLoader from "@/components/Loader/ComponentLevelLoader";
@@ -25,12 +24,19 @@ export default function Register() {
       name: "",
       email: "",
       password: "",
-      address: "swoyambhu",
+      address: "",
     },
   });
 
   const router = useRouter();
-  const { register, handleSubmit } = form;
+  const { register, handleSubmit, watch } = form;
+  const [checkbox, setCheckbox] = useState(false);
+
+  const isNotDisabled =
+    watch("name") !== "" &&
+    watch("email") !== "" &&
+    watch("password") !== "" &&
+    checkbox;
 
   const onSubmit = async (data) => {
     try {
@@ -98,13 +104,18 @@ export default function Register() {
             <FormControlLabel
               control={
                 <Checkbox
+                  value={checkbox}
+                  onChange={() => setCheckbox(!checkbox)}
                   icon={<RadioButtonUncheckedIcon />}
                   checkedIcon={<RadioButtonCheckedIcon />}
                 />
               }
               label="I agree to Terms and Conditions."
             />
-            <Button variant="success" onClick={handleSubmit(onSubmit)}>
+            <Button
+              disabled={!isNotDisabled}
+              variant="success"
+              onClick={handleSubmit(onSubmit)}>
               {componentLevelLoader ? (
                 <ComponentLevelLoader text={"Registering User"} />
               ) : (

@@ -131,6 +131,7 @@ export const priceCalculator = (priceRange, guestNumber) => {
       return priceRange[i].price;
     }
   }
+  return 0;
 };
 
 export const isImage = (url) => {

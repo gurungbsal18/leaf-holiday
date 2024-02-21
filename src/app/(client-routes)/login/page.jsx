@@ -32,23 +32,6 @@ export default function Login() {
     trackPage,
     componentLevelLoader,
     setComponentLevelLoader,
-    pageLevelLoader,
-    setPageLevelLoader,
-    isAdminView,
-    setAdminView,
-    createComponentOpen,
-    setCreateComponentOpen,
-    updateForm,
-    setUpdateForm,
-    callExtractAll,
-    setCallExtractAll,
-    dialogOpen,
-    setDialogOpen,
-    dialogContent,
-    setDialogContent,
-    updatePackage,
-    setUpdatePackage,
-    user,
     setUser,
     isAuthUser,
     setIsAuthUser,
@@ -61,7 +44,9 @@ export default function Login() {
     },
   });
   const router = useRouter();
-  const { register, handleSubmit } = form;
+  const { register, handleSubmit, watch } = form;
+
+  const isNotDisabled = watch("email") !== "" && watch("password") !== "";
 
   const onSubmit = async (data) => {
     setComponentLevelLoader(true);
@@ -130,6 +115,7 @@ export default function Login() {
 
             <div className="d-flex gap-2">
               <Button
+                disabled={!isNotDisabled}
                 variant="success"
                 className="flex-grow-1"
                 onClick={handleSubmit(onSubmit)}>

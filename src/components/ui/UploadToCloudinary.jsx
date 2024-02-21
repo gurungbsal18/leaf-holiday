@@ -23,7 +23,7 @@ export default function UploadToCloudinary({
           <BeatLoader
             color="#198754"
             loading={true}
-            size={30}
+            size={10}
             data-testid="loader"
             speedMultiplier={1}
           />

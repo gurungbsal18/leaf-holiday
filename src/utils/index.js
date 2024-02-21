@@ -9,7 +9,6 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import BookOnlineIcon from "@mui/icons-material/BookOnline";
-
 import RouteIcon from "@mui/icons-material/Route";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
@@ -135,19 +134,16 @@ export const registrationFormControls = [
   {
     id: "name",
     type: "text",
-    placeholder: "Enter your username",
-    label: "Username",
+    label: "Full Name",
   },
   {
     id: "email",
     type: "email",
-    placeholder: "Enter your email",
     label: "Email",
   },
   {
     id: "password",
     type: "password",
-    placeholder: "Enter your password",
     label: "Password",
   },
 ];
@@ -156,16 +152,12 @@ export const loginFormControls = [
   {
     id: "email",
     type: "email",
-    placeholder: "Enter your email",
     label: "Email",
-    componentType: "input",
   },
   {
     id: "password",
     type: "password",
-    placeholder: "Enter your password",
     label: "Password",
-    componentType: "input",
   },
 ];
 export const packageNavItems = [
@@ -214,123 +206,6 @@ export const packageNavItems = [
     path: "#review",
   },
 ];
-
-export const pkgDetail = {
-  headerImage: "/images/km.png",
-  headerTitle: "Kailash Overland Tour - 13 Days",
-  packageInformation: [
-    {
-      id: "duration",
-      label: "Duration",
-      information: "14 Days",
-    },
-    {
-      id: "difficulty",
-      label: "Difficulty",
-      information: "Strenuous",
-    },
-    {
-      id: "bestWeather",
-      label: "Best Weather",
-      information: "March-May & Sep-Nav",
-    },
-    {
-      id: "maxAltitude",
-      label: "Max Altitude",
-      information: "5545m",
-    },
-  ],
-  overviewTitle: "Experience the Allure of the Mount Kailash Overland Tour",
-  overviewContent:
-    "Leaf Holidays and Expedition provides you with the best experience. This is an extraordinary adventure that deals with spirituality, the beauty of Kailash, and the culture as well. The journey to Mount Kailash and Lake Manasarovar located in Tibet, China is quite amazing. It’s not just an expedition but has a spiritual value. The Mount Kailash Overland Tour is a typical adventure and makes your soul amazing. Mostly the Pilgrims visit Mount Kailash and Lake Manasarovar as it is considered one of the Holiest Peaks in Hinduism and Buddhism.It is believed that Mount Kailash is the abode of Lord Shiva and Lake Manasarovar is located nearer to his sacred lake and is believed to have a holy property. Yet with every step, you’ll also be moving closer to the spiritual essence of Mount Kailash. You may join us as we provide you with the best experience while traveling with us.",
-  itinerary: [
-    {
-      id: 1,
-      title: "Day 1: Arrival in Kathmandu (1400m)",
-      details:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum rutrum at. Mauris ultricies et mauris convallis consectetur. Cras pulvinar dolor eget felis vulputate, sit amet vestibulum erat ultricies. Ut at velit quam. Mauris porttitor suscipit ipsum sit amet dapibus. Aliquam lobortis vulputate nunc. Fusce pretium ultricies urna sed consectetur. Praesent ut egestas ex. Morbi eu lacinia enim. Nullam id erat elementum, porta eros fringilla, rutrum enim. Pellentesque iaculis felis ac malesuada vestibulum. Etiam facilisis, metus sed pretium tristique, nibh felis pretium arcu, at vehicula enim tortor sit amet urna.",
-    },
-    {
-      id: 2,
-      title: "Day 2: Kathmandu to Lukla by flight",
-      details:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum rutrum at. Mauris ultricies et mauris convallis consectetur. Cras pulvinar dolor eget felis vulputate, sit amet vestibulum erat ultricies. Ut at velit quam. Mauris porttitor suscipit ipsum sit amet dapibus. Aliquam lobortis vulputate nunc. Fusce pretium ultricies urna sed consectetur. Praesent ut egestas ex. Morbi eu lacinia enim. Nullam id erat elementum, porta eros fringilla, rutrum enim. Pellentesque iaculis felis ac malesuada vestibulum. Etiam facilisis, metus sed pretium tristique, nibh felis pretium arcu, at vehicula enim tortor sit amet urna.",
-    },
-    {
-      id: 3,
-      title: "Day 3: Lukla to Namche Bazaar",
-      details:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum rutrum at. Mauris ultricies et mauris convallis consectetur. Cras pulvinar dolor eget felis vulputate, sit amet vestibulum erat ultricies. Ut at velit quam. Mauris porttitor suscipit ipsum sit amet dapibus. Aliquam lobortis vulputate nunc. Fusce pretium ultricies urna sed consectetur. Praesent ut egestas ex. Morbi eu lacinia enim. Nullam id erat elementum, porta eros fringilla, rutrum enim. Pellentesque iaculis felis ac malesuada vestibulum. Etiam facilisis, metus sed pretium tristique, nibh felis pretium arcu, at vehicula enim tortor sit amet urna.",
-    },
-    {
-      id: 4,
-      title: "Day 4: Namche Bazaar to Phakding",
-      details:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum rutrum at. Mauris ultricies et mauris convallis consectetur. Cras pulvinar dolor eget felis vulputate, sit amet vestibulum erat ultricies. Ut at velit quam. Mauris porttitor suscipit ipsum sit amet dapibus. Aliquam lobortis vulputate nunc. Fusce pretium ultricies urna sed consectetur. Praesent ut egestas ex. Morbi eu lacinia enim. Nullam id erat elementum, porta eros fringilla, rutrum enim. Pellentesque iaculis felis ac malesuada vestibulum. Etiam facilisis, metus sed pretium tristique, nibh felis pretium arcu, at vehicula enim tortor sit amet urna.",
-    },
-    {
-      id: 5,
-      title: "Day 5: Phakding to Tengboche",
-      details:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum rutrum at. Mauris ultricies et mauris convallis consectetur. Cras pulvinar dolor eget felis vulputate, sit amet vestibulum erat ultricies. Ut at velit quam. Mauris porttitor suscipit ipsum sit amet dapibus. Aliquam lobortis vulputate nunc. Fusce pretium ultricies urna sed consectetur. Praesent ut egestas ex. Morbi eu lacinia enim. Nullam id erat elementum, porta eros fringilla, rutrum enim. Pellentesque iaculis felis ac malesuada vestibulum. Etiam facilisis, metus sed pretium tristique, nibh felis pretium arcu, at vehicula enim tortor sit amet urna.",
-    },
-  ],
-  costInclude: [
-    {
-      id: 1,
-      content:
-        "Cost Include Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
-    },
-    {
-      id: 2,
-      content:
-        "Cost Include Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
-    },
-    {
-      id: 3,
-      content:
-        "Cost Include Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
-    },
-    {
-      id: 4,
-      content:
-        "Cost Include Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
-    },
-    {
-      id: 5,
-      content:
-        "Cost Include Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
-    },
-  ],
-  costExclude: [
-    {
-      id: 1,
-      content:
-        "Cost Exclude Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
-    },
-    {
-      id: 2,
-      content:
-        "Cost Exclude Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
-    },
-    {
-      id: 3,
-      content:
-        "Cost Exclude Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
-    },
-    {
-      id: 4,
-      content:
-        "Cost Exclude Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
-    },
-    {
-      id: 5,
-      content:
-        "Cost Exclude Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra justo neque, eget accumsan ipsum",
-    },
-  ],
-  mapImage: "/images/map.jpg",
-};
 
 export const countries = [
   "Andorra",
