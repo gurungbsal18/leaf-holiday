@@ -27,6 +27,7 @@
   }
   &-nav {
     padding: 30px 0;
+
     a {
       color: $black;
       text-decoration: none;
@@ -208,6 +209,8 @@
   .single-trip {
     &-nav {
       overflow: auto;
+      padding: 15px 0;
+      padding-left: 11% !important;
     }
     .itinerary-fact {
       font-size: 14px;
