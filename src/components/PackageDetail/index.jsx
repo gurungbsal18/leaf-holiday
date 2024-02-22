@@ -222,7 +222,6 @@ export default function PackageDetail({ packageDetail }) {
       </div>
 
       <div className="bg-success-subtle">
-        {/* <div className="container d-flex gap-5 single-trip-nav ps-3 px-md-0"> */}
         <div
           className={`container d-flex gap-5
             ${
