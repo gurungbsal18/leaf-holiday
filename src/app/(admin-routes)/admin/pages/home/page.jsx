@@ -149,7 +149,7 @@ export default function EditHome() {
             </div>
           </div>
 
-          <div className="bg-success-subtle p-2 rounded">
+          <div className="bg-success-subtle p-2 my-4 rounded">
             <div className="d-flex justify-content-between align-items-center">
               <h4 className="title m-0">Middle Level Tabs</h4>
               <button
