@@ -284,9 +284,8 @@ export default function PackageDetail({ packageDetail }) {
               </div>
             )}
             {packageDetail?.overview !== "" && (
-              <div id="overview">
+              <div id="overview" className="pt-6">
                 <h2 className="title">{packageDetail?.name}</h2>
-                {/* <div className="overview-content-collapse overview-content-expand"> */}
                 <div
                   className={`${
                     contentExpand
@@ -304,7 +303,7 @@ export default function PackageDetail({ packageDetail }) {
             )}
             {packageDetail?.itineraries &&
               packageDetail?.itineraries.length !== 0 && (
-                <div className="mt-5" id="itinerary">
+                <div className="pt-6" id="itinerary">
                   <div className="d-flex justify-content-between mb-3 align-items-center">
                     <h4 className="title ">
                       <ModeOfTravelIcon />
@@ -390,7 +389,7 @@ export default function PackageDetail({ packageDetail }) {
               )}
             {(packageDetail?.inclusions.length !== 0 ||
               packageDetail?.exclusions.length !== 0) && (
-              <div className="cost-IE-container mt-5" id="costInclueExclude">
+              <div className="cost-IE-container pt-6" id="costInclueExclude">
                 <div className="cost-IE-header d-flex align-items-center gap-2">
                   <div
                     size="sm"
@@ -462,7 +461,7 @@ export default function PackageDetail({ packageDetail }) {
                 </div>
               )}
             {packageDetail?.tripMapUrl && packageDetail?.tripMapUrl !== "" && (
-              <div className="map-container mt-5" id="map">
+              <div className="map-container pt-6" id="map">
                 <h4 className="title">
                   <MapIcon />
                   Trip Map
@@ -479,7 +478,7 @@ export default function PackageDetail({ packageDetail }) {
             )}
             {packageDetail?.departureDate &&
               packageDetail?.departureDate.length !== 0 && (
-                <div className="fix-departure-date-table mt-5" id="date-price">
+                <div className="fix-departure-date-table pt-6" id="date-price">
                   <h4 className="title">
                     <CalendarMonth />
                     Dates & Price
@@ -548,7 +547,7 @@ export default function PackageDetail({ packageDetail }) {
               packageDetail?.gallery.length !== 0 &&
               packageDetail?.gallery[0].images.length !== 0 && (
                 <div>
-                  <h4 className="title mt-5">
+                  <h4 className="title pt-6">
                     <CollectionsIcon />
                     Photo Gallery
                   </h4>
@@ -609,7 +608,7 @@ export default function PackageDetail({ packageDetail }) {
                 </div>
               )}
             {packageDetail?.faq && packageDetail?.faq.length !== 0 && (
-              <div className="mt-5">
+              <div className="pt-6">
                 <h4 className="title">
                   <ContactSupportIcon />
                   FAQs
