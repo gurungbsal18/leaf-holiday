@@ -71,9 +71,14 @@ export default function Booking() {
         setPageLevelLoader(false);
       }
     } catch (e) {
-      toast.error("Failed to book the package! Please Try Again Later...", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      console.log(e);
+      toast.error(
+        e?.response?.data?.error ||
+          "Failed to book the package! Please Try Again Later...",
+        {
+          position: toast.POSITION.TOP_RIGHT,
+        }
+      );
       localStorage.removeItem("bookingData");
       setPageLevelLoader(false);
     }

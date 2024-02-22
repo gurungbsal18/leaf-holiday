@@ -13,6 +13,8 @@ import { GlobalContext } from "@/context";
 import ComponentLevelLoader from "@/components/Loader/ComponentLevelLoader";
 import axios from "@/utils/axios";
 import Link from "next/link";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 function IsVerified() {
   const searchParams = useSearchParams();
@@ -37,14 +39,29 @@ export default function Login() {
     setIsAuthUser,
   } = useContext(GlobalContext);
 
+  const loginSchema = z.object({
+    email: z.string().min(1, { message: "Email is required" }).email({
+      message: "Must be a valid email",
+    }),
+    password: z
+      .string()
+      .min(6, { message: "Password must be atleast 6 characters" }),
+  });
+
   const form = useForm({
     defaultValues: {
       email: "",
       password: "",
     },
+    resolver: zodResolver(loginSchema),
   });
   const router = useRouter();
-  const { register, handleSubmit, watch } = form;
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = form;
 
   const isNotDisabled = watch("email") !== "" && watch("password") !== "";
 
@@ -100,17 +117,24 @@ export default function Login() {
         <form>
           <div className="form-container d-flex flex-column gap-3">
             {loginFormControls.map((formControl) => (
-              <TextField
-                key={formControl.id}
-                required
-                fullWidth
-                size="small"
-                id={formControl.id}
-                label={formControl.label}
-                type={formControl.type}
-                variant="outlined"
-                {...register(formControl.id)}
-              />
+              <>
+                <TextField
+                  key={formControl.id}
+                  required
+                  fullWidth
+                  size="small"
+                  id={formControl.id}
+                  label={formControl.label}
+                  type={formControl.type}
+                  variant="outlined"
+                  {...register(formControl.id)}
+                />
+                {errors[formControl?.id] && (
+                  <p className="text-danger">
+                    {errors[formControl.id]?.message}
+                  </p>
+                )}
+              </>
             ))}
 
             <div className="d-flex gap-2">

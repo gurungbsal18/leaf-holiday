@@ -20,6 +20,7 @@ const BookingCard = ({ prices, packageId, pdfUrl }) => {
   const router = useRouter();
   const [showGroupPrice, setShowGroupPrice] = useState(false);
   const currentDate = new Date().toDateString();
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     country: "",
     dateOfTravel: dayjs(currentDate),
@@ -40,7 +41,6 @@ const BookingCard = ({ prices, packageId, pdfUrl }) => {
         router.push("/login");
       }, 1000);
     } else {
-      "Booking card form submitted: ", formData;
       localStorage.setItem("bookingData", JSON.stringify(formData));
       setTimeout(() => {
         router.push(`/package/${packageId}/booking`);
@@ -166,6 +166,29 @@ const BookingCard = ({ prices, packageId, pdfUrl }) => {
               type={"Number"}
               value={formData.numberOfPeople}
               onChange={(e) => {
+                if (
+                  e.target.value <
+                  Number(prices[0].numberOfPeople.split("-")[0])
+                ) {
+                  setError(
+                    `Number of People should be greater than ${
+                      Number(prices[0].numberOfPeople.split("-")[0]) - 1
+                    }`
+                  );
+                } else if (
+                  e.target.value >
+                  Number(prices[prices.length - 1].numberOfPeople.split("-")[1])
+                ) {
+                  setError(
+                    `Number of People should be less than ${
+                      Number(
+                        prices[prices.length - 1].numberOfPeople.split("-")[1]
+                      ) + 1
+                    }`
+                  );
+                } else {
+                  setError(null);
+                }
                 setFormData({
                   ...formData,
                   numberOfPeople: Number(e.target.value),
@@ -175,6 +198,7 @@ const BookingCard = ({ prices, packageId, pdfUrl }) => {
                 });
               }}
             />
+            {error && <p className="text-danger">{error}</p>}
             <span className="d-flex justify-content-between ">
               <p>{`$${priceCalculator(prices, formData.numberOfPeople)} x ${
                 formData.numberOfPeople

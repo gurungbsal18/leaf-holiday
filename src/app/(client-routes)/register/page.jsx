@@ -15,28 +15,39 @@ import { GlobalContext } from "@/context";
 import { useRouter } from "next/navigation";
 import ComponentLevelLoader from "@/components/Loader/ComponentLevelLoader";
 import axios from "@/utils/axios";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 export default function Register() {
   const { isAuthUser, componentLevelLoader, setComponentLevelLoader } =
     useContext(GlobalContext);
-  const form = useForm({
+  const [checkbox, setCheckbox] = useState(false);
+  const router = useRouter();
+
+  const registerSchema = z.object({
+    name: z.string().min(3, { message: "Full Name is required" }),
+    email: z.string().min(1, { message: "Email is required" }).email({
+      message: "Must be a valid email",
+    }),
+    password: z
+      .string()
+      .min(6, { message: "Password must be atleast 6 characters" }),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       name: "",
       email: "",
       password: "",
       address: "",
     },
+    resolver: zodResolver(registerSchema),
   });
-
-  const router = useRouter();
-  const { register, handleSubmit, watch } = form;
-  const [checkbox, setCheckbox] = useState(false);
-
-  const isNotDisabled =
-    watch("name") !== "" &&
-    watch("email") !== "" &&
-    watch("password") !== "" &&
-    checkbox;
 
   const onSubmit = async (data) => {
     try {
@@ -89,17 +100,25 @@ export default function Register() {
         <form>
           <div className="form-container d-flex flex-column gap-3">
             {registrationFormControls.map((formControl) => (
-              <TextField
-                key={formControl.id}
-                required
-                fullWidth
-                size="small"
-                id={formControl.id}
-                label={formControl.label}
-                type={formControl.type}
-                variant="outlined"
-                {...register(formControl.id)}
-              />
+              <>
+                <TextField
+                  key={formControl.id}
+                  required
+                  fullWidth
+                  size="small"
+                  id={formControl.id}
+                  label={formControl.label}
+                  type={formControl.type}
+                  variant="outlined"
+                  {...register(formControl.id)}
+                />
+                {errors[formControl.id] && (
+                  <p className="text-danger">
+                    {" "}
+                    {errors[formControl.id]?.message}
+                  </p>
+                )}
+              </>
             ))}
             <FormControlLabel
               control={
@@ -113,7 +132,7 @@ export default function Register() {
               label="I agree to Terms and Conditions."
             />
             <Button
-              disabled={!isNotDisabled}
+              disabled={!checkbox}
               variant="success"
               onClick={handleSubmit(onSubmit)}>
               {componentLevelLoader ? (

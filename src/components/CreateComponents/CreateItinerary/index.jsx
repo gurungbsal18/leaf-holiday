@@ -2,10 +2,8 @@
 import React, { useContext } from "react";
 import { GrClose } from "react-icons/gr";
 import TextField from "@mui/material/TextField";
-import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { useForm } from "react-hook-form";
 import { GlobalContext } from "@/context";
-
 import { submitForm } from "@/utils/functions";
 import UploadToCloudinary from "@/components/ui/UploadToCloudinary";
 import TextEditor from "@/components/TextEditor";

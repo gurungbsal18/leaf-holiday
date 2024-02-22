@@ -62,7 +62,8 @@ export default function Inquiry() {
         }
       } catch (e) {
         toast.error(
-          "Failed to request the inquiry of the package! Please Try Again Later...",
+          e?.response?.data?.error ||
+            "Failed to request the inquiry of the package! Please Try Again Later...",
           {
             position: toast.POSITION.TOP_RIGHT,
           }
@@ -205,8 +206,7 @@ export default function Inquiry() {
                 <button
                   className="btn btn-success"
                   type="submit"
-                  onClick={handleSubmit(onSubmit)}
-                >
+                  onClick={handleSubmit(onSubmit)}>
                   Submit
                 </button>
               </div>

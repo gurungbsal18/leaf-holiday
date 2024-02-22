@@ -143,10 +143,10 @@ export default function CreateTestimonial() {
                 // defaultValue={-1}
                 render={({ field: { onChange, value } }) => (
                   <Rating
+                    className="rating-star"
                     name={"stars"}
                     onChange={onChange}
                     value={Number(value)}
-                    precision={0.5}
                     readOnly={verify}
                   />
                 )}
