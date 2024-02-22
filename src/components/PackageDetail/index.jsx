@@ -287,7 +287,7 @@ export default function PackageDetail({ packageDetail }) {
               <div id="overview" className="pt-6">
                 <h2 className="title">{packageDetail?.name}</h2>
                 <div
-                  className={`${
+                  className={`text-justify ${
                     contentExpand
                       ? "overview-content-expand"
                       : "overview-content-collapse"
@@ -344,7 +344,7 @@ export default function PackageDetail({ packageDetail }) {
                           </Button>
                         </div>
                         <div
-                          className={`${
+                          className={`text-justify ${
                             showItineraryDetails[item._id]
                               ? "detail-itinerary"
                               : "d-none "
@@ -366,17 +366,17 @@ export default function PackageDetail({ packageDetail }) {
                           <div className="d-flex justify-content-between itinerary-fact">
                             <div className="d-flex align-items-center gap-1">
                               <TerrainIcon className="text-muted" />
-                              <p className="m-0">
+                              <p className="m-0 fs-14">
                                 Max Altitude: {item.maxAltitude}
                               </p>
                             </div>
                             <div className="d-flex align-items-center gap-1">
                               <GiMeal className="text-muted" />
-                              <p className="m-0">Meals: {item.meals}</p>
+                              <p className="m-0 fs-14">Meals: {item.meals}</p>
                             </div>
                             <div className="d-flex align-items-center gap-1">
                               <FaBed className="text-muted" />
-                              <p className="m-0">
+                              <p className="m-0 fs-14">
                                 Accomodation: {item.accomodation}
                               </p>
                             </div>
@@ -495,10 +495,8 @@ export default function PackageDetail({ packageDetail }) {
                         <th></th>
                       </tr>
                     </thead>
-                    {/* </div> */}
 
                     {packageDetail?.departureDate.map((item, index) => (
-                      // <div className="d-flex gap-3">
                       <tbody key={`departure-date-${index}`}>
                         <tr>
                           <td className="text-muted">
@@ -538,7 +536,7 @@ export default function PackageDetail({ packageDetail }) {
                 </div>
               )}
             <div
-              className="extra-contents"
+              className="extra-contents text-justify"
               dangerouslySetInnerHTML={{
                 __html: packageDetail?.content,
               }}
