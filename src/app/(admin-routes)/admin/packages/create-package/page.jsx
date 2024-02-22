@@ -209,7 +209,8 @@ export default function CreatePackage() {
               <Button
                 size="sm"
                 variant="success"
-                onClick={handleSubmit(onSubmit)}>
+                onClick={handleSubmit(onSubmit)}
+              >
                 {updatePackage ? "Update" : "Publish"}
               </Button>
             </div>
@@ -237,7 +238,7 @@ export default function CreatePackage() {
                     }}
                     className="mb-3"
                   />
-                  <label htmlFor="url">
+                  <label htmlFor="url" className="text-muted fs-14 mb-4">
                     URL:{" "}
                     {process.env.NEXT_PUBLIC_NODE_ENV === "development"
                       ? "http://localhost:3000/"
@@ -248,6 +249,7 @@ export default function CreatePackage() {
                     type="text"
                     value={watch("slug")}
                     onChange={(e) => setValue("slug", e.target.value)}
+                    style={{ width: "300px", fontSize: "14px" }}
                   />
 
                   <div className="d-flex">
@@ -256,7 +258,8 @@ export default function CreatePackage() {
                       {pricesFields.map((priceField, index) => (
                         <div
                           className="d-flex flex-column flex-md-row gap-3 align-items-center"
-                          key={priceField.id}>
+                          key={priceField.id}
+                        >
                           <TextField
                             className="mx-0"
                             label="No. of People"
@@ -293,7 +296,8 @@ export default function CreatePackage() {
                             <span
                               role="button"
                               className="text-danger"
-                              onClick={() => pricesRemove(index)}>
+                              onClick={() => pricesRemove(index)}
+                            >
                               <RemoveCircleIcon />
                             </span>
                             // <button
@@ -314,7 +318,8 @@ export default function CreatePackage() {
                             numberOfPeople: "",
                             price: 0,
                           })
-                        }>
+                        }
+                      >
                         <span className="d-flex align-items-center gap-1">
                           <MonetizationOnIcon />
                           Add More Price
@@ -431,7 +436,8 @@ export default function CreatePackage() {
                         <Button
                           variant="primary"
                           size="sm"
-                          onClick={() => highlightsAppend("")}>
+                          onClick={() => highlightsAppend("")}
+                        >
                           + Add Trip Highlights
                         </Button>
                       </div>
@@ -440,12 +446,14 @@ export default function CreatePackage() {
                           return (
                             <div
                               key={field.key}
-                              className="d-flex align-items-center">
+                              className="d-flex align-items-center"
+                            >
                               <input {...register(`highlights.${index}`)} />
                               <span
                                 role="button"
                                 className="text-danger"
-                                onClick={() => highlightsRemove(index)}>
+                                onClick={() => highlightsRemove(index)}
+                              >
                                 <RemoveCircleIcon />
                               </span>
                             </div>
@@ -460,7 +468,8 @@ export default function CreatePackage() {
                         <Button
                           variant="primary"
                           size="sm"
-                          onClick={() => inclusionsAppend("")}>
+                          onClick={() => inclusionsAppend("")}
+                        >
                           + Add Cost Include
                         </Button>
                       </div>
@@ -484,7 +493,8 @@ export default function CreatePackage() {
                         <Button
                           variant="primary"
                           size="sm"
-                          onClick={() => exclusionsAppend("")}>
+                          onClick={() => exclusionsAppend("")}
+                        >
                           + Add Cost Exclude
                         </Button>
                       </div>
@@ -607,7 +617,8 @@ export default function CreatePackage() {
                 <Button
                   variant="primary"
                   size="sm"
-                  onClick={() => videoGalleryAppend("")}>
+                  onClick={() => videoGalleryAppend("")}
+                >
                   + Add Video Url
                 </Button>
               </div>
@@ -619,7 +630,8 @@ export default function CreatePackage() {
                       <span
                         role="button"
                         className="text-danger"
-                        onClick={() => videoGalleryRemove(index)}>
+                        onClick={() => videoGalleryRemove(index)}
+                      >
                         <RemoveCircleIcon />
                       </span>
                     </div>
