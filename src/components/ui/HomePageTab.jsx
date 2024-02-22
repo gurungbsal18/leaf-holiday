@@ -99,6 +99,7 @@ export default function HomePageTab({ position, valueDefault, url }) {
         <PageLevelLoader />
       ) : (
         <div className="custom-dialog-inner">
+          <h4 className="title mb-4 pb-2 border-bottom">Add Packages</h4>
           <div className="mb-2">
             <div className="d-flex justify-content-between">
               <div className="d-flex align-items-cente gap-2">
@@ -123,14 +124,14 @@ export default function HomePageTab({ position, valueDefault, url }) {
                 </button>
               </div>
 
-              <span
+              {/* <span
                 onClick={() => {
                   setDialogOpen(false);
                 }}
                 style={{ cursor: "pointer" }}
               >
                 <CloseIcon />
-              </span>
+              </span> */}
             </div>
           </div>
           {url && (
@@ -145,7 +146,7 @@ export default function HomePageTab({ position, valueDefault, url }) {
           {packagesFields.map((packagesField, index) => {
             return (
               <div
-                className="d-flex flex-column flex-md-row gap-3 align-items-center"
+                className="d-flex flex-column flex-md-row gap-3 align-items-center py-2"
                 key={packagesField.id}
               >
                 <CustomAutocomplete
@@ -167,17 +168,28 @@ export default function HomePageTab({ position, valueDefault, url }) {
               </div>
             );
           })}
-          <button
-            className="btn btn-sm btn-success mt-2"
-            onClick={handleSubmit(onSubmit)}
-            disabled={
-              watch("packages[0]") === "" ||
-              watch("packages[0]") === null ||
-              watch("packages[0]") === undefined
-            }
-          >
-            {valueDefault ? "UPDATE" : "CREATE"}
-          </button>
+          <div className="d-flex justify-content-end mt-2 border-top pt-2 gap-2">
+            <button
+              className="btn btn-sm btn-outline-secondary"
+              onClick={() => {
+                setDialogOpen(false);
+              }}
+              style={{ cursor: "pointer" }}
+            >
+              cancel
+            </button>
+            <button
+              className="btn btn-sm btn-success"
+              onClick={handleSubmit(onSubmit)}
+              disabled={
+                watch("packages[0]") === "" ||
+                watch("packages[0]") === null ||
+                watch("packages[0]") === undefined
+              }
+            >
+              {valueDefault ? "UPDATE" : "CREATE"}
+            </button>
+          </div>
         </div>
       )}
     </>
