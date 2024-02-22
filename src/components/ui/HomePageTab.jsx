@@ -98,7 +98,7 @@ export default function HomePageTab({ position, valueDefault, url }) {
       {pageLevelLoader ? (
         <PageLevelLoader />
       ) : (
-        <div className="custom-dialog">
+        <div className="custom-dialog-inner">
           <div className="mb-2">
             <div className="d-flex justify-content-between">
               <div className="d-flex align-items-cente gap-2">

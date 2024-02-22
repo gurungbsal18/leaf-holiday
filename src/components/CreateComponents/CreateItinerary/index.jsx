@@ -47,70 +47,78 @@ export default function CreateItinerary() {
   };
 
   return (
-    <div className="">
-      <div className="">
-        <div className="d-flex justify-content-between p-3 ">
-          <p>{updateForm ? "Update Itinerary" : "Create Itinerary"}</p>
-          <GrClose
-            onClick={() => {
-              setUpdateForm(null);
-              setDialogOpen(false);
-            }}
-          />
-        </div>
-        <form>
-          <div className="d-flex gap-5">
-            <div className="d-flex flex-column gap-2">
+    <div className="custom-dialog-inner">
+      <div className="d-flex justify-content-between p-3 ">
+        <h4 className="title">
+          {updateForm ? "Update Itinerary" : "Create Itinerary"}
+        </h4>
+        <GrClose
+          onClick={() => {
+            setUpdateForm(null);
+            setDialogOpen(false);
+          }}
+          style={{ cursor: "pointer" }}
+        />
+      </div>
+      <form>
+        <div className="d-flex gap-5">
+          <div className="d-flex flex-column gap-2">
+            <TextField
+              required
+              fullWidth
+              size="small"
+              label="Title"
+              type="text"
+              variant="outlined"
+              {...register("title")}
+            />
+            <div>
+              <label name="content">Content</label>
+              <TextEditor control={control} name="content" />
+            </div>
+            <div className="d-flex gap-3 w-100">
               <TextField
-                required
-                fullWidth
+                className="col"
                 size="small"
-                label="Title"
+                label="Max Altitude"
+                type="number"
+                variant="outlined"
+                {...register("maxAltitude")}
+              />
+              <TextField
+                className="col"
+                size="small"
+                label="Meals"
                 type="text"
                 variant="outlined"
-                {...register("title")}
+                {...register("meals")}
               />
-              <div>
-                <label name="content">Content</label>
-                <TextEditor control={control} name="content" />
-              </div>
-              <div>
-                <TextField
-                  size="small"
-                  label="Max Altitude"
-                  type="number"
-                  variant="outlined"
-                  {...register("maxAltitude")}
-                />
-                <TextField
-                  size="small"
-                  label="Meals"
-                  type="text"
-                  variant="outlined"
-                  {...register("meals")}
-                />
-                <TextField
-                  size="small"
-                  label="Accomodation"
-                  type="text"
-                  variant="outlined"
-                  {...register("accomodation")}
-                />
-              </div>
-              <button type="submit" onClick={handleSubmit(onSubmit)}>
-                {updateForm ? "Update" : "Create"}
-              </button>
+              <TextField
+                className="col"
+                size="small"
+                label="Accomodation"
+                type="text"
+                variant="outlined"
+                {...register("accomodation")}
+              />
             </div>
-            <UploadToCloudinary
-              selectedFile={selectedFile}
-              setSelectedFile={setSelectedFile}
-              label="Header Image"
-              setValue={setValue}
-              formName="imageUrl"
-            />
+            <button
+              className="btn btn-sm btn-success"
+              type="submit"
+              onClick={handleSubmit(onSubmit)}
+            >
+              {updateForm ? "Update" : "Create"}
+            </button>
           </div>
-        </form>
-      </div>
+          <UploadToCloudinary
+            selectedFile={selectedFile}
+            setSelectedFile={setSelectedFile}
+            label="Header Image"
+            setValue={setValue}
+            formName="imageUrl"
+          />
+        </div>
+      </form>
     </div>
   );
 }
