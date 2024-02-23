@@ -62,7 +62,8 @@ export default function CustomizeTrip() {
         }
       } catch (e) {
         toast.error(
-          "Failed to request the customize the package! Please Try Again Later...",
+          e?.response?.data?.error ||
+            "Failed to request the customize the package! Please Try Again Later...",
           {
             position: toast.POSITION.TOP_RIGHT,
           }
@@ -206,8 +207,7 @@ export default function CustomizeTrip() {
                 <button
                   type="submit"
                   onClick={handleSubmit(onSubmit)}
-                  className="btn btn-success"
-                >
+                  className="btn btn-success">
                   Submit
                 </button>
               </div>

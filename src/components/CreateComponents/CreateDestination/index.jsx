@@ -3,12 +3,9 @@ import React, { useContext, useRef } from "react";
 import { GrClose } from "react-icons/gr";
 import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
-import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import { useForm } from "react-hook-form";
 import { GlobalContext } from "@/context";
-import { toast } from "react-toastify";
 import { submitForm } from "@/utils/functions";
-import Notification from "@/components/Notification";
 import UploadToCloudinary from "@/components/ui/UploadToCloudinary";
 
 export default function CreateDestination() {

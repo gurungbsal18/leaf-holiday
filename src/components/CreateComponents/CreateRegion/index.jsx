@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { GrClose } from "react-icons/gr";
 import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { GlobalContext } from "@/context";
 import { submitForm } from "@/utils/functions";
 import UploadToCloudinary from "@/components/ui/UploadToCloudinary";

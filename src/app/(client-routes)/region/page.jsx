@@ -47,6 +47,7 @@ export default function RegionPage() {
               height={500}
               width={1510}
               alt="region-image"
+              priority
             />
             <h4>Regions</h4>
           </div>

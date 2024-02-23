@@ -20,6 +20,7 @@ const BookingCard = ({ prices, packageId, pdfUrl }) => {
   const router = useRouter();
   const [showGroupPrice, setShowGroupPrice] = useState(false);
   const currentDate = new Date().toDateString();
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     country: "",
     dateOfTravel: dayjs(currentDate),
@@ -40,7 +41,6 @@ const BookingCard = ({ prices, packageId, pdfUrl }) => {
         router.push("/login");
       }, 1000);
     } else {
-      "Booking card form submitted: ", formData;
       localStorage.setItem("bookingData", JSON.stringify(formData));
       setTimeout(() => {
         router.push(`/package/${packageId}/booking`);
@@ -77,6 +77,7 @@ const BookingCard = ({ prices, packageId, pdfUrl }) => {
       }, 1000);
     }
   };
+  console.log(formData.price == NaN);
 
   return (
     <div className="sticky-top">
@@ -100,21 +101,18 @@ const BookingCard = ({ prices, packageId, pdfUrl }) => {
       <div className="booking-card-body mb-2">
         <div
           className="d-flex align-items-center mb-1"
-          style={{ position: "relative" }}
-        >
+          style={{ position: "relative" }}>
           <Button
             variant="light"
             size="sm"
             onClick={() => setShowGroupPrice(!showGroupPrice)}
-            className="d-flex justify-content-between gap-5 w-100"
-          >
+            className="d-flex justify-content-between gap-5 w-100">
             <p className="m-0">We Offer Group Prices</p>
             <ArrowDropDownIcon />
           </Button>
         </div>
         <div
-          className={`${showGroupPrice ? "" : "d-none"} group-price-dropdown`}
-        >
+          className={`${showGroupPrice ? "" : "d-none"} group-price-dropdown`}>
           <ul className="p-0 m-0">
             <li className="d-flex justify-content-between align-items-center">
               <p className="fs-14">No. of People</p>
@@ -123,8 +121,7 @@ const BookingCard = ({ prices, packageId, pdfUrl }) => {
             {prices?.map((item) => (
               <li
                 key={item.id}
-                className="d-flex justify-content-between align-items-center fs-14"
-              >
+                className="d-flex justify-content-between align-items-center fs-14">
                 <p>{item.numberOfPeople}</p>
                 <p>US$ {item.price}</p>
               </li>
@@ -155,8 +152,7 @@ const BookingCard = ({ prices, packageId, pdfUrl }) => {
             <a
               href="#date-price"
               role="button"
-              className="fs-14 text-light text-decoration-none"
-            >
+              className="fs-14 text-light text-decoration-none">
               Fixed Departure Dates
             </a>
           </div>
@@ -170,6 +166,29 @@ const BookingCard = ({ prices, packageId, pdfUrl }) => {
               type={"Number"}
               value={formData.numberOfPeople}
               onChange={(e) => {
+                if (
+                  e.target.value <
+                  Number(prices[0].numberOfPeople.split("-")[0])
+                ) {
+                  setError(
+                    `Number of People should be greater than ${
+                      Number(prices[0].numberOfPeople.split("-")[0]) - 1
+                    }`
+                  );
+                } else if (
+                  e.target.value >
+                  Number(prices[prices.length - 1].numberOfPeople.split("-")[1])
+                ) {
+                  setError(
+                    `Number of People should be less than ${
+                      Number(
+                        prices[prices.length - 1].numberOfPeople.split("-")[1]
+                      ) + 1
+                    }`
+                  );
+                } else {
+                  setError(null);
+                }
                 setFormData({
                   ...formData,
                   numberOfPeople: Number(e.target.value),
@@ -179,6 +198,7 @@ const BookingCard = ({ prices, packageId, pdfUrl }) => {
                 });
               }}
             />
+            {error && <p className="text-danger">{error}</p>}
             <span className="d-flex justify-content-between ">
               <p>{`$${priceCalculator(prices, formData.numberOfPeople)} x ${
                 formData.numberOfPeople
@@ -195,7 +215,11 @@ const BookingCard = ({ prices, packageId, pdfUrl }) => {
 
       <div className="d-flex gap-3 flex-column">
         <div className="d-flex gap-2">
-          <Button variant="success" className="w-100" onClick={handleBook}>
+          <Button
+            disabled={formData.price === 0}
+            variant="success"
+            className="w-100"
+            onClick={handleBook}>
             Book Now
           </Button>
           <Button variant="success" className="w-100" onClick={handleInquiry}>
@@ -204,23 +228,20 @@ const BookingCard = ({ prices, packageId, pdfUrl }) => {
         </div>
         <Button
           className="btn btn-theme-secondary w-100"
-          onClick={handleCustomize}
-        >
+          onClick={handleCustomize}>
           Customize Trip
         </Button>
         {pdfUrl && (
           <Button
             className="d-flex justify-content-center align-items-center gap-2"
-            variant="success"
-          >
+            variant="success">
             <PictureAsPdfIcon fontSize="large" />
             <Link
               className="m-0 text-light"
               href={pdfUrl}
               target="_blank"
               rel="noopener noreferrer"
-              download
-            >
+              download>
               Download PDF
             </Link>
           </Button>
