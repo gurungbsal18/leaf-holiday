@@ -8,9 +8,7 @@ const page = () => {
       <div className="py-100">
         <div className="d-flex justify-content-center gap-5 flex-column flex-lg-row align-items-center">
           <span className="d-flex flex-column">
-            <h4 className="title text-danger">
-              Your booking has been cancelled
-            </h4>
+            <h4 className="title text-danger">Booking Failed</h4>
             <button className="btn btn-success">
               <ArrowBackIcon className="me-1" />
               Back to homepage
@@ -18,9 +16,9 @@ const page = () => {
           </span>
           <div className="booking-cancel-image">
             <Image
-              src="/images/booking-cancel.jpg"
-              alt="booking-cancel"
-              width={500}
+              src="/images/booking-fail.png"
+              alt="booking-fail"
+              width={300}
               height={300}
             />
           </div>
