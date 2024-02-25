@@ -40,7 +40,6 @@ export default function ResetPassword() {
       }
       setComponentLevelLoader(false);
     } catch (e) {
-      console.log(e);
       toast.error(
         e?.response?.data?.error ||
           "Something went wrong. Please try again !!!",

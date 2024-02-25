@@ -44,9 +44,11 @@ export default function AdminBookings() {
         setPageLevelLoader(false);
       }
     } catch (e) {
-      toast.error("Something Went Wrong. Please Try Again...", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error(
+        e?.response?.data?.error ||
+          "Something went wrong. Please try again !!!",
+        { position: toast.POSITION.TOP_RIGHT }
+      );
       setPageLevelLoader(false);
     }
   };

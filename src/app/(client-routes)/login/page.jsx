@@ -88,9 +88,12 @@ export default function Login() {
         setComponentLevelLoader(false);
       }
     } catch (e) {
-      toast.error(e.response.data.error, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error(
+        e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
+        {
+          position: toast.POSITION.TOP_RIGHT,
+        }
+      );
       setComponentLevelLoader(false);
     }
   };

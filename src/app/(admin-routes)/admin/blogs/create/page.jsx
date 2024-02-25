@@ -52,13 +52,28 @@ export default function CreateBlog() {
       };
       const res = await submitForm(data, "blog", updatePackage);
       if (res.status === 200) {
+        toast.success(
+          updatePackage
+            ? "Blog Updated Successfully"
+            : "Blog Created Successfully",
+          { position: toast.POSITION.TOP_RIGHT }
+        );
         setCallExtractAll(!callExtractAll);
         setUpdatePackage(null);
         router.push("/admin/blogs");
       } else {
+        toast.error(
+          res?.message || "Something went wrong. Please try again !!!",
+          { position: toast.POSITION.TOP_RIGHT }
+        );
       }
       setPageLevelLoader(false);
     } catch (e) {
+      toast.error(
+        e?.response?.data?.error ||
+          "Something went wrong. Please try again !!!",
+        { position: toast.POSITION.TOP_RIGHT }
+      );
       setPageLevelLoader(false);
     }
   };

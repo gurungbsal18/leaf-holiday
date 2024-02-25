@@ -1,12 +1,7 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { Button } from "react-bootstrap";
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import TextField from "@mui/material/TextField";
 import { GlobalContext } from "@/context";
-import CustomAutocomplete from "@/components/ui/CustomAutocomplete";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import HomePageTab from "@/components/ui/HomePageTab";
 import Link from "next/link";
@@ -28,6 +23,7 @@ export default function EditHome() {
   const [homePageData, setHomePageData] = useState(null);
 
   const handleRemove = async (id) => {
+    setPageLevelLoader(true);
     try {
       const res = await axios.delete(`/tabs/delete/${id}`);
       res;
@@ -41,10 +37,14 @@ export default function EditHome() {
           position: toast.POSITION.TOP_RIGHT,
         });
       }
+      setPageLevelLoader(false);
     } catch (e) {
-      toast.error("Something Went Wrong. Please Try Again...", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error(
+        e?.response?.data?.error ||
+          "Something went wrong. Please try again !!!",
+        { position: toast.POSITION.TOP_RIGHT }
+      );
+      setPageLevelLoader(false);
     }
   };
 
@@ -56,14 +56,19 @@ export default function EditHome() {
         setPageLevelLoader(false);
         setHomePageData(res.data);
       } else {
-        toast.error("Something Went Wrong. Please Try Again...", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+        toast.error(
+          res?.message || "Something Went Wrong. Please Try Again...",
+          {
+            position: toast.POSITION.TOP_RIGHT,
+          }
+        );
       }
     } catch (e) {
-      toast.error("Something Went Wrong. Please Try Again...", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error(
+        e?.response?.data?.error ||
+          "Something went wrong. Please try again !!!",
+        { position: toast.POSITION.TOP_RIGHT }
+      );
       setPageLevelLoader(false);
     }
   };
@@ -93,8 +98,7 @@ export default function EditHome() {
                     onClick={() => {
                       setDialogOpen(true);
                       setDialogContent(<HomePageTab position={"top"} />);
-                    }}
-                  >
+                    }}>
                     Add New Tab
                   </button>
                 )}
@@ -117,8 +121,7 @@ export default function EditHome() {
                               valueDefault={homePageData?.tabs?.top[0]}
                             />
                           );
-                        }}
-                      >
+                        }}>
                         <EditNoteIcon className ms-2 />
                         Edit
                       </button>
@@ -126,8 +129,7 @@ export default function EditHome() {
                         className="btn btn-md btn-danger"
                         onClick={() =>
                           handleRemove(homePageData?.tabs?.top[0]?._id)
-                        }
-                      >
+                        }>
                         <DeleteIcon className="ms-2" />
                         Remove
                       </button>
@@ -157,8 +159,7 @@ export default function EditHome() {
                 onClick={() => {
                   setDialogOpen(true);
                   setDialogContent(<HomePageTab position={"middle"} />);
-                }}
-              >
+                }}>
                 Add New Tab
               </button>
             </div>
@@ -178,16 +179,14 @@ export default function EditHome() {
                             valueDefault={middleTab}
                           />
                         );
-                      }}
-                    >
+                      }}>
                       <EditNoteIcon className ms-2 />
                       Edit
                     </button>
 
                     <button
                       className="btn btn-sm btn-danger"
-                      onClick={() => handleRemove(middleTab?._id)}
-                    >
+                      onClick={() => handleRemove(middleTab?._id)}>
                       <DeleteIcon className="ms-2" />
                       Remove
                     </button>
@@ -216,8 +215,7 @@ export default function EditHome() {
                       setDialogContent(
                         <HomePageTab position={"bottom"} url={true} />
                       );
-                    }}
-                  >
+                    }}>
                     Add New Tab
                   </button>
                 )}
@@ -239,8 +237,7 @@ export default function EditHome() {
                             url={true}
                           />
                         );
-                      }}
-                    >
+                      }}>
                       <EditNoteIcon className ms-2 />
                       Edit
                     </button>
@@ -248,8 +245,7 @@ export default function EditHome() {
                       className="btn btn-sm btn-danger"
                       onClick={() =>
                         handleRemove(homePageData?.tabs?.bottom[0]?._id)
-                      }
-                    >
+                      }>
                       <DeleteIcon className="ms-2" />
                       Remove
                     </button>
