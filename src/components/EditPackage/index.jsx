@@ -23,12 +23,13 @@ export default function EditPackage({ data }) {
   }, [callExtractAll]);
 
   return (
-    <div className="bg-light p-3 rounded mt-4">
+    <div className="bg-light p-3 rounded mt-4 dashboard-package-footer-table">
       <Header
         pageName={data?.pageName}
         createComponent={data?.createComponent}
       />
       <Table
+        className=""
         headerData={data.headerData}
         bodyData={allData}
         apiName={data.apiName}

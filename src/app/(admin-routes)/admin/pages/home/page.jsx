@@ -98,7 +98,8 @@ export default function EditHome() {
                     onClick={() => {
                       setDialogOpen(true);
                       setDialogContent(<HomePageTab position={"top"} />);
-                    }}>
+                    }}
+                  >
                     Add New Tab
                   </button>
                 )}
@@ -121,7 +122,8 @@ export default function EditHome() {
                               valueDefault={homePageData?.tabs?.top[0]}
                             />
                           );
-                        }}>
+                        }}
+                      >
                         <EditNoteIcon className ms-2 />
                         Edit
                       </button>
@@ -129,7 +131,8 @@ export default function EditHome() {
                         className="btn btn-md btn-danger"
                         onClick={() =>
                           handleRemove(homePageData?.tabs?.top[0]?._id)
-                        }>
+                        }
+                      >
                         <DeleteIcon className="ms-2" />
                         Remove
                       </button>
@@ -159,7 +162,8 @@ export default function EditHome() {
                 onClick={() => {
                   setDialogOpen(true);
                   setDialogContent(<HomePageTab position={"middle"} />);
-                }}>
+                }}
+              >
                 Add New Tab
               </button>
             </div>
@@ -179,14 +183,16 @@ export default function EditHome() {
                             valueDefault={middleTab}
                           />
                         );
-                      }}>
+                      }}
+                    >
                       <EditNoteIcon className ms-2 />
                       Edit
                     </button>
 
                     <button
                       className="btn btn-sm btn-danger"
-                      onClick={() => handleRemove(middleTab?._id)}>
+                      onClick={() => handleRemove(middleTab?._id)}
+                    >
                       <DeleteIcon className="ms-2" />
                       Remove
                     </button>
@@ -217,7 +223,8 @@ export default function EditHome() {
                       setDialogContent(
                         <HomePageTab position={"bottom"} url={true} />
                       );
-                    }}>
+                    }}
+                  >
                     Add New Tab
                   </button>
                 )}
@@ -238,19 +245,20 @@ export default function EditHome() {
                             url={true}
                           />
                         );
-                      }}>
-                      <EditNoteIcon className ms-2 />
+                      }}
+                    >
+                      <EditNoteIcon className="ms-2" />
                       Edit
                     </button>
                     <button
                       className="btn btn-sm btn-danger"
                       onClick={() =>
                         handleRemove(homePageData?.tabs?.bottom[0]?._id)
-                      }>
+                      }
+                    >
                       <DeleteIcon className="ms-2" />
                       Remove
                     </button>
-                  </div>
 
                     <div>
                       <p>{homePageData?.tabs?.bottom[0]?.videoUrl}</p>

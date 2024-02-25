@@ -112,7 +112,7 @@ export default function Table({
   }
   bodyData;
   return (
-    <div>
+    <div className="">
       <table {...getTableProps()} className="dashboard-table">
         <thead>
           {headerGroups.map((headerGroup) => {
@@ -199,7 +199,8 @@ export default function Table({
                                 );
                               }, 1000);
                             }
-                          }}>
+                          }}
+                        >
                           {apiName === "review" ? "Verify" : "View"}
                         </button>
                       )}
@@ -225,7 +226,8 @@ export default function Table({
                           setDialogContent(updateComponent);
                         }
                       }}
-                      className="btn btn-sm btn-success">
+                      className="btn btn-sm btn-success"
+                    >
                       <EditNoteIcon /> Edit
                     </button>
                   )}
@@ -234,9 +236,9 @@ export default function Table({
                       onClick={() =>
                         handleRemove(bodyData[key.split("_")[1]]._id)
                       }
-                      className="btn btn-sm btn-danger">
+                      className="btn btn-sm btn-danger"
+                    >
                       <DeleteIcon />
-                      Remove
                     </button>
                   )}
                 </td>
