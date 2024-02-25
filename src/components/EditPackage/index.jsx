@@ -40,6 +40,7 @@ export default function EditPackage({ data }) {
         checkbox={data.checkbox}
         setVerify={data.setVerify}
         noPagination={true}
+        sizeOfPage={data.sizeOfPage}
       />
     </div>
   );

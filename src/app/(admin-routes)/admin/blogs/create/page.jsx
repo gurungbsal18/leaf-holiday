@@ -10,6 +10,7 @@ import { submitForm } from "@/utils/functions";
 import TextEditor from "@/components/TextEditor";
 import UploadToCloudinary from "@/components/ui/UploadToCloudinary";
 import { useRouter } from "next/navigation";
+import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 
 export default function CreateBlog() {
   const {
@@ -18,6 +19,8 @@ export default function CreateBlog() {
     callExtractAll,
     setCallExtractAll,
     updatePackage,
+    pageLevelLoader,
+    setPageLevelLoader,
   } = useContext(GlobalContext);
   const [selectedFile, setSelectedFile] = React.useState(
     updatePackage ? updatePackage.imageUrl : null
@@ -40,96 +43,113 @@ export default function CreateBlog() {
   const { register, handleSubmit, setValue, control, watch } = form;
 
   const onSubmit = async (data) => {
-    data = { ...data, slug: data.title.toLowerCase().replace(/\s+/g, "-") };
-    const res = await submitForm(data, "blog", updatePackage);
-    if (res.status === 200) {
-      setCallExtractAll(!callExtractAll);
-      setUpdatePackage(null);
-      router.push("/admin/blogs");
+    setPageLevelLoader(true);
+    try {
+      data = {
+        ...data,
+        slug: data.title.toLowerCase().replace(/\s+/g, "-"),
+        authorId: user?._id,
+      };
+      const res = await submitForm(data, "blog", updatePackage);
+      if (res.status === 200) {
+        setCallExtractAll(!callExtractAll);
+        setUpdatePackage(null);
+        router.push("/admin/blogs");
+      } else {
+      }
+      setPageLevelLoader(false);
+    } catch (e) {
+      setPageLevelLoader(false);
     }
   };
 
   return (
-    <div className="">
-      <div className="">
-        <div className="d-flex justify-content-between p-3 ">
-          <p>{updatePackage ? "Update Blog" : "Create Blog"}</p>
-          <button type="submit" onClick={handleSubmit(onSubmit)}>
-            {updatePackage ? "Update" : "Create"}
-          </button>
-        </div>
-        <form>
-          <div className="d-flex gap-5">
-            <div className="d-flex flex-column gap-2">
-              <TextField
-                required
-                fullWidth
-                size="small"
-                label="Title"
-                type="text"
-                variant="outlined"
-                {...register("title")}
-              />
-              <div>
-                <label htmlFor="content">Content</label>
-                <TextEditor control={control} name={"content"} />
-              </div>
-              <div>
-                <TextField
-                  required
-                  size="small"
-                  label="Meta Title"
-                  type="text"
-                  variant="outlined"
-                  {...register("metaTitle")}
-                />
-                <TextField
-                  required
-                  size="small"
-                  label="Meta Description"
-                  type="text"
-                  variant="outlined"
-                  {...register("metaDescription")}
-                />
-              </div>
+    <>
+      {pageLevelLoader ? (
+        <PageLevelLoader />
+      ) : (
+        <div className="">
+          <div className="">
+            <div className="d-flex justify-content-between p-3 ">
+              <p>{updatePackage ? "Update Blog" : "Create Blog"}</p>
+              <button type="submit" onClick={handleSubmit(onSubmit)}>
+                {updatePackage ? "Update" : "Create"}
+              </button>
             </div>
-            <div>
-              <div className="d-flex flex-column">
-                <p>Options</p>
-                <div>
-                  <input
-                    checked={watch("options") === "article"}
-                    type="radio"
-                    id="article"
-                    name="options"
-                    value="article"
-                    onClick={() => setValue("options", "article")}
+            <form>
+              <div className="d-flex gap-5">
+                <div className="d-flex flex-column gap-2">
+                  <TextField
+                    required
+                    fullWidth
+                    size="small"
+                    label="Title"
+                    type="text"
+                    variant="outlined"
+                    {...register("title")}
                   />
-                  <label for="html">Article</label>
+                  <div>
+                    <label htmlFor="content">Content</label>
+                    <TextEditor control={control} name={"content"} />
+                  </div>
+                  <div>
+                    <TextField
+                      required
+                      size="small"
+                      label="Meta Title"
+                      type="text"
+                      variant="outlined"
+                      {...register("metaTitle")}
+                    />
+                    <TextField
+                      required
+                      size="small"
+                      label="Meta Description"
+                      type="text"
+                      variant="outlined"
+                      {...register("metaDescription")}
+                    />
+                  </div>
                 </div>
                 <div>
-                  <input
-                    checked={watch("options") === "news"}
-                    type="radio"
-                    id="news"
-                    name="options"
-                    value="news"
-                    onClick={() => setValue("options", "news")}
+                  <div className="d-flex flex-column">
+                    <p>Options</p>
+                    <div>
+                      <input
+                        checked={watch("options") === "article"}
+                        type="radio"
+                        id="article"
+                        name="options"
+                        value="article"
+                        onClick={() => setValue("options", "article")}
+                      />
+                      <label for="html">Article</label>
+                    </div>
+                    <div>
+                      <input
+                        checked={watch("options") === "news"}
+                        type="radio"
+                        id="news"
+                        name="options"
+                        value="news"
+                        onClick={() => setValue("options", "news")}
+                      />
+                      <label for="css">News</label>
+                    </div>
+                  </div>
+                  <UploadToCloudinary
+                    selectedFile={selectedFile}
+                    setSelectedFile={setSelectedFile}
+                    label="Header Image"
+                    setValue={setValue}
+                    formName="imageUrl"
                   />
-                  <label for="css">News</label>
                 </div>
               </div>
-              <UploadToCloudinary
-                selectedFile={selectedFile}
-                setSelectedFile={setSelectedFile}
-                label="Header Image"
-                setValue={setValue}
-                formName="imageUrl"
-              />
-            </div>
+            </form>
           </div>
-        </form>
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 }

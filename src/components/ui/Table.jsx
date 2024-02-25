@@ -16,11 +16,11 @@ export default function Table({
   showEdit,
   showRemove,
   updateComponent,
-  showImage,
   checkbox,
   sizeOfPage,
   noPagination,
 }) {
+  console.log(apiName, sizeOfPage);
   const { setVerify } = useContext(GlobalContext);
   const columns = useMemo(() => headerData, []);
   const tableInstance = useTable(
