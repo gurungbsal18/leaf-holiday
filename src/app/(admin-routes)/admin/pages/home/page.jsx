@@ -149,8 +149,8 @@ export default function EditHome() {
             </div>
           </div>
 
-          <div className="bg-success-subtle p-2 my-4 rounded">
-            <div className="d-flex justify-content-between align-items-center">
+          <div className="">
+            <div className="d-flex justify-content-between align-items-center bg-success-subtle p-2 mt-4 mb-2 rounded">
               <h4 className="title m-0">Middle Level Tabs</h4>
               <button
                 className="btn btn-sm btn-success"
@@ -162,42 +162,46 @@ export default function EditHome() {
                 Add New Tab
               </button>
             </div>
-            <div className="d-flex">
+            <div className="d-flex flex-column gap-3 bg-light rounded p-3 mb-4">
               {homePageData?.tabs?.middle?.map((middleTab) => (
                 <div key={middleTab._id}>
-                  <div className="d-flex gap-2">
+                  <div className="d-flex justify-content-between align-items-center gap-2 border-bottom pb-2">
                     <h5>{middleTab.title}</h5>
-                    <button
-                      className="btn btn-sm btn-success"
-                      onClick={() => {
-                        setHomePageEdit(middleTab);
-                        setDialogOpen(true);
-                        setDialogContent(
-                          <HomePageTab
-                            position={"middle"}
-                            valueDefault={middleTab}
-                          />
-                        );
-                      }}
-                    >
-                      <EditNoteIcon className ms-2 />
-                      Edit
-                    </button>
+                    <div className="d-flex gap-2">
+                      <button
+                        className="btn btn-sm btn-success"
+                        onClick={() => {
+                          setHomePageEdit(middleTab);
+                          setDialogOpen(true);
+                          setDialogContent(
+                            <HomePageTab
+                              position={"middle"}
+                              valueDefault={middleTab}
+                            />
+                          );
+                        }}
+                      >
+                        <EditNoteIcon className ms-2 />
+                        Edit
+                      </button>
 
-                    <button
-                      className="btn btn-sm btn-danger"
-                      onClick={() => handleRemove(middleTab?._id)}
-                    >
-                      <DeleteIcon className="ms-2" />
-                      Remove
-                    </button>
+                      <button
+                        className="btn btn-sm btn-danger"
+                        onClick={() => handleRemove(middleTab?._id)}
+                      >
+                        <DeleteIcon className="ms-2" />
+                        Remove
+                      </button>
+                    </div>
                   </div>
 
-                  <div>
-                    {middleTab &&
-                      middleTab.packages.map((item) => (
-                        <p key={item._id}>{item.name}</p>
-                      ))}
+                  <div className="border-bottom">
+                    <ol>
+                      {middleTab &&
+                        middleTab.packages.map((item) => (
+                          <li key={item._id}>{item.name}</li>
+                        ))}
+                    </ol>
                   </div>
                 </div>
               ))}
@@ -222,48 +226,53 @@ export default function EditHome() {
                   </button>
                 )}
               </div>
-              <div></div>
-              {homePageData?.tabs?.bottom?.length > 0 && (
-                <div>
+              <div className="bg-light rounded p-3 mt-2">
+                {homePageData?.tabs?.bottom?.length > 0 && (
                   <div>
-                    <h5>{homePageData?.tabs?.bottom[0]?.title}</h5>
-                    <button
-                      className="btn btn-sm btn-success"
-                      onClick={() => {
-                        setHomePageEdit(homePageData?.tabs?.bottom[0]);
-                        setDialogOpen(true);
-                        setDialogContent(
-                          <HomePageTab
-                            position={"bottom"}
-                            valueDefault={homePageData?.tabs?.bottom[0]}
-                            url={true}
-                          />
-                        );
-                      }}
-                    >
-                      <EditNoteIcon className ms-2 />
-                      Edit
-                    </button>
-                    <button
-                      className="btn btn-sm btn-danger"
-                      onClick={() =>
-                        handleRemove(homePageData?.tabs?.bottom[0]?._id)
-                      }
-                    >
-                      <DeleteIcon className="ms-2" />
-                      Remove
-                    </button>
-                  </div>
+                    <div className="d-flex justify-content-between align-items-center border-bottom pb-2">
+                      <h5>{homePageData?.tabs?.bottom[0]?.title}</h5>
+                      <div className="d-flex gap-2">
+                        <button
+                          className="btn btn-sm btn-success"
+                          onClick={() => {
+                            setHomePageEdit(homePageData?.tabs?.bottom[0]);
+                            setDialogOpen(true);
+                            setDialogContent(
+                              <HomePageTab
+                                position={"bottom"}
+                                valueDefault={homePageData?.tabs?.bottom[0]}
+                                url={true}
+                              />
+                            );
+                          }}
+                        >
+                          <EditNoteIcon className ms-2 />
+                          Edit
+                        </button>
+                        <button
+                          className="btn btn-sm btn-danger"
+                          onClick={() =>
+                            handleRemove(homePageData?.tabs?.bottom[0]?._id)
+                          }
+                        >
+                          <DeleteIcon className="ms-2" />
+                          Remove
+                        </button>
+                      </div>
+                    </div>
 
-                  <div>
-                    <p>{homePageData?.tabs?.bottom[0]?.videoUrl}</p>
-                    {homePageData?.tabs?.bottom[0] &&
-                      homePageData?.tabs?.bottom[0].packages.map((item) => (
-                        <p key={item._id}>{item.name}</p>
-                      ))}
+                    <div>
+                      <p>{homePageData?.tabs?.bottom[0]?.videoUrl}</p>
+                      <ol>
+                        {homePageData?.tabs?.bottom[0] &&
+                          homePageData?.tabs?.bottom[0].packages.map((item) => (
+                            <li key={item._id}>{item.name}</li>
+                          ))}
+                      </ol>
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>

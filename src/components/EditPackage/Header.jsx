@@ -10,12 +10,13 @@ export default function Header({ pageName, createComponent }) {
 
   return (
     <div className="d-flex justify-content-between ">
-      <h3>{pageName}</h3>
+      <h4 className="title">{pageName}</h4>
       <button
         onClick={() => {
           setDialogOpen(true);
           setDialogContent(createComponent);
-        }}>
+        }}
+      >
         Create
       </button>
     </div>

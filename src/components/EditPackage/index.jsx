@@ -23,7 +23,7 @@ export default function EditPackage({ data }) {
   }, [callExtractAll]);
 
   return (
-    <div>
+    <div className="bg-light p-3 rounded mt-4">
       <Header
         pageName={data?.pageName}
         createComponent={data?.createComponent}

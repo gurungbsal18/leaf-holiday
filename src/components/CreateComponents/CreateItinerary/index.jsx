@@ -59,7 +59,7 @@ export default function CreateItinerary() {
         />
       </div>
       <form>
-        <div className="d-flex gap-5">
+        <div className="d-flex gap-5 create-itimerary-modal">
           <div className="d-flex flex-column gap-2">
             <TextField
               required

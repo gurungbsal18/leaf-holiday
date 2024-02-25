@@ -218,7 +218,7 @@ export default function CreatePackage() {
 
           <form>
             <div className="row gap-5 w-100 py-3">
-              <div className="col flex-grow-1">
+              <div className="col dashboard-main-content">
                 <h4 className="dashboard-title">Name of package</h4>
                 <div className="">
                   <TextField
@@ -430,7 +430,7 @@ export default function CreatePackage() {
                   </div>
 
                   <div className="d-flex flex-column gap-3 mb-5">
-                    <div className="trip-highlights border-bottom pb-3">
+                    <div className="trip-highlights p-3 bg-light rounded mb-4">
                       <div className="form-header d-flex justify-content-between ">
                         <h4 className="dashboard-title">Trip Highlights</h4>
                         <Button
@@ -446,9 +446,12 @@ export default function CreatePackage() {
                           return (
                             <div
                               key={field.key}
-                              className="d-flex align-items-center"
+                              className="d-flex align-items-center gap-2 mt-2"
                             >
-                              <input {...register(`highlights.${index}`)} />
+                              <input
+                                {...register(`highlights.${index}`)}
+                                className="form-control"
+                              />
                               <span
                                 role="button"
                                 className="text-danger"
@@ -462,7 +465,7 @@ export default function CreatePackage() {
                       </div>
                     </div>
 
-                    <div className="trip-inclusions border-bottom pb-3">
+                    <div className="trip-inclusions p-3 bg-light rounded">
                       <div className="form-header d-flex justify-content-between ">
                         <h4 className="dashboard-title">Trip Inclusions</h4>
                         <Button
@@ -476,18 +479,27 @@ export default function CreatePackage() {
                       <div className="form-content d-flex flex-column gap-2">
                         {inclusionsFields.map((field, index) => {
                           return (
-                            <div key={field.key} className="d-flex ">
-                              <input {...register(`inclusions.${index}`)} />
-                              <button onClick={() => inclusionsRemove(index)}>
-                                -
-                              </button>
+                            <div
+                              key={field.key}
+                              className="d-flex align-items-center gap-2 mt-2"
+                            >
+                              <input
+                                {...register(`inclusions.${index}`)}
+                                className="form-control"
+                              />
+                              <span
+                                onClick={() => inclusionsRemove(index)}
+                                className="text-danger"
+                              >
+                                <RemoveCircleIcon />
+                              </span>
                             </div>
                           );
                         })}
                       </div>
                     </div>
 
-                    <div className="trip-exclusions border-bottom pb-3">
+                    <div className="trip-exclusions p-3 bg-light rounded">
                       <div className="form-header d-flex justify-content-between ">
                         <h4 className="dashboard-title">Trip exclusions</h4>
                         <Button
@@ -501,11 +513,20 @@ export default function CreatePackage() {
                       <div className="form-content">
                         {exclusionsFields.map((field, index) => {
                           return (
-                            <div key={field.key} className="d-flex ">
-                              <input {...register(`exclusions.${index}`)} />
-                              <button onClick={() => exclusionsRemove(index)}>
-                                -
-                              </button>
+                            <div
+                              key={field.key}
+                              className="d-flex align-items-center gap-2 mt-2"
+                            >
+                              <input
+                                {...register(`exclusions.${index}`)}
+                                className="form-control"
+                              />
+                              <span
+                                onClick={() => exclusionsRemove(index)}
+                                className="text-danger"
+                              >
+                                <RemoveCircleIcon />
+                              </span>
                             </div>
                           );
                         })}
@@ -518,7 +539,7 @@ export default function CreatePackage() {
                     <TextEditor control={control} name="content" />
                   </div>
 
-                  <div className="d-flex gap-3 flex-column">
+                  <div className="d-flex gap-3 flex-column bg-light p-3">
                     <h4 className="dashboard-title">SEO</h4>
                     <TextField
                       fullWidth
@@ -540,7 +561,7 @@ export default function CreatePackage() {
                   </div>
                 </div>
               </div>
-              <div className="col-auto">
+              <div className="col-auto dashboard-main-content-sidebar">
                 <div className="d-flex flex-column gap-3">
                   <div className="d-flex flex-column ">
                     <div className="d-flex gap-2">
@@ -611,8 +632,8 @@ export default function CreatePackage() {
             </div>
           </form>
           {updatePackage && (
-            <div className="video-gallery border-bottom pb-3">
-              <div className="form-header d-flex justify-content-between ">
+            <div className="video-gallery border-bottom pb-3 dashboard-video-gallery">
+              <div className="form-header d-flex justify-content-between align-items-center bg-light p-3">
                 <h4 className="dashboard-title">Video Gallery Links</h4>
                 <Button
                   variant="primary"
