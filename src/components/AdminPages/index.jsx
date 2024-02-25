@@ -30,9 +30,12 @@ export default function AdminPages({ data }) {
         setPageLevelLoader(false);
       }
     } catch (e) {
-      toast.error("Something Went Wrong. Please Try Again...", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error(
+        e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
+        {
+          position: toast.POSITION.TOP_RIGHT,
+        }
+      );
       setPageLevelLoader(false);
     }
   }
@@ -53,9 +56,14 @@ export default function AdminPages({ data }) {
         });
         setFilteredData(temp);
       } catch (e) {
-        toast.error("Something went wrong. Please try again...", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+        toast.error(
+          e?.response?.data?.error ||
+            "Something Went Wrong. Please Try Again...",
+          {
+            position: toast.POSITION.TOP_RIGHT,
+          }
+        );
+        setPageLevelLoader(false);
       }
     }
   }, [keyword]);

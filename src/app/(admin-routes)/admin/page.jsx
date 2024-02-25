@@ -24,8 +24,10 @@ export default function AdminDashboard() {
         setPageLevelLoader(false);
       }
     } catch (e) {
-      console.log(
-        e?.response?.data?.error || "Something went wrong. Please try again !!!"
+      toast.error(
+        e?.response?.data?.error ||
+          "Something went wrong. Please try again !!!",
+        { position: toast.POSITION.TOP_RIGHT }
       );
       setPageLevelLoader(false);
     }

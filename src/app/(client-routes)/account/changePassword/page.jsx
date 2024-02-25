@@ -33,9 +33,12 @@ export default function ChangePassword() {
         setPageLevelLoader(false);
       }
     } catch (e) {
-      toast.error("Something Went Wrong. Please Try Again...", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error(
+        e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
+        {
+          position: toast.POSITION.TOP_RIGHT,
+        }
+      );
       setPageLevelLoader(false);
     }
   };
@@ -81,8 +84,7 @@ export default function ChangePassword() {
                     watch("password") === "" ||
                     watch("password") !== confirmPasswordValue
                   }
-                  className="btn btn-sm btn-success"
-                >
+                  className="btn btn-sm btn-success">
                   CHANGE PASSWORD
                 </button>
               </div>

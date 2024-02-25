@@ -41,9 +41,13 @@ export default function UserDetail() {
           setPageLevelLoader(false);
         }
       } catch (e) {
-        toast.error("Something Went Wrong. Please Try Again...", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+        toast.error(
+          e?.response?.data?.error ||
+            "Something Went Wrong. Please Try Again...",
+          {
+            position: toast.POSITION.TOP_RIGHT,
+          }
+        );
         setPageLevelLoader(false);
       }
     }
@@ -96,8 +100,7 @@ export default function UserDetail() {
               <div className="d-flex justify-content-start">
                 <button
                   onClick={handleSubmit(submitForm)}
-                  className="btn btn-sm btn-success"
-                >
+                  className="btn btn-sm btn-success">
                   UPDATE
                 </button>
               </div>

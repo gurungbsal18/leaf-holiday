@@ -22,9 +22,13 @@ export default function OurTeam() {
       } else {
         setPageLevelLoader(false);
       }
-      res;
     } catch (e) {
-      e;
+      toast.error(
+        e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
+        {
+          position: toast.POSITION.TOP_RIGHT,
+        }
+      );
       setPageLevelLoader(false);
     }
   };

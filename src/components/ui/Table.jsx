@@ -16,11 +16,11 @@ export default function Table({
   showEdit,
   showRemove,
   updateComponent,
-  showImage,
   checkbox,
   sizeOfPage,
   noPagination,
 }) {
+  console.log(apiName, sizeOfPage);
   const { setVerify } = useContext(GlobalContext);
   const columns = useMemo(() => headerData, []);
   const tableInstance = useTable(
@@ -74,9 +74,13 @@ export default function Table({
         });
       }
     } catch (e) {
-      toast.error("Something Went Wrong. Please Try Again...", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error(
+        e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
+        {
+          position: toast.POSITION.TOP_RIGHT,
+        }
+      );
+      setPageLevelLoader(false);
     }
   };
 

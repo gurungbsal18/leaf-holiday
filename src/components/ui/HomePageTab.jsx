@@ -61,9 +61,12 @@ export default function HomePageTab({ position, valueDefault, url }) {
         setPageLevelLoader(false);
       }
     } catch (e) {
-      toast.error("Something Went Wrong. Please Try Again...", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error(
+        e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
+        {
+          position: toast.POSITION.TOP_RIGHT,
+        }
+      );
       setPageLevelLoader(false);
     }
   };
@@ -82,9 +85,12 @@ export default function HomePageTab({ position, valueDefault, url }) {
         setPageLevelLoader(false);
       }
     } catch (e) {
-      toast.error("Something Went Wrong. Please Try Again...", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error(
+        e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
+        {
+          position: toast.POSITION.TOP_RIGHT,
+        }
+      );
       setPageLevelLoader(false);
     }
   };
@@ -128,8 +134,7 @@ export default function HomePageTab({ position, valueDefault, url }) {
                 onClick={() => {
                   setDialogOpen(false);
                 }}
-                style={{ cursor: "pointer" }}
-              >
+                style={{ cursor: "pointer" }}>
                 <CloseIcon />
               </span> */}
             </div>
@@ -146,7 +151,7 @@ export default function HomePageTab({ position, valueDefault, url }) {
           {packagesFields.map((packagesField, index) => {
             return (
               <div
-                className="d-flex flex-column flex-md-row gap-3 align-items-center py-2"
+                className="d-flex flex-column flex-md-row gap-3 align-items-center"
                 key={packagesField.id}
               >
                 <CustomAutocomplete
@@ -168,28 +173,17 @@ export default function HomePageTab({ position, valueDefault, url }) {
               </div>
             );
           })}
-          <div className="d-flex justify-content-end mt-2 border-top pt-2 gap-2">
-            <button
-              className="btn btn-sm btn-outline-secondary"
-              onClick={() => {
-                setDialogOpen(false);
-              }}
-              style={{ cursor: "pointer" }}
-            >
-              cancel
-            </button>
-            <button
-              className="btn btn-sm btn-success"
-              onClick={handleSubmit(onSubmit)}
-              disabled={
-                watch("packages[0]") === "" ||
-                watch("packages[0]") === null ||
-                watch("packages[0]") === undefined
-              }
-            >
-              {valueDefault ? "UPDATE" : "CREATE"}
-            </button>
-          </div>
+          <button
+            className="btn btn-sm btn-success mt-2"
+            onClick={handleSubmit(onSubmit)}
+            disabled={
+              watch("packages[0]") === "" ||
+              watch("packages[0]") === null ||
+              watch("packages[0]") === undefined
+            }
+          >
+            {valueDefault ? "UPDATE" : "CREATE"}
+          </button>
         </div>
       )}
     </>

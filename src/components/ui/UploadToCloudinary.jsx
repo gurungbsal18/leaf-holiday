@@ -83,10 +83,14 @@ export default function UploadToCloudinary({
               setLoading(false);
             }
           } catch (e) {
-            toast.error("Failed to Upload Image", {
-              position: toast.POSITION.TOP_RIGHT,
-            });
-            setLoading(false);
+            toast.error(
+              e?.response?.data?.error ||
+                "Something Went Wrong. Please Try Again...",
+              {
+                position: toast.POSITION.TOP_RIGHT,
+              }
+            );
+            setPageLevelLoader(false);
           }
         }}
       />

@@ -64,11 +64,15 @@ export default function CreateRegion({ nameValue, setNameValue, setVal }) {
             position: toast.POSITION.TOP_RIGHT,
           });
         }
-      } catch (error) {
-        console.log(error);
-        toast.error("Error getting Destinations...", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+      } catch (e) {
+        toast.error(
+          e?.response?.data?.error ||
+            "Something Went Wrong. Please Try Again...",
+          {
+            position: toast.POSITION.TOP_RIGHT,
+          }
+        );
+        setPageLevelLoader(false);
       }
     };
 
