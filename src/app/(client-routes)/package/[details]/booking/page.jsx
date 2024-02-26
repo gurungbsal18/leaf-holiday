@@ -71,7 +71,6 @@ export default function Booking() {
         setPageLevelLoader(false);
       }
     } catch (e) {
-      console.log(e);
       toast.error(
         e?.response?.data?.error ||
           "Failed to book the package! Please Try Again Later...",

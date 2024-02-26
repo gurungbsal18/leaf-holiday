@@ -20,7 +20,6 @@ export default function Table({
   sizeOfPage,
   noPagination,
 }) {
-  console.log(apiName, sizeOfPage);
   const { setVerify } = useContext(GlobalContext);
   const columns = useMemo(() => headerData, []);
   const tableInstance = useTable(
@@ -199,8 +198,7 @@ export default function Table({
                                 );
                               }, 1000);
                             }
-                          }}
-                        >
+                          }}>
                           {apiName === "review" ? "Verify" : "View"}
                         </button>
                       )}
@@ -226,8 +224,7 @@ export default function Table({
                           setDialogContent(updateComponent);
                         }
                       }}
-                      className="btn btn-sm btn-success"
-                    >
+                      className="btn btn-sm btn-success">
                       <EditNoteIcon /> Edit
                     </button>
                   )}
@@ -236,8 +233,7 @@ export default function Table({
                       onClick={() =>
                         handleRemove(bodyData[key.split("_")[1]]._id)
                       }
-                      className="btn btn-sm btn-danger"
-                    >
+                      className="btn btn-sm btn-danger">
                       <DeleteIcon />
                     </button>
                   )}

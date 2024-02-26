@@ -13,6 +13,7 @@ import { getEmbeddedYouTubeUrl } from "@/utils/functions";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import axios from "@/utils/axios";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const {
@@ -27,6 +28,9 @@ export default function Home() {
     setDialogContent,
   } = useContext(GlobalContext);
   const [homePageData, setHomePageData] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const router = useRouter();
+
   const getHomePageDetail = async () => {
     setPageLevelLoader(true);
     try {
@@ -51,6 +55,16 @@ export default function Home() {
     }
   };
 
+  const handleEnter = (event) => {
+    if (event.key === "Enter") {
+      // Prevent the default form submission behavior
+      event.preventDefault();
+      setPageLevelLoader(true);
+      // Navigate to search page with the search query
+      router.push(`/search?searchTerm=${searchTerm}`);
+    }
+  };
+
   useEffect(() => {
     getHomePageDetail();
   }, [callExtractAll]);
@@ -72,8 +86,16 @@ export default function Home() {
                 type="text"
                 className="form-control"
                 placeholder="Search your next adventure"
+                onKeyDown={handleEnter}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <button className="search-btn btn btn-sm btn-success">
+              <button
+                className="search-btn btn btn-sm btn-success"
+                onClick={() => {
+                  setPageLevelLoader(true);
+                  router.push(`/search?searchTerm=${searchTerm}`);
+                }}>
                 <SearchOutlinedIcon />
                 Search
               </button>

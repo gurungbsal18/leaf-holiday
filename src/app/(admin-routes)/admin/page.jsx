@@ -16,7 +16,6 @@ export default function AdminDashboard() {
     setPageLevelLoader(true);
     try {
       const res = await axios.get("/homepage/dashboard");
-      console.log(res);
       if (res.status === 200) {
         setDashboardData(res?.data);
         setPageLevelLoader(false);

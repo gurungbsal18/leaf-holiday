@@ -28,12 +28,10 @@ export default function AdminBookings() {
     { Header: "PRICE", accessor: "price" },
   ];
 
-  console.log(tableData);
   const getTableData = async () => {
     setPageLevelLoader(true);
     try {
       const res = await axios.get(`/booking/find/?formType=${activeTable}`);
-      console.log(res);
       if (res.status === 200) {
         setTableData(res?.data?.data?.reverse());
         setPageLevelLoader(false);
@@ -54,7 +52,6 @@ export default function AdminBookings() {
   };
 
   useEffect(() => {
-    console.log("use effect");
     getTableData();
   }, [activeTable]);
   return (

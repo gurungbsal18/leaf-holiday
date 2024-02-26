@@ -34,34 +34,6 @@ export default function AboutUsPage({ aboutUsData }) {
     },
   ];
 
-  //   const getData = async () => {
-  //     setPageLevelLoader(true);
-  //     try {
-  //       const res = await axios.get(`/aboutUs/`);
-
-  //       if (res?.data?.data?.length > 0) {
-  //         setAboutUsData(res.data.data[0]);
-  //         setPageLevelLoader(false);
-  //       } else {
-  //         toast.error("Something Went Wrong. Please Try Again...", {
-  //           position: toast.POSITION.TOP_RIGHT,
-  //         });
-  //         setPageLevelLoader(false);
-  //       }
-  //     } catch (e) {
-  //       toast.error("Something Went Wrong. Please Try Again...", {
-  //         position: toast.POSITION.TOP_RIGHT,
-  //       });
-  //       setPageLevelLoader(false);
-  //     }
-  //   };
-  //   console.log(aboutUsData);
-
-  //get data from the server on mount
-  //   useEffect(() => {
-  //     getData();
-  //   }, []);
-
   return (
     <div>
       <div className="common-banner">

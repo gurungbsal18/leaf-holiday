@@ -45,7 +45,6 @@ export default function Settings() {
       isUpdate
         ? (res = await axios.put(`/setting/update/${data._id}`, data))
         : (res = await axios.post(`/setting/add`, data));
-      console.log(res);
 
       if (res.status === 200) {
         toast.success(res.data.message, {
@@ -79,7 +78,7 @@ export default function Settings() {
         const res = await axios.get(
           "https://leaf-backend.sushilbalami.com.np/setting/"
         );
-        console.log(res);
+
         if (res.status === 200) {
           const settingData = res.data?.data;
           if (settingData.length > 0) {

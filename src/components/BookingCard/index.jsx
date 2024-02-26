@@ -77,7 +77,6 @@ const BookingCard = ({ prices, packageId, pdfUrl }) => {
       }, 1000);
     }
   };
-  console.log(formData.price == NaN);
 
   return (
     <div className="sticky-top">
