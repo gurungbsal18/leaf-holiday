@@ -43,12 +43,11 @@ export default function Booking() {
   });
 
   const onSubmit = async (data, e) => {
-    const isPayNow = e?.target?.id === "payNowBtn";
     setPageLevelLoader(true);
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/booking/add`,
-        { ...data, isPayNow }
+        { ...data }
       );
       if (res.status === 200) {
         toast.success("Package Booked Successfully", {
@@ -56,13 +55,11 @@ export default function Booking() {
         });
         localStorage.removeItem("bookingData");
         setPageLevelLoader(false);
-        if (isPayNow) {
           const redirectUrl =
             res.data?.data?.payment?.response?.paymentPage?.paymentPageURL;
           if (redirectUrl) {
             window.location.href = redirectUrl;
           }
-        }
       } else {
         toast.error("Failed to book the package! Please Try Again Later...", {
           position: toast.POSITION.TOP_RIGHT,
