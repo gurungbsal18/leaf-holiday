@@ -42,7 +42,8 @@ export default function AdminNavbar() {
         <span
           role="button"
           className="text-white"
-          onClick={() => setNavText(!showNavText)}>
+          onClick={() => setNavText(!showNavText)}
+        >
           {showNavText ? (
             <KeyboardDoubleArrowLeftIcon />
           ) : (
@@ -58,12 +59,14 @@ export default function AdminNavbar() {
               router.push(`/admin/${item.path}`);
             }}
             className="nav-item d-flex gap-2"
-            key={item.id}>
+            key={item.id}
+          >
             <div className="nav-icon">{item.icon}</div>
             <p
               className={`nav-label m-0 ${showNavText ? "" : "d-none"} ${
-                activeNav === item.path ? "text-danger" : ""
-              }`}>
+                activeNav === item.path ? "text-warning" : ""
+              }`}
+            >
               {item.label}
             </p>
           </div>
@@ -73,7 +76,8 @@ export default function AdminNavbar() {
             // setPageLevelLoader(true);
             handleLogout();
           }}
-          className="nav-item d-flex gap-2">
+          className="nav-item d-flex gap-2"
+        >
           <div className="nav-icon">
             <LogoutIcon />
           </div>

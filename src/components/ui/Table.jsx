@@ -198,7 +198,8 @@ export default function Table({
                                 );
                               }, 1000);
                             }
-                          }}>
+                          }}
+                        >
                           {apiName === "review" ? "Verify" : "View"}
                         </button>
                       )}
@@ -224,7 +225,8 @@ export default function Table({
                           setDialogContent(updateComponent);
                         }
                       }}
-                      className="btn btn-sm btn-success">
+                      className="btn btn-sm btn-success"
+                    >
                       <EditNoteIcon /> Edit
                     </button>
                   )}
@@ -233,7 +235,8 @@ export default function Table({
                       onClick={() =>
                         handleRemove(bodyData[key.split("_")[1]]._id)
                       }
-                      className="btn btn-sm btn-danger">
+                      className="btn btn-sm btn-danger"
+                    >
                       <DeleteIcon />
                     </button>
                   )}
@@ -244,15 +247,23 @@ export default function Table({
         </tbody>
       </table>
       {!noPagination && (
-        <div>
-          <span>
-            Page <strong>{pageIndex + 1}</strong>of
-            <strong>{pageOptions.length}</strong>
+        <div className="d-flex gap-2 mt-4 align-items-end">
+          <span className="text-muted">
+            Page{pageIndex + 1}of
+            {pageOptions.length}
           </span>
-          <button disabled={!canPreviousPage} onClick={() => previousPage()}>
+          <button
+            disabled={!canPreviousPage}
+            onClick={() => previousPage()}
+            className="btn btn-secondary"
+          >
             Previous
           </button>
-          <button disabled={!canNextPage} onClick={() => nextPage()}>
+          <button
+            disabled={!canNextPage}
+            onClick={() => nextPage()}
+            className="btn btn-secondary"
+          >
             Next
           </button>
         </div>
