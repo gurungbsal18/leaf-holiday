@@ -701,7 +701,7 @@ export default function PackageDetail({ packageDetail }) {
           <div className="d-flex">
             {relatedPackages &&
               relatedPackages.map((item) => (
-                <PackageCard packageDetail={item} />
+                <PackageCard key={item._id} packageDetail={item} />
               ))}
           </div>
         </div>
