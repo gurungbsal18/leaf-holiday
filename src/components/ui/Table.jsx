@@ -209,6 +209,7 @@ export default function Table({
                     <button
                       onClick={() => {
                         if (apiName === "package") {
+                          setPageLevelLoader(true);
                           localStorage.setItem(
                             "updatePackage",
                             bodyData[key.split("_")[1]]
