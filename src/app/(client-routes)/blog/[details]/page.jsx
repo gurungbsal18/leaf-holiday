@@ -4,17 +4,25 @@ import { GlobalContext } from "@/context";
 import { usePathname } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import FacebookIcon from "@mui/icons-material/Facebook";
-import InstagramIcon from "@mui/icons-material/Instagram";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import TwitterIcon from "@mui/icons-material/Twitter";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import EmailIcon from "@mui/icons-material/Email";
 import axios from "@/utils/axios";
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  LinkedinShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+} from "react-share";
 
 export default function BlogDetail() {
   const [blogDetail, setBlogDetail] = useState(null);
   const { pageLevelLoader, setPageLevelLoader } = useContext(GlobalContext);
   const blogName = usePathname().match(/\/blog\/([^\/]+)(?:\/|$)/)[1];
+  const [blogUrl, setBlogUrl] = useState(process.env.NEXT_PUBLIC_WEBSITE_URL);
 
   const getBlogDetail = async () => {
     setPageLevelLoader(true);
@@ -43,8 +51,9 @@ export default function BlogDetail() {
       setPageLevelLoader(false);
     }
   };
-  blogDetail;
+
   useEffect(() => {
+    setBlogUrl(window.location.href);
     getBlogDetail();
   }, []);
 
@@ -74,18 +83,21 @@ export default function BlogDetail() {
                   <p>Author: {blogDetail?.authorId?.name}</p>
                   <div>
                     <p>Share this {blogDetail?.options}:</p>
-                    <Link href="">
+                    <FacebookShareButton url={blogUrl}>
                       <FacebookIcon />
-                    </Link>
-                    <Link href="">
-                      <InstagramIcon />
-                    </Link>
-                    <Link href="">
+                    </FacebookShareButton>
+                    <WhatsappShareButton url={blogUrl}>
                       <WhatsAppIcon />
-                    </Link>
-                    <Link href="">
+                    </WhatsappShareButton>
+                    <TwitterShareButton url={blogUrl}>
                       <TwitterIcon />
-                    </Link>
+                    </TwitterShareButton>
+                    <EmailShareButton url={blogUrl}>
+                      <EmailIcon />
+                    </EmailShareButton>
+                    <LinkedinShareButton url={blogUrl}>
+                      <LinkedInIcon />
+                    </LinkedinShareButton>
                   </div>
                 </div>
               </div>

@@ -27,7 +27,7 @@ export default function Footer() {
     }
   };
   useEffect(() => {
-    getLeafData();
+    // getLeafData();
   }, []);
 
   return (
