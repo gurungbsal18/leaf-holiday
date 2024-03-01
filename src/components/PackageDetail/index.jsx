@@ -37,12 +37,25 @@ import CollectionsIcon from "@mui/icons-material/Collections";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import { GlobalContext } from "@/context";
 import { getEmbeddedYouTubeUrl, isImage } from "@/utils/functions";
-import { CldVideoPlayer } from "next-cloudinary";
 import "next-cloudinary/dist/cld-video-player.css";
 import Fancybox from "@/components/FancyappWrapper";
+import { FaTripadvisor } from "react-icons/fa";
+import Rating from "@mui/material/Rating";
 import axios from "@/utils/axios";
+import PackageCard from "../PackageCard";
+import CreateTestimonial from "../CreateComponents/CreateTestimonial";
 
 export default function PackageDetail({ packageDetail }) {
+  const {
+    setDialogOpen,
+    setDialogContent,
+    isAuthUser,
+    user,
+    setBookingFormData,
+    pageLevelLoader,
+    setPageLevelLoader,
+  } = useContext(GlobalContext);
+
   const [showItineraryDetails, setShowItineraryDetails] = useState({});
   const [expandOrCollapse, setExpandOrCollapse] = useState(false);
   const [showCostInclude, setShowConstInclude] = useState(true);
@@ -51,6 +64,7 @@ export default function PackageDetail({ packageDetail }) {
   const [showAnswer, setShowAnswer] = useState({});
   const [isSticky, setIsSticky] = useState(false);
   const [initialOffset, setInitialOffset] = useState(0);
+  const [relatedPackages, setRelatedPackages] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -83,14 +97,6 @@ export default function PackageDetail({ packageDetail }) {
 
   const packageId = usePathname().match(/\/package\/([^\/]+)(?:\/|$)/)[1];
   "slug: ", packageId;
-
-  const {
-    user,
-    setBookingFormData,
-    isAuthUser,
-    pageLevelLoader,
-    setPageLevelLoader,
-  } = useContext(GlobalContext);
 
   const router = useRouter();
 
@@ -192,7 +198,30 @@ export default function PackageDetail({ packageDetail }) {
     }
   };
 
-  "package details: ", packageDetail;
+  const getRelatedPackages = async () => {
+    try {
+      const res = await axios.get(
+        `/region/slug/${packageDetail?.region?.slug}`
+      );
+      if (res.status === 200) {
+        let allPackages = res.data?.data[0]?.packages;
+        allPackages = allPackages.map((obj) => {
+          return { ...obj, region: packageDetail.region };
+        });
+        const arr = allPackages.filter((obj) => obj._id !== packageDetail._id);
+        setRelatedPackages(arr.slice(0, 4));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getRelatedPackages();
+  }, []);
+  console.log(relatedPackages);
+
+  // console.log("package details: ", packageDetail);
 
   return (
     <div className="main-div mb-5">
@@ -343,14 +372,16 @@ export default function PackageDetail({ packageDetail }) {
                               ? "detail-itinerary"
                               : "d-none "
                           }`}>
-                          <div className="itinerary-img">
-                            <Image
-                              src={item.imageUrl}
-                              height={500}
-                              width={500}
-                              alt={`${item.name}-image`}
-                            />
-                          </div>
+                          {item.image && (
+                            <div className="itinerary-img">
+                              <Image
+                                src={item.imageUrl}
+                                height={500}
+                                width={500}
+                                alt={`${item.name}-image`}
+                              />
+                            </div>
+                          )}
                           <div
                             dangerouslySetInnerHTML={{
                               __html: item.content,
@@ -620,6 +651,42 @@ export default function PackageDetail({ packageDetail }) {
                 </ol>
               </div>
             )}
+            {packageDetail?.reviews && packageDetail?.reviews.length !== 0 && (
+              <div className="pt-6">
+                <div className="d-flex justify-content-between ">
+                  <h4 className="title">
+                    <ContactSupportIcon />
+                    Reviews
+                  </h4>
+                  <button
+                    className="text-success"
+                    onClick={() => {
+                      setDialogOpen(true);
+                      setDialogContent(<CreateTestimonial />);
+                    }}>
+                    Add a Review
+                  </button>
+                </div>
+                <ol>
+                  {packageDetail?.reviews.map(
+                    (item, index) =>
+                      item.isVerified && (
+                        <li key={`review-${index}`} className="d-flex">
+                          <div>icon</div>
+                          <div>
+                            <p>
+                              {item.userName} -{" "}
+                              {dayjs(item.date).format("DD MMM, YYYY")}
+                            </p>
+                            <Rating readOnly value={item.stars} />
+                            <p>{item.comment}</p>
+                          </div>
+                        </li>
+                      )
+                  )}
+                </ol>
+              </div>
+            )}
           </div>
           <div className="col-12 col-lg-3 booking-card pt-4">
             <BookingCard
@@ -627,6 +694,15 @@ export default function PackageDetail({ packageDetail }) {
               packageId={packageDetail?.slug}
               pdfUrl={packageDetail?.pdfUrl}
             />
+          </div>
+        </div>
+        <div>
+          <h4 className="title">Related Packages</h4>
+          <div className="d-flex">
+            {relatedPackages &&
+              relatedPackages.map((item) => (
+                <PackageCard packageDetail={item} />
+              ))}
           </div>
         </div>
       </Container>
