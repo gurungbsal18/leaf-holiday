@@ -134,7 +134,7 @@ export default function MegaMenuMain() {
   ];
 
   return (
-    <div className="">
+    <div className="bg-success">
       <MegaMenu model={items} breakpoint="960px" />
     </div>
   );

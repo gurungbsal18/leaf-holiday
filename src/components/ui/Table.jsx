@@ -212,7 +212,7 @@ export default function Table({
                           setPageLevelLoader(true);
                           localStorage.setItem(
                             "updatePackage",
-                            bodyData[key.split("_")[1]]
+                            JSON.stringify(bodyData[key.split("_")[1]])
                           );
                           setUpdatePackage(bodyData[key.split("_")[1]]);
                           router.push("/admin/packages/create-package");

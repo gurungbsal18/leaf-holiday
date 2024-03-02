@@ -43,12 +43,14 @@ export default function CreatePackage() {
   const [tripMap, setTripMap] = useState(
     updatePackage ? updatePackage.tripMapUrl : null
   );
+  const [pdf, setPdf] = useState(updatePackage ? updatePackage.pdfUrl : null);
+
   const newUpdatePackage = {
     ...updatePackage,
     region: updatePackage?.region?._id,
     difficulty: updatePackage?.difficulty?._id,
   };
-  const [pdf, setPdf] = useState(updatePackage ? updatePackage.pdfUrl : null);
+
   const router = useRouter();
 
   const initialFormData = {
@@ -115,7 +117,7 @@ export default function CreatePackage() {
   const form = useForm({
     defaultValues: newUpdatePackage ? newUpdatePackage : initialFormData,
   });
-  const { register, control, handleSubmit, setValue, watch } = form;
+  const { register, control, handleSubmit, setValue, watch, reset } = form;
 
   //for price list
   const {
@@ -176,6 +178,19 @@ export default function CreatePackage() {
     );
   };
   useEffect(() => {
+    const updatePackageData = JSON.parse(localStorage.getItem("updatePackage"));
+    if (updatePackageData) {
+      const newUpdatePackage = {
+        ...updatePackageData,
+        region: updatePackageData?.region?._id,
+        difficulty: updatePackageData?.difficulty?._id,
+      };
+      setUpdatePackage(newUpdatePackage);
+      reset(newUpdatePackage);
+      setMainImage(newUpdatePackage?.mainImageUrl || null);
+      setTripMap(newUpdatePackage?.tripMapUrl || null);
+      setPdf(newUpdatePackage?.pdfUrl || null);
+    }
     setPageLevelLoader(true);
     setTimeout(() => {
       setPageLevelLoader(false);
@@ -209,8 +224,7 @@ export default function CreatePackage() {
               <Button
                 size="sm"
                 variant="success"
-                onClick={handleSubmit(onSubmit)}
-              >
+                onClick={handleSubmit(onSubmit)}>
                 {updatePackage ? "Update" : "Publish"}
               </Button>
             </div>
@@ -258,8 +272,7 @@ export default function CreatePackage() {
                       {pricesFields.map((priceField, index) => (
                         <div
                           className="d-flex flex-column flex-md-row gap-3 align-items-center"
-                          key={priceField.id}
-                        >
+                          key={`prices-${index}`}>
                           <TextField
                             className="mx-0"
                             label="No. of People"
@@ -296,8 +309,7 @@ export default function CreatePackage() {
                             <span
                               role="button"
                               className="text-danger"
-                              onClick={() => pricesRemove(index)}
-                            >
+                              onClick={() => pricesRemove(index)}>
                               <RemoveCircleIcon />
                             </span>
                             // <button
@@ -318,8 +330,7 @@ export default function CreatePackage() {
                             numberOfPeople: "",
                             price: 0,
                           })
-                        }
-                      >
+                        }>
                         <span className="d-flex align-items-center gap-1">
                           <MonetizationOnIcon />
                           Add More Price
@@ -436,8 +447,7 @@ export default function CreatePackage() {
                         <Button
                           variant="primary"
                           size="sm"
-                          onClick={() => highlightsAppend("")}
-                        >
+                          onClick={() => highlightsAppend("")}>
                           + Add Trip Highlights
                         </Button>
                       </div>
@@ -445,9 +455,8 @@ export default function CreatePackage() {
                         {highlightsFields.map((field, index) => {
                           return (
                             <div
-                              key={field.key}
-                              className="d-flex align-items-center gap-2 mt-2"
-                            >
+                              key={`highlight-${index}`}
+                              className="d-flex align-items-center gap-2 mt-2">
                               <input
                                 {...register(`highlights.${index}`)}
                                 className="form-control"
@@ -455,8 +464,7 @@ export default function CreatePackage() {
                               <span
                                 role="button"
                                 className="text-danger"
-                                onClick={() => highlightsRemove(index)}
-                              >
+                                onClick={() => highlightsRemove(index)}>
                                 <RemoveCircleIcon />
                               </span>
                             </div>
@@ -471,8 +479,7 @@ export default function CreatePackage() {
                         <Button
                           variant="primary"
                           size="sm"
-                          onClick={() => inclusionsAppend("")}
-                        >
+                          onClick={() => inclusionsAppend("")}>
                           + Add Cost Include
                         </Button>
                       </div>
@@ -480,17 +487,15 @@ export default function CreatePackage() {
                         {inclusionsFields.map((field, index) => {
                           return (
                             <div
-                              key={field.key}
-                              className="d-flex align-items-center gap-2 mt-2"
-                            >
+                              key={`inclusion-${index}`}
+                              className="d-flex align-items-center gap-2 mt-2">
                               <input
                                 {...register(`inclusions.${index}`)}
                                 className="form-control"
                               />
                               <span
                                 onClick={() => inclusionsRemove(index)}
-                                className="text-danger"
-                              >
+                                className="text-danger">
                                 <RemoveCircleIcon />
                               </span>
                             </div>
@@ -505,8 +510,7 @@ export default function CreatePackage() {
                         <Button
                           variant="primary"
                           size="sm"
-                          onClick={() => exclusionsAppend("")}
-                        >
+                          onClick={() => exclusionsAppend("")}>
                           + Add Cost Exclude
                         </Button>
                       </div>
@@ -514,17 +518,15 @@ export default function CreatePackage() {
                         {exclusionsFields.map((field, index) => {
                           return (
                             <div
-                              key={field.key}
-                              className="d-flex align-items-center gap-2 mt-2"
-                            >
+                              key={`exclusion-${index}`}
+                              className="d-flex align-items-center gap-2 mt-2">
                               <input
                                 {...register(`exclusions.${index}`)}
                                 className="form-control"
                               />
                               <span
                                 onClick={() => exclusionsRemove(index)}
-                                className="text-danger"
-                              >
+                                className="text-danger">
                                 <RemoveCircleIcon />
                               </span>
                             </div>
@@ -638,8 +640,7 @@ export default function CreatePackage() {
                 <Button
                   variant="primary"
                   size="sm"
-                  onClick={() => videoGalleryAppend("")}
-                >
+                  onClick={() => videoGalleryAppend("")}>
                   + Add Video Url
                 </Button>
               </div>
@@ -651,8 +652,7 @@ export default function CreatePackage() {
                       <span
                         role="button"
                         className="text-danger"
-                        onClick={() => videoGalleryRemove(index)}
-                      >
+                        onClick={() => videoGalleryRemove(index)}>
                         <RemoveCircleIcon />
                       </span>
                     </div>

@@ -8,7 +8,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function AdminBookings() {
-  const { setPageLevelLoader, pageLevelLoader } = useContext(GlobalContext);
+  const { setPageLevelLoader, pageLevelLoader, callExtractAll } =
+    useContext(GlobalContext);
   const [activeTable, setActiveTable] = useState("booking");
 
   const [tableData, setTableData] = useState(null);
@@ -53,7 +54,7 @@ export default function AdminBookings() {
 
   useEffect(() => {
     getTableData();
-  }, [activeTable]);
+  }, [activeTable, callExtractAll]);
   return (
     <div>
       <div className="d-flex gap-5">
