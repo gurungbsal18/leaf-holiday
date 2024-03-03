@@ -61,10 +61,17 @@ export default function AdminNavbar() {
             className="nav-item d-flex gap-2"
             key={item.id}
           >
-            <div className="nav-icon">{item.icon}</div>
+            {/* <div className="nav-icon">{item.icon}</div> */}
+            <div
+              className={`nav-icon ${
+                activeNav === item.path ? "text-success" : "text-muted"
+              }`}
+            >
+              {item.icon}
+            </div>
             <p
               className={`nav-label m-0 ${showNavText ? "" : "d-none"} ${
-                activeNav === item.path ? "text-success" : ""
+                activeNav === item.path ? "text-success" : "text-muted"
               }`}
             >
               {item.label}
