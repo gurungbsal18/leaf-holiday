@@ -1,19 +1,19 @@
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
-import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive";
+import HikingIcon from "@mui/icons-material/Hiking";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MapIcon from "@mui/icons-material/Map";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 import ArticleIcon from "@mui/icons-material/Article";
 import SettingsIcon from "@mui/icons-material/Settings";
-import AssignmentIcon from "@mui/icons-material/Assignment";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import BookOnlineIcon from "@mui/icons-material/BookOnline";
+import MobileFriendlyIcon from "@mui/icons-material/MobileFriendly";
 import RouteIcon from "@mui/icons-material/Route";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import CollectionsIcon from "@mui/icons-material/Collections";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
+import GroupsIcon from "@mui/icons-material/Groups";
 
 export const navItems = [
   {
@@ -77,7 +77,7 @@ export const adminNavItems = [
   },
   {
     id: "packages",
-    icon: <AirplanemodeActiveIcon />,
+    icon: <HikingIcon />,
     label: "Packages",
     path: "packages",
   },
@@ -113,13 +113,13 @@ export const adminNavItems = [
   },
   {
     id: "our-team",
-    icon: <AssignmentIcon />,
+    icon: <GroupsIcon />,
     label: "Our Team",
     path: "our-team",
   },
   {
     id: "bookings",
-    icon: <BookOnlineIcon />,
+    icon: <MobileFriendlyIcon />,
     label: "Bookings",
     path: "bookings",
   },
