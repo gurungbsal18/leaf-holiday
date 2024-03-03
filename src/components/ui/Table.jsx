@@ -23,7 +23,7 @@ export default function Table({
   const { setVerify } = useContext(GlobalContext);
   const columns = useMemo(() => headerData, []);
   const tableInstance = useTable(
-    { columns, data: bodyData, initialState: { pageSize: sizeOfPage || 8 } },
+    { columns, data: bodyData, initialState: { pageSize: sizeOfPage || 10 } },
     usePagination
   );
   const {
@@ -250,8 +250,8 @@ export default function Table({
       {!noPagination && (
         <div className="d-flex gap-2 mt-4 align-items-end">
           <span className="text-muted">
-            Page{pageIndex + 1}of
-            {pageOptions.length}
+            Page<span className="mx-1">{pageIndex + 1}</span>of
+            <span className="mx-1">{pageOptions.length}</span>
           </span>
           <button
             disabled={!canPreviousPage}
