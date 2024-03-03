@@ -47,7 +47,7 @@ export default function UploadGallery() {
   };
 
   return (
-    <div className="bg-light p-3 rounded mt-4">
+    <div className="bg-light p-3 rounded mt-4 dashboard-gallery">
       <h4 className="title fw-bold">Gallery</h4>
       <div className="d-flex gap-3">
         {images?.map((imagelink, index) => (

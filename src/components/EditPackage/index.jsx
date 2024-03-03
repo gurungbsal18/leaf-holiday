@@ -27,6 +27,7 @@ export default function EditPackage({ data }) {
       <Header
         pageName={data?.pageName}
         createComponent={data?.createComponent}
+        className="bg-success-subtle"
       />
       <Table
         className=""

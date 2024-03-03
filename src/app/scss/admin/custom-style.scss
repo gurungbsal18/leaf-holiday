@@ -43,9 +43,10 @@
 .dashboard-main-content-sidebar {
   position: absolute;
   right: 0;
-  margin-right: 30px;
+  // margin-right: 30px;
 }
 
-.dashboard-package-footer-table {
+.dashboard-package-footer-table,
+.dashboard-gallery {
   margin-right: 370px;
 }

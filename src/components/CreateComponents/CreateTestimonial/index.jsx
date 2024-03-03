@@ -95,9 +95,9 @@ export default function CreateTestimonial() {
       {pageLevelLoader ? (
         <PageLevelLoader />
       ) : (
-        <div className="">
-          <div className="d-flex justify-content-between p-3 ">
-            <p>
+        <div className="p-3">
+          <div className="d-flex justify-content-between border-bottom align-items-center pb-2 mb-3">
+            <p className="m-0">
               {updateForm
                 ? verify
                   ? "Verify Review"
@@ -105,6 +105,7 @@ export default function CreateTestimonial() {
                 : "Create Review"}
             </p>
             <GrClose
+              style={{ cursor: "pointer" }}
               onClick={() => {
                 setDialogOpen(false);
                 setUpdateForm(null);
@@ -115,7 +116,7 @@ export default function CreateTestimonial() {
           <form>
             <div className="d-flex flex-column gap-2">
               {user?.role === "admin" && (
-                <div>
+                <div className="d-flex gap-3 flex-column">
                   <TextField
                     required
                     fullWidth
@@ -155,7 +156,8 @@ export default function CreateTestimonial() {
               )}
               <label name="comment">Comment</label>
               <TextareaAutosize
-                className="w-100"
+                minRows={4}
+                className="w-100 form-control"
                 size="large"
                 label="Comment"
                 type="text"
@@ -178,7 +180,11 @@ export default function CreateTestimonial() {
                   />
                 )}
               />
-              <button type="submit" onClick={handleSubmit(onSubmit)}>
+              <button
+                type="submit"
+                onClick={handleSubmit(onSubmit)}
+                className="btn btn-sm btn-success"
+              >
                 {updateForm ? (verify ? "Verify" : "Update") : "Create"}
               </button>
             </div>
