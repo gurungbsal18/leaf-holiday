@@ -27,7 +27,7 @@
   }
   &-nav {
     padding: 30px 0;
-
+    z-index: 1;
     a {
       color: $black;
       text-decoration: none;
@@ -203,6 +203,10 @@
     opacity: 0;
     transition: 0.5s;
   }
+}
+
+.related-packages-container {
+  flex-wrap: wrap;
 }
 
 @media (max-width: 567px) {

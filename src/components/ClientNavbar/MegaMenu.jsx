@@ -25,6 +25,18 @@ export default function MegaMenuMain() {
       ],
     },
 
+    // {
+    //   label: "Kailash Tour",
+    //   items: [
+    //     [
+    //       {
+    //         label: "label 2",
+    //         url: "package/annapurna-base-camp-trek-12-days",
+    //       },
+    //     ],
+    //   ],
+    // },
+
     {
       label: "About us",
       url: "/aboutus",
@@ -134,7 +146,7 @@ export default function MegaMenuMain() {
   ];
 
   return (
-    <div className="bg-success">
+    <div className="bg-light">
       <MegaMenu model={items} breakpoint="960px" />
     </div>
   );
