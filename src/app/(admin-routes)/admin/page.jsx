@@ -8,6 +8,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MapIcon from "@mui/icons-material/Map";
 import ArticleIcon from "@mui/icons-material/Article";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 export default function AdminDashboard() {
   const { pageLevelLoader, setPageLevelLoader } = useContext(GlobalContext);
@@ -18,10 +19,8 @@ export default function AdminDashboard() {
       const res = await axios.get("/homepage/dashboard");
       if (res.status === 200) {
         setDashboardData(res?.data);
-        setPageLevelLoader(false);
-      } else {
-        setPageLevelLoader(false);
       }
+      setPageLevelLoader(false);
     } catch (e) {
       toast.error(
         e?.response?.data?.error ||

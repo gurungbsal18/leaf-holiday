@@ -36,7 +36,7 @@ export default function DestinationDetail() {
       setPageLevelLoader(false);
     }
   };
-  destinationDetail;
+  console.log(destinationDetail);
   useEffect(() => {
     getDestinationDetail();
   }, []);
@@ -62,6 +62,7 @@ export default function DestinationDetail() {
                 <h4>{destinationDetail?.name}</h4>
                 <p>{destinationDetail?.description}</p>
               </div>
+              <div></div>
             </div>
           )}
         </>

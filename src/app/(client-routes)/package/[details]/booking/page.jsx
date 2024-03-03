@@ -18,7 +18,8 @@ import { priceCalculator } from "@/utils/functions";
 import axios from "@/utils/axios";
 
 export default function Booking() {
-  const { pageLevelLoader, setPageLevelLoader } = useContext(GlobalContext);
+  const { pageLevelLoader, setPageLevelLoader, isAuthUser } =
+    useContext(GlobalContext);
   const router = useRouter();
   const pathName = usePathname();
   const packageId = pathName.match(/\/package\/([^\/]+)\//)[1];
@@ -43,40 +44,47 @@ export default function Booking() {
   });
 
   const onSubmit = async (data, e) => {
-    setPageLevelLoader(true);
-    try {
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/booking/add`,
-        { ...data }
-      );
-      if (res.status === 200) {
-        toast.success("Package Booked Successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-        localStorage.removeItem("bookingData");
-        setPageLevelLoader(false);
+    if (!isAuthUser) {
+      toast.error("Please Log in to book the package", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setTimeout(() => {
+        setPageLevelLoader(true);
+        router.push("/login");
+      }, 1000);
+    } else {
+      setPageLevelLoader(true);
+      try {
+        const res = await axios.post(`/booking/add`, { ...data });
+        if (res.status === 200) {
+          toast.success("Package Booked Successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          localStorage.removeItem("bookingData");
+          setPageLevelLoader(false);
           const redirectUrl =
             res.data?.data?.payment?.response?.paymentPage?.paymentPageURL;
           if (redirectUrl) {
             window.location.href = redirectUrl;
           }
-      } else {
-        toast.error("Failed to book the package! Please Try Again Later...", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+        } else {
+          toast.error("Failed to book the package! Please Try Again Later...", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          localStorage.removeItem("bookingData");
+          setPageLevelLoader(false);
+        }
+      } catch (e) {
+        toast.error(
+          e?.response?.data?.error ||
+            "Failed to book the package! Please Try Again Later...",
+          {
+            position: toast.POSITION.TOP_RIGHT,
+          }
+        );
         localStorage.removeItem("bookingData");
         setPageLevelLoader(false);
       }
-    } catch (e) {
-      toast.error(
-        e?.response?.data?.error ||
-          "Failed to book the package! Please Try Again Later...",
-        {
-          position: toast.POSITION.TOP_RIGHT,
-        }
-      );
-      localStorage.removeItem("bookingData");
-      setPageLevelLoader(false);
     }
   };
 

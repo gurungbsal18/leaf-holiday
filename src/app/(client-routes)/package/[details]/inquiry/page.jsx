@@ -40,9 +40,8 @@ export default function Inquiry() {
   });
 
   const onSubmit = async (data) => {
-    data;
-    setPageLevelLoader(true);
     if (isAuthUser) {
+      setPageLevelLoader(true);
       try {
         const res = await axios.post(`/booking/add`, data);
         if (res.status === 200) {
@@ -75,6 +74,7 @@ export default function Inquiry() {
         position: toast.POSITION.TOP_RIGHT,
       });
       setTimeout(() => {
+        setPageLevelLoader(true);
         router.push("/login");
       }, 1000);
     }

@@ -6,9 +6,11 @@ import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import axios from "@/utils/axios";
+import PackageCard from "@/components/PackageCard";
 
 export default function RegionDetail() {
   const [regionDetail, setRegionDetail] = useState(null);
+  const [packages, setPackages] = useState(null);
   const { pageLevelLoader, setPageLevelLoader } = useContext(GlobalContext);
   const regionName = usePathname().match(/\/region\/([^\/]+)(?:\/|$)/)[1];
 
@@ -20,6 +22,13 @@ export default function RegionDetail() {
 
         if (regionData.length > 0) {
           setRegionDetail(regionData[0]);
+          if (regionData[0]?.packages?.length > 0) {
+            let allPackages = regionData[0]?.packages;
+            allPackages = allPackages.map((obj) => {
+              return { ...obj, region: regionData[0] };
+            });
+            setPackages(allPackages);
+          }
         }
         setPageLevelLoader(false);
       } else {
@@ -64,7 +73,12 @@ export default function RegionDetail() {
                 <h4>{regionDetail?.name}</h4>
                 <p>{regionDetail?.description}</p>
               </div>
-              <div></div>
+              <div className="d-flex">
+                {packages &&
+                  packages.map((item) => (
+                    <PackageCard key={item._id} packageDetail={item} />
+                  ))}
+              </div>
             </div>
           )}
         </>
