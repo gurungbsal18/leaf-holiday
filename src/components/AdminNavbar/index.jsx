@@ -37,11 +37,11 @@ export default function AdminNavbar() {
   }
 
   return (
-    <div className="admin-navbar bg-success d-flex flex-column p-4 border-end">
+    <div className="admin-navbar bg-success-subtle d-flex flex-column p-4 border-end">
       <div className="admin-nav-items d-flex flex-column gap-4">
         <span
           role="button"
-          className="text-white"
+          className="text-dark"
           onClick={() => setNavText(!showNavText)}
         >
           {showNavText ? (
@@ -64,7 +64,7 @@ export default function AdminNavbar() {
             <div className="nav-icon">{item.icon}</div>
             <p
               className={`nav-label m-0 ${showNavText ? "" : "d-none"} ${
-                activeNav === item.path ? "text-warning" : ""
+                activeNav === item.path ? "text-success" : ""
               }`}
             >
               {item.label}

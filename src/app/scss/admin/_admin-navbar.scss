@@ -1,11 +1,10 @@
 .admin-navbar {
   position: relative;
-  background: #ffffff;
   height: 100vh;
   .admin-nav-items {
     // margin-top: 100px;
     .nav-item {
-      color: $white;
+      color: $dark;
       height: 30px;
       cursor: pointer;
       &:hover {
