@@ -9,9 +9,9 @@ import { useContext } from "react";
 export default function ClientLayout({ children }) {
   const { dialogOpen, dialogContent } = useContext(GlobalContext);
   return (
-    <div className="main-container">
+    <div className="">
       <ClientNavbar />
-      {children}
+      <div className="main-container">{children}</div>
       <Footer />
 
       <Dialog open={dialogOpen}>{dialogContent}</Dialog>

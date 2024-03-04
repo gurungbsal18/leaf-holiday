@@ -56,7 +56,7 @@ export default function AdminBookings() {
     getTableData();
   }, [activeTable, callExtractAll]);
   return (
-    <div>
+    <div className="d-flex flex-column min-vh-100  ">
       <div className="d-flex gap-5">
         <button
           disabled={activeTable === "booking"}
@@ -74,19 +74,21 @@ export default function AdminBookings() {
           Customization Requests
         </button>
       </div>
-      {pageLevelLoader ? (
-        <PageLevelLoader />
-      ) : (
-        tableData && (
-          <Table
-            headerData={headerData}
-            bodyData={tableData}
-            apiName={"booking"}
-            showRemove={true}
-            sizeOfPage={10}
-          />
-        )
-      )}
+      <div className="admin-booking-table">
+        {pageLevelLoader ? (
+          <PageLevelLoader />
+        ) : (
+          tableData && (
+            <Table
+              headerData={headerData}
+              bodyData={tableData}
+              apiName={"booking"}
+              showRemove={true}
+              sizeOfPage={10}
+            />
+          )
+        )}
+      </div>
     </div>
   );
 }
