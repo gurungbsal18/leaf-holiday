@@ -62,27 +62,32 @@ export default function BlogDetail() {
       {pageLevelLoader ? (
         <PageLevelLoader />
       ) : (
-        <>
+        <div className="blog-section">
           {blogDetail && (
             <div>
-              <div>
+              <div className="blog-header-img">
                 <Image
                   src={blogDetail?.imageUrl}
                   height={500}
                   width={1512}
                   alt={`${blogDetail?.name}-image`}
                 />
-                <h4>{blogDetail?.title}</h4>
               </div>
-              <div>
+              <div className="container my-5">
+                <h4>{blogDetail?.title}</h4>
                 <div
                   dangerouslySetInnerHTML={{
                     __html: blogDetail?.content,
-                  }}></div>
+                  }}
+                ></div>
                 <div>
-                  <p>Author: {blogDetail?.authorId?.name}</p>
+                  <p className="text-muted fw-bold">
+                    Author: {blogDetail?.authorId?.name}
+                  </p>
                   <div>
-                    <p>Share this {blogDetail?.options}:</p>
+                    <p className="text-muted">
+                      Share this {blogDetail?.options}:
+                    </p>
                     <FacebookShareButton url={blogUrl}>
                       <FacebookIcon />
                     </FacebookShareButton>
@@ -104,7 +109,7 @@ export default function BlogDetail() {
               <div></div>
             </div>
           )}
-        </>
+        </div>
       )}
     </>
   );
