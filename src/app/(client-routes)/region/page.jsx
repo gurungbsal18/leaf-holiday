@@ -44,7 +44,7 @@ export default function RegionPage() {
         <PageLevelLoader />
       ) : (
         <div>
-          <div>
+          <div className="header-image">
             <Image
               src="/images/km.png"
               height={500}
@@ -52,9 +52,9 @@ export default function RegionPage() {
               alt="region-image"
               priority
             />
-            <h4>Regions</h4>
           </div>
-          <div>
+          <div className="container my-5">
+            <h4 className="fw-bold title">Regions</h4>
             <p>
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis
               sapiente ipsam commodi nam suscipit iure libero rem veniam minima
@@ -65,15 +65,16 @@ export default function RegionPage() {
               eaque consequuntur iste saepe! Nisi, officia perspiciatis!
             </p>
             {allRegions && (
-              <div className="d-flex">
+              <div className="d-flex justify-content-start gap-5">
                 {allRegions.map((item) => (
                   <div key={item._id}>
                     <Image
                       onClick={() => router.push(`/region/${item.slug}`)}
                       src={item.imgUrl}
-                      height={200}
-                      width={200}
+                      height={300}
+                      width={300}
                       alt={`${item.name}-image`}
+                      style={{ objectFit: "cover" }}
                     />
                   </div>
                 ))}
