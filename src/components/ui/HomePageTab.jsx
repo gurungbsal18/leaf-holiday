@@ -105,7 +105,16 @@ export default function HomePageTab({ position, valueDefault, url }) {
         <PageLevelLoader />
       ) : (
         <div className="custom-dialog-inner">
-          <h4 className="title mb-4 pb-2 border-bottom">Add Packages</h4>
+          <div className="d-flex justify-content-between mb-4 pb-2 border-bottom">
+            <h4 className="title">Add Packages</h4>
+            <span
+              onClick={() => {
+                setDialogOpen(false);
+              }}
+              style={{ cursor: "pointer" }}>
+              <CloseIcon />
+            </span>
+          </div>
           <div className="mb-2">
             <div className="d-flex justify-content-between">
               <div className="d-flex align-items-cente gap-2">
@@ -122,21 +131,12 @@ export default function HomePageTab({ position, valueDefault, url }) {
                   disabled={packagesFields.length >= 6}
                   onClick={() => {
                     packagesAppend(allPackages[0]);
-                  }}
-                >
+                  }}>
                   <span className="d-flex align-items-center gap-1">
                     + Add More Package
                   </span>
                 </button>
               </div>
-
-              {/* <span
-                onClick={() => {
-                  setDialogOpen(false);
-                }}
-                style={{ cursor: "pointer" }}>
-                <CloseIcon />
-              </span> */}
             </div>
           </div>
           {url && (
@@ -152,8 +152,7 @@ export default function HomePageTab({ position, valueDefault, url }) {
             return (
               <div
                 className="d-flex flex-column flex-md-row gap-3 align-items-center"
-                key={packagesField.id}
-              >
+                key={packagesField.id}>
                 <CustomAutocomplete
                   fieldName={packagesField}
                   setValue={setValue}
@@ -165,8 +164,7 @@ export default function HomePageTab({ position, valueDefault, url }) {
                   <span
                     role="button"
                     className="text-danger"
-                    onClick={() => packagesRemove(index)}
-                  >
+                    onClick={() => packagesRemove(index)}>
                     <RemoveCircleIcon />
                   </span>
                 )}
@@ -180,8 +178,7 @@ export default function HomePageTab({ position, valueDefault, url }) {
               watch("packages[0]") === "" ||
               watch("packages[0]") === null ||
               watch("packages[0]") === undefined
-            }
-          >
+            }>
             {valueDefault ? "UPDATE" : "CREATE"}
           </button>
         </div>

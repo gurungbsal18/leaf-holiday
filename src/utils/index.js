@@ -106,6 +106,12 @@ export const adminNavItems = [
     path: "blogs",
   },
   {
+    id: "menu",
+    icon: <ArticleIcon />,
+    label: "Menu",
+    path: "menu",
+  },
+  {
     id: "settings",
     icon: <SettingsIcon />,
     label: "Settings",

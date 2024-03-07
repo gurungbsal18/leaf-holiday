@@ -61,7 +61,7 @@ export default function Home() {
       event.preventDefault();
       setPageLevelLoader(true);
       // Navigate to search page with the search query
-      router.push(`/search?searchTerm=${searchTerm}`);
+      router.push(`/search?searchTerm=${searchTerm}&page=${1}`);
     }
   };
 
