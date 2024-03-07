@@ -98,8 +98,7 @@ export default function EditHome() {
                     onClick={() => {
                       setDialogOpen(true);
                       setDialogContent(<HomePageTab position={"top"} />);
-                    }}
-                  >
+                    }}>
                     Add New Tab
                   </button>
                 )}
@@ -122,8 +121,7 @@ export default function EditHome() {
                               valueDefault={homePageData?.tabs?.top[0]}
                             />
                           );
-                        }}
-                      >
+                        }}>
                         <EditNoteIcon className ms-2 />
                         Edit
                       </button>
@@ -131,8 +129,7 @@ export default function EditHome() {
                         className="btn btn-md btn-danger"
                         onClick={() =>
                           handleRemove(homePageData?.tabs?.top[0]?._id)
-                        }
-                      >
+                        }>
                         <DeleteIcon className="ms-2" />
                         Remove
                       </button>
@@ -162,8 +159,7 @@ export default function EditHome() {
                 onClick={() => {
                   setDialogOpen(true);
                   setDialogContent(<HomePageTab position={"middle"} />);
-                }}
-              >
+                }}>
                 Add New Tab
               </button>
             </div>
@@ -172,30 +168,30 @@ export default function EditHome() {
                 <div key={middleTab._id}>
                   <div className="d-flex justify-content-between align-items-center gap-2 border-bottom pb-2">
                     <h5>{middleTab.title}</h5>
-                    <button
-                      className="btn btn-sm btn-success"
-                      onClick={() => {
-                        setHomePageEdit(middleTab);
-                        setDialogOpen(true);
-                        setDialogContent(
-                          <HomePageTab
-                            position={"middle"}
-                            valueDefault={middleTab}
-                          />
-                        );
-                      }}
-                    >
-                      <EditNoteIcon className ms-2 />
-                      Edit
-                    </button>
+                    <div className="d-flex gap-2">
+                      <button
+                        className="btn btn-sm btn-success"
+                        onClick={() => {
+                          setHomePageEdit(middleTab);
+                          setDialogOpen(true);
+                          setDialogContent(
+                            <HomePageTab
+                              position={"middle"}
+                              valueDefault={middleTab}
+                            />
+                          );
+                        }}>
+                        <EditNoteIcon className ms-2 />
+                        Edit
+                      </button>
 
-                    <button
-                      className="btn btn-sm btn-danger"
-                      onClick={() => handleRemove(middleTab?._id)}
-                    >
-                      <DeleteIcon className="ms-2" />
-                      Remove
-                    </button>
+                      <button
+                        className="btn btn-sm btn-danger"
+                        onClick={() => handleRemove(middleTab?._id)}>
+                        <DeleteIcon className="ms-2" />
+                        Remove
+                      </button>
+                    </div>
                   </div>
 
                   <div className="border-bottom">
@@ -223,42 +219,43 @@ export default function EditHome() {
                       setDialogContent(
                         <HomePageTab position={"bottom"} url={true} />
                       );
-                    }}
-                  >
+                    }}>
                     Add New Tab
                   </button>
                 )}
               </div>
               <div className="bg-light rounded p-3 mt-2">
                 {homePageData?.tabs?.bottom?.length > 0 && (
-                  <div>
-                    <h5>{homePageData?.tabs?.bottom[0]?.title}</h5>
-                    <button
-                      className="btn btn-sm btn-success"
-                      onClick={() => {
-                        setHomePageEdit(homePageData?.tabs?.bottom[0]);
-                        setDialogOpen(true);
-                        setDialogContent(
-                          <HomePageTab
-                            position={"bottom"}
-                            valueDefault={homePageData?.tabs?.bottom[0]}
-                            url={true}
-                          />
-                        );
-                      }}
-                    >
-                      <EditNoteIcon className="ms-2" />
-                      Edit
-                    </button>
-                    <button
-                      className="btn btn-sm btn-danger"
-                      onClick={() =>
-                        handleRemove(homePageData?.tabs?.bottom[0]?._id)
-                      }
-                    >
-                      <DeleteIcon className="ms-2" />
-                      Remove
-                    </button>
+                  <div className="">
+                    <div className="d-flex justify-content-between ">
+                      <h5>{homePageData?.tabs?.bottom[0]?.title}</h5>
+                      <div className="d-flex gap-2">
+                        <button
+                          className="btn btn-sm btn-success"
+                          onClick={() => {
+                            setHomePageEdit(homePageData?.tabs?.bottom[0]);
+                            setDialogOpen(true);
+                            setDialogContent(
+                              <HomePageTab
+                                position={"bottom"}
+                                valueDefault={homePageData?.tabs?.bottom[0]}
+                                url={true}
+                              />
+                            );
+                          }}>
+                          <EditNoteIcon className="ms-2" />
+                          Edit
+                        </button>
+                        <button
+                          className="btn btn-sm btn-danger"
+                          onClick={() =>
+                            handleRemove(homePageData?.tabs?.bottom[0]?._id)
+                          }>
+                          <DeleteIcon className="ms-2" />
+                          Remove
+                        </button>
+                      </div>
+                    </div>
 
                     <div>
                       <p>{homePageData?.tabs?.bottom[0]?.videoUrl}</p>
