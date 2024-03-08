@@ -109,7 +109,7 @@ export default function Table({
       setPageLevelLoader(false);
     }
   }
-  bodyData;
+
   return (
     <div className="">
       <table {...getTableProps()} className="dashboard-table">
@@ -198,8 +198,7 @@ export default function Table({
                                 );
                               }, 1000);
                             }
-                          }}
-                        >
+                          }}>
                           {apiName === "review" ? "Verify" : "View"}
                         </button>
                       )}
@@ -226,8 +225,7 @@ export default function Table({
                           setDialogContent(updateComponent);
                         }
                       }}
-                      className="btn btn-sm btn-success"
-                    >
+                      className="btn btn-sm btn-success">
                       <EditNoteIcon /> Edit
                     </button>
                   )}
@@ -236,8 +234,7 @@ export default function Table({
                       onClick={() =>
                         handleRemove(bodyData[key.split("_")[1]]._id)
                       }
-                      className="btn btn-sm btn-danger"
-                    >
+                      className="btn btn-sm btn-danger">
                       <DeleteIcon />
                     </button>
                   )}
@@ -256,15 +253,13 @@ export default function Table({
           <button
             disabled={!canPreviousPage}
             onClick={() => previousPage()}
-            className="btn btn-secondary"
-          >
+            className="btn btn-secondary">
             Previous
           </button>
           <button
             disabled={!canNextPage}
             onClick={() => nextPage()}
-            className="btn btn-secondary"
-          >
+            className="btn btn-secondary">
             Next
           </button>
         </div>
