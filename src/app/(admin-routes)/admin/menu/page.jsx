@@ -9,9 +9,11 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateMenu from "@/components/CreateComponents/CreateMenu";
 import { toast } from "react-toastify";
+import { IndeterminateCheckBoxOutlined } from "@mui/icons-material";
 
 export default function Menu() {
   const {
+    setUpdateForm,
     pageLevelLoader,
     setPageLevelLoader,
     setDialogOpen,
@@ -94,29 +96,43 @@ export default function Menu() {
                 <div className="">
                   {item.child.length > 0 &&
                     item.child.map((childItem) => (
-                      <div
-                        key={childItem._id}
-                        className="d-flex justify-content-between align-items-center gap-2 pb-2">
-                        <h5>{childItem.title}</h5>
-                        <Link href={childItem.link}>{childItem.link}</Link>
-                        <div className="d-flex gap-2">
-                          <button
-                            className="btn btn-sm btn-success d-flex gap-2 align-items-center"
-                            onClick={() => {
-                              setDialogContent(<CreateMenu />);
-                              setDialogOpen(true);
-                            }}>
-                            <EditNoteIcon className="" />
-                            Edit
-                          </button>
-
-                          <button
-                            className="btn btn-sm btn-danger d-flex gap-2 align-items-center "
-                            onClick={() => handleRemove(childItem._id)}>
-                            <DeleteIcon className="" />
-                            Remove
-                          </button>
+                      <div key={childItem._id}>
+                        <div className="d-flex justify-content-between align-items-center gap-2 pb-2">
+                          <h5>{childItem.title}</h5>
+                          <Link href={childItem.link}>{childItem.link}</Link>
+                          <div className="d-flex gap-2">
+                            <button
+                              className="btn btn-sm btn-success d-flex gap-2 align-items-center"
+                              onClick={() => {
+                                setUpdateForm(childItem);
+                                setDialogContent(
+                                  <CreateMenu menuName={item.title} />
+                                );
+                                setDialogOpen(true);
+                              }}>
+                              <EditNoteIcon className="" />
+                              Edit
+                            </button>
+                            <button
+                              className="btn btn-sm btn-danger d-flex gap-2 align-items-center "
+                              onClick={() => handleRemove(childItem._id)}>
+                              <DeleteIcon className="" />
+                              Remove
+                            </button>
+                          </div>
                         </div>
+                        {childItem.child.length > 0 && (
+                          <div>
+                            {childItem.child.map((lastChild, index) => (
+                              <div
+                                key={`lastchild-${IndeterminateCheckBoxOutlined}`}
+                                className="d-flex gap-3">
+                                <p>{lastChild.title}</p>
+                                <p>{lastChild.link}</p>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     ))}
                 </div>
