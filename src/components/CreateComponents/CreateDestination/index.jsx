@@ -60,32 +60,35 @@ export default function CreateDestination() {
         </div>
         <form className="p-4">
           <div className="d-flex row">
-            <div className="d-flex flex-column gap-2 col-8">
-              <TextField
-                required
-                fullWidth
-                size="small"
-                label="Name"
-                type="text"
-                variant="outlined"
-                {...register("name")}
-              />
-              <label name="description">Description</label>
-              <TextareaAutosize
-                className="w-100 form-control pt-2"
-                size="large"
-                label="Description"
-                type="text"
-                variant="outlined"
-                {...register("description")}
-              />
-              <div className="d-flex justify-content-end">
-                <button
-                  type="submit"
-                  onClick={handleSubmit(onSubmit)}
-                  className="btn btn-success">
-                  {updateForm ? "Update" : "Create"}
-                </button>
+            <div className="col-8">
+              <div className="d-flex flex-column gap-2 ">
+                <TextField
+                  required
+                  fullWidth
+                  size="small"
+                  label="Name"
+                  type="text"
+                  variant="outlined"
+                  {...register("name")}
+                />
+                <label name="description">Description</label>
+                <TextareaAutosize
+                  className="w-100 form-control pt-2"
+                  size="large"
+                  label="Description"
+                  type="text"
+                  variant="outlined"
+                  {...register("description")}
+                />
+                <div className="d-flex justify-content-end">
+                  <button
+                    type="submit"
+                    onClick={handleSubmit(onSubmit)}
+                    className="btn btn-success"
+                  >
+                    {updateForm ? "Update" : "Create"}
+                  </button>
+                </div>
               </div>
             </div>
             <UploadToCloudinary

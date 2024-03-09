@@ -112,17 +112,23 @@ export default function Settings() {
       {pageLevelLoader ? (
         <PageLevelLoader />
       ) : (
-        <div className="">
+        <div className="p-4">
           <div className="">
-            <div className="d-flex justify-content-between p-3 ">
-              <p>{isUpdate ? "Update Settings" : "Create Settings"}</p>
-              <button type="submit" onClick={handleSubmit(onSubmit)}>
+            <div className="d-flex justify-content-between mb-4">
+              <h4 className="title m-0">
+                {isUpdate ? "Update Settings" : "Create Settings"}
+              </h4>
+              <button
+                type="submit"
+                onClick={handleSubmit(onSubmit)}
+                className="btn btn-sm btn-success"
+              >
                 {isUpdate ? "Update" : "Create"}
               </button>
             </div>
             <form>
               <div className="d-flex gap-5">
-                <div className="d-flex flex-column gap-2">
+                <div className="d-flex flex-column gap-4">
                   {leftDivData.map((item) => (
                     <Controller
                       key={item.id}
@@ -147,7 +153,7 @@ export default function Settings() {
                     formName="logo"
                   />
                 </div>
-                <div className="d-flex flex-column gap-2">
+                <div className="d-flex flex-column gap-4">
                   {rightDivData.map((item) => (
                     <Controller
                       key={item.id}
