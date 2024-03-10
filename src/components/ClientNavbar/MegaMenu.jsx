@@ -1,153 +1,99 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MegaMenu } from "primereact/megamenu";
-import { link } from "joi";
+import axios from "@/utils/axios";
 
 export default function MegaMenuMain() {
-  const items = [
-    {
-      label: "Home",
-      url: "/",
-    },
-    {
-      label: "Trekking",
-      items: [
-        [
-          {
-            label: "Annapurna Region",
-            items: [
-              {
-                label: "Annapurna Base Camp Trek",
-                url: "package/annapurna-base-camp-trek-12-days",
-              },
-            ],
-          },
-        ],
-      ],
-    },
-
-    // {
-    //   label: "Kailash Tour",
-    //   items: [
-    //     [
-    //       {
-    //         label: "label 2",
-    //         url: "package/annapurna-base-camp-trek-12-days",
-    //       },
-    //     ],
-    //   ],
-    // },
-
-    {
-      label: "About us",
-      url: "/aboutus",
-    },
-
-    {
-      label: "Contact",
-      url: "/contact",
-    },
-
-    // {
-    //   label: "Trekking",
-    //   items: [
-    //     [
-    //       {
-    //         label: "Everest Region",
-    //         items: [
-    //           { label: "Everest Base Camp Trek - 14 Days" },
-    //           { label: "Everest Three Passes Trek - 21 Days" },
-    //           { label: "Everest Short Base Camp Trek - 12 Days" },
-    //           { label: "Everest and Gokyo Lake Trek - 19 Days" },
-    //         ],
-    //       },
-    //       {
-    //         label: "Annapuarna Region 1",
-    //         items: [
-    //           { label: "Annapurna Base Camp Trek - 12 Days" },
-    //           { label: "Annapurna Circuit Trek - 19 Days" },
-    //           { label: "Tilicho Base Camp Trek - 15 Days" },
-    //         ],
-    //       },
-    //     ],
-    //     [
-    //       {
-    //         label: "Annapuarna Region",
-    //         items: [
-    //           { label: "Annapurna Base Camp Trek - 12 Days" },
-    //           // { label: "Annapurna Base Camp Trek - 12 Days" },
-    //         ],
-    //       },
-    //     ],
-
-    //     [
-    //       {
-    //         label: "Hello Region",
-    //         items: [
-    //           { label: "Annapurna Base Camp Trek - 12 Days" },
-    //           { label: "Annapurna Circuit Trek - 19 Days" },
-    //           { label: "Tilicho Base Camp Trek - 15 Days" },
-    //         ],
-    //       },
-    //     ],
-    //   ],
-    // },
-
-    // next menu starts
-    // {
-    //   label: "Destination",
-    //   icon: "pi pi-clock",
-    //   items: [
-    //     [
-    //       {
-    //         label: "Nepal",
-    //         items: [
-    //           { label: "Trekking" },
-    //           { label: "Tour" },
-    //           { label: "Helicopter Tour" },
-    //           { label: "Hiking" },
-    //         ],
-    //       },
-    //     ],
-    //     [
-    //       {
-    //         label: "Running",
-    //         items: [
-    //           { label: "Accessories" },
-    //           { label: "Shoes" },
-    //           { label: "T-Shirts" },
-    //           { label: "Shorts" },
-    //         ],
-    //       },
-    //     ],
-    //     [
-    //       {
-    //         label: "Swimming",
-    //         items: [
-    //           { label: "Kickboard" },
-    //           { label: "Nose Clip" },
-    //           { label: "Swimsuits" },
-    //           { label: "Paddles" },
-    //         ],
-    //       },
-    //     ],
-    //     [
-    //       {
-    //         label: "Tennis",
-    //         items: [
-    //           { label: "Balls" },
-    //           { label: "Rackets" },
-    //           { label: "Shoes" },
-    //           { label: "Training" },
-    //         ],
-    //       },
-    //     ],
-    //   ],
-    // },
-  ];
+  const [menuData, setMenuData] = useState(initialMenu);
+  const getMenuData = async () => {
+    const res = await axios.get("/menu/");
+    const finalMenu = updateInitialMenu(res.data.data);
+    console.log(JSON.stringify(finalMenu));
+    setMenuData(finalMenu);
+    // console.log(JSON.stringify(res.data.data));
+  };
+  useEffect(() => {
+    getMenuData();
+  }, []);
 
   return (
-    <div className="bg-light">
-      <MegaMenu model={items} breakpoint="960px" />
+    <div className="bg-danger w-100">
+      <MegaMenu model={menuData} breakpoint="1280px" />
     </div>
   );
 }
+
+function updateInitialMenu(response) {
+  // Make a copy of the initialMenu array to avoid mutation
+  const updatedMenu = JSON.parse(JSON.stringify(initialMenu));
+
+  response.forEach((menuItem) => {
+    // Handle the "Contact" menu item separately
+    if (menuItem.label === "Contact" && menuItem.url) {
+      updatedMenu.push({
+        label: menuItem.label,
+        url: menuItem.url,
+      });
+    } else {
+      // Find the matching parent in the updatedMenu
+      const parentMenu = updatedMenu.find(
+        (menu) => menu.label === menuItem.parent
+      );
+      if (parentMenu) {
+        // Add child items to the parent menu
+        const newItem = [
+          {
+            label: menuItem.title,
+            url: menuItem.link,
+            items: menuItem.child.map((childItem) => ({
+              label: childItem.title,
+              url: childItem.link,
+            })),
+          },
+        ];
+        parentMenu.items.push(newItem);
+      }
+    }
+  });
+  console.log(updatedMenu);
+  return updatedMenu;
+}
+
+const initialMenu = [
+  {
+    label: "Trekking",
+    items: [],
+  },
+  {
+    label: "Company",
+    items: [],
+  },
+  {
+    label: "Kailash Tours",
+    items: [],
+  },
+  {
+    label: "Activity",
+    items: [],
+  },
+  {
+    label: "Day Tours",
+    items: [],
+  },
+  {
+    label: "Outbound",
+    items: [],
+  },
+  {
+    label: "Nepal Tour",
+    items: [],
+  },
+  {
+    label: "Travel Info",
+    items: [],
+  },
+
+  {
+    label: "Contact",
+    url: "/contact",
+  },
+];

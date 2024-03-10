@@ -8,7 +8,7 @@ import { GlobalContext } from "@/context";
 import { submitForm } from "@/utils/functions";
 import UploadToCloudinary from "@/components/ui/UploadToCloudinary";
 
-export default function CreateDestination() {
+export default function CreateActivity() {
   const {
     updateForm,
     setUpdateForm,
@@ -16,25 +16,24 @@ export default function CreateDestination() {
     callExtractAll,
     setCallExtractAll,
   } = useContext(GlobalContext);
-
   const [selectedFile, setSelectedFile] = React.useState(
     updateForm ? updateForm.imageUrl : null
   );
 
-  const initialDestinationData = {
+  const initialData = {
     name: "",
     description: "",
     imageUrl: "",
   };
 
   const form = useForm({
-    defaultValues: updateForm ? updateForm : initialDestinationData,
+    defaultValues: updateForm ? updateForm : initialData,
   });
   const { register, handleSubmit, setValue } = form;
 
   const onSubmit = async (data) => {
     data = { ...data, slug: data.name.toLowerCase().replace(/\s+/g, "-") };
-    const res = await submitForm(data, "destination", updateForm);
+    const res = await submitForm(data, "activity", updateForm);
 
     setCallExtractAll(!callExtractAll);
     setUpdateForm(null);
@@ -46,7 +45,7 @@ export default function CreateDestination() {
       <div className="custom-modal">
         <div className="custom-modal-header">
           <p className="m-0">
-            {updateForm ? "Update Destination" : "Create Destination"}
+            {updateForm ? "Update Activity" : "Create Activity"}
           </p>
           <GrClose
             onClick={() => {

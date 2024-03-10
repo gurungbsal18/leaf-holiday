@@ -85,6 +85,10 @@ ul.p-submenu-list.p-megamenu-submenu li {
   border-radius: 5px;
 }
 
+.p-menuitem-active .p-megamenu-panel {
+  justify-content: start;
+}
+
 @media (max-width: 820px) {
   .login-section {
     position: absolute;

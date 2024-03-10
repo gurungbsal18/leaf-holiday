@@ -84,6 +84,22 @@ import axios from "@/utils/axios";
 export default function ClientNavbar() {
   const { isAuthUser, user, setUser, setIsAuthUser, setPageLevelLoader } =
     useContext(GlobalContext);
+
+  const [showMenu, setShowMenu] = useState(false);
+
+  const router = useRouter();
+
+  function profileImageMaker() {
+    const { name } = JSON.parse(localStorage.getItem("user"));
+
+    // Split the name into an array of words
+    const names = name.split(" ");
+
+    // Extract the first character of each word and convert to uppercase
+    const initials = names.map((word) => word.charAt(0).toUpperCase()).join("");
+    return initials;
+  }
+
   function handleLogout() {
     toast.success("Logged Out Successfully", {
       position: toast.POSITION.TOP_RIGHT,
@@ -96,24 +112,6 @@ export default function ClientNavbar() {
       setIsAuthUser(false);
       router.push("/login");
     }, 1000);
-  }
-  const [showNavbar, setShowNavbar] = useState(false);
-  const router = useRouter();
-
-  function handleShowNavBar() {
-    setShowNavbar(!showNavbar);
-  }
-  const [showMenu, setShowMenu] = useState(false);
-
-  function profileImageMaker() {
-    const { name } = JSON.parse(localStorage.getItem("user"));
-
-    // Split the name into an array of words
-    const names = name.split(" ");
-
-    // Extract the first character of each word and convert to uppercase
-    const initials = names.map((word) => word.charAt(0).toUpperCase()).join("");
-    return initials;
   }
 
   return (
@@ -132,7 +130,15 @@ export default function ClientNavbar() {
             </Link>
           </div>
 
-          <div className="d-flex flex-column">
+          <div className="d-flex">
+            {user && user.role === "admin" && (
+              <Link
+                href="/admin"
+                onClick={() => setPageLevelLoader(true)}
+                className="d-none d-md-block text-success">
+                Admin Dashboard
+              </Link>
+            )}
             <Button variant="success" size="sm" className="p-2">
               <span className="d-flex gap-2">
                 Mount Kailash (Fixed Departure 2024)
@@ -143,80 +149,57 @@ export default function ClientNavbar() {
         <div className="d-block d-lg-flex justify-content-center gap-4 pb-2 align-items-center position-relative mt-2">
           <PrimeReactProvider>
             <MegaMenuMain />
-            {user && user.role === "admin" && (
-              <Link
-                href="/admin"
-                onClick={() => setPageLevelLoader(true)}
-                className="d-none d-md-block text-success"
-              >
-                Admin Dashboard
-              </Link>
-            )}
-            <div className="d-flex gap-3 login-section">
-              {isAuthUser ? (
-                <div className="d-flex align-items-center gap-2 login-section-user">
+          </PrimeReactProvider>
+
+          <div className="d-flex gap-3 login-section">
+            {isAuthUser ? (
+              <div className="d-flex align-items-center gap-2 login-section-user">
+                <div
+                  onClick={() => {
+                    setPageLevelLoader(true);
+                    setTimeout(() => {
+                      router.push("/account");
+                    }, 1000);
+                  }}
+                  style={{ cursor: "pointer" }}>
+                  <div className="login-user">{profileImageMaker()}</div>
+                </div>
+                <div>
                   <div
-                    onClick={() => {
-                      setPageLevelLoader(true);
-                      setTimeout(() => {
-                        router.push("/account");
-                      }, 1000);
-                    }}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <div className="login-user">{profileImageMaker()}</div>
+                    onClick={() => setShowMenu((prev) => !prev)}
+                    style={{ cursor: "pointer" }}>
+                    {showMenu ? <FaChevronUp /> : <FaChevronDown />}
                   </div>
-                  <div>
-                    <div
-                      onClick={() => setShowMenu((prev) => !prev)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      {showMenu ? <FaChevronUp /> : <FaChevronDown />}
-                    </div>
-                    <div
-                      className={`login-dropdown ${showMenu ? "" : "d-none"}`}
-                    >
-                      <p className="m-0">{user && user?.name}</p>
-                      <hr />
-                      <Link
-                        href="/account/"
-                        className="mb-2"
-                        onClick={() => {
-                          setPageLevelLoader(true);
-                          setShowMenu(false);
-                        }}
-                      >
-                        User Information
-                      </Link>
-                      <button
-                        className="btn btn-sm btn-success"
-                        onClick={handleLogout}
-                      >
-                        Logout
-                      </button>
-                    </div>
+                  <div className={`login-dropdown ${showMenu ? "" : "d-none"}`}>
+                    <p className="m-0">{user && user?.name}</p>
+                    <hr />
+                    <Link
+                      href="/account/"
+                      className="mb-2"
+                      onClick={() => {
+                        setPageLevelLoader(true);
+                        setShowMenu(false);
+                      }}>
+                      User Information
+                    </Link>
+                    <button
+                      className="btn btn-sm btn-success"
+                      onClick={handleLogout}>
+                      Logout
+                    </button>
                   </div>
                 </div>
-              ) : (
-                <a
-                  role="button"
-                  className="text-success d-flex align-items-center gap-1 log-in-btn"
-                  onClick={() => router.push("/login")}
-                >
-                  <LoginIcon />
-                  Log In
-                </a>
-              )}
-              {/* <a
+              </div>
+            ) : (
+              <Link
                 role="button"
-                className="text-success d-flex align-items-center gap-2"
-                onClick={() => router.push("/register")}
-              >
-                <PersonAddAltOutlinedIcon />
-                Sign Up
-              </a> */}
-            </div>
-          </PrimeReactProvider>
+                className="text-success d-flex align-items-center gap-1 log-in-btn"
+                href="/login">
+                <LoginIcon />
+                Log In
+              </Link>
+            )}
+          </div>
         </div>
         {/* <span onClick={handleShowNavBar} className="d-md-none">
           {showNavbar ? <MenuOpenIcon /> : <CloseIcon />}

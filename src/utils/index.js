@@ -135,6 +135,12 @@ export const adminNavItems = [
     label: "Admins",
     path: "admins",
   },
+  {
+    id: "activity",
+    icon: <AccountCircleIcon />,
+    label: "Activity",
+    path: "activity",
+  },
 ];
 export const registrationFormControls = [
   {
