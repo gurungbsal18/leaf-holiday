@@ -3,6 +3,8 @@
   height: 100vh;
   .admin-nav-items {
     // margin-top: 100px;
+    overflow-y: auto;
+    padding-bottom: 90px;
     .nav-item {
       height: 30px;
       cursor: pointer;
