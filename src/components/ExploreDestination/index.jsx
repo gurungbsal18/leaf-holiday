@@ -30,12 +30,13 @@ const ExploreDestination = ({ middleTabData }) => {
                 onClick={() => {
                   setActiveExploreBtn(item._id);
                   setMiddleTabIndex(index);
-                }}>
+                }}
+              >
                 {item.title}
               </button>
             ))}
           </div>
-          <div className="d-flex gap-3 flex-wrap mt-3">
+          <div className="d-flex gap-3 flex-wrap mt-3 justify-content-between">
             {middleTabData[middleTabIndex]?.packages?.map((item) => (
               <PackageCard key={item._id} packageDetail={item} />
             ))}

@@ -95,7 +95,8 @@ export default function Home() {
                 onClick={() => {
                   setPageLevelLoader(true);
                   router.push(`/search?searchTerm=${searchTerm}`);
-                }}>
+                }}
+              >
                 <SearchOutlinedIcon />
                 Search
               </button>
@@ -109,7 +110,7 @@ export default function Home() {
                       {homePageData?.tabs?.top[0]?.title}
                     </h4>
                   </div>
-                  <div className="d-flex gap-3 flex-wrap">
+                  <div className="d-flex gap-3 flex-wrap justify-content-between">
                     {homePageData?.tabs?.top[0]?.packages?.map((item) => (
                       <PackageCard key={item._id} packageDetail={item} />
                     ))}
@@ -141,7 +142,8 @@ export default function Home() {
                             homePageData?.tabs?.bottom[0]?.videoUrl
                           )}
                           title="YouTube video player"
-                          allowFullScreen></iframe>
+                          allowFullScreen
+                        ></iframe>
                       )}
                     </div>
                     <div className="col-12 col-lg-6">

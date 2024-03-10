@@ -32,8 +32,8 @@ export default function Footer() {
 
   return (
     <div className="footer bg-success p-5 pb-2 text-white">
-      <div className="footer-content d-flex justify-content-between flex-column flex-md-row">
-        <div className="d-flex flex-column footer-content-contact">
+      <div className="footer-content d-flex justify-content-between flex-column flex-md-row align-items-center align-items-start">
+        <div className="d-flex flex-column footer-content-contact align-items-center align-items-md-start">
           <h4>Contact Us</h4>
           <a href="tel:+9771234567890">
             <WhatsAppIcon />
@@ -91,25 +91,29 @@ export default function Footer() {
           <a
             href={leafData?.facebook || "#"}
             target="_blank"
-            className="text-white">
+            className="text-white"
+          >
             <FacebookIcon />
           </a>
           <a
             href={leafData?.instagram || "#"}
             target="_blank"
-            className="text-white">
+            className="text-white"
+          >
             <InstagramIcon />
           </a>
           <a
             href={leafData?.linkedin || "#"}
             target="_blank"
-            className="text-white">
+            className="text-white"
+          >
             <LinkedInIcon />
           </a>
           <a
             href={leafData?.twitter || "#"}
             target="_blank"
-            className="text-white">
+            className="text-white"
+          >
             <TwitterIcon />
           </a>
         </div>
