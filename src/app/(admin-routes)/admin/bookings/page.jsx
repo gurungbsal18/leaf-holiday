@@ -56,22 +56,36 @@ export default function AdminBookings() {
     getTableData();
   }, [activeTable, callExtractAll]);
   return (
-    <div className="d-flex flex-column min-vh-100  ">
-      <div className="d-flex gap-5">
+    <div className="d-flex flex-column min-vh-100 p-4">
+      <div className="d-flex gap-5 mb-3">
         <button
-          disabled={activeTable === "booking"}
-          onClick={() => setActiveTable("booking")}>
+          className={`btn btn-sm ${
+            activeTable === "booking" ? "btn-success" : "btn-outline-success"
+          }`}
+          // disabled={activeTable === "booking"}
+          onClick={() => setActiveTable("booking")}
+        >
           Bookings
         </button>
         <button
-          disabled={activeTable === "inquiry"}
-          onClick={() => setActiveTable("inquiry")}>
+          className={`btn btn-sm ${
+            activeTable === "inquiry" ? "btn-success" : "btn-outline-success"
+          }`}
+          // disabled={activeTable === "inquiry"}
+          onClick={() => setActiveTable("inquiry")}
+        >
           Inquiries
         </button>
         <button
-          disabled={activeTable === "customization"}
-          onClick={() => setActiveTable("customization")}>
-          Customization Requests
+          className={`btn btn-sm ${
+            activeTable === "customization"
+              ? "btn-success"
+              : "btn-outline-success"
+          }`}
+          // disabled={activeTable === "customization"}
+          onClick={() => setActiveTable("customization")}
+        >
+          Custom Requests
         </button>
       </div>
       <div className="admin-booking-table">
