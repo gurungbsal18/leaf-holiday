@@ -37,72 +37,74 @@ export default function AdminNavbar() {
   }
 
   return (
-    <div className="admin-navbar bg-success-subtle d-flex flex-column p-4 border-end">
-      <div className="admin-nav-items d-flex flex-column gap-4">
-        <span
-          role="button"
-          className="text-dark"
-          onClick={() => setNavText(!showNavText)}
-        >
-          {showNavText ? (
-            <KeyboardDoubleArrowLeftIcon />
-          ) : (
-            <KeyboardDoubleArrowRightIcon />
-          )}
-        </span>
-        {adminNavItems.map((item) => (
+    <div className="position-relative">
+      <div className="admin-navbar bg-success-subtle d-flex flex-column p-4 border-end">
+        <div className="admin-nav-items d-flex flex-column gap-4">
+          <span
+            role="button"
+            className="text-dark"
+            onClick={() => setNavText(!showNavText)}
+          >
+            {showNavText ? (
+              <KeyboardDoubleArrowLeftIcon />
+            ) : (
+              <KeyboardDoubleArrowRightIcon />
+            )}
+          </span>
+          {adminNavItems.map((item) => (
+            <div
+              onClick={() => {
+                if (activeNav !== item.path) {
+                  setPageLevelLoader(true);
+                }
+                router.push(`/admin/${item.path}`);
+              }}
+              className="nav-item d-flex gap-2"
+              key={item.id}
+            >
+              {/* <div className="nav-icon">{item.icon}</div> */}
+              <div
+                className={`nav-icon ${
+                  activeNav === item.path ? "text-success" : "text-muted"
+                }`}
+              >
+                {item.icon}
+              </div>
+              <p
+                className={`nav-label m-0 ${showNavText ? "" : "d-none"} ${
+                  activeNav === item.path ? "text-success" : "text-muted"
+                }`}
+              >
+                {item.label}
+              </p>
+            </div>
+          ))}
           <div
             onClick={() => {
-              if (activeNav !== item.path) {
-                setPageLevelLoader(true);
-              }
-              router.push(`/admin/${item.path}`);
+              // setPageLevelLoader(true);
+              handleLogout();
             }}
             className="nav-item d-flex gap-2"
-            key={item.id}
           >
-            {/* <div className="nav-icon">{item.icon}</div> */}
-            <div
-              className={`nav-icon ${
-                activeNav === item.path ? "text-success" : "text-muted"
-              }`}
-            >
-              {item.icon}
+            <div className="nav-icon">
+              <LogoutIcon />
             </div>
-            <p
-              className={`nav-label m-0 ${showNavText ? "" : "d-none"} ${
-                activeNav === item.path ? "text-success" : "text-muted"
-              }`}
-            >
-              {item.label}
+            <p className={`nav-label m-0 ${showNavText ? "" : "d-none"}`}>
+              Log Out
             </p>
           </div>
-        ))}
-        <div
-          onClick={() => {
-            // setPageLevelLoader(true);
-            handleLogout();
-          }}
-          className="nav-item d-flex gap-2"
-        >
-          <div className="nav-icon">
-            <LogoutIcon />
-          </div>
-          <p className={`nav-label m-0 ${showNavText ? "" : "d-none"}`}>
-            Log Out
-          </p>
         </div>
-      </div>
-      <div className="brand bg-white w-100">
-        <a href="/">
-          <Image
-            src="/images/logo.png"
-            width={showNavText ? 150 : 38}
-            height={showNavText ? 59 : 15}
-            alt="leaf-holiday-logo"
-            priority={true}
-          />
-        </a>
+        <div className="brand bg-white w-100">
+          <a href="/">
+            <Image
+              src="/images/logo.png"
+              width={showNavText ? 150 : 38}
+              height={showNavText ? 59 : 15}
+              alt="leaf-holiday-logo"
+              priority={true}
+            />
+          </a>
+        </div>
       </div>
     </div>
   );
