@@ -437,11 +437,11 @@ export default function CreatePackage() {
                     </div>
                   </div>
 
-                  <ChipInput
+                  {/* <ChipInput
                     setValue={setValue}
                     formName={"activities"}
                     initialValue={watch("activities")}
-                  />
+                  /> */}
 
                   <div className="mb-5">
                     <h4 className="dashboard-title">Overview</h4>
