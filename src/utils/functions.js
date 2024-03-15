@@ -144,7 +144,7 @@ export const getId = (searchName, dataArray, searchBy) => {
       return dataArray[i]?._id;
     }
   }
-  return "Invalid Name";
+  return "Invalid Search Term";
 };
 
 export function toTitleCase(input) {

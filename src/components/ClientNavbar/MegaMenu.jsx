@@ -7,9 +7,7 @@ export default function MegaMenuMain() {
   const getMenuData = async () => {
     const res = await axios.get("/menu/");
     const finalMenu = updateInitialMenu(res.data.data);
-    console.log(JSON.stringify(finalMenu));
     setMenuData(finalMenu);
-    // console.log(JSON.stringify(res.data.data));
   };
   useEffect(() => {
     getMenuData();
@@ -54,7 +52,6 @@ function updateInitialMenu(response) {
       }
     }
   });
-  console.log(updatedMenu);
   return updatedMenu;
 }
 

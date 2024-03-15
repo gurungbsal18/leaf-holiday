@@ -219,9 +219,6 @@ export default function PackageDetail({ packageDetail }) {
   useEffect(() => {
     getRelatedPackages();
   }, []);
-  console.log(relatedPackages);
-
-  // console.log("package details: ", packageDetail);
 
   return (
     <div className="main-div mb-5">
@@ -387,22 +384,28 @@ export default function PackageDetail({ packageDetail }) {
                               __html: item.content,
                             }}></div>
                           <div className="d-flex justify-content-between itinerary-fact">
-                            <div className="d-flex align-items-center gap-1">
-                              <TerrainIcon className="text-muted" />
-                              <p className="m-0 fs-14">
-                                Max Altitude: {item.maxAltitude}
-                              </p>
-                            </div>
-                            <div className="d-flex align-items-center gap-1">
-                              <GiMeal className="text-muted" />
-                              <p className="m-0 fs-14">Meals: {item.meals}</p>
-                            </div>
-                            <div className="d-flex align-items-center gap-1">
-                              <FaBed className="text-muted" />
-                              <p className="m-0 fs-14">
-                                Accomodation: {item.accomodation}
-                              </p>
-                            </div>
+                            {item.maxAltitude && (
+                              <div className="d-flex align-items-center gap-1">
+                                <TerrainIcon className="text-muted" />
+                                <p className="m-0 fs-14">
+                                  Max Altitude: {item.maxAltitude}
+                                </p>
+                              </div>
+                            )}
+                            {item.meals && (
+                              <div className="d-flex align-items-center gap-1">
+                                <GiMeal className="text-muted" />
+                                <p className="m-0 fs-14">Meals: {item.meals}</p>
+                              </div>
+                            )}
+                            {item.accomodation && (
+                              <div className="d-flex align-items-center gap-1">
+                                <FaBed className="text-muted" />
+                                <p className="m-0 fs-14">
+                                  Accomodation: {item.accomodation}
+                                </p>
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>

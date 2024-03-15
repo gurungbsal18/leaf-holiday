@@ -3,11 +3,11 @@ import React from "react";
 import Image from "next/image";
 import PackageCard from "@/components/PackageCard";
 
-export default async function RegionDetail({ params }) {
-  let regionData;
+export default async function ActivityDetail({ params }) {
+  let activityData;
   try {
-    const res = await axios.get(`/region/slug/${params.detail}`);
-    regionData = res.data.data[0];
+    const res = await axios.get(`/activity/slug/${params.slug}`);
+    activityData = res.data.data[0];
   } catch (e) {
     console.log(e);
   }
@@ -15,19 +15,19 @@ export default async function RegionDetail({ params }) {
     <div>
       <div>
         <Image
-          src={regionData?.imageUrl}
+          src={activityData?.imageUrl}
           height={500}
           width={1512}
-          alt={`${regionData?.name}-image`}
+          alt={`${activityData?.name}-image`}
         />
-        <h4>Explore {regionData?.name}</h4>
+        <h4>Explore {activityData?.name}</h4>
       </div>
       <div>
-        <h4>{regionData?.name}</h4>
-        <p>{regionData?.description}</p>
+        <h4>{activityData?.name}</h4>
+        <p>{activityData?.description}</p>
       </div>
       <div className="d-flex">
-        {regionData?.packages?.map(
+        {activityData?.packages?.map(
           (item, index) =>
             index < 3 && <PackageCard key={item._id} packageDetail={item} />
         )}

@@ -54,20 +54,17 @@ export default function Menu() {
     setPageLevelLoader(true);
     try {
       const res = await axios.get("/menu/");
-      console.log(JSON.stringify(res.data));
       const finalArr = updateMenuData(res.data.data);
-      console.log("final array", finalArr);
       setMenuData(finalArr);
       setPageLevelLoader(false);
     } catch (e) {
-      console.log(e);
       setPageLevelLoader(false);
     }
   };
   useEffect(() => {
     getMenuData();
   }, [callExtractAll]);
-  console.log("menu data:", menuData);
+
   return (
     <>
       {pageLevelLoader ? (
