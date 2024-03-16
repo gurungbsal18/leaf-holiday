@@ -50,7 +50,19 @@ export default function OurTeam() {
             />
           </div>
           <div className="container my-5">
-            <h4>Our Team</h4>
+            <h4 className="title fw-bold text-center">Meet Our Team</h4>
+            <p className="text-muted text-center mb-5">
+              We are a group of dedicated professionals united by our passion
+              for the outdoors and a shared commitment to global exploration.
+              Within our team, we have individuals devoted to operations,
+              finance, and sales, whose professionalism has enabled Himalayan
+              Glacier to consistently deliver top-tier services to our
+              clientele. Our team comprises nature enthusiasts who are fervently
+              dedicated to global travel. Over nearly thirty years, we have
+              continuously expanded our offerings, introducing fresh and
+              distinctive destinations and itineraries tailored to exceed the
+              expectations of our clients.
+            </p>
             <div className="row">
               {ourTeamData &&
                 ourTeamData.map((item) => (
