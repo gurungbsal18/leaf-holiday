@@ -41,20 +41,22 @@ export default function OurTeam() {
         <PageLevelLoader />
       ) : (
         <div>
-          <div>
+          <div className="header-image">
             <Image
               src="/images/km.png"
               width={1511}
               height={500}
               alt="our-team-header"
             />
-            <h4>Our Team</h4>
           </div>
-          <div className="d-flex">
-            {ourTeamData &&
-              ourTeamData.map((item) => (
-                <TeamCard key={item._id} teamDetail={item} />
-              ))}
+          <div className="container my-5">
+            <h4>Our Team</h4>
+            <div className="row">
+              {ourTeamData &&
+                ourTeamData.map((item) => (
+                  <TeamCard key={item._id} teamDetail={item} />
+                ))}
+            </div>
           </div>
         </div>
       )}
