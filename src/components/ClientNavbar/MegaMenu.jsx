@@ -14,7 +14,7 @@ export default function MegaMenuMain() {
   }, []);
 
   return (
-    <div className="bg-danger w-100">
+    <div className="megamenu-nav">
       <MegaMenu model={menuData} breakpoint="1280px" />
     </div>
   );

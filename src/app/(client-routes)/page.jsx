@@ -110,7 +110,7 @@ export default function Home() {
                       {homePageData?.tabs?.top[0]?.title}
                     </h4>
                   </div>
-                  <div className="d-flex gap-3 flex-wrap justify-content-between">
+                  <div className="row">
                     {homePageData?.tabs?.top[0]?.packages?.map((item) => (
                       <PackageCard key={item._id} packageDetail={item} />
                     ))}
@@ -132,7 +132,7 @@ export default function Home() {
                     </h2>
                   </div>
 
-                  <div className="home-video-section d-flex flex-column flex-lg-row gap-3">
+                  <div className="home-video-section row d-flex flex-column flex-lg-row">
                     <div className="col-12 col-lg-6">
                       {homePageData?.tabs?.bottom[0]?.videoUrl && (
                         <iframe
@@ -147,7 +147,7 @@ export default function Home() {
                       )}
                     </div>
                     <div className="col-12 col-lg-6">
-                      <div className="d-flex gap-3 flex-wrap">
+                      <div className="d-flex justify-content-between gap-2 flex-wrap">
                         {homePageData?.tabs?.bottom[0]?.packages?.map(
                           (item) => (
                             <PackageCard key={item._id} packageDetail={item} />

@@ -1,3 +1,14 @@
+.megamenu-nav {
+  .p-megamenu {
+    ul {
+      padding: 0;
+      li {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
 .p-megamenu .p-menuitem > .p-menuitem-content .p-menuitem-link,
 .p-megamenu .p-submenu-header {
   padding: 0.75rem 1.25rem !important;

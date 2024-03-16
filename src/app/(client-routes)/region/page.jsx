@@ -65,9 +65,9 @@ export default function RegionPage() {
               eaque consequuntur iste saepe! Nisi, officia perspiciatis!
             </p>
             {allRegions && (
-              <div className="d-flex justify-content-start gap-5">
+              <div className="row region-container">
                 {allRegions.map((item) => (
-                  <div key={item._id}>
+                  <div key={item._id} className="col-4 mb-4 ">
                     <Image
                       onClick={() => router.push(`/region/${item.slug}`)}
                       src={item.imgUrl}

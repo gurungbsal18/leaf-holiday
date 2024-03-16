@@ -22,15 +22,17 @@ export default async function RegionDetail({ params }) {
         />
         <h4>Explore {regionData?.name}</h4>
       </div>
-      <div>
-        <h4>{regionData?.name}</h4>
-        <p>{regionData?.description}</p>
-      </div>
-      <div className="d-flex">
-        {regionData?.packages?.map(
-          (item, index) =>
-            index < 3 && <PackageCard key={item._id} packageDetail={item} />
-        )}
+      <div className="container">
+        <div>
+          <h4>{regionData?.name}</h4>
+          <p>{regionData?.description}</p>
+        </div>
+        <div className="row">
+          {regionData?.packages?.map(
+            (item, index) =>
+              index < 3 && <PackageCard key={item._id} packageDetail={item} />
+          )}
+        </div>
       </div>
     </div>
   );
