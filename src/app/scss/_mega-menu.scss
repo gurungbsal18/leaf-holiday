@@ -1,60 +1,60 @@
-.megamenu-nav {
-  .p-megamenu {
-    ul {
-      padding: 0;
-      li {
-        font-size: 14px;
-      }
-    }
-  }
-}
+// .megamenu-nav {
+//   .p-megamenu {
+//     ul {
+//       padding: 0;
+//       li {
+//         font-size: 14px;
+//       }
+//     }
+//   }
+// }
 
-.p-megamenu .p-menuitem > .p-menuitem-content .p-menuitem-link,
-.p-megamenu .p-submenu-header {
-  padding: 0.75rem 1.25rem !important;
-}
+// .p-megamenu .p-menuitem > .p-menuitem-content .p-menuitem-link,
+// .p-megamenu .p-submenu-header {
+//   padding: 0.75rem 1.25rem !important;
+// }
 
-.p-megamenu .p-submenu-list {
-  padding: 0.5rem 0 !important;
-  width: 350px;
-}
+// .p-megamenu .p-submenu-list {
+//   padding: 0.5rem 0 !important;
+//   width: 350px;
+// }
 
-.p-megamenu-col-3 {
-  padding: 0.5rem !important;
-}
+// .p-megamenu-col-3 {
+//   padding: 0.5rem !important;
+// }
 
-.p-megamenu {
-  background-color: $white !important;
-  border: none !important;
-}
+// .p-megamenu {
+//   background-color: $white !important;
+//   border: none !important;
+// }
 
-.p-megamenu-horizontal .p-megamenu-root-list {
-  display: flex;
-  justify-content: center;
-  margin: 0 auto !important;
-}
+// .p-megamenu-horizontal .p-megamenu-root-list {
+//   display: flex;
+//   justify-content: center;
+//   margin: 0 auto !important;
+// }
 
-ul.p-submenu-list.p-megamenu-submenu li {
-  font-size: 14px;
-}
+// ul.p-submenu-list.p-megamenu-submenu li {
+//   font-size: 14px;
+// }
 
-.p-megamenu .p-menuitem.p-highlight > .p-menuitem-content {
-  background: #f3f4f6 !important;
-}
+// .p-megamenu .p-menuitem.p-highlight > .p-menuitem-content {
+//   background: #f3f4f6 !important;
+// }
 
-.p-menuitem-active {
-  .p-megamenu-panel {
-    width: 100%;
-    background-color: $white;
-    position: absolute;
-    margin: 0 auto !important;
-    display: flex !important;
-    justify-content: center;
-    .p-megamenu-grid {
-      background-color: $white;
-    }
-  }
-}
+// .p-menuitem-active {
+//   .p-megamenu-panel {
+//     width: 100%;
+//     background-color: $white;
+//     position: absolute;
+//     margin: 0 auto !important;
+//     display: flex !important;
+//     justify-content: center;
+//     .p-megamenu-grid {
+//       background-color: $white;
+//     }
+//   }
+// }
 
 .log-in-btn {
   padding: 0.75rem 1.25rem;

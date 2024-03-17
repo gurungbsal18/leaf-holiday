@@ -40,16 +40,16 @@ export default function DestinationPage() {
         <PageLevelLoader />
       ) : (
         <div>
-          <div>
+          <div className="header-image">
             <Image
               src="/images/km.png"
               height={500}
               width={1510}
               alt="destination-image"
             />
-            <h4>Destinations</h4>
           </div>
-          <div>
+          <div className="container my-5">
+            <h4 className="title fw-bold">Destinations</h4>
             <p>
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis
               sapiente ipsam commodi nam suscipit iure libero rem veniam minima
@@ -60,9 +60,12 @@ export default function DestinationPage() {
               eaque consequuntur iste saepe! Nisi, officia perspiciatis!
             </p>
             {allDestinations && (
-              <div className="d-flex">
+              <div className="row">
                 {allDestinations.map((item) => (
-                  <div key={item._id}>
+                  <div
+                    key={item._id}
+                    className="col-12 col-md-4 mb-4 destination-card"
+                  >
                     <Image
                       onClick={() => router.push(`/destination/${item.slug}`)}
                       src={item.imageUrl}

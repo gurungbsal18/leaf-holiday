@@ -67,7 +67,7 @@ export default function RegionPage() {
             {allRegions && (
               <div className="row region-container">
                 {allRegions.map((item) => (
-                  <div key={item._id} className="col-4 mb-4 ">
+                  <div key={item._id} className="col-12 col-md-4 mb-4 ">
                     <Image
                       onClick={() => router.push(`/region/${item.slug}`)}
                       src={item.imgUrl}

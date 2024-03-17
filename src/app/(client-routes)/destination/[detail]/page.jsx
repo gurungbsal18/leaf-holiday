@@ -13,24 +13,25 @@ export default async function RegionDetail({ params }) {
   }
   return (
     <div>
-      <div>
+      <div className="header-image">
         <Image
           src={destinationData?.imageUrl}
           height={500}
           width={1512}
           alt={`${destinationData?.name}-image`}
         />
-        <h4>Explore {destinationData?.name}</h4>
       </div>
-      <div>
-        <h4>{destinationData?.name}</h4>
-        <p>{destinationData?.description}</p>
-      </div>
-      <div className="d-flex">
-        {destinationData?.regions?.map(
-          (item, index) =>
-            index < 3 && <RegionCard key={item._id} regionDetail={item} />
-        )}
+      <div className="container my-5">
+        <div>
+          <h4 className="title fw-bold">{destinationData?.name}</h4>
+          <p>{destinationData?.description}</p>
+        </div>
+        <div className="d-flex">
+          {destinationData?.regions?.map(
+            (item, index) =>
+              index < 3 && <RegionCard key={item._id} regionDetail={item} />
+          )}
+        </div>
       </div>
     </div>
   );

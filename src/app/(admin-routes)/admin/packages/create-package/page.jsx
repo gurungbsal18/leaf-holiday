@@ -226,7 +226,8 @@ export default function CreatePackage() {
               <Button
                 size="sm"
                 variant="success"
-                onClick={handleSubmit(onSubmit)}>
+                onClick={handleSubmit(onSubmit)}
+              >
                 {updatePackage ? "Update" : "Publish"}
               </Button>
             </div>
@@ -274,7 +275,8 @@ export default function CreatePackage() {
                       {pricesFields.map((priceField, index) => (
                         <div
                           className="d-flex flex-column flex-md-row gap-3 align-items-center"
-                          key={`prices-${index}`}>
+                          key={`prices-${index}`}
+                        >
                           <TextField
                             className="mx-0"
                             label="No. of People"
@@ -311,7 +313,8 @@ export default function CreatePackage() {
                             <span
                               role="button"
                               className="text-danger"
-                              onClick={() => pricesRemove(index)}>
+                              onClick={() => pricesRemove(index)}
+                            >
                               <RemoveCircleIcon />
                             </span>
                             // <button
@@ -332,7 +335,8 @@ export default function CreatePackage() {
                             numberOfPeople: "",
                             price: 0,
                           })
-                        }>
+                        }
+                      >
                         <span className="d-flex align-items-center gap-1">
                           <MonetizationOnIcon />
                           Add More Price
@@ -437,11 +441,11 @@ export default function CreatePackage() {
                     </div>
                   </div>
 
-                  {/* <ChipInput
+                  <ChipInput
                     setValue={setValue}
                     formName={"activities"}
                     initialValue={watch("activities")}
-                  /> */}
+                  />
 
                   <div className="mb-5">
                     <h4 className="dashboard-title">Overview</h4>
@@ -455,7 +459,8 @@ export default function CreatePackage() {
                         <Button
                           variant="primary"
                           size="sm"
-                          onClick={() => inclusionsAppend("")}>
+                          onClick={() => inclusionsAppend("")}
+                        >
                           + Add Cost Include
                         </Button>
                       </div>
@@ -464,14 +469,16 @@ export default function CreatePackage() {
                           return (
                             <div
                               key={`inclusion-${index}`}
-                              className="d-flex align-items-center gap-2 mt-2">
+                              className="d-flex align-items-center gap-2 mt-2"
+                            >
                               <input
                                 {...register(`inclusions.${index}`)}
                                 className="form-control"
                               />
                               <span
                                 onClick={() => inclusionsRemove(index)}
-                                className="text-danger">
+                                className="text-danger"
+                              >
                                 <RemoveCircleIcon />
                               </span>
                             </div>
@@ -486,7 +493,8 @@ export default function CreatePackage() {
                         <Button
                           variant="primary"
                           size="sm"
-                          onClick={() => exclusionsAppend("")}>
+                          onClick={() => exclusionsAppend("")}
+                        >
                           + Add Cost Exclude
                         </Button>
                       </div>
@@ -495,14 +503,16 @@ export default function CreatePackage() {
                           return (
                             <div
                               key={`exclusion-${index}`}
-                              className="d-flex align-items-center gap-2 mt-2">
+                              className="d-flex align-items-center gap-2 mt-2"
+                            >
                               <input
                                 {...register(`exclusions.${index}`)}
                                 className="form-control"
                               />
                               <span
                                 onClick={() => exclusionsRemove(index)}
-                                className="text-danger">
+                                className="text-danger"
+                              >
                                 <RemoveCircleIcon />
                               </span>
                             </div>
@@ -517,7 +527,8 @@ export default function CreatePackage() {
                         <Button
                           variant="primary"
                           size="sm"
-                          onClick={() => highlightsAppend("")}>
+                          onClick={() => highlightsAppend("")}
+                        >
                           + Add Trip Highlights
                         </Button>
                       </div>
@@ -526,7 +537,8 @@ export default function CreatePackage() {
                           return (
                             <div
                               key={`highlight-${index}`}
-                              className="d-flex align-items-center gap-2 mt-2">
+                              className="d-flex align-items-center gap-2 mt-2"
+                            >
                               <input
                                 {...register(`highlights.${index}`)}
                                 className="form-control"
@@ -534,7 +546,8 @@ export default function CreatePackage() {
                               <span
                                 role="button"
                                 className="text-danger"
-                                onClick={() => highlightsRemove(index)}>
+                                onClick={() => highlightsRemove(index)}
+                              >
                                 <RemoveCircleIcon />
                               </span>
                             </div>
@@ -648,7 +661,8 @@ export default function CreatePackage() {
                 <Button
                   variant="primary"
                   size="sm"
-                  onClick={() => videoGalleryAppend("")}>
+                  onClick={() => videoGalleryAppend("")}
+                >
                   <span>
                     <MovieIcon />
                   </span>
@@ -666,7 +680,8 @@ export default function CreatePackage() {
                       <span
                         role="button"
                         className="text-danger"
-                        onClick={() => videoGalleryRemove(index)}>
+                        onClick={() => videoGalleryRemove(index)}
+                      >
                         <RemoveCircleIcon />
                       </span>
                     </div>

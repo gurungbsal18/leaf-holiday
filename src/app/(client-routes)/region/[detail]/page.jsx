@@ -13,18 +13,17 @@ export default async function RegionDetail({ params }) {
   }
   return (
     <div>
-      <div>
+      <div className="header-image">
         <Image
           src={regionData?.imageUrl}
           height={500}
           width={1512}
           alt={`${regionData?.name}-image`}
         />
-        <h4>Explore {regionData?.name}</h4>
       </div>
-      <div className="container">
+      <div className="container my-5">
         <div>
-          <h4>{regionData?.name}</h4>
+          <h4 className="title fw-bold">{regionData?.name}</h4>
           <p>{regionData?.description}</p>
         </div>
         <div className="row">
