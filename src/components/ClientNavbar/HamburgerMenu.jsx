@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 
-const MegaMenu = ({ menuData }) => {
+const HamburgerMenu = ({ menuData, setShowHamburgerMenu }) => {
   const [activeMenu, setActiveMenu] = useState(null);
 
   const handleMenuClick = (label) => {
@@ -9,32 +9,35 @@ const MegaMenu = ({ menuData }) => {
   };
 
   return (
-    <ul className="d-none d-lg-flex gap-3 flex-wrap">
+    <ul className="position-absolute bg-white d-flex flex-column gap-3 d-lg-none overflow-scroll ">
       {menuData.map((item) => (
         <li
-          className="position-relative"
+          className=""
           key={item.label}
           onClick={() => handleMenuClick(item.label)}>
           {item.label}
           {item.items && activeMenu === item.label && (
-            <ul
-              className={`position-absolute left-0 top-50 d-flex bg-white ${
-                item.label.toLowerCase() === "trekking" ||
-                item.label.toLowerCase() === "outbound" ||
-                item.label.toLowerCase() === "activity"
-                  ? ""
-                  : " flex-column"
-              }`}>
+            <ul className=" flex-column">
               {item.items.map((subItem) =>
                 subItem?.items?.length > 0 ? (
                   <ul
                     key={subItem.label}
-                    className="d-flex flex-col gap-2 flex-wrap">
+                    className="d-flex flex-column gap-2 flex-wrap">
                     <li>
-                      <Link href={subItem.url}>{subItem.label}</Link>
+                      <Link
+                        href={subItem.url}
+                        onClick={() => setShowHamburgerMenu(false)}>
+                        {subItem.label}
+                      </Link>
                     </li>
                     {subItem.items.map((childItem) => (
-                      <li key={childItem.label}>{childItem.label}</li>
+                      <li key={childItem.label}>
+                        <Link
+                          href={childItem.url}
+                          onClick={() => setShowHamburgerMenu(false)}>
+                          {childItem.label}
+                        </Link>
+                      </li>
                     ))}
                   </ul>
                 ) : (
@@ -51,4 +54,4 @@ const MegaMenu = ({ menuData }) => {
   );
 };
 
-export default MegaMenu;
+export default HamburgerMenu;

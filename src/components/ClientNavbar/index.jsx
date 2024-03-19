@@ -1,66 +1,3 @@
-// "use client";
-// import React, { useState } from "react";
-// import Navbar from "react-bootstrap/Navbar";
-// import Button from "react-bootstrap/Button";
-// import Image from "next/image";
-// import Nav from "react-bootstrap/Nav";
-// import { navItems } from "@/utils";
-// import MenuOpenIcon from "@mui/icons-material/MenuOpen";
-// import CloseIcon from "@mui/icons-material/Close";
-
-// import { PrimeReactProvider } from "primereact/api";
-// import MegaMenuMain from "./MegaMenu";
-
-// export default function ClientNavbar() {
-//   const [showNavbar, setShowNavbar] = useState(false);
-
-//   function handleShowNavBar() {
-//     setShowNavbar(!showNavbar);
-//   }
-
-//   return (
-//     <>
-//       <Navbar className="p-5 pt-3 pb-3 h-20  " bg="light" expand="md">
-//        <div className="image-container">
-//          <a href="/">
-//           <Image
-//             src="/images/logo.png"
-//             width={191}
-//             height={76}
-//             alt="leaf-holiday-logo"
-//             priority={true}
-//           />
-//         </a>
-//       </div>
-//       <div className="nav-container d-flex flex-row align-items-end w-100 flex-lg-column">
-//         <Button variant="success" size="sm" className="p-2">
-//           <span className="d-flex gap-2">
-//             Mount Kailash (Fixed Departure 2024)
-//           </span>
-//         </Button>
-
-//       <PrimeReactProvider>
-//         <div className="nav-list">
-//             <Nav className="justify-content-end">
-//               {navItems.map((navItem) => (
-//                 <Nav.Link key={navItem.id} href={navItem.path}>
-//                   {navItem.label}
-//                 </Nav.Link>
-//               ))}
-//             </Nav>
-//           </div>
-
-//         <MegaMenuMain />
-//       </PrimeReactProvider>
-//       <span onClick={handleShowNavBar} className="d-md-none">
-//         {showNavbar ? <MenuOpenIcon /> : <CloseIcon />}
-//       </span>
-//       </div>
-//       // </Navbar>
-//     </>
-//   );
-// }
-
 "use client";
 import React, { useContext, useEffect, useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
@@ -80,12 +17,16 @@ import MegaMenuMain from "./MegaMenu";
 import LoginIcon from "@mui/icons-material/Login";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import axios from "@/utils/axios";
+import MegaMenu from "./MegaMenu";
+import HamburgerMenu from "./HamburgerMenu";
 
 export default function ClientNavbar() {
   const { isAuthUser, user, setUser, setIsAuthUser, setPageLevelLoader } =
     useContext(GlobalContext);
 
   const [showMenu, setShowMenu] = useState(false);
+  const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
+  const [menuData, setMenuData] = useState(initialMenu);
 
   const router = useRouter();
 
@@ -100,6 +41,12 @@ export default function ClientNavbar() {
     return initials;
   }
 
+  const getMenuData = async () => {
+    const res = await axios.get("/menu/");
+    const finalMenu = updateInitialMenu(res.data.data);
+    setMenuData(finalMenu);
+  };
+
   function handleLogout() {
     toast.success("Logged Out Successfully", {
       position: toast.POSITION.TOP_RIGHT,
@@ -113,10 +60,13 @@ export default function ClientNavbar() {
       router.push("/login");
     }, 1000);
   }
+  useEffect(() => {
+    getMenuData();
+  }, []);
 
   return (
     <>
-      <div className="container">
+      <div className="container sticky-top bg-white">
         <div className="d-flex justify-content-between align-items-center flex-column flex-md-row header">
           <div className="logo-img">
             <Link href="/" onClick={() => setPageLevelLoader(true)}>
@@ -147,9 +97,9 @@ export default function ClientNavbar() {
           </div>
         </div>
         <div className="d-block d-lg-flex justify-content-center gap-4 pb-2 align-items-center position-relative mt-2">
-          <PrimeReactProvider>
-            <MegaMenuMain />
-          </PrimeReactProvider>
+          <div className="megamenu-nav">
+            <MegaMenu menuData={menuData} />
+          </div>
 
           <div className="d-flex gap-3 login-section">
             {isAuthUser ? (
@@ -201,10 +151,100 @@ export default function ClientNavbar() {
             )}
           </div>
         </div>
-        {/* <span onClick={handleShowNavBar} className="d-md-none">
-          {showNavbar ? <MenuOpenIcon /> : <CloseIcon />}
-        </span> */}
+        <div className="d-lg-none position-relative">
+          <div onClick={() => setShowHamburgerMenu(!showHamburgerMenu)}>
+            {showHamburgerMenu ? <CloseIcon /> : <MenuOpenIcon />}
+          </div>
+
+          <div>
+            {showHamburgerMenu && (
+              <HamburgerMenu
+                menuData={menuData}
+                setShowHamburgerMenu={setShowHamburgerMenu}
+              />
+            )}
+          </div>
+        </div>
       </div>
     </>
   );
 }
+
+function updateInitialMenu(response) {
+  // Make a copy of the initialMenu array to avoid mutation
+  const updatedMenu = JSON.parse(JSON.stringify(initialMenu));
+
+  response.forEach((menuItem) => {
+    // Handle the "Contact" menu item separately
+    if (menuItem.label === "Contact" && menuItem.url) {
+      updatedMenu.push({
+        label: menuItem.label,
+        url: menuItem.url,
+      });
+    } else {
+      // Find the matching parent in the updatedMenu
+      const parentMenu = updatedMenu.find(
+        (menu) => menu.label === menuItem.parent
+      );
+      if (parentMenu) {
+        // Add child items to the parent menu
+        let newItem = {
+          label: menuItem.title,
+          url: menuItem.link,
+          items: menuItem.child.map((childItem) => ({
+            label: childItem.title,
+            url: childItem.link,
+          })),
+        };
+        if (newItem.length > 0 && newItem.items.length === 0) {
+          // Remove the 'items' key from the object
+          const { items, ...newItemWithoutItems } = newItem;
+          // Update the variable with the modified object
+          newItem = newItemWithoutItems;
+        }
+        parentMenu.items.push(newItem);
+      }
+    }
+  });
+  return updatedMenu;
+}
+
+const initialMenu = [
+  {
+    label: "Trekking",
+    items: [],
+  },
+  {
+    label: "Company",
+    items: [],
+  },
+  {
+    label: "Kailash Tours",
+    items: [],
+  },
+  {
+    label: "Activity",
+    items: [],
+  },
+  {
+    label: "Day Tours",
+    items: [],
+  },
+  {
+    label: "Outbound",
+    items: [],
+  },
+  {
+    label: "Nepal Tour",
+    items: [],
+  },
+  {
+    label: "Travel Info",
+    items: [],
+  },
+
+  {
+    label: "Contact",
+    url: "/contact",
+  },
+];
