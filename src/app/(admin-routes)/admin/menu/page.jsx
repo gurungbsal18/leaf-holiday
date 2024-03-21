@@ -70,21 +70,25 @@ export default function Menu() {
       {pageLevelLoader ? (
         <PageLevelLoader />
       ) : (
-        <div>
-          <div>
-            <h1>Menu</h1>
+        <div className="dashboard-content-section p-4">
+          <div className="bg-success-subtle p-3 rounded mb-2">
+            <h4 className="p-0">Navigation Menu</h4>
           </div>
           <div className="d-flex flex-column gap-5">
             {menuData.map((item) => (
-              <div key={item.title} className="d-flex flex-column gap-2">
-                <div className="d-flex justify-content-between ">
-                  <h3>{item.title}</h3>
+              <div
+                key={item.title}
+                className="d-flex flex-column gap-2 bg-light p-3 rounded"
+              >
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                  <p className="fw-bold m-0">{item.title}</p>
                   <button
                     className="btn btn-sm btn-success d-flex gap-2 align-items-center"
                     onClick={() => {
                       setDialogContent(<CreateMenu menuName={item.title} />);
                       setDialogOpen(true);
-                    }}>
+                    }}
+                  >
                     {" "}
                     Add {item.title}&rsquo;s Sub-Menu
                   </button>
@@ -94,8 +98,8 @@ export default function Menu() {
                   {item.child.length > 0 &&
                     item.child.map((childItem) => (
                       <div key={childItem._id}>
-                        <div className="d-flex justify-content-between align-items-center gap-2 pb-2">
-                          <h5>{childItem.title}</h5>
+                        <div className="d-flex justify-content-between align-items-center pb-2 mb-2 border-bottom">
+                          <p className="m-0">{childItem.title}</p>
                           <Link href={childItem.link}>{childItem.link}</Link>
                           <div className="d-flex gap-2">
                             <button
@@ -106,13 +110,15 @@ export default function Menu() {
                                   <CreateMenu menuName={item.title} />
                                 );
                                 setDialogOpen(true);
-                              }}>
+                              }}
+                            >
                               <EditNoteIcon className="" />
                               Edit
                             </button>
                             <button
                               className="btn btn-sm btn-danger d-flex gap-2 align-items-center "
-                              onClick={() => handleRemove(childItem._id)}>
+                              onClick={() => handleRemove(childItem._id)}
+                            >
                               <DeleteIcon className="" />
                               Remove
                             </button>
@@ -123,7 +129,8 @@ export default function Menu() {
                             {childItem.child.map((lastChild, index) => (
                               <div
                                 key={`lastchild-${IndeterminateCheckBoxOutlined}`}
-                                className="d-flex gap-3">
+                                className="d-flex gap-3"
+                              >
                                 <p>{lastChild.title}</p>
                                 <p>{lastChild.link}</p>
                               </div>
