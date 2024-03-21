@@ -34,7 +34,6 @@ export default function GlobalState({ children }) {
   useEffect(() => {
     const token = Cookies.get("token");
     if (token !== undefined) {
-      console.log("token available");
       setIsAuthUser(true);
       axios.defaults.headers.Authorization = `Bearer ${token}`;
       const userData = JSON.parse(localStorage.getItem("user")) || {};
@@ -42,7 +41,6 @@ export default function GlobalState({ children }) {
       setUser(userData);
       setBookingFormData(bookingData);
     } else {
-      console.log("token unavailable");
       localStorage.clear();
       setIsAuthUser(false);
       setUser({}); //unauthenticated user
@@ -56,9 +54,7 @@ export default function GlobalState({ children }) {
       setTrackPage(pathname);
     }
     if (extractAdminPath[1] === "admin") {
-      console.log("admin path");
       setVerify(false);
-      console.log(userData);
       if (!userData) {
         setTrackPage("/");
         router.push("/login");

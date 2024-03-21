@@ -47,6 +47,9 @@ const MegaMenu = ({ menuData }) => {
           )}
         </li>
       ))}
+      <li>
+        <Link href="/contact">Contact</Link>
+      </li>
     </ul>
   );
 };

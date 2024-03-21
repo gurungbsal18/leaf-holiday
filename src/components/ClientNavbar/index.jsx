@@ -1,10 +1,10 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import Button from "react-bootstrap/Button";
 import Image from "next/image";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import CloseIcon from "@mui/icons-material/Close";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { GlobalContext } from "@/context";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
@@ -22,6 +22,8 @@ export default function ClientNavbar() {
   const [showMenu, setShowMenu] = useState(false);
   const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
   const [menuData, setMenuData] = useState(initialMenu);
+  const menuRef = useRef();
+  const pathName = usePathname().split("/")[1];
 
   const router = useRouter();
 
@@ -58,6 +60,18 @@ export default function ClientNavbar() {
   useEffect(() => {
     getMenuData();
   }, []);
+  useEffect(() => {
+    const handler = (e) => {
+      if (!menuRef?.current?.contains(e?.target)) {
+        setShowMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  });
 
   return (
     <>
@@ -98,43 +112,40 @@ export default function ClientNavbar() {
 
           <div className="d-flex gap-3 login-section">
             {isAuthUser ? (
-              <div className="d-flex align-items-center gap-2 login-section-user">
-                <div
-                  onClick={() => {
-                    setPageLevelLoader(true);
-                    setTimeout(() => {
-                      router.push("/account");
-                    }, 1000);
-                  }}
-                  style={{ cursor: "pointer" }}>
-                  <div className="login-user">{profileImageMaker()}</div>
-                </div>
-                <div>
-                  <div
-                    onClick={() => setShowMenu((prev) => !prev)}
-                    style={{ cursor: "pointer" }}>
-                    {showMenu ? <FaChevronUp /> : <FaChevronDown />}
-                  </div>
-                  <div className={`login-dropdown ${showMenu ? "" : "d-none"}`}>
-                    <p className="m-0">{user && user?.name}</p>
-                    <hr />
-                    <Link
-                      href="/account/"
-                      className="mb-2"
-                      onClick={() => {
-                        setPageLevelLoader(true);
-                        setShowMenu(false);
-                      }}>
-                      User Information
-                    </Link>
-                    <button
-                      className="btn btn-sm btn-success"
-                      onClick={handleLogout}>
-                      Logout
-                    </button>
+              pathName !== "account" && (
+                <div className="d-flex align-items-center gap-2 login-section-user">
+                  <Link href="/account">
+                    <div className="login-user">{profileImageMaker()}</div>
+                  </Link>
+                  <div>
+                    <div
+                      onClick={() => setShowMenu((prev) => !prev)}
+                      style={{ cursor: "pointer" }}>
+                      {showMenu ? <FaChevronUp /> : <FaChevronDown />}
+                    </div>
+                    <div
+                      ref={menuRef}
+                      className={`login-dropdown ${showMenu ? "" : "d-none"}`}>
+                      <p className="m-0">{user && user?.name}</p>
+                      <hr />
+                      <Link
+                        href="/account"
+                        className="mb-2"
+                        onClick={() => {
+                          setPageLevelLoader(true);
+                          setShowMenu(false);
+                        }}>
+                        User Information
+                      </Link>
+                      <button
+                        className="btn btn-sm btn-danger"
+                        onClick={handleLogout}>
+                        Logout
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )
             ) : (
               <Link
                 role="button"
@@ -236,10 +247,5 @@ const initialMenu = [
   {
     label: "Travel Info",
     items: [],
-  },
-
-  {
-    label: "Contact",
-    url: "/contact",
   },
 ];

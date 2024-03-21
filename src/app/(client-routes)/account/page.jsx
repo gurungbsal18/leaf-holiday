@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
 import { GlobalContext } from "@/context";
@@ -11,11 +11,14 @@ import axios from "@/utils/axios";
 export default function UserDetail() {
   const { user, isAuthUser, pageLevelLoader, setPageLevelLoader } =
     useContext(GlobalContext);
-  setPageLevelLoader(false);
+
   const { register, handleSubmit } = useForm({
     defaultValues: user,
   });
   const router = useRouter();
+  useEffect(() => {
+    setPageLevelLoader(false);
+  }, []);
 
   const submitForm = async (data) => {
     setPageLevelLoader(true);

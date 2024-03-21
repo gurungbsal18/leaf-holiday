@@ -61,11 +61,12 @@ export default function Home() {
       event.preventDefault();
       setPageLevelLoader(true);
       // Navigate to search page with the search query
-      router.push(`/search?searchTerm=${searchTerm}&page=${1}`);
+      router.push(`/search?searchTerm=${searchTerm}`);
     }
   };
 
   useEffect(() => {
+    console.log("hello");
     getHomePageDetail();
   }, [callExtractAll]);
 
@@ -95,8 +96,7 @@ export default function Home() {
                 onClick={() => {
                   setPageLevelLoader(true);
                   router.push(`/search?searchTerm=${searchTerm}`);
-                }}
-              >
+                }}>
                 <SearchOutlinedIcon />
                 Search
               </button>
@@ -142,8 +142,7 @@ export default function Home() {
                             homePageData?.tabs?.bottom[0]?.videoUrl
                           )}
                           title="YouTube video player"
-                          allowFullScreen
-                        ></iframe>
+                          allowFullScreen></iframe>
                       )}
                     </div>
                     <div className="col-12 col-lg-6">

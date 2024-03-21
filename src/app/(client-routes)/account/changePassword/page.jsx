@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import TextField from "@mui/material/TextField";
 import { toast } from "react-toastify";
@@ -42,6 +42,11 @@ export default function ChangePassword() {
       setPageLevelLoader(false);
     }
   };
+
+  useEffect(() => {
+    setPageLevelLoader(false);
+  }, []);
+
   return (
     <>
       {pageLevelLoader ? (

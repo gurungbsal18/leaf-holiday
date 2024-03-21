@@ -1,9 +1,9 @@
 import axios from "@/utils/axios";
 import React from "react";
 import Image from "next/image";
-import RegionCard from "@/components/RegionCard";
+import Card from "@/components/Card";
 
-export default async function RegionDetail({ params }) {
+export default async function DestinationDetail({ params }) {
   let destinationData;
   try {
     const res = await axios.get(`/destination/slug/${params.detail}`);
@@ -29,7 +29,7 @@ export default async function RegionDetail({ params }) {
         <div className="d-flex">
           {destinationData?.regions?.map(
             (item, index) =>
-              index < 3 && <RegionCard key={item._id} regionDetail={item} />
+              index < 3 && <Card key={item._id} api="region" detail={item} />
           )}
         </div>
       </div>
