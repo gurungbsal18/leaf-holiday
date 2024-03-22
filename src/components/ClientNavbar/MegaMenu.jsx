@@ -9,10 +9,10 @@ const MegaMenu = ({ menuData }) => {
   };
 
   return (
-    <ul className="d-none d-lg-flex gap-3 flex-wrap m-0 py-3">
+    <ul className="d-none d-lg-flex gap-3 flex-wrap m-0 py-3 menu-header-container">
       {menuData.map((item) => (
         <li
-          className="position-relative"
+          className="position-relative menu-header"
           key={item.label}
           onClick={() => handleMenuClick(item.label)}
         >
