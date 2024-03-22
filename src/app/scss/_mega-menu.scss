@@ -94,6 +94,9 @@
   width: 250px;
   border: 1px solid rgb(218, 218, 218);
   border-radius: 5px;
+  a:hover {
+    background: #f1f1f1;
+  }
 }
 
 .p-menuitem-active .p-megamenu-panel {

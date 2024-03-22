@@ -90,7 +90,7 @@ export default function ClientNavbar() {
           </div>
 
           <div className="d-flex">
-            {user && user.role === "admin" && (
+            {/* {user && user.role === "admin" && (
               <Link
                 href="/admin"
                 onClick={() => setPageLevelLoader(true)}
@@ -98,7 +98,7 @@ export default function ClientNavbar() {
               >
                 Admin Dashboard
               </Link>
-            )}
+            )} */}
             <Button variant="success" size="sm" className="p-2">
               <span className="d-flex gap-2">
                 Mount Kailash (Fixed Departure 2024)
@@ -133,7 +133,7 @@ export default function ClientNavbar() {
                       <hr />
                       <Link
                         href="/account"
-                        className="mb-2"
+                        className="mb-2 p-2 rounded"
                         onClick={() => {
                           setPageLevelLoader(true);
                           setShowMenu(false);
@@ -141,6 +141,17 @@ export default function ClientNavbar() {
                       >
                         User Information
                       </Link>
+                      <div className="mb-2">
+                        {user && user.role === "admin" && (
+                          <Link
+                            href="/admin"
+                            onClick={() => setPageLevelLoader(true)}
+                            className="d-none d-md-block text-success p-2 rounded"
+                          >
+                            Admin Dashboard
+                          </Link>
+                        )}
+                      </div>
                       <button
                         className="btn btn-sm btn-danger"
                         onClick={handleLogout}
