@@ -1,5 +1,11 @@
 .main-menu {
-  .nav-list {
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  .submenu {
+    width: 850px;
     font-size: 14px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   }
 }

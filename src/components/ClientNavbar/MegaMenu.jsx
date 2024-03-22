@@ -9,27 +9,30 @@ const MegaMenu = ({ menuData }) => {
   };
 
   return (
-    <ul className="d-none d-lg-flex gap-3 flex-wrap">
+    <ul className="d-none d-lg-flex gap-3 flex-wrap m-0 py-3">
       {menuData.map((item) => (
         <li
           className="position-relative"
           key={item.label}
-          onClick={() => handleMenuClick(item.label)}>
+          onClick={() => handleMenuClick(item.label)}
+        >
           {item.label}
           {item.items && activeMenu === item.label && (
             <ul
-              className={`position-absolute left-0 top-50 d-flex bg-white ${
+              className={`position-absolute left-0 bg-white submenu row ${
                 item.label.toLowerCase() === "trekking" ||
                 item.label.toLowerCase() === "outbound" ||
                 item.label.toLowerCase() === "activity"
                   ? ""
                   : " flex-column"
-              }`}>
+              }`}
+            >
               {item.items.map((subItem) =>
                 subItem?.items?.length > 0 ? (
                   <ul
                     key={subItem.label}
-                    className="d-flex flex-col gap-2 flex-wrap">
+                    className="d-flex col-3 flex-column gap-2 flex-wrap p-4"
+                  >
                     <li>
                       <Link href={subItem.url}>{subItem.label}</Link>
                     </li>

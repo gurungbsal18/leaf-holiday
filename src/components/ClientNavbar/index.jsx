@@ -75,7 +75,7 @@ export default function ClientNavbar() {
 
   return (
     <>
-      <div className="container sticky-top bg-white">
+      <div className="container bg-white">
         <div className="d-flex justify-content-between align-items-center flex-column flex-md-row header">
           <div className="logo-img">
             <Link href="/" onClick={() => setPageLevelLoader(true)}>
@@ -94,7 +94,8 @@ export default function ClientNavbar() {
               <Link
                 href="/admin"
                 onClick={() => setPageLevelLoader(true)}
-                className="d-none d-md-block text-success">
+                className="d-none d-md-block text-success"
+              >
                 Admin Dashboard
               </Link>
             )}
@@ -105,7 +106,7 @@ export default function ClientNavbar() {
             </Button>
           </div>
         </div>
-        <div className="d-block d-lg-flex justify-content-center gap-4 pb-2 align-items-center position-relative mt-2">
+        <div className="d-block d-lg-flex justify-content-center gap-4 pb-2 align-items-center position-relative mt-2 main-menu">
           <div className="megamenu-nav">
             <MegaMenu menuData={menuData} />
           </div>
@@ -120,12 +121,14 @@ export default function ClientNavbar() {
                   <div>
                     <div
                       onClick={() => setShowMenu((prev) => !prev)}
-                      style={{ cursor: "pointer" }}>
+                      style={{ cursor: "pointer" }}
+                    >
                       {showMenu ? <FaChevronUp /> : <FaChevronDown />}
                     </div>
                     <div
                       ref={menuRef}
-                      className={`login-dropdown ${showMenu ? "" : "d-none"}`}>
+                      className={`login-dropdown ${showMenu ? "" : "d-none"}`}
+                    >
                       <p className="m-0">{user && user?.name}</p>
                       <hr />
                       <Link
@@ -134,12 +137,14 @@ export default function ClientNavbar() {
                         onClick={() => {
                           setPageLevelLoader(true);
                           setShowMenu(false);
-                        }}>
+                        }}
+                      >
                         User Information
                       </Link>
                       <button
                         className="btn btn-sm btn-danger"
-                        onClick={handleLogout}>
+                        onClick={handleLogout}
+                      >
                         Logout
                       </button>
                     </div>
@@ -150,7 +155,8 @@ export default function ClientNavbar() {
               <Link
                 role="button"
                 className="text-success d-flex align-items-center gap-1 log-in-btn"
-                href="/login">
+                href="/login"
+              >
                 <LoginIcon />
                 Log In
               </Link>
