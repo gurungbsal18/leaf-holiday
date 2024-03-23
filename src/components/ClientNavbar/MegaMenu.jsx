@@ -12,7 +12,7 @@ const MegaMenu = ({ menuData }) => {
     <ul className="d-none d-lg-flex gap-3 flex-wrap m-0 py-3 menu-header-container">
       {menuData.map((item) => (
         <li
-          className="position-relative menu-header"
+          className="position-relative menu-header rounded"
           key={item.label}
           onClick={() => handleMenuClick(item.label)}
         >
@@ -50,7 +50,7 @@ const MegaMenu = ({ menuData }) => {
           )}
         </li>
       ))}
-      <li>
+      <li className="position-relative menu-header rounded">
         <Link href="/contact">Contact</Link>
       </li>
     </ul>
