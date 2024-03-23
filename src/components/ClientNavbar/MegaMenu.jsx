@@ -33,11 +33,13 @@ const MegaMenu = ({ menuData }) => {
                     key={subItem.label}
                     className="d-flex col-3 flex-column gap-2 flex-wrap p-4"
                   >
-                    <li>
+                    <li className="rounded bg-light">
                       <Link href={subItem.url}>{subItem.label}</Link>
                     </li>
                     {subItem.items.map((childItem) => (
-                      <li key={childItem.label}>{childItem.label}</li>
+                      <li className="rounded" key={childItem.label}>
+                        {childItem.label}
+                      </li>
                     ))}
                   </ul>
                 ) : (

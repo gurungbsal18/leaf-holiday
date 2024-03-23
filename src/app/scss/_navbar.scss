@@ -23,9 +23,16 @@
     background: #f1f1f1;
     .submenu {
       color: $dark;
-      li:hover {
-        color: $success;
+      li {
+        padding: 5px 10px;
+        &:hover {
+          color: $success;
+          background: #f1f1f1;
+        }
       }
     }
+  }
+  .submenu li {
+    padding: 5px 10px;
   }
 }
