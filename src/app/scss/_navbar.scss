@@ -11,13 +11,28 @@
   }
 }
 
-.menu-header:hover {
-  color: $success;
-  cursor: pointer;
-  .submenu {
-    color: $dark;
-    li:hover {
-      color: $success;
+.menu-header {
+  font-size: 14px;
+  padding: 5px 10px;
+  a {
+    color: $dark !important;
+  }
+  &:hover {
+    color: $success;
+    cursor: pointer;
+    background: #f1f1f1;
+    .submenu {
+      color: $dark;
+      li {
+        padding: 5px 10px;
+        &:hover {
+          color: $success;
+          background: #f1f1f1;
+        }
+      }
     }
+  }
+  .submenu li {
+    padding: 5px 10px;
   }
 }
