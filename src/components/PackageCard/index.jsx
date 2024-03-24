@@ -14,7 +14,7 @@ function PackageCard({ packageDetail }) {
   packageDetail;
   return (
     <div
-      className="col-12 col-md-4 mb-4"
+      className="col-12 col-md-4 py-3"
       onClick={() => {
         setPageLevelLoader(true);
         router.push(`/package/${packageDetail?.slug}`);
