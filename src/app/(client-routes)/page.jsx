@@ -14,6 +14,7 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 import axios from "@/utils/axios";
 import { useRouter } from "next/navigation";
+import SmallPackageCard from "@/components/SmallPackageCard";
 
 export default function Home() {
   const {
@@ -96,8 +97,7 @@ export default function Home() {
                 onClick={() => {
                   setPageLevelLoader(true);
                   router.push(`/search?searchTerm=${searchTerm}`);
-                }}
-              >
+                }}>
                 <SearchOutlinedIcon />
                 Search
               </button>
@@ -143,15 +143,17 @@ export default function Home() {
                             homePageData?.tabs?.bottom[0]?.videoUrl
                           )}
                           title="YouTube video player"
-                          allowFullScreen
-                        ></iframe>
+                          allowFullScreen></iframe>
                       )}
                     </div>
                     <div className="col-12 col-lg-6">
                       <div className="d-flex justify-content-between gap-2 flex-wrap">
                         {homePageData?.tabs?.bottom[0]?.packages?.map(
                           (item) => (
-                            <PackageCard key={item._id} packageDetail={item} />
+                            <SmallPackageCard
+                              key={item._id}
+                              packageDetail={item}
+                            />
                           )
                         )}
                       </div>

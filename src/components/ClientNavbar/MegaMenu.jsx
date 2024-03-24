@@ -14,8 +14,7 @@ const MegaMenu = ({ menuData }) => {
         <li
           className="position-relative menu-header rounded"
           key={item.label}
-          onClick={() => handleMenuClick(item.label)}
-        >
+          onClick={() => handleMenuClick(item.label)}>
           {item.label}
           {item.items && activeMenu === item.label && (
             <ul
@@ -25,20 +24,18 @@ const MegaMenu = ({ menuData }) => {
                 item.label.toLowerCase() === "activity"
                   ? ""
                   : " flex-column"
-              }`}
-            >
+              }`}>
               {item.items.map((subItem) =>
                 subItem?.items?.length > 0 ? (
                   <ul
                     key={subItem.label}
-                    className="d-flex col-3 flex-column gap-2 flex-wrap p-4"
-                  >
+                    className="d-flex col-3 flex-column gap-2 flex-wrap p-4">
                     <li className="rounded bg-light">
                       <Link href={subItem.url}>{subItem.label}</Link>
                     </li>
                     {subItem.items.map((childItem) => (
-                      <li className="rounded" key={childItem.label}>
-                        {childItem.label}
+                      <li key={childItem.label} className="rounded">
+                        <Link href={childItem.url}>{childItem.label}</Link>
                       </li>
                     ))}
                   </ul>
