@@ -14,6 +14,8 @@ import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import CollectionsIcon from "@mui/icons-material/Collections";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import GroupsIcon from "@mui/icons-material/Groups";
+import MenuOpenIcon from "@mui/icons-material/MenuOpen";
+import RowingIcon from "@mui/icons-material/Rowing";
 
 export const navItems = [
   {
@@ -107,7 +109,7 @@ export const adminNavItems = [
   },
   {
     id: "menu",
-    icon: <ArticleIcon />,
+    icon: <MenuOpenIcon />,
     label: "Menu",
     path: "menu",
   },
@@ -137,7 +139,7 @@ export const adminNavItems = [
   },
   {
     id: "activity",
-    icon: <AccountCircleIcon />,
+    icon: <RowingIcon />,
     label: "Activity",
     path: "activity",
   },

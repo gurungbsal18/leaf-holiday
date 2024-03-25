@@ -34,7 +34,7 @@ export default function Header({
             }
           }}>
           <PostAddIcon className="me-1" />
-          {`Create New ${pageName}`}
+          {`Create New ${pageName === "Activitie" ? "Activity" : pageName}`}
         </button>
         <input
           type="text"

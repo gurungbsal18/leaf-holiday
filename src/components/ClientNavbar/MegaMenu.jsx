@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Link from "next/link";
+import { GlobalContext } from "@/context";
 
 const MegaMenu = ({ menuData }) => {
+  const { setPageLevelLoader } = useContext(GlobalContext);
   const [activeMenu, setActiveMenu] = useState(null);
 
   const handleMenuClick = (label) => {
@@ -31,17 +33,29 @@ const MegaMenu = ({ menuData }) => {
                     key={subItem.label}
                     className="d-flex col-3 flex-column gap-2 flex-wrap p-4">
                     <li className="rounded bg-light">
-                      <Link href={subItem.url}>{subItem.label}</Link>
+                      <Link
+                        href={subItem.url}
+                        onClick={() => setPageLevelLoader(true)}>
+                        {subItem.label}
+                      </Link>
                     </li>
                     {subItem.items.map((childItem) => (
                       <li key={childItem.label} className="rounded">
-                        <Link href={childItem.url}>{childItem.label}</Link>
+                        <Link
+                          href={childItem.url}
+                          onClick={() => setPageLevelLoader(true)}>
+                          {childItem.label}
+                        </Link>
                       </li>
                     ))}
                   </ul>
                 ) : (
                   <li key={subItem.label}>
-                    <Link href={subItem.url}>{subItem.label}</Link>
+                    <Link
+                      href={subItem.url}
+                      onClick={() => setPageLevelLoader(true)}>
+                      {subItem.label}
+                    </Link>
                   </li>
                 )
               )}
@@ -50,7 +64,9 @@ const MegaMenu = ({ menuData }) => {
         </li>
       ))}
       <li className="position-relative menu-header rounded">
-        <Link href="/contact">Contact</Link>
+        <Link href="/contact" onClick={() => setPageLevelLoader(true)}>
+          Contact
+        </Link>
       </li>
     </ul>
   );

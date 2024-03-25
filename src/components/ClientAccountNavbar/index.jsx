@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useContext, useEffect } from "react";
 import { FaUser, FaHistory, FaKey } from "react-icons/fa";
 import { MdArrowForwardIos } from "react-icons/md";
@@ -9,8 +9,10 @@ import { GlobalContext } from "@/context";
 import Cookies from "js-cookie";
 
 export default function ClientAccountNavbar() {
+  const pathName = usePathname();
   const router = useRouter();
-  const { setUser, setIsAuthUser } = useContext(GlobalContext);
+  const { setUser, setIsAuthUser, setPageLevelLoader } =
+    useContext(GlobalContext);
   function handleLogout() {
     toast.success("Logged Out Successfully", {
       position: toast.POSITION.TOP_RIGHT,
@@ -44,14 +46,21 @@ export default function ClientAccountNavbar() {
     },
   ];
 
+  console.log(pathName);
   return (
     <div className="d-flex flex-column bg-success-subtle col p-4 vh-100 gap-4">
       {mapHelper.map((item) => (
         <div
           className="d-flex justify-content-between align-items-center user-account-dashboard-item"
           key={item.id}
-          onClick={() => router.push(item.path)}>
-          <div className="d-flex gap-2 align-items-center">
+          onClick={() => {
+            setPageLevelLoader(true);
+            router.push(item.path);
+          }}>
+          <div
+            className={`d-flex gap-2 align-items-center ${
+              pathName === item.path ? "text-success" : ""
+            }`}>
             {item.icon}
             <p className="m-0">{item.label}</p>
           </div>

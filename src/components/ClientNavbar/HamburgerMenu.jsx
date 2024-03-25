@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Link from "next/link";
+import { GlobalContext } from "@/context";
 
 const HamburgerMenu = ({ menuData, setShowHamburgerMenu }) => {
+  const { setPageLevelLoader } = useContext(GlobalContext);
   const [activeMenu, setActiveMenu] = useState(null);
 
   const handleMenuClick = (label) => {
@@ -9,7 +11,7 @@ const HamburgerMenu = ({ menuData, setShowHamburgerMenu }) => {
   };
 
   return (
-    <ul className="position-absolute bg-white d-flex flex-column gap-3 d-lg-none overflow-scroll ">
+    <ul className="position-absolute bg-white d-flex flex-column gap-3 d-lg-none overflow-scroll z-2 ">
       {menuData.map((item) => (
         <li
           className=""
@@ -26,7 +28,10 @@ const HamburgerMenu = ({ menuData, setShowHamburgerMenu }) => {
                     <li>
                       <Link
                         href={subItem.url}
-                        onClick={() => setShowHamburgerMenu(false)}>
+                        onClick={() => {
+                          setShowHamburgerMenu(false);
+                          setPageLevelLoader(true);
+                        }}>
                         {subItem.label}
                       </Link>
                     </li>
@@ -34,7 +39,10 @@ const HamburgerMenu = ({ menuData, setShowHamburgerMenu }) => {
                       <li key={childItem.label}>
                         <Link
                           href={childItem.url}
-                          onClick={() => setShowHamburgerMenu(false)}>
+                          onClick={() => {
+                            setShowHamburgerMenu(false);
+                            setPageLevelLoader(true);
+                          }}>
                           {childItem.label}
                         </Link>
                       </li>
@@ -50,6 +58,16 @@ const HamburgerMenu = ({ menuData, setShowHamburgerMenu }) => {
           )}
         </li>
       ))}
+      <li>
+        <Link
+          href="/contact"
+          onClick={() => {
+            setShowHamburgerMenu(false);
+            setPageLevelLoader(true);
+          }}>
+          Contact
+        </Link>
+      </li>
     </ul>
   );
 };
