@@ -14,11 +14,12 @@ function SmallPackageCard({ packageDetail }) {
   packageDetail;
   return (
     <div
-      className="col-12 col-md-4 py-3"
+      className="col-12 col-md-6 py-2"
       onClick={() => {
         setPageLevelLoader(true);
         router.push(`/package/${packageDetail?.slug}`);
-      }}>
+      }}
+    >
       <div className="trip-card border">
         <Image
           src={packageDetail?.mainImageUrl}
