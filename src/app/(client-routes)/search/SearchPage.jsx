@@ -46,7 +46,7 @@ export default function ClientSearch({ searchTerm }) {
     getSearchData();
   }, [callExtractAll]);
   return (
-    <div className="pt-5">
+    <div className="container pt-5">
       <SearchBar
         searchValue={searchVal}
         page={page}
@@ -60,8 +60,8 @@ export default function ClientSearch({ searchTerm }) {
       ) : (
         <>
           {searchData ? (
-            <div>
-              <div className="d-flex flex-wrap justify-content-center gap-3 my-5">
+            <div className="">
+              <div className="row">
                 {filteredData.map((item) => (
                   <PackageCard key={item._id} packageDetail={item} />
                 ))}

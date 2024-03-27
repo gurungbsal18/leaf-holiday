@@ -47,16 +47,25 @@ export default function SearchBar({
             setPage(1);
             setSearchVal(searchTerm);
             router.push(`/search?searchTerm=${searchTerm}`);
-          }}>
+          }}
+        >
           <SearchOutlinedIcon />
           Search
         </button>
       </div>
-      <div>
-        <button disabled={page < 2} onClick={() => setPage(page - 1)}>
+      <div className="d-flex gap-2">
+        <button
+          className="btn btn-sm btn-success"
+          disabled={page < 2}
+          onClick={() => setPage(page - 1)}
+        >
           Prev
         </button>
-        <button disabled={page >= maxPage} onClick={() => setPage(page + 1)}>
+        <button
+          className="btn btn-sm btn-success"
+          disabled={page >= maxPage}
+          onClick={() => setPage(page + 1)}
+        >
           Next
         </button>
       </div>
