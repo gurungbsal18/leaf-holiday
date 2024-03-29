@@ -1,6 +1,5 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
-import Dialog from "@mui/material/Dialog";
+import React, { useContext } from "react";
 import { GlobalContext } from "@/context";
 import { useRouter } from "next/navigation";
 import PostAddIcon from "@mui/icons-material/PostAdd";
@@ -32,17 +31,20 @@ export default function Header({
               setDialogOpen(true);
               setDialogContent(createComponent);
             }
-          }}>
+          }}
+        >
           <PostAddIcon className="me-1" />
           {`Create New ${pageName === "Activitie" ? "Activity" : pageName}`}
         </button>
-        <input
-          type="text"
-          value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
-          className="form-control search-package-input"
-          placeholder="Search..."
-        />
+        {pageName !== "Testimonial" && (
+          <input
+            type="text"
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+            className="form-control search-package-input"
+            placeholder="Search..."
+          />
+        )}
       </div>
     </div>
   );

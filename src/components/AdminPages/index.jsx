@@ -49,9 +49,19 @@ export default function AdminPages({ data }) {
     } else {
       try {
         const temp = [];
-        allData.map((data) => {
-          if (data.name.toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
-            temp.push(data);
+        allData.map((eachData) => {
+          if (data.apiName === "blog") {
+            if (
+              eachData.title.toLowerCase().indexOf(keyword.toLowerCase()) !== -1
+            ) {
+              temp.push(eachData);
+            }
+          } else {
+            if (
+              eachData.name.toLowerCase().indexOf(keyword.toLowerCase()) !== -1
+            ) {
+              temp.push(eachData);
+            }
           }
         });
         setFilteredData(temp);

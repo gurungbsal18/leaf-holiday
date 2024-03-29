@@ -77,6 +77,9 @@ export default function CreateBlog() {
       setPageLevelLoader(false);
     }
   };
+  useEffect(() => {
+    setPageLevelLoader(false);
+  });
 
   return (
     <>
