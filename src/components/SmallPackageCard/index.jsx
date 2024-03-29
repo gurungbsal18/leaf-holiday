@@ -7,17 +7,19 @@ import { averageReview } from "@/utils/functions";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { GlobalContext } from "@/context";
+import Link from "next/link";
 
 function SmallPackageCard({ packageDetail }) {
   const { setPageLevelLoader } = useContext(GlobalContext);
   const router = useRouter();
   packageDetail;
   return (
-    <div
+    <Link
+      href={`/package/${packageDetail?.slug}`}
       className="col-12 col-md-6 py-2"
       onClick={() => {
         setPageLevelLoader(true);
-        router.push(`/package/${packageDetail?.slug}`);
+        // router.push(`/package/${packageDetail?.slug}`);
       }}
     >
       <div className="trip-card border">
@@ -42,13 +44,13 @@ function SmallPackageCard({ packageDetail }) {
               {packageDetail?.reviews?.length || 0} Reviews
             </span>
           </div>
-          <h4 className="trip-card-title">{packageDetail?.name}</h4>
+          <h4 className="trip-card-title text-dark">{packageDetail?.name}</h4>
           <div className="d-flex justify-content-between align-items-center">
             <span className="text-muted trip-card-duration d-flex align-items-center gap-1">
               <ScheduleOutlinedIcon fontSize="14" />
               {packageDetail?.tripFacts?.duration?.info} Days
             </span>
-            <p className="m-0">
+            <p className="m-0 text-dark">
               USD {packageDetail?.prices[0]?.price || 0}/
               <span className="text-muted" style={{ fontSize: "12px" }}>
                 per person
@@ -57,7 +59,7 @@ function SmallPackageCard({ packageDetail }) {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
