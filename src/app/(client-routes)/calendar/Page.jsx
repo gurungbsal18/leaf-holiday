@@ -3,7 +3,7 @@ import React from "react";
 const CalendarPage = () => {
   return (
     <>
-      <div>
+      <div className="container">
         <p style={{ "font-weight": "400" }}>
           <strong>Fix Departure Date for Non-Indian (NRI) Nationals</strong>
         </p>

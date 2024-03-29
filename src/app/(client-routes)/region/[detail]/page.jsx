@@ -29,7 +29,9 @@ export default async function RegionDetail({ params }) {
         <div className="row">
           {regionData?.packages?.map(
             (item, index) =>
-              index < 100 && <PackageCard key={item._id} packageDetail={item} />
+              index < regionData.packages.length && (
+                <PackageCard key={item._id} packageDetail={item} />
+              )
           )}
         </div>
       </div>

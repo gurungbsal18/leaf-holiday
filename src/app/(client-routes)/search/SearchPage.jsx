@@ -6,7 +6,7 @@ import { GlobalContext } from "@/context";
 import axios from "@/utils/axios";
 import React, { useContext, useEffect, useState } from "react";
 
-const searchNumber = 3;
+const searchNumber = 6;
 
 const getMaxPage = (length) => {
   if (length % searchNumber === 0) {
