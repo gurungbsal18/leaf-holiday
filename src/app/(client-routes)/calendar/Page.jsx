@@ -4,12 +4,12 @@ const CalendarPage = () => {
   return (
     <>
       <div>
-        <p style="font-weight: 400;">
+        <p style={{ "font-weight": "400" }}>
           <strong>Fix Departure Date for Non-Indian (NRI) Nationals</strong>
         </p>
 
         <div className="table-responsive">
-          <table className="table-bordered" style="font-weight: 400;">
+          <table className="table-bordered" style={{ "font-weight": "400" }}>
             <tbody>
               <tr>
                 <td>Day</td>
@@ -31,26 +31,26 @@ const CalendarPage = () => {
               <tr>
                 <td>01</td>
                 <td>Kathmandu Arrival</td>
-                <td style="color: #339966;">
+                <td style={{ color: "#339966" }}>
                   <strong>14*</strong>
                 </td>
                 <td>27</td>
                 <td>03</td>
-                <td style="color: #339966;">
+                <td style={{ color: "#339966" }}>
                   <strong>12*</strong>
                 </td>
                 <td>17</td>
                 <td>24</td>
                 <td>01</td>
-                <td style="color: #339966;">
+                <td style={{ color: "#339966" }}>
                   <strong>13*</strong>
                 </td>
                 <td>22</td>
                 <td>04</td>
-                <td style="color: #339966;">
+                <td style={{ color: "#339966" }}>
                   <strong>11*</strong>
                 </td>
-                <td style="color: #339966;">
+                <td style={{ color: "#339966" }}>
                   <strong>09*</strong>
                 </td>
                 <td>16</td>
@@ -177,26 +177,26 @@ const CalendarPage = () => {
               <tr>
                 <td>09</td>
                 <td>Mansarovar</td>
-                <td style="color: #339966;">
+                <td style={{ color: "#339966" }}>
                   <strong>23*</strong>
                 </td>
                 <td>04</td>
                 <td>11</td>
-                <td style="color: #339966;">
+                <td style={{ color: "#339966" }}>
                   <strong>21*</strong>
                 </td>
                 <td>25</td>
                 <td>02</td>
                 <td>09</td>
-                <td style="color: #339966;">
+                <td style={{ color: "#339966" }}>
                   <strong>21*</strong>
                 </td>
                 <td>30</td>
                 <td>12</td>
-                <td style="color: #339966;">
+                <td style={{ color: "#339966" }}>
                   <strong>19*</strong>
                 </td>
-                <td style="color: #339966;">
+                <td style={{ color: "#339966" }}>
                   <strong>17*</strong>
                 </td>
                 <td>24</td>
@@ -323,15 +323,15 @@ const CalendarPage = () => {
             </tbody>
           </table>
         </div>
-        <div className="alert alert-info" style="margin-top: 15px;">
-          <p style="font-weight: 400; text-align: center;">
-            <span style="color: #ff0000;">
-              <span style="color: #339966;">
+        <div className="alert alert-info" style={{ "margin-top": "15px" }}>
+          <p style={{ "font-weight": "400", "text-align": "center" }}>
+            <span style={{ color: "#ff0000" }}>
+              <span style={{ color: "#339966" }}>
                 <strong>*</strong>
                 <strong> Indicates tour leaving for full moon day</strong>
               </span>
               <strong>
-                <span style="color: #339966;">.</span> 
+                <span style={{ color: "#339966" }}>.</span> 
               </strong>
               <strong>*</strong>
             </span>
@@ -339,7 +339,7 @@ const CalendarPage = () => {
             unavoidable circumstances.
           </p>
         </div>
-        <div className="alert alert-warning" style="text-align: center;">
+        <div className="alert alert-warning" style={{ "text-align": "center" }}>
           Note: May 14 and June 12 (Full Moon) program is 16 Nights and 17 Days
           due to Saturday/Sunday (Holidays) in between.
         </div>
