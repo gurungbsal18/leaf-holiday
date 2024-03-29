@@ -616,16 +616,14 @@ export default function PackageDetail({ packageDetail }) {
                   </h4>
                   <div>
                     {packageDetail?.videoGallery?.map((item) => (
-                      <a key={item} data-fancybox="gallery" href={item}>
-                        <iframe
-                          className="w-100"
-                          width="150"
-                          height="90"
-                          src={getEmbeddedYouTubeUrl(item)}
-                          title="YouTube video player"
-                          allowFullScreen
-                        ></iframe>
-                      </a>
+                      <iframe
+                        className="w-100"
+                        width="150"
+                        height="90"
+                        src={getEmbeddedYouTubeUrl(item)}
+                        title="YouTube video player"
+                        allowFullScreen
+                      ></iframe>
                     ))}
                   </div>
                 </div>
