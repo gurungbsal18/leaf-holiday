@@ -4,13 +4,7 @@ import React, { useContext, useState } from "react";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { GlobalContext } from "@/context";
 
-export default function SearchBar({
-  searchValue,
-  page,
-  setPage,
-  maxPage,
-  setSearchVal,
-}) {
+export default function SearchBar({ searchValue, setPage, setSearchVal }) {
   const { setPageLevelLoader, callExtractAll, setCallExtractAll } =
     useContext(GlobalContext);
   const [searchTerm, setSearchTerm] = useState(searchValue || "");
@@ -51,22 +45,6 @@ export default function SearchBar({
         >
           <SearchOutlinedIcon />
           Search
-        </button>
-      </div>
-      <div className="d-flex gap-2">
-        <button
-          className="btn btn-sm btn-success"
-          disabled={page < 2}
-          onClick={() => setPage(page - 1)}
-        >
-          Prev
-        </button>
-        <button
-          className="btn btn-sm btn-success"
-          disabled={page >= maxPage}
-          onClick={() => setPage(page + 1)}
-        >
-          Next
         </button>
       </div>
     </div>

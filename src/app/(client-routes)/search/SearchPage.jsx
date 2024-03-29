@@ -22,6 +22,9 @@ export default function ClientSearch({ searchTerm }) {
   const [searchVal, setSearchVal] = useState(searchTerm);
   const [searchData, setSearchData] = useState(null);
   const [page, setPage] = useState(1);
+
+  const maxPage = getMaxPage(searchData?.length);
+
   const filteredData = searchData?.slice(
     (page - 1) * searchNumber,
     (page - 1) * searchNumber + searchNumber
@@ -48,10 +51,8 @@ export default function ClientSearch({ searchTerm }) {
   return (
     <div className="container pt-5">
       <SearchBar
-        searchValue={searchVal}
-        page={page}
         setPage={setPage}
-        maxPage={searchData ? getMaxPage(searchData?.length) : 1}
+        searchValue={searchVal}
         setSearchVal={setSearchVal}
       />
       <p>Search Term : {searchVal}</p>
@@ -65,6 +66,22 @@ export default function ClientSearch({ searchTerm }) {
                 {filteredData.map((item) => (
                   <PackageCard key={item._id} packageDetail={item} />
                 ))}
+              </div>
+              <div className="d-flex gap-2">
+                <button
+                  className="btn btn-sm btn-success"
+                  disabled={page < 2}
+                  onClick={() => setPage(page - 1)}
+                >
+                  Prev
+                </button>
+                <button
+                  className="btn btn-sm btn-success"
+                  disabled={page >= maxPage}
+                  onClick={() => setPage(page + 1)}
+                >
+                  Next
+                </button>
               </div>
             </div>
           ) : (
