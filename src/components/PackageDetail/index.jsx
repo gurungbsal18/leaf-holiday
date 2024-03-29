@@ -617,6 +617,7 @@ export default function PackageDetail({ packageDetail }) {
                   <div>
                     {packageDetail?.videoGallery?.map((item) => (
                       <iframe
+                        key={item}
                         className="w-100"
                         width="150"
                         height="500"
