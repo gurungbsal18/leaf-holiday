@@ -127,8 +127,8 @@ export default function Settings() {
               </button>
             </div>
             <form>
-              <div className="d-flex gap-5">
-                <div className="d-flex flex-column gap-4">
+              <div className="row gap-5">
+                <div className="col-4 d-flex flex-column gap-4">
                   {leftDivData.map((item) => (
                     <Controller
                       key={item.id}
@@ -145,15 +145,8 @@ export default function Settings() {
                       )}
                     />
                   ))}
-                  <UploadToCloudinary
-                    selectedFile={selectedFile}
-                    setSelectedFile={setSelectedFile}
-                    label="Logo"
-                    setValue={setValue}
-                    formName="logo"
-                  />
                 </div>
-                <div className="d-flex flex-column gap-4">
+                <div className="col d-flex flex-column gap-4">
                   {rightDivData.map((item) => (
                     <Controller
                       key={item.id}
@@ -171,6 +164,15 @@ export default function Settings() {
                     />
                   ))}
                 </div>
+              </div>
+              <div className="upload-logo my-5 bg-light p-3 rounded">
+                <UploadToCloudinary
+                  selectedFile={selectedFile}
+                  setSelectedFile={setSelectedFile}
+                  label="Logo"
+                  setValue={setValue}
+                  formName="logo"
+                />
               </div>
             </form>
           </div>

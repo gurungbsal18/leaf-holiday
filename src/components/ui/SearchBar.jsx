@@ -23,8 +23,8 @@ export default function SearchBar({ searchValue, setPage, setSearchVal }) {
     }
   };
   return (
-    <div>
-      <div className="hero-search-bar d-flex jusitify-content-center mx-auto">
+    <div className="search-page">
+      <div className="hero-search-bar d-flex jusitify-content-start mb-3">
         <input
           type="text"
           className="form-control"

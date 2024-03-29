@@ -50,7 +50,7 @@ export default function CreateDepartureDate() {
   };
 
   return (
-    <div className="">
+    <div className="p-3">
       <div className="">
         <div className="d-flex justify-content-between p-3 ">
           <p>
@@ -65,7 +65,7 @@ export default function CreateDepartureDate() {
         </div>
         <form>
           <div className="d-flex gap-5">
-            <div className="d-flex flex-column gap-2">
+            <div className="d-flex flex-column gap-2 col-12">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Controller
                   name="startDate"
@@ -94,6 +94,7 @@ export default function CreateDepartureDate() {
                 {...register("pricePerPerson", {
                   valueAsNumber: true,
                 })}
+                className="mt-2"
               />
 
               <div>
@@ -102,13 +103,20 @@ export default function CreateDepartureDate() {
                   id="isAvailable"
                   name="isAvailable"
                   {...register("isAvailable")}
+                  className="me-2"
                 />
                 <label for="isAvailable">Available</label>
               </div>
 
-              <button type="submit" onClick={handleSubmit(onSubmit)}>
-                {updateForm ? "Update" : "Create"}
-              </button>
+              <div className="d-flex justify-content-end">
+                <button
+                  type="submit"
+                  onClick={handleSubmit(onSubmit)}
+                  className="btn btn-sm btn-success"
+                >
+                  {updateForm ? "Update" : "Create"}
+                </button>
+              </div>
             </div>
           </div>
         </form>

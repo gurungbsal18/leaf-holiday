@@ -517,7 +517,7 @@ export default function PackageDetail({ packageDetail }) {
                     Dates & Price
                   </h4>
                   {/* <table> */}
-                  <table className="table table-hover">
+                  <table className="table table-hover border my-4">
                     {/* <div className="d-flex gap-3"> */}
                     <thead>
                       <tr>
@@ -569,7 +569,7 @@ export default function PackageDetail({ packageDetail }) {
                 </div>
               )}
             <div
-              className="extra-contents text-justify"
+              className="extra-contents text-justify pt-4"
               dangerouslySetInnerHTML={{
                 __html: packageDetail?.content,
               }}
@@ -619,7 +619,7 @@ export default function PackageDetail({ packageDetail }) {
                       <iframe
                         className="w-100"
                         width="150"
-                        height="90"
+                        height="500"
                         src={getEmbeddedYouTubeUrl(item)}
                         title="YouTube video player"
                         allowFullScreen
@@ -668,7 +668,7 @@ export default function PackageDetail({ packageDetail }) {
                     Reviews
                   </h4>
                   <button
-                    className="text-success"
+                    className="btn btn-sm btn-success"
                     onClick={() => {
                       setDialogOpen(true);
                       setDialogContent(<CreateTestimonial />);
@@ -682,9 +682,8 @@ export default function PackageDetail({ packageDetail }) {
                     (item, index) =>
                       item.isVerified && (
                         <li key={`review-${index}`} className="d-flex">
-                          <div>icon</div>
                           <div>
-                            <p>
+                            <p className="text-muted">
                               {item.userName} -{" "}
                               {dayjs(item.date).format("DD MMM, YYYY")}
                             </p>
