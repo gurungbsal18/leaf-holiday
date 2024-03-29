@@ -15,6 +15,7 @@ export default async function DestinationDetail({ params }) {
     <div>
       <div className="header-image">
         <Image
+          priority
           src={destinationData?.imageUrl}
           height={500}
           width={1512}
@@ -29,7 +30,9 @@ export default async function DestinationDetail({ params }) {
         <div className="d-flex">
           {destinationData?.regions?.map(
             (item, index) =>
-              index < 3 && <Card key={item._id} api="region" detail={item} />
+              index < destinationData.regions.length && (
+                <Card key={item._id} api="region" detail={item} />
+              )
           )}
         </div>
       </div>

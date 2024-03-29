@@ -391,7 +391,7 @@ export default function PackageDetail({ packageDetail }) {
                             }}
                           ></div>
                           <div className="d-flex justify-content-between itinerary-fact">
-                            {item.maxAltitude && (
+                            {item.maxAltitude && item.maxAltitude !== 0 && (
                               <div className="d-flex align-items-center gap-1">
                                 <TerrainIcon className="text-muted" />
                                 <p className="m-0 fs-14">

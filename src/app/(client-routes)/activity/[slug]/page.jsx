@@ -15,6 +15,7 @@ export default async function ActivityDetail({ params }) {
     <div>
       <div>
         <Image
+          priority
           src={activityData?.imageUrl}
           height={500}
           width={1512}
@@ -29,7 +30,9 @@ export default async function ActivityDetail({ params }) {
       <div className="d-flex">
         {activityData?.packages?.map(
           (item, index) =>
-            index < 3 && <PackageCard key={item._id} packageDetail={item} />
+            index < activityData.packages.length && (
+              <PackageCard key={item._id} packageDetail={item} />
+            )
         )}
       </div>
     </div>

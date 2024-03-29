@@ -15,7 +15,8 @@ export default async function RegionDetail({ params }) {
     <div>
       <div className="header-image">
         <Image
-          src={regionData?.imageUrl}
+          priority
+          src={regionData?.imgUrl}
           height={500}
           width={1512}
           alt={`${regionData?.name}-image`}
