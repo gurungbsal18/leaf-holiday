@@ -55,7 +55,7 @@ export default function ClientSearch({ searchTerm }) {
         searchValue={searchVal}
         setSearchVal={setSearchVal}
       />
-      <p>Search Term : {searchVal}</p>
+      <p className="m-0">Search Term : {searchVal}</p>
       {pageLevelLoader ? (
         <PageLevelLoader />
       ) : (
@@ -67,7 +67,7 @@ export default function ClientSearch({ searchTerm }) {
                   <PackageCard key={item._id} packageDetail={item} />
                 ))}
               </div>
-              <div className="d-flex gap-2">
+              <div className="d-flex gap-2 mb-5">
                 <button
                   className="btn btn-sm btn-success"
                   disabled={page < 2}

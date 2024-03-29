@@ -198,7 +198,8 @@ export default function Table({
                                 );
                               }, 1000);
                             }
-                          }}>
+                          }}
+                        >
                           {apiName === "review" ? "Verify" : "View"}
                         </button>
                       )}
@@ -225,7 +226,8 @@ export default function Table({
                           setDialogContent(updateComponent);
                         }
                       }}
-                      className="btn btn-sm btn-success">
+                      className="btn btn-sm btn-success"
+                    >
                       <EditNoteIcon /> Edit
                     </button>
                   )}
@@ -234,7 +236,8 @@ export default function Table({
                       onClick={() =>
                         handleRemove(bodyData[key.split("_")[1]]._id)
                       }
-                      className="btn btn-sm btn-danger">
+                      className="btn btn-sm btn-danger"
+                    >
                       <DeleteIcon />
                     </button>
                   )}
@@ -245,7 +248,7 @@ export default function Table({
         </tbody>
       </table>
       {!noPagination && (
-        <div className="d-flex gap-2 mt-4 align-items-end">
+        <div className="d-flex gap-2 mt-4 align-items-center">
           <span className="text-muted">
             Page<span className="mx-1">{pageIndex + 1}</span>of
             <span className="mx-1">{pageOptions.length}</span>
@@ -253,13 +256,15 @@ export default function Table({
           <button
             disabled={!canPreviousPage}
             onClick={() => previousPage()}
-            className="btn btn-secondary">
+            className="btn btn-success"
+          >
             Previous
           </button>
           <button
             disabled={!canNextPage}
             onClick={() => nextPage()}
-            className="btn btn-secondary">
+            className="btn btn-success"
+          >
             Next
           </button>
         </div>

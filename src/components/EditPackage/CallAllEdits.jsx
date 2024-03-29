@@ -56,9 +56,9 @@ export default function CallAllEdits() {
         accessor: "isAvailable",
         Cell: ({ value }) => {
           return (
-            <button className={`${value ? "text-success" : "text-danger"}`}>
+            <p className={`m-0 ${value ? "text-success" : "text-danger"}`}>
               {value ? "Available" : "Unavailable"}
-            </button>
+            </p>
           );
         },
       },

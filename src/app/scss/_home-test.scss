@@ -42,6 +42,15 @@
   }
 }
 
+.search-page {
+  .hero-search-bar {
+    box-shadow: none;
+    input:focus {
+      border: #dee2e6 1px solid;
+    }
+  }
+}
+
 .home-video-section {
   iframe {
     height: 100%;

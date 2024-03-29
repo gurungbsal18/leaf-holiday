@@ -12,26 +12,27 @@ export default async function ActivityDetail({ params }) {
     console.log(e);
   }
   return (
-    <div>
-      <div>
+    <>
+      <div className="common-banner">
         <Image
           src={activityData?.imageUrl}
           height={500}
           width={1512}
           alt={`${activityData?.name}-image`}
         />
-        <h4>Explore {activityData?.name}</h4>
       </div>
-      <div>
-        <h4>{activityData?.name}</h4>
-        <p>{activityData?.description}</p>
+      <div className="container my-5">
+        <div>
+          <h4>Explore {activityData?.name}</h4>
+          <p>{activityData?.description}</p>
+        </div>
+        <div className="row">
+          {activityData?.packages?.map(
+            (item, index) =>
+              index < 3 && <PackageCard key={item._id} packageDetail={item} />
+          )}
+        </div>
       </div>
-      <div className="d-flex">
-        {activityData?.packages?.map(
-          (item, index) =>
-            index < 3 && <PackageCard key={item._id} packageDetail={item} />
-        )}
-      </div>
-    </div>
+    </>
   );
 }

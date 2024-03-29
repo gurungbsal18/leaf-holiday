@@ -21,7 +21,7 @@ const MegaMenu = ({ menuData }) => {
           {item.label}
           {item.items && activeMenu === item.label && (
             <ul
-              className={`position-absolute left-0 bg-white submenu row ${
+              className={`position-absolute left-0 bg-white submenu col d-flex flex-wrap ${
                 item.label.toLowerCase() === "trekking" ||
                 item.label.toLowerCase() === "outbound" ||
                 item.label.toLowerCase() === "activity"
@@ -31,10 +31,7 @@ const MegaMenu = ({ menuData }) => {
             >
               {item.items.map((subItem) =>
                 subItem?.items?.length > 0 ? (
-                  <ul
-                    key={subItem.label}
-                    className="d-flex col-3 flex-column gap-2 flex-wrap p-4"
-                  >
+                  <ul key={subItem.label} className="child-menu col-3">
                     <li className="rounded bg-light">
                       <Link
                         href={subItem.url}

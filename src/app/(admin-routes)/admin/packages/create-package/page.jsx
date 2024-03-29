@@ -457,7 +457,7 @@ export default function CreatePackage() {
                       <div className="form-header d-flex justify-content-between ">
                         <h4 className="dashboard-title">Trip Inclusions</h4>
                         <Button
-                          variant="primary"
+                          variant="success"
                           size="sm"
                           onClick={() => inclusionsAppend("")}
                         >
@@ -491,7 +491,7 @@ export default function CreatePackage() {
                       <div className="form-header d-flex justify-content-between ">
                         <h4 className="dashboard-title">Trip exclusions</h4>
                         <Button
-                          variant="primary"
+                          variant="success"
                           size="sm"
                           onClick={() => exclusionsAppend("")}
                         >
@@ -525,7 +525,7 @@ export default function CreatePackage() {
                       <div className="form-header d-flex justify-content-between ">
                         <h4 className="dashboard-title">Trip Highlights</h4>
                         <Button
-                          variant="primary"
+                          variant="success"
                           size="sm"
                           onClick={() => highlightsAppend("")}
                         >
@@ -659,7 +659,7 @@ export default function CreatePackage() {
               <div className="form-header d-flex justify-content-between align-items-center bg-light p-3">
                 <h4 className="dashboard-title">Video Gallery Links</h4>
                 <Button
-                  variant="primary"
+                  variant="success"
                   size="sm"
                   onClick={() => videoGalleryAppend("")}
                 >
