@@ -97,7 +97,7 @@ export default function UploadGallery() {
           onClick={handleSubmit}
           className="btn btn-sm btn-success"
         >
-          {updateGallery ? "Update" : "Submit"}
+          {updateGallery ? "Update" : "Save"}
         </button>
       </div>
     </div>
