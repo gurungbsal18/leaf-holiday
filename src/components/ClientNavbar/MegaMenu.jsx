@@ -30,15 +30,15 @@ const MegaMenu = ({ menuData }) => {
     <ul className="d-none d-lg-flex gap-3 flex-wrap m-0 py-3 menu-header-container">
       {menuData.map((item) => (
         <li
-          className="position-relative menu-header rounded"
+          className="menu-header rounded"
           key={item.label}
           onClick={() => handleMenuClick(item.label)}
         >
           {item.label}
           {item.items && activeMenu === item.label && (
-            <ul
+            <div
               ref={menuRef}
-              className={`position-absolute left-0 bg-white submenu col d-flex flex-wrap ${
+              className={`position-absolute left-0 bg-white mega-menu p-2 rounded border row flex-wrap${
                 item.label.toLowerCase() === "trekking" ||
                 item.label.toLowerCase() === "outbound" ||
                 item.label.toLowerCase() === "activity"
@@ -48,8 +48,8 @@ const MegaMenu = ({ menuData }) => {
             >
               {item.items.map((subItem) =>
                 subItem?.items?.length > 0 ? (
-                  <ul key={subItem.label} className="child-menu col-3">
-                    <li className="rounded bg-light">
+                  <ul key={subItem.label} className="mega-menu-items col">
+                    <li className="text-success fw-bold">
                       <Link
                         href={subItem.url}
                         onClick={() => setPageLevelLoader(true)}
@@ -79,7 +79,7 @@ const MegaMenu = ({ menuData }) => {
                   </li>
                 )
               )}
-            </ul>
+            </div>
           )}
         </li>
       ))}
