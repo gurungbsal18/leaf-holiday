@@ -11,38 +11,42 @@ const HamburgerMenu = ({ menuData, setShowHamburgerMenu }) => {
   };
 
   return (
-    <ul className="position-absolute bg-white d-flex flex-column gap-3 d-lg-none overflow-scroll z-2 ">
+    <ul className="position-absolute bg-white d-flex flex-column gap-3 d-lg-none overflow-scroll z-2 mobile-mega-menu border p-3">
       {menuData.map((item) => (
         <li
-          className=""
+          className="mobile-menu-header"
           key={item.label}
-          onClick={() => handleMenuClick(item.label)}>
+          onClick={() => handleMenuClick(item.label)}
+        >
           {item.label}
           {item.items && activeMenu === item.label && (
-            <ul className=" flex-column">
+            <ul className="p-0 flex-column">
               {item.items.map((subItem) =>
                 subItem?.items?.length > 0 ? (
                   <ul
                     key={subItem.label}
-                    className="d-flex flex-column gap-2 flex-wrap">
-                    <li>
+                    className="d-flex flex-column gap-2 flex-wrap p-0"
+                  >
+                    <li className="mobile-mega-menu-header fw-bold rounded p-2">
                       <Link
                         href={subItem.url}
                         onClick={() => {
                           setShowHamburgerMenu(false);
                           setPageLevelLoader(true);
-                        }}>
+                        }}
+                      >
                         {subItem.label}
                       </Link>
                     </li>
                     {subItem.items.map((childItem) => (
-                      <li key={childItem.label}>
+                      <li key={childItem.label} className="">
                         <Link
                           href={childItem.url}
                           onClick={() => {
                             setShowHamburgerMenu(false);
                             setPageLevelLoader(true);
-                          }}>
+                          }}
+                        >
                           {childItem.label}
                         </Link>
                       </li>
@@ -64,7 +68,8 @@ const HamburgerMenu = ({ menuData, setShowHamburgerMenu }) => {
           onClick={() => {
             setShowHamburgerMenu(false);
             setPageLevelLoader(true);
-          }}>
+          }}
+        >
           Contact
         </Link>
       </li>

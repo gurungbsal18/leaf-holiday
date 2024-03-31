@@ -47,3 +47,20 @@
     cursor: pointer;
   }
 }
+
+@media (max-width: 576px) {
+  .mobile-mega-menu {
+    width: 100%;
+    max-height: calc(100vh - 220px);
+    overflow: auto;
+    font-size: 14px;
+    top: 120%;
+    a {
+      color: unset;
+    }
+    &-header {
+      color: $success;
+      background-color: #f8f9fa;
+    }
+  }
+}
