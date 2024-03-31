@@ -108,7 +108,7 @@ export default function ClientNavbar() {
             </Link>
           </div>
         </div>
-        <div className="d-block d-lg-flex justify-content-center gap-4 pb-2 align-items-center position-relative mt-2 main-menu">
+        <div className="d-block d-md-flex justify-content-center gap-4 pb-2 align-items-center position-relative mt-2 main-menu">
           <div className="megamenu-nav">
             <MegaMenu menuData={menuData} />
           </div>
@@ -175,7 +175,7 @@ export default function ClientNavbar() {
               </Link>
             )}
           </div>
-          <div className="d-lg-none position-relative">
+          <div className="d-md-none position-relative">
             <div onClick={() => setShowHamburgerMenu(!showHamburgerMenu)}>
               {showHamburgerMenu ? <CloseIcon /> : <MenuOpenIcon />}
             </div>

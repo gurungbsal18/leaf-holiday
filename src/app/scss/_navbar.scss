@@ -1,39 +1,41 @@
-.menu-header {
-  font-size: 14px;
-  padding: 0.5rem;
-  &:hover {
-    background-color: #f8f9fa;
-    border-radius: 0.375rem;
-    cursor: pointer;
-  }
-  a {
-    color: unset;
-  }
-}
-
-.main-menu {
-  position: relative;
-  ul {
-    list-style: none;
-  }
-}
-
-.mega-menu {
-  max-width: 100%;
-  z-index: 1;
-  top: 80%;
-  a {
-    color: unset;
-  }
-  .mega-menu-items {
-    flex-basis: 33.33%;
+@media (min-width: 576px) {
+  .menu-header {
     font-size: 14px;
-    li {
-      padding: 0.2rem;
-      &:hover {
-        background-color: #f8f9fa;
-        border-radius: 0.375rem;
-        cursor: pointer;
+    padding: 0.5rem;
+    &:hover {
+      background-color: #f8f9fa;
+      border-radius: 0.375rem;
+      cursor: pointer;
+    }
+    a {
+      color: unset;
+    }
+  }
+
+  .main-menu {
+    position: relative;
+    ul {
+      list-style: none;
+    }
+  }
+
+  .mega-menu {
+    max-width: 100%;
+    z-index: 1;
+    top: 80%;
+    a {
+      color: unset;
+    }
+    .mega-menu-items {
+      flex-basis: 33.33%;
+      font-size: 14px;
+      li {
+        padding: 0.2rem;
+        &:hover {
+          background-color: #f8f9fa;
+          border-radius: 0.375rem;
+          cursor: pointer;
+        }
       }
     }
   }
@@ -45,6 +47,17 @@
     background-color: #f8f9fa;
     border-radius: 0.375rem;
     cursor: pointer;
+  }
+}
+
+@media (max-width: 820px) {
+  .main-menu ul {
+    width: 100%;
+
+    list-style: none;
+    a {
+      color: unset;
+    }
   }
 }
 

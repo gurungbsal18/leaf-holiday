@@ -27,7 +27,7 @@ const MegaMenu = ({ menuData }) => {
   });
 
   return (
-    <ul className="d-none d-lg-flex gap-3 flex-wrap m-0 py-3 menu-header-container">
+    <ul className="d-none d-md-flex gap-3 flex-wrap m-0 py-3 menu-header-container">
       {menuData.map((item) => (
         <li
           className="menu-header rounded"
