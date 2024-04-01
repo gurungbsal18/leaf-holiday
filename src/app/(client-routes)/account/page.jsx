@@ -5,23 +5,17 @@ import { useForm } from "react-hook-form";
 import { GlobalContext } from "@/context";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import axios from "@/utils/axios";
 
 export default function UserDetail() {
-  const { user, isAuthUser, pageLevelLoader, setPageLevelLoader } =
-    useContext(GlobalContext);
+  const { user, isAuthUser } = useContext(GlobalContext);
 
   const { register, handleSubmit } = useForm({
     defaultValues: user,
   });
   const router = useRouter();
-  useEffect(() => {
-    setPageLevelLoader(false);
-  }, []);
 
   const submitForm = async (data) => {
-    setPageLevelLoader(true);
     if (!isAuthUser) {
       toast.error("Please Log In to Continue", {
         position: toast.POSITION.TOP_RIGHT,
@@ -41,7 +35,6 @@ export default function UserDetail() {
           toast.error("Something Went Wrong. Please Try Again...", {
             position: toast.POSITION.TOP_RIGHT,
           });
-          setPageLevelLoader(false);
         }
       } catch (e) {
         toast.error(
@@ -51,66 +44,59 @@ export default function UserDetail() {
             position: toast.POSITION.TOP_RIGHT,
           }
         );
-        setPageLevelLoader(false);
       }
     }
   };
   return (
-    <>
-      {pageLevelLoader ? (
-        <PageLevelLoader />
-      ) : (
-        <div className="col-9 px-2 mt-2">
-          <h4>PERSONAL INFORMATION</h4>
-          <div className="mt-5">
-            <form className="d-flex flex-column gap-3">
-              <TextField
-                required
-                size="small"
-                label="Full Name"
-                type="text"
-                variant="outlined"
-                {...register("name")}
-                className="mb-3"
-              />
-              <TextField
-                required
-                size="small"
-                label="Email"
-                type="text"
-                variant="outlined"
-                {...register("email")}
-                className="mb-3"
-              />
-              <TextField
-                required
-                size="small"
-                label="Phone Number"
-                type="text"
-                variant="outlined"
-                {...register("phoneNumber")}
-                className="mb-3"
-              />
-              <TextField
-                required
-                size="small"
-                label="Address"
-                type="text"
-                variant="outlined"
-                {...register("address")}
-                className="mb-3"
-              />
-              <div className="d-flex justify-content-start">
-                <button
-                  onClick={handleSubmit(submitForm)}
-                  className="btn btn-sm btn-success">
-                  UPDATE
-                </button>
-              </div>
-            </form>
+    <div className="col-9 px-2 mt-2">
+      <h4>PERSONAL INFORMATION</h4>
+      <div className="mt-5">
+        <form className="d-flex flex-column gap-3">
+          <TextField
+            required
+            size="small"
+            label="Full Name"
+            type="text"
+            variant="outlined"
+            {...register("name")}
+            className="mb-3"
+          />
+          <TextField
+            required
+            size="small"
+            label="Email"
+            type="text"
+            variant="outlined"
+            {...register("email")}
+            className="mb-3"
+          />
+          <TextField
+            required
+            size="small"
+            label="Phone Number"
+            type="text"
+            variant="outlined"
+            {...register("phoneNumber")}
+            className="mb-3"
+          />
+          <TextField
+            required
+            size="small"
+            label="Address"
+            type="text"
+            variant="outlined"
+            {...register("address")}
+            className="mb-3"
+          />
+          <div className="d-flex justify-content-start">
+            <button
+              onClick={handleSubmit(submitForm)}
+              className="btn btn-sm btn-success">
+              UPDATE
+            </button>
           </div>
-        </div>
-      )}
-    </>
+        </form>
+      </div>
+    </div>
   );
 }
