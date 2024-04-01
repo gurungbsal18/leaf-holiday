@@ -65,10 +65,10 @@ function PackageCard({ packageDetail }) {
       </div>
       {showBadge && (
         <div className="badge-container position-absolute top-0 w-100 left-0 d-flex justify-content-between">
-          {packageDetail.isFeatured && <Badge name="Featured" />}
-          {packageDetail.isGroupTour && <Badge name="Group Tour" />}
-          {packageDetail.isTrending && <Badge name="Trending" />}
-          {packageDetail.isTopSelling && <Badge name="Top Selling" />}
+          {packageDetail.isFeatured && <Badge name="featured" />}
+          {packageDetail.isGroupTour && <Badge name="groupTour" />}
+          {packageDetail.isTrending && <Badge name="trending" />}
+          {packageDetail.isTopSelling && <Badge name="topSelling" />}
         </div>
       )}
     </Link>
