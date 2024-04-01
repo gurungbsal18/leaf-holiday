@@ -10,9 +10,11 @@ import axios from "@/utils/axios";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddHeroImage from "@/components/ui/AddHeroImage";
+import Image from "next/image";
 
 export default function EditHome() {
   const {
+    setUpdateForm,
     callExtractAll,
     setCallExtractAll,
     setPageLevelLoader,
@@ -104,22 +106,24 @@ export default function EditHome() {
               </button>
             </div>
             <div className="d-flex flex-column gap-3 bg-light rounded p-3 mb-4">
-              {/* {homePageData?.tabs?.middle?.map((middleTab) => (
-                <div key={middleTab._id}>
+              {homePageData?.carousels?.map((carousel) => (
+                <div key={carousel._id}>
                   <div className="d-flex justify-content-between align-items-center gap-2 border-bottom pb-2">
-                    <h5>{middleTab.title}</h5>
+                    <h5>{carousel.title}</h5>
+                    <Image
+                      src={carousel.imageUrl}
+                      height={75}
+                      width={75}
+                      alt="carousel-image"
+                    />
+
                     <div className="d-flex gap-2">
                       <button
                         className="btn btn-sm btn-success"
                         onClick={() => {
-                          setHomePageEdit(middleTab);
+                          setUpdateForm(carousel);
                           setDialogOpen(true);
-                          setDialogContent(
-                            <HomePageTab
-                              position={"middle"}
-                              valueDefault={middleTab}
-                            />
-                          );
+                          setDialogContent(<AddHeroImage />);
                         }}>
                         <EditNoteIcon className ms-2 />
                         Edit
@@ -127,23 +131,14 @@ export default function EditHome() {
 
                       <button
                         className="btn btn-sm btn-danger"
-                        onClick={() => handleRemove(middleTab?._id)}>
+                        onClick={() => handleRemove(carousel?._id)}>
                         <DeleteIcon className="ms-2" />
                         Remove
                       </button>
                     </div>
                   </div>
-
-                  <div className="border-bottom">
-                    <ol>
-                      {middleTab &&
-                        middleTab.packages.map((item) => (
-                          <li key={item._id}>{item.name}</li>
-                        ))}
-                    </ol>
-                  </div>
                 </div>
-              ))} */}
+              ))}
             </div>
           </div>
 

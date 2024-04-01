@@ -20,7 +20,7 @@ export default function AddHeroImage() {
   );
 
   const initialData = {
-    name: "",
+    imageName: "",
     imageUrl: "",
   };
 
@@ -60,7 +60,7 @@ export default function AddHeroImage() {
                 label="Name"
                 type="text"
                 variant="outlined"
-                {...register("name")}
+                {...register("imageName")}
               />
 
               <UploadToCloudinary
