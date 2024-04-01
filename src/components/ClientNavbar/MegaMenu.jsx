@@ -13,8 +13,6 @@ const MegaMenu = ({ menuData }) => {
 
   useEffect(() => {
     const handler = (e) => {
-      console.log(e.target);
-      console.log(menuRef);
       if (!menuRef?.current?.contains(e?.target)) {
         setActiveMenu(null);
       }
@@ -32,8 +30,7 @@ const MegaMenu = ({ menuData }) => {
         <li
           className="menu-header rounded"
           key={item.label}
-          onClick={() => handleMenuClick(item.label)}
-        >
+          onClick={() => handleMenuClick(item.label)}>
           {item.label}
           {item.items && activeMenu === item.label && (
             <div
@@ -44,16 +41,14 @@ const MegaMenu = ({ menuData }) => {
                 item.label.toLowerCase() === "activity"
                   ? ""
                   : " flex-column"
-              }`}
-            >
+              }`}>
               {item.items.map((subItem) =>
                 subItem?.items?.length > 0 ? (
                   <ul key={subItem.label} className="mega-menu-items col">
                     <li className="text-success fw-bold">
                       <Link
                         href={subItem.url}
-                        onClick={() => setPageLevelLoader(true)}
-                      >
+                        onClick={() => setPageLevelLoader(true)}>
                         {subItem.label}
                       </Link>
                     </li>
@@ -61,8 +56,7 @@ const MegaMenu = ({ menuData }) => {
                       <li key={childItem.label} className="rounded">
                         <Link
                           href={childItem.url}
-                          onClick={() => setPageLevelLoader(true)}
-                        >
+                          onClick={() => setPageLevelLoader(true)}>
                           {childItem.label}
                         </Link>
                       </li>
@@ -72,8 +66,7 @@ const MegaMenu = ({ menuData }) => {
                   <li key={subItem.label}>
                     <Link
                       href={subItem.url}
-                      onClick={() => setPageLevelLoader(true)}
-                    >
+                      onClick={() => setPageLevelLoader(true)}>
                       {subItem.label}
                     </Link>
                   </li>

@@ -212,7 +212,7 @@ export default function PackageDetail({ packageDetail }) {
         setRelatedPackages(arr.slice(0, 6));
       }
     } catch (e) {
-      console.log(e);
+      
     }
   };
 

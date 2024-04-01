@@ -22,22 +22,10 @@ import ChipInput from "@/components/ui/ChipInput";
 
 export default function CreatePackage() {
   const {
-    componentLevelLoader,
-    setComponentLevelLoader,
     pageLevelLoader,
     setPageLevelLoader,
-    isAdminView,
-    setAdminView,
-    createComponentOpen,
-    setCreateComponentOpen,
     updatePackage,
     setUpdatePackage,
-    callExtractAll,
-    setCallExtractAll,
-    dialogOpen,
-    setDialogOpen,
-    dialogContent,
-    setDialogContent,
   } = useContext(GlobalContext);
   const [mainImage, setMainImage] = useState(
     updatePackage ? updatePackage.mainImageUrl : null
@@ -119,7 +107,15 @@ export default function CreatePackage() {
   const form = useForm({
     defaultValues: newUpdatePackage ? newUpdatePackage : initialFormData,
   });
-  const { register, control, handleSubmit, setValue, watch, reset } = form;
+  const {
+    register,
+    control,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { errors },
+  } = form;
 
   //for price list
   const {
@@ -162,14 +158,14 @@ export default function CreatePackage() {
   });
 
   //for video gallery
-  const {
-    fields: videoGalleryFields,
-    append: videoGalleryAppend,
-    remove: videoGalleryRemove,
-  } = useFieldArray({
-    name: "videoGallery",
-    control,
-  });
+  // const {
+  //   fields: videoGalleryFields,
+  //   append: videoGalleryAppend,
+  //   remove: videoGalleryRemove,
+  // } = useFieldArray({
+  //   name: "videoGallery",
+  //   control,
+  // });
 
   const onSubmit = async (data) => {
     const res = submitPackageForm(
@@ -226,8 +222,7 @@ export default function CreatePackage() {
               <Button
                 size="sm"
                 variant="success"
-                onClick={handleSubmit(onSubmit)}
-              >
+                onClick={handleSubmit(onSubmit)}>
                 {updatePackage ? "Update" : "Publish"}
               </Button>
             </div>
@@ -275,8 +270,7 @@ export default function CreatePackage() {
                       {pricesFields.map((priceField, index) => (
                         <div
                           className="d-flex flex-column flex-md-row gap-3 align-items-center"
-                          key={`prices-${index}`}
-                        >
+                          key={`prices-${index}`}>
                           <TextField
                             className="mx-0"
                             label="No. of People"
@@ -313,17 +307,9 @@ export default function CreatePackage() {
                             <span
                               role="button"
                               className="text-danger"
-                              onClick={() => pricesRemove(index)}
-                            >
+                              onClick={() => pricesRemove(index)}>
                               <RemoveCircleIcon />
                             </span>
-                            // <button
-                            //   size="sm"
-                            //   type="button"
-                            //   onClick={() => pricesRemove(index)}
-                            // >
-                            //   -
-                            // </button>
                           )}
                         </div>
                       ))}
@@ -335,27 +321,13 @@ export default function CreatePackage() {
                             numberOfPeople: "",
                             price: 0,
                           })
-                        }
-                      >
+                        }>
                         <span className="d-flex align-items-center gap-1">
                           <MonetizationOnIcon />
                           Add More Price
                         </span>
                       </Button>
                     </div>
-                    {/* 
-                <TextField
-                  label="Duration"
-                  sx={{ m: 1, width: "25ch" }}
-                  type="number"
-                  size="small"
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="start">Days</InputAdornment>
-                    ),
-                  }}
-                  {...register("duration", { valueAsNumber: true })}
-                /> */}
                   </div>
 
                   <h4 className="dashboard-title">Trip Fact</h4>
@@ -459,8 +431,7 @@ export default function CreatePackage() {
                         <Button
                           variant="success"
                           size="sm"
-                          onClick={() => inclusionsAppend("")}
-                        >
+                          onClick={() => inclusionsAppend("")}>
                           + Add Cost Include
                         </Button>
                       </div>
@@ -469,16 +440,14 @@ export default function CreatePackage() {
                           return (
                             <div
                               key={`inclusion-${index}`}
-                              className="d-flex align-items-center gap-2 mt-2"
-                            >
+                              className="d-flex align-items-center gap-2 mt-2">
                               <input
                                 {...register(`inclusions.${index}`)}
                                 className="form-control"
                               />
                               <span
                                 onClick={() => inclusionsRemove(index)}
-                                className="text-danger"
-                              >
+                                className="text-danger">
                                 <RemoveCircleIcon />
                               </span>
                             </div>
@@ -493,8 +462,7 @@ export default function CreatePackage() {
                         <Button
                           variant="success"
                           size="sm"
-                          onClick={() => exclusionsAppend("")}
-                        >
+                          onClick={() => exclusionsAppend("")}>
                           + Add Cost Exclude
                         </Button>
                       </div>
@@ -503,16 +471,14 @@ export default function CreatePackage() {
                           return (
                             <div
                               key={`exclusion-${index}`}
-                              className="d-flex align-items-center gap-2 mt-2"
-                            >
+                              className="d-flex align-items-center gap-2 mt-2">
                               <input
                                 {...register(`exclusions.${index}`)}
                                 className="form-control"
                               />
                               <span
                                 onClick={() => exclusionsRemove(index)}
-                                className="text-danger"
-                              >
+                                className="text-danger">
                                 <RemoveCircleIcon />
                               </span>
                             </div>
@@ -527,8 +493,7 @@ export default function CreatePackage() {
                         <Button
                           variant="success"
                           size="sm"
-                          onClick={() => highlightsAppend("")}
-                        >
+                          onClick={() => highlightsAppend("")}>
                           + Add Trip Highlights
                         </Button>
                       </div>
@@ -537,8 +502,7 @@ export default function CreatePackage() {
                           return (
                             <div
                               key={`highlight-${index}`}
-                              className="d-flex align-items-center gap-2 mt-2"
-                            >
+                              className="d-flex align-items-center gap-2 mt-2">
                               <input
                                 {...register(`highlights.${index}`)}
                                 className="form-control"
@@ -546,8 +510,7 @@ export default function CreatePackage() {
                               <span
                                 role="button"
                                 className="text-danger"
-                                onClick={() => highlightsRemove(index)}
-                              >
+                                onClick={() => highlightsRemove(index)}>
                                 <RemoveCircleIcon />
                               </span>
                             </div>
@@ -593,7 +556,7 @@ export default function CreatePackage() {
                         id="isTopSelling"
                         {...register("isTopSelling")}
                       />
-                      <label htmlFor="isFeatured">Top Selling</label>
+                      <label htmlFor="isTopSelling">Top Selling</label>
                     </div>
                     <div className="d-flex gap-2">
                       <input
@@ -617,7 +580,7 @@ export default function CreatePackage() {
                         id="isGroupTour"
                         {...register("isGroupTour")}
                       />
-                      <label htmlFor="isTrending">Group Tour</label>
+                      <label htmlFor="isGroupTour">Group Tour</label>
                     </div>
                   </div>
 
@@ -657,20 +620,10 @@ export default function CreatePackage() {
           {updatePackage && (
             <div className="video-gallery border-bottom pb-3 dashboard-video-gallery">
               <div className="form-header d-flex justify-content-between align-items-center bg-light p-3">
-                <h4 className="dashboard-title">Video Gallery Links</h4>
-                <Button
-                  variant="success"
-                  size="sm"
-                  onClick={() => videoGalleryAppend("")}
-                >
-                  <span>
-                    <MovieIcon />
-                  </span>
-                  Add Video Url
-                </Button>
+                <h4 className="dashboard-title">Youtube Video Link</h4>
               </div>
               <div className="form-content">
-                {videoGalleryFields.map((field, index) => {
+                {/* {videoGalleryFields.map((field, index) => {
                   return (
                     <div key={field.key} className="d-flex align-items-center">
                       <input
@@ -680,13 +633,20 @@ export default function CreatePackage() {
                       <span
                         role="button"
                         className="text-danger"
-                        onClick={() => videoGalleryRemove(index)}
-                      >
+                        onClick={() => videoGalleryRemove(index)}>
                         <RemoveCircleIcon />
                       </span>
                     </div>
                   );
-                })}
+                })} */}
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="Video URL"
+                  type="text"
+                  variant="outlined"
+                  {...register("videoGallery.0")}
+                />
               </div>
             </div>
           )}

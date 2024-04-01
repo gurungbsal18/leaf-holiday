@@ -41,7 +41,6 @@ export default function ClientSearch({ searchTerm }) {
       }
       setPageLevelLoader(false);
     } catch (error) {
-      console.log(error);
       setPageLevelLoader(false);
     }
   };
@@ -71,15 +70,13 @@ export default function ClientSearch({ searchTerm }) {
                 <button
                   className="btn btn-sm btn-success"
                   disabled={page < 2}
-                  onClick={() => setPage(page - 1)}
-                >
+                  onClick={() => setPage(page - 1)}>
                   Prev
                 </button>
                 <button
                   className="btn btn-sm btn-success"
                   disabled={page >= maxPage}
-                  onClick={() => setPage(page + 1)}
-                >
+                  onClick={() => setPage(page + 1)}>
                   Next
                 </button>
               </div>

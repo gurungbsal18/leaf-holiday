@@ -9,6 +9,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios from "@/utils/axios";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteIcon from "@mui/icons-material/Delete";
+import AddHeroImage from "@/components/ui/AddHeroImage";
 
 export default function EditHome() {
   const {
@@ -89,6 +90,63 @@ export default function EditHome() {
             </Link>
             <h4 className="title fw-bold">Edit HOME PAGE</h4>
           </div>
+
+          <div className="">
+            <div className="d-flex justify-content-between align-items-center bg-success-subtle p-2 mt-4 mb-2 rounded">
+              <h4 className="title m-0">Home Page Hero Section Images</h4>
+              <button
+                className="btn btn-sm btn-success"
+                onClick={() => {
+                  setDialogOpen(true);
+                  setDialogContent(<AddHeroImage />);
+                }}>
+                Add New Image
+              </button>
+            </div>
+            <div className="d-flex flex-column gap-3 bg-light rounded p-3 mb-4">
+              {/* {homePageData?.tabs?.middle?.map((middleTab) => (
+                <div key={middleTab._id}>
+                  <div className="d-flex justify-content-between align-items-center gap-2 border-bottom pb-2">
+                    <h5>{middleTab.title}</h5>
+                    <div className="d-flex gap-2">
+                      <button
+                        className="btn btn-sm btn-success"
+                        onClick={() => {
+                          setHomePageEdit(middleTab);
+                          setDialogOpen(true);
+                          setDialogContent(
+                            <HomePageTab
+                              position={"middle"}
+                              valueDefault={middleTab}
+                            />
+                          );
+                        }}>
+                        <EditNoteIcon className ms-2 />
+                        Edit
+                      </button>
+
+                      <button
+                        className="btn btn-sm btn-danger"
+                        onClick={() => handleRemove(middleTab?._id)}>
+                        <DeleteIcon className="ms-2" />
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="border-bottom">
+                    <ol>
+                      {middleTab &&
+                        middleTab.packages.map((item) => (
+                          <li key={item._id}>{item.name}</li>
+                        ))}
+                    </ol>
+                  </div>
+                </div>
+              ))} */}
+            </div>
+          </div>
+
           <div>
             <div>
               <div className="bg-success-subtle p-2 rounded">
@@ -98,8 +156,7 @@ export default function EditHome() {
                     onClick={() => {
                       setDialogOpen(true);
                       setDialogContent(<HomePageTab position={"top"} />);
-                    }}
-                  >
+                    }}>
                     Add New Tab
                   </button>
                 )}
@@ -120,8 +177,7 @@ export default function EditHome() {
                               valueDefault={homePageData?.tabs?.top[0]}
                             />
                           );
-                        }}
-                      >
+                        }}>
                         <EditNoteIcon className ms-2 />
                         Edit
                       </button>
@@ -129,8 +185,7 @@ export default function EditHome() {
                         className="btn btn-md btn-danger"
                         onClick={() =>
                           handleRemove(homePageData?.tabs?.top[0]?._id)
-                        }
-                      >
+                        }>
                         <DeleteIcon className="ms-2" />
                         Remove
                       </button>
@@ -160,8 +215,7 @@ export default function EditHome() {
                 onClick={() => {
                   setDialogOpen(true);
                   setDialogContent(<HomePageTab position={"middle"} />);
-                }}
-              >
+                }}>
                 Add New Tab
               </button>
             </div>
@@ -182,16 +236,14 @@ export default function EditHome() {
                               valueDefault={middleTab}
                             />
                           );
-                        }}
-                      >
+                        }}>
                         <EditNoteIcon className ms-2 />
                         Edit
                       </button>
 
                       <button
                         className="btn btn-sm btn-danger"
-                        onClick={() => handleRemove(middleTab?._id)}
-                      >
+                        onClick={() => handleRemove(middleTab?._id)}>
                         <DeleteIcon className="ms-2" />
                         Remove
                       </button>
@@ -223,8 +275,7 @@ export default function EditHome() {
                       setDialogContent(
                         <HomePageTab position={"bottom"} url={true} />
                       );
-                    }}
-                  >
+                    }}>
                     Add New Tab
                   </button>
                 )}
@@ -247,8 +298,7 @@ export default function EditHome() {
                                 url={true}
                               />
                             );
-                          }}
-                        >
+                          }}>
                           <EditNoteIcon className="ms-2" />
                           Edit
                         </button>
@@ -256,8 +306,7 @@ export default function EditHome() {
                           className="btn btn-sm btn-danger"
                           onClick={() =>
                             handleRemove(homePageData?.tabs?.bottom[0]?._id)
-                          }
-                        >
+                          }>
                           <DeleteIcon className="ms-2" />
                           Remove
                         </button>

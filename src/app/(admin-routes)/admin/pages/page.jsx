@@ -16,9 +16,7 @@ export default function Pages() {
         <div className="dashboard-content-section p-4">
           <h4>Pages</h4>
           <div>
-            <div>
-              <p>Page Name</p>
-            </div>
+            <div></div>
             <div className="d-flex justify-content-between border-bottom py-2">
               <p>Home</p>
               <div className="d-flex gap-2">

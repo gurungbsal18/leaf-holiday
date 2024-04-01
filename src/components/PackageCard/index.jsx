@@ -4,24 +4,28 @@ import Rating from "@mui/material/Rating";
 import Image from "next/image";
 import FmdGoodOutlinedIcon from "@mui/icons-material/FmdGoodOutlined";
 import { averageReview } from "@/utils/functions";
-import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { GlobalContext } from "@/context";
 import Link from "next/link";
+import Badge from "../ui/Badge";
 
 function PackageCard({ packageDetail }) {
   const { setPageLevelLoader } = useContext(GlobalContext);
-  const router = useRouter();
-  packageDetail;
+
+  const showBadge =
+    packageDetail.isFeatured ||
+    packageDetail.isGroupTour ||
+    packageDetail.isTopSelling ||
+    packageDetail.isTrending;
+
   return (
     <Link
       href={`/package/${packageDetail?.slug}`}
-      className="col-12 col-md-4 py-3"
+      className="position-relative col-12 col-md-4 py-3"
       onClick={() => {
         setPageLevelLoader(true);
         // router.push(`/package/${packageDetail?.slug}`);
-      }}
-    >
+      }}>
       <div className="trip-card border">
         <Image
           src={packageDetail?.mainImageUrl}
@@ -59,6 +63,14 @@ function PackageCard({ packageDetail }) {
           </div>
         </div>
       </div>
+      {showBadge && (
+        <div className="badge-container position-absolute top-0 w-100 left-0 d-flex justify-content-between">
+          {packageDetail.isFeatured && <Badge name="Featured" />}
+          {packageDetail.isGroupTour && <Badge name="Group Tour" />}
+          {packageDetail.isTrending && <Badge name="Trending" />}
+          {packageDetail.isTopSelling && <Badge name="Top Selling" />}
+        </div>
+      )}
     </Link>
   );
 }

@@ -46,7 +46,6 @@ export default function ClientAccountNavbar() {
     },
   ];
 
-  console.log(pathName);
   return (
     <div className="d-flex flex-column bg-success-subtle col p-4 vh-100 gap-4">
       {mapHelper.map((item) => (

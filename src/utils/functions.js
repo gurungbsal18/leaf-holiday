@@ -45,7 +45,6 @@ export const submitForm = async (
           }))
         : (res = await axios.put(`/${apiName}/update/${data._id}`, data))
       : (res = await axios.post(`/${apiName}/add`, data));
-    console.log(res);
 
     if (res.status === 200) {
       toast.success(res.data.message, {
@@ -62,7 +61,6 @@ export const submitForm = async (
       return res;
     }
   } catch (e) {
-    console.log(e);
     toast.error(
       e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
       {
@@ -83,7 +81,6 @@ export const submitPackageForm = async (
     updatePackage
       ? (res = await axios.put(`/package/update/${updatePackage._id}`, data))
       : (res = await axios.post(`/package/add`, data));
-    console.log(res);
 
     if (res.status === 200) {
       toast.success(res.data.message, {
@@ -99,9 +96,12 @@ export const submitPackageForm = async (
       });
     }
   } catch (e) {
-    toast.error(e.response.statusText, {
-      position: toast.POSITION.TOP_RIGHT,
-    });
+    toast.error(
+      e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
+      {
+        position: toast.POSITION.TOP_RIGHT,
+      }
+    );
   }
 };
 
