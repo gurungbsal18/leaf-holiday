@@ -34,3 +34,16 @@
       rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
   }
 }
+.badge-container {
+  z-index: 1;
+  .group-tour-badge {
+    position: absolute;
+    top: 30px;
+    left: 26px;
+  }
+  .badge-group {
+    position: absolute;
+    top: 30px;
+    right: 26px;
+  }
+}

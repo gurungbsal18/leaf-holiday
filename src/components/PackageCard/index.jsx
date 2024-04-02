@@ -25,7 +25,8 @@ function PackageCard({ packageDetail }) {
       onClick={() => {
         setPageLevelLoader(true);
         // router.push(`/package/${packageDetail?.slug}`);
-      }}>
+      }}
+    >
       <div className="trip-card border">
         <Image
           src={packageDetail?.mainImageUrl}
@@ -64,7 +65,7 @@ function PackageCard({ packageDetail }) {
         </div>
       </div>
       {showBadge && (
-        <div className="badge-container position-absolute top-0 w-100 left-0 d-flex justify-content-between">
+        <div className="badge-container w-100 d-flex justify-content-between">
           {packageDetail.isFeatured && <Badge name="featured" />}
           {packageDetail.isGroupTour && <Badge name="groupTour" />}
           {packageDetail.isTrending && <Badge name="trending" />}
