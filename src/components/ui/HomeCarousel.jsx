@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
 export default function HomeCarousel({ carouselData }) {
@@ -23,7 +23,7 @@ export default function HomeCarousel({ carouselData }) {
   useEffect(() => {
     const interval = setInterval(() => {
       setCarouselIndex((prevIndex) => (prevIndex + 1) % carouselData?.length);
-    }, 3000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
@@ -33,8 +33,8 @@ export default function HomeCarousel({ carouselData }) {
       <div className="carousel-content position-relative ">
         <Image
           src={carouselData[carouselIndex].imageUrl}
-          width={1500}
-          height={500}
+          width={1519}
+          height={520}
           alt="hero-image"
         />
         <h1 className="position-absolute bottom-0 mx-auto">

@@ -25,10 +25,10 @@ export default function EditHome() {
   } = useContext(GlobalContext);
   const [homePageData, setHomePageData] = useState(null);
 
-  const handleRemove = async (id) => {
+  const handleRemove = async (id, apiName) => {
     setPageLevelLoader(true);
     try {
-      const res = await axios.delete(`/tabs/delete/${id}`);
+      const res = await axios.delete(`/${apiName}/delete/${id}`);
       res;
       if (res.status === 200) {
         setCallExtractAll(!callExtractAll);
@@ -109,7 +109,7 @@ export default function EditHome() {
               {homePageData?.carousels?.map((carousel) => (
                 <div key={carousel._id}>
                   <div className="d-flex justify-content-between align-items-center gap-2 border-bottom pb-2">
-                    <h5>{carousel.title}</h5>
+                    <h5>{carousel.imageName}</h5>
                     <Image
                       src={carousel.imageUrl}
                       height={75}
@@ -131,7 +131,7 @@ export default function EditHome() {
 
                       <button
                         className="btn btn-sm btn-danger"
-                        onClick={() => handleRemove(carousel?._id)}>
+                        onClick={() => handleRemove(carousel?._id, "carousel")}>
                         <DeleteIcon className="ms-2" />
                         Remove
                       </button>
@@ -179,7 +179,7 @@ export default function EditHome() {
                       <button
                         className="btn btn-md btn-danger"
                         onClick={() =>
-                          handleRemove(homePageData?.tabs?.top[0]?._id)
+                          handleRemove(homePageData?.tabs?.top[0]?._id, "tabs")
                         }>
                         <DeleteIcon className="ms-2" />
                         Remove
@@ -238,7 +238,7 @@ export default function EditHome() {
 
                       <button
                         className="btn btn-sm btn-danger"
-                        onClick={() => handleRemove(middleTab?._id)}>
+                        onClick={() => handleRemove(middleTab?._id, "tabs")}>
                         <DeleteIcon className="ms-2" />
                         Remove
                       </button>
@@ -300,7 +300,10 @@ export default function EditHome() {
                         <button
                           className="btn btn-sm btn-danger"
                           onClick={() =>
-                            handleRemove(homePageData?.tabs?.bottom[0]?._id)
+                            handleRemove(
+                              homePageData?.tabs?.bottom[0]?._id,
+                              "tabs"
+                            )
                           }>
                           <DeleteIcon className="ms-2" />
                           Remove

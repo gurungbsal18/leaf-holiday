@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import axios from "@/utils/axios";
 import { useRouter } from "next/navigation";
 import SmallPackageCard from "@/components/SmallPackageCard";
+import HomeCarousel from "@/components/ui/HomeCarousel";
 
 export default function Home() {
   const { callExtractAll, setPageLevelLoader, pageLevelLoader } =
@@ -72,7 +73,8 @@ export default function Home() {
           <>
             <div className="hero-section">
               <div className="d-flex justify-content-center align-items-center">
-                <h1>Kailash Mansarovar Yatra</h1>
+                {/* <h1>Kailash Mansarovar Yatra</h1> */}
+                <HomeCarousel carouselData={homePageData.carousels} />
               </div>
             </div>
             <div className="hero-search-bar d-flex jusitify-content-center mx-auto">
