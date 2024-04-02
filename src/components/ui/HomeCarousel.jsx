@@ -37,12 +37,16 @@ export default function HomeCarousel({ carouselData }) {
           height={520}
           alt="hero-image"
         />
-        <h1 className="position-absolute bottom-0 mx-auto">
+        <h1 className="position-absolute bottom-5 mx-auto w-100">
           {carouselData[carouselIndex].imageName}
         </h1>
       </div>
-      <button onClick={handlePrev}>{"<"}</button>
-      <button onClick={handleNext}>{">"}</button>
+      <button onClick={handlePrev} className="d-none">
+        {"<"}
+      </button>
+      <button onClick={handleNext} className="d-none">
+        {">"}
+      </button>
     </div>
   );
 }
