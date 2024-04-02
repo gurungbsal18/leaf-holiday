@@ -23,7 +23,7 @@ export default function HomeCarousel({ carouselData }) {
   useEffect(() => {
     const interval = setInterval(() => {
       setCarouselIndex((prevIndex) => (prevIndex + 1) % carouselData?.length);
-    }, 5000);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, []);
