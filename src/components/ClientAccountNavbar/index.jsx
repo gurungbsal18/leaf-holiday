@@ -47,7 +47,7 @@ export default function ClientAccountNavbar() {
   ];
 
   return (
-    <div className="d-flex flex-column bg-success-subtle col p-4 vh-100 gap-4">
+    <div className="col-3 d-flex flex-column bg-success-subtle col p-4 vh-100 gap-4">
       {mapHelper.map((item) => (
         <div
           className="d-flex justify-content-between align-items-center user-account-dashboard-item"
@@ -55,11 +55,13 @@ export default function ClientAccountNavbar() {
           onClick={() => {
             setPageLevelLoader(true);
             router.push(item.path);
-          }}>
+          }}
+        >
           <div
             className={`d-flex gap-2 align-items-center ${
               pathName === item.path ? "text-success" : ""
-            }`}>
+            }`}
+          >
             {item.icon}
             <p className="m-0">{item.label}</p>
           </div>
@@ -67,10 +69,11 @@ export default function ClientAccountNavbar() {
         </div>
       ))}
       <div
-        className="d-flex gap-2 border-top pt-3 logout-btn"
-        onClick={handleLogout}>
-        <LogoutIcon className="text-danger" />
-        <p className="m-0 text-danger">Log Out</p>
+        className="d-flex gap-2 border-top logout-btn bg-success align-items-center p-2 rounded"
+        onClick={handleLogout}
+      >
+        <LogoutIcon className="text-light" />
+        <p className="m-0 text-light">Log Out</p>
       </div>
     </div>
   );
