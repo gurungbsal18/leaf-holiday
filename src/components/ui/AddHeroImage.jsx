@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import { GlobalContext } from "@/context";
 import { submitForm } from "@/utils/functions";
 import UploadToCloudinary from "@/components/ui/UploadToCloudinary";
+import { toast } from "react-toastify";
+import axios from "@/utils/axios";
 
 export default function AddHeroImage() {
   const {
@@ -20,7 +22,7 @@ export default function AddHeroImage() {
   );
 
   const initialData = {
-    name: "",
+    imageName: "",
     imageUrl: "",
   };
 
@@ -30,12 +32,32 @@ export default function AddHeroImage() {
   const { register, handleSubmit, setValue } = form;
 
   const onSubmit = async (data) => {
-    // const res = await submitForm(data, "activity", updateForm);
+    try {
+      let res = {};
+      updateForm
+        ? (res = await axios.put(`/carousel/update/${data._id}`, data))
+        : (res = await axios.post("/carousel/addCarousel", data));
 
-    // setCallExtractAll(!callExtractAll);
-    // setUpdateForm(null);
-    // setDialogOpen(false);
-    console.log(data);
+      if (res.status === 200) {
+        toast.success(res.data.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setCallExtractAll(!callExtractAll);
+        setDialogOpen(false);
+        setUpdateForm(null);
+      } else {
+        toast.error(res.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+    } catch (e) {
+      toast.error(
+        e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
+        {
+          position: toast.POSITION.TOP_RIGHT,
+        }
+      );
+    }
   };
 
   return (
@@ -60,7 +82,7 @@ export default function AddHeroImage() {
                 label="Name"
                 type="text"
                 variant="outlined"
-                {...register("name")}
+                {...register("imageName")}
               />
 
               <UploadToCloudinary

@@ -15,22 +15,16 @@ import { toast } from "react-toastify";
 import axios from "@/utils/axios";
 import { useRouter } from "next/navigation";
 import SmallPackageCard from "@/components/SmallPackageCard";
+import HomeCarousel from "@/components/ui/HomeCarousel";
 
 export default function Home() {
-  const {
-    callExtractAll,
-    setCallExtractAll,
-    setPageLevelLoader,
-    pageLevelLoader,
-    homePageEdit,
-    setHomePageEdit,
-    setDialogOpen,
-    dialogContent,
-    setDialogContent,
-  } = useContext(GlobalContext);
+  const { callExtractAll, setPageLevelLoader, pageLevelLoader } =
+    useContext(GlobalContext);
   const [homePageData, setHomePageData] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
+
+  console.log(homePageData);
 
   const getHomePageDetail = async () => {
     setPageLevelLoader(true);
@@ -79,7 +73,8 @@ export default function Home() {
           <>
             <div className="hero-section">
               <div className="d-flex justify-content-center align-items-center">
-                <h1>Kailash Mansarovar Yatra</h1>
+                {/* <h1>Kailash Mansarovar Yatra</h1> */}
+                <HomeCarousel carouselData={homePageData.carousels} />
               </div>
             </div>
             <div className="hero-search-bar d-flex jusitify-content-center mx-auto">
@@ -96,8 +91,7 @@ export default function Home() {
                 onClick={() => {
                   setPageLevelLoader(true);
                   router.push(`/search?searchTerm=${searchTerm}`);
-                }}
-              >
+                }}>
                 <SearchOutlinedIcon />
                 Search
               </button>
@@ -143,8 +137,7 @@ export default function Home() {
                             homePageData?.tabs?.bottom[0]?.videoUrl
                           )}
                           title="YouTube video player"
-                          allowFullScreen
-                        ></iframe>
+                          allowFullScreen></iframe>
                       )}
                     </div>
                     <div className="col-12 col-lg-6">
