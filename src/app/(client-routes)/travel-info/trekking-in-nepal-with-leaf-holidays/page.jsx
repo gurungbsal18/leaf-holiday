@@ -6,7 +6,7 @@ const page = () => {
       <div className="common-banner"></div>
       <div className="container my-5">
         <h1 className="title fw-bold">Trekking In Nepal With Leaf Holidays</h1>
-        <p className="text-jusitfy">
+        <p className="text-justify">
           Explore the world through travel. A right decision of travelling lives
           the wonderful experiences for your lifetime. Nepal is a country rich
           in natural and cultural biodiversity well known for hospitality. Nepal
