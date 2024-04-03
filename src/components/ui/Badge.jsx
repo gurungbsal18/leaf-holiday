@@ -10,12 +10,12 @@ export default function Badge({ name }) {
       {name === "groupTour" && (
         <div className="badge text-bg-success group-tour-badge d-flex align-items-center">
           <GroupsSharpIcon className="me-1" />
-          Group Tour
+          Group Discount
         </div>
       )}
       <div className="d-flex badge-group gap-2">
         {name === "featured" && (
-          <div className="badge text-bg-info feature-badge d-flex align-items-center">
+          <div className="badge text-bg-primary feature-badge d-flex align-items-center">
             <StarsSharpIcon className="me-1" />
             Featured
           </div>
