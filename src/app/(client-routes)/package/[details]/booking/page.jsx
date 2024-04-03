@@ -226,8 +226,9 @@ export default function Booking() {
                     id="payNowBtn"
                     className="btn btn-success"
                     type="submit"
-                    onClick={handleSubmit(onSubmit)}>
-                    Book and Pay Now
+                    onClick={handleSubmit(onSubmit)}
+                  >
+                    Proceed To Payment
                   </button>
                 </div>
               </form>
