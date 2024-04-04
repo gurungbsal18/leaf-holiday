@@ -38,6 +38,7 @@ export default function AboutUsPage({ aboutUsData }) {
     <div>
       <div className="common-banner">
         <Image
+          priority
           src={aboutUsData.imageUrl}
           width={1024}
           height={500}

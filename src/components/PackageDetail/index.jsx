@@ -211,9 +211,7 @@ export default function PackageDetail({ packageDetail }) {
         const arr = allPackages.filter((obj) => obj._id !== packageDetail._id);
         setRelatedPackages(arr.slice(0, 6));
       }
-    } catch (e) {
-      
-    }
+    } catch (e) {}
   };
 
   useEffect(() => {
@@ -255,8 +253,7 @@ export default function PackageDetail({ packageDetail }) {
                 : "single-trip-nav"
             }
           `}
-          style={stickyNavBarStyle}
-        >
+          style={stickyNavBarStyle}>
           {packageNavItems.map((item) => (
             <a key={item.id} href={item.path}>
               <span className="text-muted fs-12">{item.icon}</span> {item.label}
@@ -319,8 +316,7 @@ export default function PackageDetail({ packageDetail }) {
                   }`}
                   dangerouslySetInnerHTML={{
                     __html: packageDetail?.overview,
-                  }}
-                ></div>
+                  }}></div>
                 <Button size="sm" variant="success" onClick={readMoreBtn}>
                   {contentExpand ? "Read Less" : "Read More"}
                 </Button>
@@ -337,8 +333,7 @@ export default function PackageDetail({ packageDetail }) {
                     <Button
                       variant="success"
                       size="sm"
-                      onClick={handleExpandCollapse}
-                    >
+                      onClick={handleExpandCollapse}>
                       {expandOrCollapse ? "Collapse All -" : "Expand All +"}
                     </Button>
                   </div>
@@ -348,8 +343,7 @@ export default function PackageDetail({ packageDetail }) {
                         <div
                           className="d-flex justify-content-between align-items-center bg-light p-2"
                           onClick={() => handleToggle(item._id)}
-                          style={{ cursor: "pointer" }}
-                        >
+                          style={{ cursor: "pointer" }}>
                           {showItineraryDetails[item._id]}
                           <span className="d-flex align-items-center gap-2">
                             <span className="text-success">
@@ -363,8 +357,7 @@ export default function PackageDetail({ packageDetail }) {
                           <Button
                             variant="success"
                             size="sm"
-                            className="itinerary-expand-btn"
-                          >
+                            className="itinerary-expand-btn">
                             {showItineraryDetails[item._id] ? "-" : "+"}
                           </Button>
                         </div>
@@ -373,8 +366,7 @@ export default function PackageDetail({ packageDetail }) {
                             showItineraryDetails[item._id]
                               ? "detail-itinerary"
                               : "d-none "
-                          }`}
-                        >
+                          }`}>
                           {item?.imageUrl && (
                             <div className="itinerary-img">
                               <Image
@@ -388,8 +380,7 @@ export default function PackageDetail({ packageDetail }) {
                           <div
                             dangerouslySetInnerHTML={{
                               __html: item.content,
-                            }}
-                          ></div>
+                            }}></div>
                           <div className="d-flex justify-content-between itinerary-fact">
                             {item.maxAltitude && item.maxAltitude !== 0 && (
                               <div className="d-flex align-items-center gap-1">
@@ -434,8 +425,7 @@ export default function PackageDetail({ packageDetail }) {
                     onClick={() => {
                       setShowConstInclude(true);
                       setActiveCost(true);
-                    }}
-                  >
+                    }}>
                     <span className="me-1">
                       <CheckCircleOutlineIcon fontSize="small" />
                     </span>
@@ -451,8 +441,7 @@ export default function PackageDetail({ packageDetail }) {
                     onClick={() => {
                       setShowConstInclude(false);
                       setActiveCost(false);
-                    }}
-                  >
+                    }}>
                     <span className="me-1">
                       <CancelIcon fontSize="small" />
                     </span>
@@ -555,8 +544,7 @@ export default function PackageDetail({ packageDetail }) {
                                 router.push(
                                   `/package/${packageDetail.slug}/booking`
                                 );
-                              }}
-                            >
+                              }}>
                               Book Now
                             </button>
                           </td>
@@ -572,8 +560,7 @@ export default function PackageDetail({ packageDetail }) {
               className="extra-contents text-justify pt-4"
               dangerouslySetInnerHTML={{
                 __html: packageDetail?.content,
-              }}
-            ></div>
+              }}></div>
             {packageDetail?.gallery &&
               packageDetail?.gallery.length !== 0 &&
               packageDetail?.gallery[0].images.length !== 0 && (
@@ -588,8 +575,7 @@ export default function PackageDetail({ packageDetail }) {
                         Carousel: {
                           infinite: false,
                         },
-                      }}
-                    >
+                      }}>
                       {packageDetail?.gallery[0].images.map((item) => (
                         <a data-fancybox="gallery" href={item} key={item}>
                           <div className="itinerary-img-container">
@@ -608,7 +594,8 @@ export default function PackageDetail({ packageDetail }) {
                 </div>
               )}
             {packageDetail?.videoGallery &&
-              packageDetail?.videoGallery.length !== 0 && (
+              packageDetail?.videoGallery.length !== 0 &&
+              packageDetail?.videoGallery[0] !== "" && (
                 <div>
                   <h4 className="title mt-5">
                     <CollectionsIcon />
@@ -623,8 +610,7 @@ export default function PackageDetail({ packageDetail }) {
                         height="500"
                         src={getEmbeddedYouTubeUrl(item)}
                         title="YouTube video player"
-                        allowFullScreen
-                      ></iframe>
+                        allowFullScreen></iframe>
                     ))}
                   </div>
                 </div>
@@ -644,16 +630,14 @@ export default function PackageDetail({ packageDetail }) {
                           variant="success"
                           size="sm"
                           className="itinerary-expand-btn"
-                          onClick={() => handleFaqToggle(item._id)}
-                        >
+                          onClick={() => handleFaqToggle(item._id)}>
                           {showAnswer[item._id] ? "-" : "+"}
                         </Button>
                       </div>
                       <p
                         className={`text-muted ${
                           showAnswer[item._id] ? "" : "d-none"
-                        }`}
-                      >
+                        }`}>
                         {item.answer}
                       </p>
                     </li>
@@ -673,8 +657,7 @@ export default function PackageDetail({ packageDetail }) {
                     onClick={() => {
                       setDialogOpen(true);
                       setDialogContent(<CreateTestimonial />);
-                    }}
-                  >
+                    }}>
                     Add a Review
                   </button>
                 </div>
