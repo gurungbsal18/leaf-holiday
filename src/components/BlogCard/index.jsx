@@ -8,7 +8,7 @@ export default function BlogCard({ blogDetail }) {
   const router = useRouter();
   return (
     <div
-      className="col-12 col-lg-4 border pb-3"
+      className="col-12 col-lg-4 border"
       onClick={() => {
         setPageLevelLoader(true);
         router.push(`/blog/${blogDetail?.slug}`);
