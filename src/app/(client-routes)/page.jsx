@@ -77,8 +77,10 @@ export default function Home() {
           <>
             <div className="hero-section">
               <div className="d-flex justify-content-center align-items-center">
-                {/* <h1>Kailash Mansarovar Yatra</h1> */}
-                <HomeCarousel carouselData={homePageData.carousels} />
+                {homePageData?.carousels &&
+                  homePageData?.carousels?.length > 0 && (
+                    <HomeCarousel carouselData={homePageData.carousels} />
+                  )}
               </div>
             </div>
             <div className="hero-search-bar d-flex jusitify-content-center mx-auto">
