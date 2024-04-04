@@ -7,12 +7,12 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { toast } from "react-toastify";
 import { GlobalContext } from "@/context";
 import Cookies from "js-cookie";
+import Link from "next/link";
 
 export default function ClientAccountNavbar() {
   const pathName = usePathname();
   const router = useRouter();
-  const { setUser, setIsAuthUser, setPageLevelLoader } =
-    useContext(GlobalContext);
+  const { setUser, setIsAuthUser } = useContext(GlobalContext);
   function handleLogout() {
     toast.success("Logged Out Successfully", {
       position: toast.POSITION.TOP_RIGHT,
@@ -49,29 +49,22 @@ export default function ClientAccountNavbar() {
   return (
     <div className="col-3 d-flex flex-column bg-success-subtle col p-4 vh-100 gap-4">
       {mapHelper.map((item) => (
-        <div
-          className="d-flex justify-content-between align-items-center user-account-dashboard-item"
+        <Link
+          className={`d-flex justify-content-between align-items-center user-account-dashboard-item ${
+            pathName === item.path ? "text-success" : "text-dark"
+          }`}
           key={item.id}
-          onClick={() => {
-            setPageLevelLoader(true);
-            router.push(item.path);
-          }}
-        >
-          <div
-            className={`d-flex gap-2 align-items-center ${
-              pathName === item.path ? "text-success" : ""
-            }`}
-          >
+          href={item.path}>
+          <div className="d-flex gap-2 align-items-center">
             {item.icon}
             <p className="m-0">{item.label}</p>
           </div>
           <MdArrowForwardIos />
-        </div>
+        </Link>
       ))}
       <div
         className="d-flex gap-2 border-top logout-btn bg-success align-items-center p-2 rounded"
-        onClick={handleLogout}
-      >
+        onClick={handleLogout}>
         <LogoutIcon className="text-light" />
         <p className="m-0 text-light">Log Out</p>
       </div>
