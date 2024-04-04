@@ -56,7 +56,6 @@ export default function EditHome() {
     try {
       const res = await axios.get(`/homepage/`);
       if (res.status === 200) {
-        setPageLevelLoader(false);
         setHomePageData(res.data);
       } else {
         toast.error(
@@ -66,6 +65,7 @@ export default function EditHome() {
           }
         );
       }
+      setPageLevelLoader(false);
     } catch (e) {
       toast.error(
         e?.response?.data?.error ||
@@ -77,8 +77,14 @@ export default function EditHome() {
   };
 
   useEffect(() => {
-    getHomePageDetail();
-  }, [callExtractAll]);
+    if (pageLevelLoader) {
+      if (!homePageData) {
+        getHomePageDetail();
+      } else {
+        setPageLevelLoader(false);
+      }
+    }
+  }, [callExtractAll, pageLevelLoader]);
 
   return (
     <div className="dashboard-content-section p-4">

@@ -24,8 +24,6 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
 
-  console.log(homePageData);
-
   const getHomePageDetail = async () => {
     setPageLevelLoader(true);
     try {
@@ -61,8 +59,14 @@ export default function Home() {
   };
 
   useEffect(() => {
-    getHomePageDetail();
-  }, [callExtractAll]);
+    if (pageLevelLoader) {
+      if (!homePageData) {
+        getHomePageDetail();
+      } else {
+        setPageLevelLoader(false);
+      }
+    }
+  }, [callExtractAll, pageLevelLoader]);
 
   return (
     <>
@@ -91,8 +95,7 @@ export default function Home() {
                 onClick={() => {
                   setPageLevelLoader(true);
                   router.push(`/search?searchTerm=${searchTerm}`);
-                }}
-              >
+                }}>
                 <SearchOutlinedIcon />
                 Search
               </button>
@@ -138,8 +141,7 @@ export default function Home() {
                             homePageData?.tabs?.bottom[0]?.videoUrl
                           )}
                           title="YouTube video player"
-                          allowFullScreen
-                        ></iframe>
+                          allowFullScreen></iframe>
                       )}
                     </div>
                     <div className="col-12 col-lg-6">
