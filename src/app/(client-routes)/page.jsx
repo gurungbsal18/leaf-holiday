@@ -97,7 +97,8 @@ export default function Home() {
                 onClick={() => {
                   setPageLevelLoader(true);
                   router.push(`/search?searchTerm=${searchTerm}`);
-                }}>
+                }}
+              >
                 <SearchOutlinedIcon />
                 Search
               </button>
@@ -143,7 +144,8 @@ export default function Home() {
                             homePageData?.tabs?.bottom[0]?.videoUrl
                           )}
                           title="YouTube video player"
-                          allowFullScreen></iframe>
+                          allowFullScreen
+                        ></iframe>
                       )}
                     </div>
                     <div className="col-12 col-lg-6">
@@ -176,9 +178,9 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="d-flex justify-content-center">
+                {/* <div className="d-flex justify-content-center">
                   <button className="btn btn-success">View all</button>
-                </div>
+                </div> */}
               </div>
             )}
 
