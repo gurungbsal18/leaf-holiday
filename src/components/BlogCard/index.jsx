@@ -12,7 +12,8 @@ export default function BlogCard({ blogDetail }) {
       onClick={() => {
         setPageLevelLoader(true);
         router.push(`/blog/${blogDetail?.slug}`);
-      }}>
+      }}
+    >
       <Image
         src={blogDetail?.imageUrl}
         width={800}
@@ -23,7 +24,8 @@ export default function BlogCard({ blogDetail }) {
         <h4 className="my-4 title">{blogDetail?.title}</h4>
         <div
           dangerouslySetInnerHTML={{ __html: blogDetail?.content }}
-          className="blog-card-content"></div>
+          className="blog-card-content d-none"
+        ></div>
       </div>
     </div>
   );
