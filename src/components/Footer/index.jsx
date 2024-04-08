@@ -11,6 +11,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "@/utils/axios";
+import Link from "next/link";
 
 export default function Footer() {
   const date = new Date();
@@ -85,9 +86,12 @@ export default function Footer() {
           />
         </div>
       </div>
-      <div className="d-flex justify-content-between mt-5">
-        <p className="m-0 fs-12">© Leaf Holiday {year}</p>
-        <div className="footer-social d-flex gap-2">
+      <div className="row justify-content-between mt-5">
+        <p className="m-0 fs-12 col-3">© Leaf Holiday {year}.</p>
+        <p className="m-0 col-3 text-center">
+          <Link href="https://itsansaar.com.np" target="_blank">Develop By: IT Sansaar</Link>
+        </p>
+        <div className="footer-social d-flex gap-2 col-3 justify-content-end">
           <a
             href={leafData?.facebook || "#"}
             target="_blank"
