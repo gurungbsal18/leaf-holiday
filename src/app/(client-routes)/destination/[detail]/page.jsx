@@ -27,7 +27,7 @@ export default async function DestinationDetail({ params }) {
           <h4 className="title fw-bold">{destinationData?.name}</h4>
           <p>{destinationData?.description}</p>
         </div>
-        <div className="d-flex">
+        <div className="row">
           {destinationData?.regions?.map(
             (item, index) =>
               index < destinationData.regions.length && (
