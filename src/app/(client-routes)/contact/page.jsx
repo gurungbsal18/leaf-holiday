@@ -44,8 +44,8 @@ const Contact = () => {
   return (
     <div>
       <div className="container">
-        <div className="d-flex gap-4 my-5">
-          <div className="col-8" style={style}>
+        <div className="d-flex flex-column-reverse flex-md-row gap-4 my-5">
+          <div className="col-12 col-md-6 col-lg-8" style={style}>
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14128.038188747307!2d85.3117133!3d27.7169915!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb18fd00b70801%3A0x297e28fb9d576b66!2sLeaf%20Holidays%20Treks%20and%20Expedition!5e0!3m2!1sen!2snp!4v1707747198892!5m2!1sen!2snp"
               width="600"
@@ -55,7 +55,7 @@ const Contact = () => {
               referrerPolicy="no-referrer-when-downgrade"
               className="w-100"></iframe>
           </div>
-          <div className="col-4">
+          <div className="col-12 col-md-6 col-lg-4">
             <h4 className="title">Contact us</h4>
             <form className="d-flex gap-3 flex-column">
               <span>
@@ -112,18 +112,18 @@ const Contact = () => {
         </div>
       </div>
       <div className="contact-banner py-100 bg-light">
-        <div className="d-flex justify-content-between text-center">
-          <div className="col-3">
+        <div className="d-flex flex-column flex-md-row justify-content-center justify-content-md-between text-center">
+          <div className="col-12 col-md-3">
             <PinDropIcon className="text-success" />
             <p className="m-0">Address</p>
             <p className="m-0">Thamel, Kathmand, Nepal</p>
           </div>
-          <div className="col-3">
+          <div className="col-12 col-md-3">
             <PermPhoneMsgIcon className="text-success" />
             <p className="m-0">Phone</p>
             <p className="m-0">+977 9851035239</p>
           </div>
-          <div className="col-3">
+          <div className="col-12 col-md-3">
             <EmailIcon className="text-success" />
             <p className="m-0">Email</p>
             <p className="m-0">Info@trekkingnepal.com</p>
