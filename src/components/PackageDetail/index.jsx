@@ -564,7 +564,7 @@ export default function PackageDetail({ packageDetail }) {
             {packageDetail?.gallery &&
               packageDetail?.gallery.length !== 0 &&
               packageDetail?.gallery[0].images.length !== 0 && (
-                <div>
+                <div id="package-gallery">
                   <h4 className="title pt-6">
                     <CollectionsIcon />
                     Photo Gallery

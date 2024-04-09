@@ -2,6 +2,7 @@
 import ClientNavbar from "@/components/ClientNavbar";
 import Footer from "@/components/Footer";
 import Notification from "@/components/Notification";
+import ScrollToTop from "@/components/ui/ScrollToTop";
 import { GlobalContext } from "@/context";
 import Dialog from "@mui/material/Dialog";
 import { useContext } from "react";
@@ -17,6 +18,7 @@ export default function ClientLayout({ children }) {
       <Dialog open={dialogOpen}>{dialogContent}</Dialog>
 
       <Notification />
+      <ScrollToTop />
     </div>
   );
 }

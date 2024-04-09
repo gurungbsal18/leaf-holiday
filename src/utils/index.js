@@ -204,7 +204,7 @@ export const packageNavItems = [
     id: "gallery",
     icon: <CollectionsIcon />,
     label: "Gallery",
-    path: "#gallery",
+    path: "#package-gallery",
   },
   {
     id: "faq",
