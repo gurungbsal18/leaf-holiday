@@ -86,17 +86,23 @@ export default function CreateBlog() {
       {pageLevelLoader ? (
         <PageLevelLoader />
       ) : (
-        <div className="">
+        <div className="create-edit-package pt-0 p-2">
           <div className="">
-            <div className="d-flex justify-content-between p-3 ">
-              <p>{updatePackage ? "Update Blog" : "Create Blog"}</p>
-              <button type="submit" onClick={handleSubmit(onSubmit)}>
+            <div className="d-flex flex-column flex-md-row justify-content-start justify-content-md-between sticky-top bg-white py-2 align-itmes-start align-items-md-center border-bottom mb-2">
+              <h4 className="dashboard-header-title">
+                {updatePackage ? "Update Blog" : "Create Blog"}
+              </h4>
+              <button
+                className="btn btn-sm btn-success"
+                type="submit"
+                onClick={handleSubmit(onSubmit)}
+              >
                 {updatePackage ? "Update" : "Create"}
               </button>
             </div>
             <form>
-              <div className="d-flex gap-5">
-                <div className="d-flex flex-column gap-2">
+              <div className="row gap-5 w-100 py-3">
+                <div className="col dashboard-main-content">
                   <TextField
                     required
                     fullWidth
@@ -106,11 +112,13 @@ export default function CreateBlog() {
                     variant="outlined"
                     {...register("title")}
                   />
-                  <div>
+                  <div className="mt-3">
                     <label htmlFor="content">Content</label>
                     <TextEditor control={control} name={"content"} />
                   </div>
-                  <div>
+                  <div className="d-flex gap-3 flex-column bg-light p-3 mt-3">
+                    <h4 className="dashboard-header-title">SEO</h4>
+
                     <TextField
                       required
                       size="small"
@@ -129,7 +137,7 @@ export default function CreateBlog() {
                     />
                   </div>
                 </div>
-                <div>
+                <div className="col-auto dashboard-main-content-sidebar">
                   <div className="d-flex flex-column">
                     <p>Options</p>
                     <div>
