@@ -88,9 +88,6 @@ export default function Footer() {
       </div>
       <div className="row justify-content-between mt-5">
         <p className="m-0 fs-12 col-3">© Leaf Holiday {year}.</p>
-        <p className="m-0 col-3 text-center">
-          <Link href="https://itsansaar.com.np" target="_blank">Develop By: IT Sansaar</Link>
-        </p>
         <div className="footer-social d-flex gap-2 col-3 justify-content-end">
           <a
             href={leafData?.facebook || "#"}
