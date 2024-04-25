@@ -51,24 +51,53 @@ export default function Footer() {
         </div>
         <div className="d-flex flex-column">
           <h4>Useful Links</h4>
-          <a href="">Trekking In Nepal</a>
-          <a href="">Travel Blogs</a>
-          <a href="">Travel News</a>
-          <a href="">Activities</a>
+          <a href="https://www.leaf-holidays.com/destination/nepal">
+            Trekking In Nepal
+          </a>
+          <a href="https://www.leaf-holidays.com/blog" target="_blank">
+            Travel Blogs
+          </a>
+          <a
+            href="https://www.leaf-holidays.com/travel-info/best-kailash-season-in-tibet"
+            target="_blank"
+          >
+            Best Season
+          </a>
+          <a href="https://www.leaf-holidays.com/activity" target="_blank">
+            Activities
+          </a>
         </div>
         <div className="d-flex flex-column">
           <h4>Get To Know Us</h4>
-          <a href="">About Us</a>
-          <a href="">Meet Our Team</a>
-          <a href="">Why Choose Us?</a>
-          <a href="">Contact Us</a>
+          <a href="https://www.leaf-holidays.com/aboutus" target="_blank">
+            About Us
+          </a>
+          <a href="https://www.leaf-holidays.com/ourTeam" target="_blank">
+            Meet Our Team
+          </a>
+          <a href="https://www.leaf-holidays.com/aboutus" target="_blank">
+            Why Choose Us?
+          </a>
+          <a href="https://www.leaf-holidays.com/contact" target="_blank">
+            Contact Us
+          </a>
         </div>
         <div className="d-flex flex-column">
           <h4>Legal Info</h4>
-          <a href="">Privacy Policy</a>
-          <a href="">Terms And Condition</a>
-          <a href="">Cancellation Policy</a>
-          <a href="">Covid Protocol</a>
+          <a
+            href="https://www.leaf-holidays.com/travel-info/travel-insurance"
+            target="_blank"
+          >
+            Travel Insurance
+          </a>
+          <a
+            href="https://www.leaf-holidays.com/travel-info/travel-insurance"
+            target="_blank"
+          >
+            Nepal Visa Information
+          </a>
+          {/* <a href="">Cancellation Policy</a>
+          <a href="">Covid Protocol</a> */}
         </div>
       </div>
       <div className="footer-association d-flex flex-column justify-content-center align-items-center mt-5">

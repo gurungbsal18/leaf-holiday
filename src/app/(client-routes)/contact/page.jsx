@@ -53,7 +53,8 @@ const Contact = () => {
               allowFullScreen=""
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              className="w-100"></iframe>
+              className="w-100"
+            ></iframe>
           </div>
           <div className="col-12 col-md-6 col-lg-4">
             <h4 className="title">Contact us</h4>
@@ -104,7 +105,8 @@ const Contact = () => {
               </span>
               <button
                 className="btn btn-success"
-                onClick={handleSubmit(onSubmit)}>
+                onClick={handleSubmit(onSubmit)}
+              >
                 Submit
               </button>
             </form>
@@ -126,7 +128,7 @@ const Contact = () => {
           <div className="col-12 col-md-3">
             <EmailIcon className="text-success" />
             <p className="m-0">Email</p>
-            <p className="m-0">Info@trekkingnepal.com</p>
+            <p className="m-0">Info@thenepaltrekking.com</p>
           </div>
         </div>
       </div>
