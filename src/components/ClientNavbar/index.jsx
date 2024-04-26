@@ -108,7 +108,7 @@ export default function ClientNavbar() {
             </Link>
           </div>
         </div>
-        <div className="d-block d-md-flex justify-content-center gap-4 pb-2 align-items-center position-relative mt-2 main-menu">
+        <div className="d-block d-md-flex justify-content-center gap-4 py-2 align-items-center position-relative mt-2 main-menu">
           <div className="megamenu-nav">
             <MegaMenu menuData={menuData} />
           </div>
@@ -123,12 +123,14 @@ export default function ClientNavbar() {
                   <div>
                     <div
                       onClick={() => setShowMenu((prev) => !prev)}
-                      style={{ cursor: "pointer" }}>
+                      style={{ cursor: "pointer" }}
+                    >
                       {showMenu ? <FaChevronUp /> : <FaChevronDown />}
                     </div>
                     <div
                       ref={menuRef}
-                      className={`login-dropdown ${showMenu ? "" : "d-none"}`}>
+                      className={`login-dropdown ${showMenu ? "" : "d-none"}`}
+                    >
                       <p className="m-0">{user && user?.name}</p>
                       <hr />
                       <Link
@@ -137,7 +139,8 @@ export default function ClientNavbar() {
                         onClick={() => {
                           setPageLevelLoader(true);
                           setShowMenu(false);
-                        }}>
+                        }}
+                      >
                         User Information
                       </Link>
                       <div className="mb-2">
@@ -145,14 +148,16 @@ export default function ClientNavbar() {
                           <Link
                             href="/admin"
                             onClick={() => setPageLevelLoader(true)}
-                            className="d-none d-md-block text-success p-2 rounded">
+                            className="d-none d-md-block text-success p-2 rounded"
+                          >
                             Admin Dashboard
                           </Link>
                         )}
                       </div>
                       <button
                         className="btn btn-sm btn-danger"
-                        onClick={handleLogout}>
+                        onClick={handleLogout}
+                      >
                         Logout
                       </button>
                     </div>
@@ -163,7 +168,8 @@ export default function ClientNavbar() {
               <Link
                 role="button"
                 className="text-success d-flex align-items-center gap-1 log-in-btn"
-                href="/login">
+                href="/login"
+              >
                 <LoginIcon />
                 Log In
               </Link>

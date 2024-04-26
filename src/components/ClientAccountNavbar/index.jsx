@@ -47,16 +47,17 @@ export default function ClientAccountNavbar() {
   ];
 
   return (
-    <div className="col-3 d-flex flex-column bg-success-subtle col p-4 vh-100 gap-4">
+    <div className="col-3 d-flex flex-row flex-md-column bg-success-subtle col p-4 gap-4 client-navbar align-items-center align-items-md-start">
       {mapHelper.map((item) => (
         <Link
-          className={`d-flex justify-content-between align-items-center user-account-dashboard-item ${
+          className={`d-flex justify-content-between align-items-start align-items-md-center user-account-dashboard-item ${
             pathName === item.path ? "text-success" : "text-dark"
           }`}
           key={item.id}
-          href={item.path}>
+          href={item.path}
+        >
           <div className="d-flex gap-2 align-items-center">
-            {item.icon}
+            <div className="client-navbar-icon">{item.icon}</div>
             <p className="m-0">{item.label}</p>
           </div>
           <MdArrowForwardIos />
@@ -64,8 +65,9 @@ export default function ClientAccountNavbar() {
       ))}
       <div
         className="d-flex gap-2 border-top logout-btn bg-success align-items-center p-2 rounded"
-        onClick={handleLogout}>
-        <LogoutIcon className="text-light" />
+        onClick={handleLogout}
+      >
+        <LogoutIcon className="text-light client-navbar-icon" />
         <p className="m-0 text-light">Log Out</p>
       </div>
     </div>

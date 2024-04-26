@@ -79,3 +79,17 @@
     }
   }
 }
+
+// client account
+.client-navbar {
+  height: 100vh;
+  margin-bottom: 30px;
+  @media (max-width: 576px) {
+    height: auto;
+    width: 100%;
+    font-size: 12px;
+    &-icon {
+      display: none;
+    }
+  }
+}

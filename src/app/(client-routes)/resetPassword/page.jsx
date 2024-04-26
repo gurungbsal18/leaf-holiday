@@ -49,12 +49,12 @@ export default function ResetPassword() {
     }
   };
   return (
-    <div>
+    <div className="container bg-light rounded p-4">
       <Suspense>
         <Token setToken={setToken} />
       </Suspense>
       <div>
-        <h4>Reset Password</h4>
+        <h4 className="title">Reset Password</h4>
       </div>
       <div>
         <label htmlFor="password">Enter The New Password</label>
@@ -63,9 +63,10 @@ export default function ResetPassword() {
           name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          className="mt-3 form-control"
         />
       </div>
-      <button onClick={handleSubmit}>
+      <button onClick={handleSubmit} className="btn btn-sm btn-success">
         {componentLevelLoader ? (
           <ComponentLevelLoader text={"Resetting Password"} />
         ) : (

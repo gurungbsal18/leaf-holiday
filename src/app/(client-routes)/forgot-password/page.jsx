@@ -43,9 +43,9 @@ export default function ForgotYourPassword() {
       {pageLevelLoader ? (
         <PageLevelLoader />
       ) : (
-        <div>
+        <div className="container my-5 bg-light rounded p-5">
           <div>
-            <h4>Forgot Your Password</h4>
+            <h4 className="title">Forgot Your Password</h4>
           </div>
           <div>
             <label htmlFor="email">
@@ -56,9 +56,15 @@ export default function ForgotYourPassword() {
               onChange={(e) => setEmail(e.target.value)}
               name="email"
               type="text"
+              className="form-control mt-3"
             />
           </div>
-          <button onClick={handleSubmit}>Submit</button>
+          <button
+            onClick={handleSubmit}
+            className="btn btn-sm btn-success mt-3"
+          >
+            Submit
+          </button>
         </div>
       )}
     </>

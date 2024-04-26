@@ -48,8 +48,8 @@ export default function UserDetail() {
     }
   };
   return (
-    <div className="col-9 px-2 mt-2">
-      <h4>PERSONAL INFORMATION</h4>
+    <div className="col-12 col-md-9 px-2 my-2">
+      <h4 className="title">PERSONAL INFORMATION</h4>
       <div className="mt-5">
         <form className="d-flex flex-column gap-3">
           <TextField
@@ -91,7 +91,8 @@ export default function UserDetail() {
           <div className="d-flex justify-content-start">
             <button
               onClick={handleSubmit(submitForm)}
-              className="btn btn-sm btn-success">
+              className="btn btn-sm btn-success"
+            >
               UPDATE
             </button>
           </div>
