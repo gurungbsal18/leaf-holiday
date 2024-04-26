@@ -47,3 +47,12 @@
     right: 26px;
   }
 }
+
+@media (max-width: 576px) {
+  .package-card-region-name {
+    font-size: 12px;
+  }
+  .package-card-review-title {
+    font-size: 12px;
+  }
+}

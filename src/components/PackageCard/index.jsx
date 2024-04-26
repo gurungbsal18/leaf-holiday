@@ -38,7 +38,7 @@ function PackageCard({ packageDetail }) {
           <div className="d-flex justify-content-between align-items-center">
             <span className="text-muted trip-card-location d-flex align-items-center gap-1">
               <FmdGoodOutlinedIcon />
-              {`${packageDetail?.region?.name}, ${packageDetail?.region?.destination?.name}`}
+              <p className="package-card-region-name m-0">{`${packageDetail?.region?.name}, ${packageDetail?.region?.destination?.name}`}</p>
             </span>
             <span className="trip-card-review d-flex align-items-center gap-2 text-muted">
               <Rating
@@ -46,7 +46,9 @@ function PackageCard({ packageDetail }) {
                 precision={0.5}
                 readOnly
               />
-              {packageDetail?.reviews?.length || 0} Reviews
+              <p className="package-card-review-title m-0">
+                {packageDetail?.reviews?.length || 0} Reviews
+              </p>
             </span>
           </div>
           <h4 className="trip-card-title text-dark">{packageDetail?.name}</h4>
@@ -55,7 +57,7 @@ function PackageCard({ packageDetail }) {
               <ScheduleOutlinedIcon fontSize="14" />
               {packageDetail?.tripFacts?.duration?.info} Days
             </span>
-            <p className="m-0 text-dark">
+            <p className="m-0 fw-semibold text-dark">
               USD {packageDetail?.prices[0]?.price || 0}/
               <span className="text-muted" style={{ fontSize: "12px" }}>
                 per person
