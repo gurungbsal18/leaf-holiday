@@ -1,9 +1,18 @@
 import React from "react";
+import Image from "next/image";
 
 const page = () => {
   return (
     <div>
-      <div className="common-banner"></div>
+      <div className="common-banner">
+        <Image
+          priority
+          src="/images/home-page-image.jpg"
+          height={500}
+          width={1519}
+          alt="best-trekking-season-image"
+        />
+      </div>
       <div className="container my-5">
         <h1 className="title fw-bold">Best Kailash Season In Tibet</h1>
         <p className="text-justify">

@@ -3,7 +3,7 @@ import React from "react";
 const page = () => {
   return (
     <>
-      <div className="common-banner"></div>
+      {/* <div className="common-banner"></div> */}
       <div className="container my-5">
         <h1 className="title fw-bold">Travel Insurance</h1>
         <p className="text-justify">
