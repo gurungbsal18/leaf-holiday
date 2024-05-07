@@ -57,9 +57,9 @@ export default function Booking() {
       try {
         const res = await axios.post(`/booking/add`, { ...data });
         if (res.status === 200) {
-          toast.success("Package Booked Successfully", {
-            position: toast.POSITION.TOP_RIGHT,
-          });
+          // toast.success("Package Booked Successfully", {
+          //   position: toast.POSITION.TOP_RIGHT,
+          // });
           localStorage.removeItem("bookingData");
           setPageLevelLoader(false);
           const redirectUrl =
@@ -186,14 +186,18 @@ export default function Booking() {
                   variant="outlined"
                   value={watch("numberOfPeople")}
                   onChange={(e) => {
-                    setValue("numberOfPeople", Number(e.target.value));
-                    setValue(
-                      "price",
-                      priceCalculator(
-                        packageDetail?.prices,
-                        Number(e.target.value)
-                      ) * Number(e.target.value)
-                    );
+                    if (e.target.value < 1) {
+                      setValue("numberOfPeople", 1);
+                    } else {
+                      setValue("numberOfPeople", Number(e.target.value));
+                      setValue(
+                        "price",
+                        priceCalculator(
+                          packageDetail?.prices,
+                          Number(e.target.value)
+                        ) * Number(e.target.value)
+                      );
+                    }
                   }}
                 />
 
@@ -226,8 +230,7 @@ export default function Booking() {
                     id="payNowBtn"
                     className="btn btn-success"
                     type="submit"
-                    onClick={handleSubmit(onSubmit)}
-                  >
+                    onClick={handleSubmit(onSubmit)}>
                     Proceed To Payment
                   </button>
                 </div>
