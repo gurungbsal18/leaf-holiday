@@ -47,34 +47,59 @@ export default function UploadGallery() {
   };
 
   return (
-    <div>
-      <h1>Gallery</h1>
+    <div className="bg-light p-3 rounded mt-4 dashboard-gallery">
+      <h4 className="title fw-bold">Gallery</h4>
       <div className="d-flex gap-3">
         {images?.map((imagelink, index) => (
           <div
             key={imagelink}
-            className="d-flex flex-column align-items-center gap-3 ">
-            <Image src={imagelink} width={50} height={50} alt="gallery-image" />
-            <button onClick={() => handleRemove(index)}>Remove Image</button>
+            className="d-flex flex-column align-items-start gap-3 "
+          >
+            <Image
+              src={imagelink}
+              width={120}
+              height={120}
+              alt="gallery-image"
+            />
+            <button
+              onClick={() => handleRemove(index)}
+              className="btn btn-sm btn-danger"
+            >
+              Remove Image
+            </button>
           </div>
         ))}
       </div>
-      <CldUploadWidget
-        options={{ sources: ["local"], resourceType: ["image"] }}
-        uploadPreset="uploadPreset"
-        onSuccess={(result) => {
-          setImages((prev) => [...prev, result?.info?.secure_url]);
-        }}>
-        {({ open }) => {
-          function handleOnClick() {
-            open();
-          }
-          return <button onClick={handleOnClick}>Upload Gallery</button>;
-        }}
-      </CldUploadWidget>
-      <button type="submit" onClick={handleSubmit}>
-        {updateGallery ? "Update" : "Submit"}
-      </button>
+      <div className="d-flex gap-2 mt-3">
+        <CldUploadWidget
+          options={{ sources: ["local"], resourceType: ["image"] }}
+          uploadPreset="uploadPreset"
+          onSuccess={(result) => {
+            setImages((prev) => [...prev, result?.info?.secure_url]);
+          }}
+        >
+          {({ open }) => {
+            function handleOnClick() {
+              open();
+            }
+            return (
+              <button
+                onClick={handleOnClick}
+                className="btn btn-sm btn-primary"
+              >
+                Upload Gallery
+              </button>
+            );
+          }}
+        </CldUploadWidget>
+        <button
+          type="submit"
+          onClick={handleSubmit}
+          className="btn btn-sm btn-success"
+        >
+          {updateGallery ? "Update" : "Save"}
+        </button>
+      </div>
     </div>
   );
 }

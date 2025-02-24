@@ -27,3 +27,36 @@
     width: 100%;
   }
 }
+
+.rating-star {
+  width: fit-content;
+}
+
+.dashboard-main-content {
+  margin-right: 350px;
+}
+
+.dashboard-video-gallery {
+  margin-right: 370px;
+}
+
+.dashboard-main-content-sidebar {
+  position: absolute;
+  right: 15px;
+  // margin-right: 30px;
+}
+
+.dashboard-package-footer-table,
+.dashboard-gallery {
+  margin-right: 370px;
+}
+
+.admin-booking-table {
+  height: calc(100vh - 32px);
+}
+
+.upload-logo {
+  .custom-modal-image {
+    width: 300px;
+  }
+}

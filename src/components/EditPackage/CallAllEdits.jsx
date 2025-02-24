@@ -6,11 +6,9 @@ import CreateDepartureDate from "../CreateComponents/CreateDepartureDate";
 import CreateFAQ from "../CreateComponents/CreateFAQ";
 import UploadGallery from "../ui/UploadGallery";
 import EditPackage from ".";
-import { GlobalContext } from "@/context";
+import dayjs from "dayjs";
 
 export default function CallAllEdits() {
-  const { dialogOpen, setDialogOpen, dialogContent, setDialogContent } =
-    useContext(GlobalContext);
   const reviewData = {
     pageName: "Reviews",
     headerData: [
@@ -22,6 +20,9 @@ export default function CallAllEdits() {
     createComponent: <CreateTestimonial />,
     titles: ["NAME", "COMMENT", "RATING"],
     apiName: "review",
+    showEdit: true,
+    showRemove: true,
+    sizeOfPage: 100,
   };
   const itineraryData = {
     headerData: [
@@ -34,18 +35,42 @@ export default function CallAllEdits() {
     createComponent: <CreateItinerary />,
     titles: ["TITLE", "MAX ALTITUDE", "MEALS", "ACCOMODATION"],
     apiName: "itineraries",
+    showEdit: true,
+    showRemove: true,
+    sizeOfPage: 100,
   };
   const departureDateData = {
     headerData: [
-      { Header: "START DATE", accessor: "startDate" },
-      { Header: "END DATE", accessor: "endDate" },
-      { Header: "STATUS", accessor: "isAvailable" },
-      { Header: "PRICE", accessor: "price" },
+      {
+        Header: "START DATE",
+        accessor: "startDate",
+        Cell: ({ value }) => dayjs(value).format("MMM DD, YYYY"),
+      },
+      {
+        Header: "END DATE",
+        accessor: "endDate",
+        Cell: ({ value }) => dayjs(value).format("MMM DD, YYYY"),
+      },
+      {
+        Header: "STATUS",
+        accessor: "isAvailable",
+        Cell: ({ value }) => {
+          return (
+            <p className={`m-0 ${value ? "text-success" : "text-danger"}`}>
+              {value ? "Available" : "Unavailable"}
+            </p>
+          );
+        },
+      },
+      { Header: "PRICE", accessor: "pricePerPerson" },
     ],
     pageName: "Departure Dates",
     createComponent: <CreateDepartureDate />,
     titles: ["START DATE", "END DATE", "STATUS", "PRICE"],
     apiName: "departureDate",
+    showEdit: true,
+    showRemove: true,
+    sizeOfPage: 100,
   };
   const faqData = {
     headerData: [
@@ -56,6 +81,9 @@ export default function CallAllEdits() {
     createComponent: <CreateFAQ />,
     titles: ["QUESTION", "ANSWER"],
     apiName: "faq",
+    showEdit: true,
+    showRemove: true,
+    sizeOfPage: 100,
   };
 
   return (

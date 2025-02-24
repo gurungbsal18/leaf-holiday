@@ -17,7 +17,7 @@ export default function Blog() {
     showEdit: true,
     showRemove: true,
     showImage: true,
-    checkbox: true,
+    checkbox: false,
   };
 
   return (

@@ -17,15 +17,24 @@
 @import "./blog-card";
 @import "./client/user-account-dashboard.scss";
 @import "./common-banner";
+@import "./blog";
+@import "./region";
+@import "./team";
+@import "./destination";
 
 $theme-secondary: #f7941d;
 $theme-secondary-dark: #eb8101;
 
 .main-container {
-  min-height: 100vh;
+  min-height: calc(100vh - 143px);
   display: flex;
   flex-direction: column;
 }
+.admin-main-container {
+  min-height: 100vh;
+  flex-grow: 1;
+}
+
 .text-theme-secondary {
   color: $theme-secondary;
 }
@@ -69,4 +78,16 @@ $theme-secondary-dark: #eb8101;
 
 .pb-50 {
   padding-bottom: 50px;
+}
+
+.pt-6 {
+  padding-top: 6rem;
+}
+
+.header-image {
+  img {
+    width: 100%;
+    height: 700px;
+    object-fit: cover;
+  }
 }

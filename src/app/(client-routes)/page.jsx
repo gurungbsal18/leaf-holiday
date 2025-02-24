@@ -13,20 +13,17 @@ import { getEmbeddedYouTubeUrl } from "@/utils/functions";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import axios from "@/utils/axios";
+import { useRouter } from "next/navigation";
+import SmallPackageCard from "@/components/SmallPackageCard";
+import HomeCarousel from "@/components/ui/HomeCarousel";
 
 export default function Home() {
-  const {
-    callExtractAll,
-    setCallExtractAll,
-    setPageLevelLoader,
-    pageLevelLoader,
-    homePageEdit,
-    setHomePageEdit,
-    setDialogOpen,
-    dialogContent,
-    setDialogContent,
-  } = useContext(GlobalContext);
+  const { callExtractAll, setPageLevelLoader, pageLevelLoader } =
+    useContext(GlobalContext);
   const [homePageData, setHomePageData] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const router = useRouter();
+
   const getHomePageDetail = async () => {
     setPageLevelLoader(true);
     try {
@@ -41,16 +38,35 @@ export default function Home() {
         setPageLevelLoader(false);
       }
     } catch (e) {
-      toast.error("Something Went Wrong. Please Try Again...", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error(
+        e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
+        {
+          position: toast.POSITION.TOP_RIGHT,
+        }
+      );
       setPageLevelLoader(false);
     }
   };
 
+  const handleEnter = (event) => {
+    if (event.key === "Enter") {
+      // Prevent the default form submission behavior
+      event.preventDefault();
+      setPageLevelLoader(true);
+      // Navigate to search page with the search query
+      router.push(`/search?searchTerm=${searchTerm}`);
+    }
+  };
+
   useEffect(() => {
-    getHomePageDetail();
-  }, [callExtractAll]);
+    if (pageLevelLoader) {
+      if (!homePageData) {
+        getHomePageDetail();
+      } else {
+        setPageLevelLoader(false);
+      }
+    }
+  }, [callExtractAll, pageLevelLoader]);
 
   return (
     <>
@@ -61,7 +77,10 @@ export default function Home() {
           <>
             <div className="hero-section">
               <div className="d-flex justify-content-center align-items-center">
-                <h1>Kailash Mansarovar Yatra</h1>
+                {homePageData?.carousels &&
+                  homePageData?.carousels?.length > 0 && (
+                    <HomeCarousel carouselData={homePageData.carousels} />
+                  )}
               </div>
             </div>
             <div className="hero-search-bar d-flex jusitify-content-center mx-auto">
@@ -69,8 +88,17 @@ export default function Home() {
                 type="text"
                 className="form-control"
                 placeholder="Search your next adventure"
+                onKeyDown={handleEnter}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <button className="search-btn btn btn-sm btn-success">
+              <button
+                className="search-btn btn btn-sm btn-success"
+                onClick={() => {
+                  setPageLevelLoader(true);
+                  router.push(`/search?searchTerm=${searchTerm}`);
+                }}
+              >
                 <SearchOutlinedIcon />
                 Search
               </button>
@@ -84,7 +112,7 @@ export default function Home() {
                       {homePageData?.tabs?.top[0]?.title}
                     </h4>
                   </div>
-                  <div className="d-flex gap-3 flex-wrap">
+                  <div className="row">
                     {homePageData?.tabs?.top[0]?.packages?.map((item) => (
                       <PackageCard key={item._id} packageDetail={item} />
                     ))}
@@ -106,8 +134,8 @@ export default function Home() {
                     </h2>
                   </div>
 
-                  <div className="home-video-section d-flex flex-column flex-lg-row gap-3">
-                    <div className="col-12 col-lg-6">
+                  <div className="home-video-section row d-flex flex-column flex-lg-row">
+                    <div className="col-12 col-lg-6 py-2">
                       {homePageData?.tabs?.bottom[0]?.videoUrl && (
                         <iframe
                           width="560"
@@ -116,14 +144,18 @@ export default function Home() {
                             homePageData?.tabs?.bottom[0]?.videoUrl
                           )}
                           title="YouTube video player"
-                          allowFullScreen></iframe>
+                          allowFullScreen
+                        ></iframe>
                       )}
                     </div>
                     <div className="col-12 col-lg-6">
-                      <div className="d-flex gap-3 flex-wrap">
+                      <div className="row">
                         {homePageData?.tabs?.bottom[0]?.packages?.map(
                           (item) => (
-                            <PackageCard key={item._id} packageDetail={item} />
+                            <SmallPackageCard
+                              key={item._id}
+                              packageDetail={item}
+                            />
                           )
                         )}
                       </div>
@@ -146,15 +178,15 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="d-flex justify-content-center">
+                {/* <div className="d-flex justify-content-center">
                   <button className="btn btn-success">View all</button>
-                </div>
+                </div> */}
               </div>
             )}
 
             <div className="container reccommended-section py-100">
               <div className="text-center my-5">
-                <h2 className="home-title">Reccommended on</h2>
+                <h2 className="home-title">Recommended on</h2>
               </div>
 
               <div className="d-flex justify-content-center">

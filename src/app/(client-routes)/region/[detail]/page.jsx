@@ -1,71 +1,41 @@
-"use client";
-import PageLevelLoader from "@/components/Loader/PageLevelLoader";
-import { GlobalContext } from "@/context";
-import { usePathname } from "next/navigation";
-import React, { useContext, useEffect, useState } from "react";
-import Image from "next/image";
-import { toast } from "react-toastify";
 import axios from "@/utils/axios";
+import React from "react";
+import Image from "next/image";
+import PackageCard from "@/components/PackageCard";
 
-export default function RegionDetail() {
-  const [regionDetail, setRegionDetail] = useState(null);
-  const { pageLevelLoader, setPageLevelLoader } = useContext(GlobalContext);
-  const regionName = usePathname().match(/\/region\/([^\/]+)(?:\/|$)/)[1];
-
-  const getRegionDetail = async () => {
-    try {
-      const res = await axios(`/region/slug/${regionName}`);
-      if (res.status === 200) {
-        const regionData = res.data?.data;
-
-        if (regionData.length > 0) {
-          setRegionDetail(regionData[0]);
-        }
-        setPageLevelLoader(false);
-      } else {
-        toast.error("Something Went Wrong. Please Try Again...", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-        setPageLevelLoader(false);
-      }
-    } catch (e) {
-      toast.error("Something Went Wrong. Please Try Again...", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      setPageLevelLoader(false);
-    }
-  };
-  regionDetail;
-  useEffect(() => {
-    getRegionDetail();
-  }, []);
-
+export default async function RegionDetail({ params }) {
+  let regionData;
+  try {
+    const res = await axios.get(`/region/slug/${params.detail}`);
+    regionData = res.data.data[0];
+  } catch (e) {
+    console.log(e);
+  }
   return (
-    <>
-      {pageLevelLoader ? (
-        <PageLevelLoader />
-      ) : (
-        <>
-          {regionDetail && (
-            <div>
-              <div>
-                <Image
-                  src={regionDetail?.imgUrl}
-                  height={500}
-                  width={1512}
-                  alt={`${regionDetail?.name}-image`}
-                />
-                <h4>Explore {regionDetail?.name}</h4>
-              </div>
-              <div>
-                <h4>{regionDetail?.name}</h4>
-                <p>{regionDetail?.description}</p>
-              </div>
-              <div></div>
-            </div>
+    <div>
+      <div className="header-image">
+        <Image
+          priority
+          src={regionData?.imgUrl}
+          height={500}
+          width={1512}
+          alt={`${regionData?.name}-image`}
+        />
+      </div>
+      <div className="container my-5">
+        <div>
+          <h4 className="title fw-bold">{regionData?.name}</h4>
+          <p>{regionData?.description}</p>
+        </div>
+        <div className="row">
+          {regionData?.packages?.map(
+            (item, index) =>
+              index < regionData.packages.length && (
+                <PackageCard key={item._id} packageDetail={item} />
+              )
           )}
-        </>
-      )}
-    </>
+        </div>
+      </div>
+    </div>
   );
 }

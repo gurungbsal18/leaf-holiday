@@ -12,6 +12,10 @@
     font-size: 13px;
   }
   &-content {
+    text-align: left;
+    @media (max-width: 576px) {
+      text-align: center;
+    }
     &-contact {
       a {
         display: flex;

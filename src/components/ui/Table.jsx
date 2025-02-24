@@ -16,7 +16,6 @@ export default function Table({
   showEdit,
   showRemove,
   updateComponent,
-  showImage,
   checkbox,
   sizeOfPage,
   noPagination,
@@ -24,7 +23,7 @@ export default function Table({
   const { setVerify } = useContext(GlobalContext);
   const columns = useMemo(() => headerData, []);
   const tableInstance = useTable(
-    { columns, data: bodyData, initialState: { pageSize: sizeOfPage || 8 } },
+    { columns, data: bodyData, initialState: { pageSize: sizeOfPage || 10 } },
     usePagination
   );
   const {
@@ -74,9 +73,13 @@ export default function Table({
         });
       }
     } catch (e) {
-      toast.error("Something Went Wrong. Please Try Again...", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error(
+        e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
+        {
+          position: toast.POSITION.TOP_RIGHT,
+        }
+      );
+      setPageLevelLoader(false);
     }
   };
 
@@ -106,9 +109,9 @@ export default function Table({
       setPageLevelLoader(false);
     }
   }
-  bodyData;
+
   return (
-    <div>
+    <div className="">
       <table {...getTableProps()} className="dashboard-table">
         <thead>
           {headerGroups.map((headerGroup) => {
@@ -195,7 +198,8 @@ export default function Table({
                                 );
                               }, 1000);
                             }
-                          }}>
+                          }}
+                        >
                           {apiName === "review" ? "Verify" : "View"}
                         </button>
                       )}
@@ -206,9 +210,10 @@ export default function Table({
                     <button
                       onClick={() => {
                         if (apiName === "package") {
+                          setPageLevelLoader(true);
                           localStorage.setItem(
                             "updatePackage",
-                            bodyData[key.split("_")[1]]
+                            JSON.stringify(bodyData[key.split("_")[1]])
                           );
                           setUpdatePackage(bodyData[key.split("_")[1]]);
                           router.push("/admin/packages/create-package");
@@ -221,7 +226,8 @@ export default function Table({
                           setDialogContent(updateComponent);
                         }
                       }}
-                      className="btn btn-sm btn-success">
+                      className="btn btn-sm btn-success"
+                    >
                       <EditNoteIcon /> Edit
                     </button>
                   )}
@@ -230,9 +236,9 @@ export default function Table({
                       onClick={() =>
                         handleRemove(bodyData[key.split("_")[1]]._id)
                       }
-                      className="btn btn-sm btn-danger">
+                      className="btn btn-sm btn-danger"
+                    >
                       <DeleteIcon />
-                      Remove
                     </button>
                   )}
                 </td>
@@ -242,15 +248,23 @@ export default function Table({
         </tbody>
       </table>
       {!noPagination && (
-        <div>
-          <span>
-            Page <strong>{pageIndex + 1}</strong>of
-            <strong>{pageOptions.length}</strong>
+        <div className="d-flex gap-2 mt-4 align-items-center">
+          <span className="text-muted">
+            Page<span className="mx-1">{pageIndex + 1}</span>of
+            <span className="mx-1">{pageOptions.length}</span>
           </span>
-          <button disabled={!canPreviousPage} onClick={() => previousPage()}>
+          <button
+            disabled={!canPreviousPage}
+            onClick={() => previousPage()}
+            className="btn btn-success"
+          >
             Previous
           </button>
-          <button disabled={!canNextPage} onClick={() => nextPage()}>
+          <button
+            disabled={!canNextPage}
+            onClick={() => nextPage()}
+            className="btn btn-success"
+          >
             Next
           </button>
         </div>

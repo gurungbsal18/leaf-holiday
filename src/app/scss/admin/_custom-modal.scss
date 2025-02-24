@@ -1,7 +1,9 @@
 .custom-dialog {
   .MuiDialog-paper {
-    max-width: 80% !important;
-    width: 80%;
+    max-width: 1200px;
+    min-width: 600px;
+    width: 100%;
+    margin: 0 auto;
     .custom-modal {
       width: 100%;
       &-image img {
@@ -19,5 +21,8 @@
         margin-bottom: 1.5rem;
       }
     }
+  }
+  .custom-dialog-inner {
+    padding: 20px;
   }
 }

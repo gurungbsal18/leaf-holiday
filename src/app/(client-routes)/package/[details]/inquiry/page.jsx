@@ -40,9 +40,8 @@ export default function Inquiry() {
   });
 
   const onSubmit = async (data) => {
-    data;
-    setPageLevelLoader(true);
     if (isAuthUser) {
+      setPageLevelLoader(true);
       try {
         const res = await axios.post(`/booking/add`, data);
         if (res.status === 200) {
@@ -62,7 +61,8 @@ export default function Inquiry() {
         }
       } catch (e) {
         toast.error(
-          "Failed to request the inquiry of the package! Please Try Again Later...",
+          e?.response?.data?.error ||
+            "Failed to request the inquiry of the package! Please Try Again Later...",
           {
             position: toast.POSITION.TOP_RIGHT,
           }
@@ -74,6 +74,7 @@ export default function Inquiry() {
         position: toast.POSITION.TOP_RIGHT,
       });
       setTimeout(() => {
+        setPageLevelLoader(true);
         router.push("/login");
       }, 1000);
     }
@@ -205,8 +206,7 @@ export default function Inquiry() {
                 <button
                   className="btn btn-success"
                   type="submit"
-                  onClick={handleSubmit(onSubmit)}
-                >
+                  onClick={handleSubmit(onSubmit)}>
                   Submit
                 </button>
               </div>

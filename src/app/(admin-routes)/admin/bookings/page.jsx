@@ -8,7 +8,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function AdminBookings() {
-  const { setPageLevelLoader, pageLevelLoader } = useContext(GlobalContext);
+  const { setPageLevelLoader, pageLevelLoader, callExtractAll } =
+    useContext(GlobalContext);
   const [activeTable, setActiveTable] = useState("booking");
 
   const [tableData, setTableData] = useState(null);
@@ -28,12 +29,10 @@ export default function AdminBookings() {
     { Header: "PRICE", accessor: "price" },
   ];
 
-  console.log(tableData);
   const getTableData = async () => {
     setPageLevelLoader(true);
     try {
       const res = await axios.get(`/booking/find/?formType=${activeTable}`);
-      console.log(res);
       if (res.status === 200) {
         setTableData(res?.data?.data?.reverse());
         setPageLevelLoader(false);
@@ -44,49 +43,66 @@ export default function AdminBookings() {
         setPageLevelLoader(false);
       }
     } catch (e) {
-      toast.error("Something Went Wrong. Please Try Again...", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error(
+        e?.response?.data?.error ||
+          "Something went wrong. Please try again !!!",
+        { position: toast.POSITION.TOP_RIGHT }
+      );
       setPageLevelLoader(false);
     }
   };
 
   useEffect(() => {
-    console.log("use effect");
     getTableData();
-  }, [activeTable]);
+  }, [activeTable, callExtractAll]);
   return (
-    <div>
-      <div className="d-flex gap-5">
+    <div className="d-flex flex-column min-vh-100 p-4">
+      <div className="d-flex gap-5 mb-3">
         <button
-          disabled={activeTable === "booking"}
-          onClick={() => setActiveTable("booking")}>
+          className={`btn btn-sm ${
+            activeTable === "booking" ? "btn-success" : "btn-outline-success"
+          }`}
+          // disabled={activeTable === "booking"}
+          onClick={() => setActiveTable("booking")}
+        >
           Bookings
         </button>
         <button
-          disabled={activeTable === "inquiry"}
-          onClick={() => setActiveTable("inquiry")}>
+          className={`btn btn-sm ${
+            activeTable === "inquiry" ? "btn-success" : "btn-outline-success"
+          }`}
+          // disabled={activeTable === "inquiry"}
+          onClick={() => setActiveTable("inquiry")}
+        >
           Inquiries
         </button>
         <button
-          disabled={activeTable === "customization"}
-          onClick={() => setActiveTable("customization")}>
-          Customization Requests
+          className={`btn btn-sm ${
+            activeTable === "customization"
+              ? "btn-success"
+              : "btn-outline-success"
+          }`}
+          // disabled={activeTable === "customization"}
+          onClick={() => setActiveTable("customization")}
+        >
+          Custom Requests
         </button>
       </div>
-      {pageLevelLoader ? (
-        <PageLevelLoader />
-      ) : (
-        tableData && (
-          <Table
-            headerData={headerData}
-            bodyData={tableData}
-            apiName={"booking"}
-            showRemove={true}
-            sizeOfPage={10}
-          />
-        )
-      )}
+      <div className="admin-booking-table">
+        {pageLevelLoader ? (
+          <PageLevelLoader />
+        ) : (
+          tableData && (
+            <Table
+              headerData={headerData}
+              bodyData={tableData}
+              apiName={"booking"}
+              showRemove={true}
+              sizeOfPage={10}
+            />
+          )
+        )}
+      </div>
     </div>
   );
 }

@@ -1,77 +1,56 @@
-"use client";
-import React, { useContext, useState } from "react";
+import React from "react";
 import Image from "next/image";
-import { GlobalContext } from "@/context";
-import PageLevelLoader from "@/components/Loader/PageLevelLoader";
-import { useRouter } from "next/navigation";
 import axios from "@/utils/axios";
+import Link from "next/link";
+import { toast } from "react-toastify";
+import Card from "@/components/Card";
 
-export default function DestinationPage() {
-  const { pageLevelLoader, setPageLevelLoader } = useContext(GlobalContext);
-  const [allDestinations, setAllDestinations] = useState(null);
-  const router = useRouter();
-  const getAllDestinations = async () => {
-    setPageLevelLoader(true);
-    try {
-      const res = await axios.get(`/destination/`);
-      res;
-      if (res.status === 200) {
-        setAllDestinations(res.data?.data);
-        setPageLevelLoader(false);
-      } else {
-        setPageLevelLoader(false);
-      }
-    } catch (e) {
-      e;
-      setPageLevelLoader(false);
+export default async function DestinationPage() {
+  let allDestinations;
+  try {
+    const res = await axios.get(`/destination/`);
+    res;
+    if (res.status === 200) {
+      allDestinations = res.data?.data;
     }
-  };
-  useState(() => {
-    getAllDestinations();
-  }, []);
+  } catch (e) {
+    toast.error(
+      e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
+      {
+        position: toast.POSITION.TOP_RIGHT,
+      }
+    );
+  }
+
   return (
-    <>
-      {pageLevelLoader ? (
-        <PageLevelLoader />
-      ) : (
-        <div>
-          <div>
-            <Image
-              src="/images/km.png"
-              height={500}
-              width={1510}
-              alt="destination-image"
-            />
-            <h4>Destinations</h4>
+    <div>
+      <div className="header-image">
+        <Image
+          src="/images/km.png"
+          height={500}
+          width={1510}
+          alt="destination-image"
+        />
+      </div>
+      <div className="container my-5">
+        <h4 className="title fw-bold">Destinations</h4>
+        <p>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis
+          sapiente ipsam commodi nam suscipit iure libero rem veniam minima quia
+          quibusdam eum repellendus expedita voluptatum, provident eos, aliquam,
+          minus quaerat aut est! Quos quia quis modi quaerat ex tempore error
+          commodi neque dolorem at temporibus iusto soluta reprehenderit
+          repudiandae, placeat voluptates earum, assumenda eaque consequuntur
+          iste saepe! Nisi, officia perspiciatis!
+        </p>
+        {allDestinations && (
+          <div className="row">
+            {allDestinations.map((item) => (
+              <Card key={item._id} api="destination" detail={item} />
+            ))}
           </div>
-          <div>
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis
-              sapiente ipsam commodi nam suscipit iure libero rem veniam minima
-              quia quibusdam eum repellendus expedita voluptatum, provident eos,
-              aliquam, minus quaerat aut est! Quos quia quis modi quaerat ex
-              tempore error commodi neque dolorem at temporibus iusto soluta
-              reprehenderit repudiandae, placeat voluptates earum, assumenda
-              eaque consequuntur iste saepe! Nisi, officia perspiciatis!
-            </p>
-            {allDestinations && (
-              <div className="d-flex">
-                {allDestinations.map((item) => (
-                  <div key={item._id}>
-                    <Image
-                      onClick={() => router.push(`/destination/${item.slug}`)}
-                      src={item.imageUrl}
-                      height={200}
-                      width={200}
-                      alt={`${item.name}-image`}
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-    </>
+        )}
+      </div>
+    </div>
   );
 }

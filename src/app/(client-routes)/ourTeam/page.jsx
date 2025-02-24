@@ -22,9 +22,13 @@ export default function OurTeam() {
       } else {
         setPageLevelLoader(false);
       }
-      res;
     } catch (e) {
-      e;
+      toast.error(
+        e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
+        {
+          position: toast.POSITION.TOP_RIGHT,
+        }
+      );
       setPageLevelLoader(false);
     }
   };
@@ -37,20 +41,34 @@ export default function OurTeam() {
         <PageLevelLoader />
       ) : (
         <div>
-          <div>
+          <div className="header-image">
             <Image
               src="/images/km.png"
               width={1511}
               height={500}
               alt="our-team-header"
             />
-            <h4>Our Team</h4>
           </div>
-          <div className="d-flex">
-            {ourTeamData &&
-              ourTeamData.map((item) => (
-                <TeamCard key={item._id} teamDetail={item} />
-              ))}
+          <div className="container my-5">
+            <h4 className="title fw-bold text-center">Meet Our Team</h4>
+            <p className="text-muted text-center mb-5">
+              We are a group of dedicated professionals united by our passion
+              for the outdoors and a shared commitment to global exploration.
+              Within our team, we have individuals devoted to operations,
+              finance, and sales, whose professionalism has enabled Himalayan
+              Glacier to consistently deliver top-tier services to our
+              clientele. Our team comprises nature enthusiasts who are fervently
+              dedicated to global travel. Over nearly thirty years, we have
+              continuously expanded our offerings, introducing fresh and
+              distinctive destinations and itineraries tailored to exceed the
+              expectations of our clients.
+            </p>
+            <div className="row">
+              {ourTeamData &&
+                ourTeamData.map((item) => (
+                  <TeamCard key={item._id} teamDetail={item} />
+                ))}
+            </div>
           </div>
         </div>
       )}

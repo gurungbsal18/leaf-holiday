@@ -40,10 +40,9 @@ export default function CustomizeTrip() {
   });
 
   const onSubmit = async (data) => {
-    data;
-    setPageLevelLoader(true);
     if (isAuthUser) {
       try {
+        setPageLevelLoader(true);
         const res = await axios.post(`/booking/add`, data);
         if (res.status === 200) {
           toast.success("Package Customization Requested Successfully", {
@@ -62,7 +61,8 @@ export default function CustomizeTrip() {
         }
       } catch (e) {
         toast.error(
-          "Failed to request the customize the package! Please Try Again Later...",
+          e?.response?.data?.error ||
+            "Failed to request the customize the package! Please Try Again Later...",
           {
             position: toast.POSITION.TOP_RIGHT,
           }
@@ -73,8 +73,9 @@ export default function CustomizeTrip() {
       toast.error("Please Log In To Continue", {
         position: toast.POSITION.TOP_RIGHT,
       });
-      setPageLevelLoader(true);
+
       setTimeout(() => {
+        setPageLevelLoader(true);
         router.push("/login");
       }, 1000);
     }
@@ -206,8 +207,7 @@ export default function CustomizeTrip() {
                 <button
                   type="submit"
                   onClick={handleSubmit(onSubmit)}
-                  className="btn btn-success"
-                >
+                  className="btn btn-success">
                   Submit
                 </button>
               </div>

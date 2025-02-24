@@ -1,14 +1,11 @@
 "use client";
-import React, { useContext, useRef } from "react";
+import React, { useContext } from "react";
 import { GrClose } from "react-icons/gr";
 import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
-import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import { useForm } from "react-hook-form";
 import { GlobalContext } from "@/context";
-import { toast } from "react-toastify";
 import { submitForm } from "@/utils/functions";
-import Notification from "@/components/Notification";
 import UploadToCloudinary from "@/components/ui/UploadToCloudinary";
 
 export default function CreateDestination() {
@@ -19,13 +16,10 @@ export default function CreateDestination() {
     callExtractAll,
     setCallExtractAll,
   } = useContext(GlobalContext);
-  const inputRef = useRef(null);
+
   const [selectedFile, setSelectedFile] = React.useState(
     updateForm ? updateForm.imageUrl : null
   );
-  const openFilePicker = () => {
-    inputRef.current.click();
-  };
 
   const initialDestinationData = {
     name: "",
@@ -63,32 +57,34 @@ export default function CreateDestination() {
         </div>
         <form className="p-4">
           <div className="d-flex row">
-            <div className="d-flex flex-column gap-2 col-8">
-              <TextField
-                required
-                fullWidth
-                size="small"
-                label="Name"
-                type="text"
-                variant="outlined"
-                {...register("name")}
-              />
-              <label name="description">Description</label>
-              <TextareaAutosize
-                className="w-100 form-control pt-2"
-                size="large"
-                label="Description"
-                type="text"
-                variant="outlined"
-                {...register("description")}
-              />
-              <div className="d-flex justify-content-end">
-                <button
-                  type="submit"
-                  onClick={handleSubmit(onSubmit)}
-                  className="btn btn-success">
-                  {updateForm ? "Update" : "Create"}
-                </button>
+            <div className="col-8">
+              <div className="d-flex flex-column gap-2 ">
+                <TextField
+                  required
+                  fullWidth
+                  size="small"
+                  label="Name"
+                  type="text"
+                  variant="outlined"
+                  {...register("name")}
+                />
+                <label name="description">Description</label>
+                <TextareaAutosize
+                  className="w-100 form-control pt-2"
+                  size="large"
+                  label="Description"
+                  type="text"
+                  variant="outlined"
+                  {...register("description")}
+                />
+                <div className="d-flex justify-content-end">
+                  <button
+                    type="submit"
+                    onClick={handleSubmit(onSubmit)}
+                    className="btn btn-success">
+                    {updateForm ? "Update" : "Create"}
+                  </button>
+                </div>
               </div>
             </div>
             <UploadToCloudinary

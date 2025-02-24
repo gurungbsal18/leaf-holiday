@@ -42,7 +42,7 @@ export default function TeamDetail() {
         <>
           {teamDetail && (
             <div>
-              <div>
+              <div className="team-hero-img">
                 <Image
                   src="/images/km.png"
                   height={500}
@@ -50,25 +50,29 @@ export default function TeamDetail() {
                   alt={`team-image`}
                 />
               </div>
-              <div>
-                <div className="d-flex">
-                  <Image
-                    src={teamDetail?.imageUrl}
-                    width={150}
-                    height={200}
-                    alt="member-image"
-                  />
-                  <div className="d-flex flex-column justify-content-center">
-                    <h4>{teamDetail?.name}</h4>
-                    <p>{teamDetail?.designation}</p>
+              <div className="container my-5">
+                <div className="row">
+                  <div className="col-12 col-md-3">
+                    <div className="team-card">
+                      <Image
+                        src={teamDetail?.imageUrl}
+                        width={150}
+                        height={200}
+                        alt="member-image"
+                      />
+                      <div className="d-flex flex-column justify-content-center">
+                        <h4>{teamDetail?.name}</h4>
+                        <p>{teamDetail?.designation}</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div
                   dangerouslySetInnerHTML={{
                     __html: teamDetail?.content,
-                  }}></div>
+                  }}
+                ></div>
               </div>
-              <div></div>
             </div>
           )}
         </>

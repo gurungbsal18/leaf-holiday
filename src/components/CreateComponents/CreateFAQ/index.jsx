@@ -38,7 +38,7 @@ export default function CreateFAQ() {
   };
 
   return (
-    <div className="">
+    <div className="p-3">
       <div className="">
         <div className="d-flex justify-content-between p-3 ">
           <p>{updateForm ? "Update FAQ" : "Create FAQ"}</p>
@@ -47,11 +47,12 @@ export default function CreateFAQ() {
               setUpdateForm(null);
               setDialogOpen(false);
             }}
+            style={{ cursor: "pointer" }}
           />
         </div>
         <form>
           <div className="d-flex gap-5">
-            <div className="d-flex flex-column gap-2">
+            <div className="d-flex flex-column gap-2 col-12">
               <TextField
                 required
                 fullWidth
@@ -63,15 +64,22 @@ export default function CreateFAQ() {
               />
               <label name="description">Answer</label>
               <TextareaAutosize
-                className="w-100"
+                className="w-100 form-control"
                 size="large"
                 type="text"
                 variant="outlined"
                 {...register("answer")}
+                minRows={6}
               />
-              <button type="submit" onClick={handleSubmit(onSubmit)}>
-                {updateForm ? "Update" : "Create"}
-              </button>
+              <div className="d-flex justify-content-end">
+                <button
+                  type="submit"
+                  onClick={handleSubmit(onSubmit)}
+                  className="btn btn-sm btn-success"
+                >
+                  {updateForm ? "Update" : "Create"}
+                </button>
+              </div>
             </div>
           </div>
         </form>

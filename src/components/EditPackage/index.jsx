@@ -23,12 +23,14 @@ export default function EditPackage({ data }) {
   }, [callExtractAll]);
 
   return (
-    <div>
+    <div className="bg-light p-3 rounded mt-4 dashboard-package-footer-table">
       <Header
         pageName={data?.pageName}
         createComponent={data?.createComponent}
+        className="bg-success-subtle"
       />
       <Table
+        className=""
         headerData={data.headerData}
         bodyData={allData}
         apiName={data.apiName}
@@ -40,6 +42,7 @@ export default function EditPackage({ data }) {
         checkbox={data.checkbox}
         setVerify={data.setVerify}
         noPagination={true}
+        sizeOfPage={data.sizeOfPage}
       />
     </div>
   );

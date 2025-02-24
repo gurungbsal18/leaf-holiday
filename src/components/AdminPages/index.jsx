@@ -30,9 +30,12 @@ export default function AdminPages({ data }) {
         setPageLevelLoader(false);
       }
     } catch (e) {
-      toast.error("Something Went Wrong. Please Try Again...", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error(
+        e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
+        {
+          position: toast.POSITION.TOP_RIGHT,
+        }
+      );
       setPageLevelLoader(false);
     }
   }
@@ -46,16 +49,31 @@ export default function AdminPages({ data }) {
     } else {
       try {
         const temp = [];
-        allData.map((data) => {
-          if (data.name.toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
-            temp.push(data);
+        allData.map((eachData) => {
+          if (data.apiName === "blog") {
+            if (
+              eachData.title.toLowerCase().indexOf(keyword.toLowerCase()) !== -1
+            ) {
+              temp.push(eachData);
+            }
+          } else {
+            if (
+              eachData.name.toLowerCase().indexOf(keyword.toLowerCase()) !== -1
+            ) {
+              temp.push(eachData);
+            }
           }
         });
         setFilteredData(temp);
       } catch (e) {
-        toast.error("Something went wrong. Please try again...", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+        toast.error(
+          e?.response?.data?.error ||
+            "Something Went Wrong. Please Try Again...",
+          {
+            position: toast.POSITION.TOP_RIGHT,
+          }
+        );
+        setPageLevelLoader(false);
       }
     }
   }, [keyword]);

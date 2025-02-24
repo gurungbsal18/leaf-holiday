@@ -28,9 +28,12 @@ export default function OrderHistory() {
         setPageLevelLoader(false);
       }
     } catch (e) {
-      toast.error("Something Went Wrong. Please Try Again...", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error(
+        e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
+        {
+          position: toast.POSITION.TOP_RIGHT,
+        }
+      );
       setPageLevelLoader(false);
     }
   };
@@ -42,7 +45,7 @@ export default function OrderHistory() {
       {pageLevelLoader ? (
         <PageLevelLoader />
       ) : (
-        <div className="history col-9 px-5 mt-2">
+        <div className="history col-12 col-md-9 px-3 my-2">
           <h4 className="mb-3">BOOKING HISTORY</h4>
           <Table headerData={COLUMNS} bodyData={userBooking} />
         </div>
