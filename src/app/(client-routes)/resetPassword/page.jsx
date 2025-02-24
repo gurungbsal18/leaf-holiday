@@ -24,7 +24,7 @@ export default function ResetPassword() {
     setComponentLevelLoader(true);
     try {
       const res = await axios.post(
-        "https://leaf-backend.sushilbalami.com.np/auth/passwordReset",
+        "https://leaf-holiday-backend.vercel.app/auth/passwordReset",
         data
       );
       if (res.status === 200) {

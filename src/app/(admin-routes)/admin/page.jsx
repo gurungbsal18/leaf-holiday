@@ -47,11 +47,8 @@ export default function AdminDashboard() {
           <div className="row mt-4">
             {dashboardData &&
               Object.entries(dashboardData).map(([key, value]) => (
-                <div className="col-3">
-                  <div
-                    key={key}
-                    className="d-flex py-3 bg-success-subtle rounded flex-column-reverse justify-content-center align-items-center"
-                  >
+                <div key={key} className="col-3">
+                  <div className="d-flex py-3 bg-success-subtle rounded flex-column-reverse justify-content-center align-items-center">
                     <div className="d-flex justify-content-center flex-column align-items-center py-2">
                       <p>{adminDataMapper[key]?.label}</p>
                       <h1 className="title text-success">{value}</h1>

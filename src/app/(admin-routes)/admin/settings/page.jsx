@@ -77,7 +77,7 @@ export default function Settings() {
       setPageLevelLoader(true);
       try {
         const res = await axios.get(
-          "https://leaf-backend.sushilbalami.com.np/setting/"
+          "https://leaf-holiday-backend.vercel.app/setting/"
         );
         console.log(res);
         if (res.status === 200) {
