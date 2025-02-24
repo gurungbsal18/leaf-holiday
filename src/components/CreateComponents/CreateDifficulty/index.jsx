@@ -5,7 +5,6 @@ import TextareaAutosize from "@mui/material/TextareaAutosize";
 import Rating from "@mui/material/Rating";
 import { useForm, Controller } from "react-hook-form";
 import { GlobalContext } from "@/context";
-import { toast } from "react-toastify";
 import { submitForm } from "@/utils/functions";
 
 export default function CreateDifficulty({ nameValue, setNameValue, setVal }) {

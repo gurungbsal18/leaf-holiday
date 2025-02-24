@@ -1,14 +1,16 @@
 "use client";
-import { useRouter } from "next/navigation";
-import React, { useContext } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useContext, useEffect } from "react";
 import { FaUser, FaHistory, FaKey } from "react-icons/fa";
 import { MdArrowForwardIos } from "react-icons/md";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { toast } from "react-toastify";
 import { GlobalContext } from "@/context";
 import Cookies from "js-cookie";
+import Link from "next/link";
 
 export default function ClientAccountNavbar() {
+  const pathName = usePathname();
   const router = useRouter();
   const { setUser, setIsAuthUser } = useContext(GlobalContext);
   function handleLogout() {
@@ -45,24 +47,28 @@ export default function ClientAccountNavbar() {
   ];
 
   return (
-    <div className="d-flex flex-column bg-light col p-4 vh-100 gap-4">
+    <div className="col-3 d-flex flex-row flex-md-column bg-success-subtle col p-4 gap-4 client-navbar align-items-center align-items-md-start">
       {mapHelper.map((item) => (
-        <div
-          className="d-flex justify-content-between align-items-center user-account-dashboard-item"
+        <Link
+          className={`d-flex justify-content-between align-items-start align-items-md-center user-account-dashboard-item ${
+            pathName === item.path ? "text-success" : "text-dark"
+          }`}
           key={item.id}
-          onClick={() => router.push(item.path)}>
+          href={item.path}
+        >
           <div className="d-flex gap-2 align-items-center">
-            {item.icon}
+            <div className="client-navbar-icon">{item.icon}</div>
             <p className="m-0">{item.label}</p>
           </div>
           <MdArrowForwardIos />
-        </div>
+        </Link>
       ))}
       <div
-        className="d-flex gap-2 border-top pt-3 logout-btn"
-        onClick={handleLogout}>
-        <LogoutIcon className="text-success" />
-        <p className="m-0 text-success">Log Out</p>
+        className="d-flex gap-2 border-top logout-btn bg-success align-items-center p-2 rounded"
+        onClick={handleLogout}
+      >
+        <LogoutIcon className="text-light client-navbar-icon" />
+        <p className="m-0 text-light">Log Out</p>
       </div>
     </div>
   );

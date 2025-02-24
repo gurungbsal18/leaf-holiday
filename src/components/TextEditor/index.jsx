@@ -79,10 +79,14 @@ const TextEditor = ({ control, name }) => {
                         position: toast.POSITION.TOP_RIGHT,
                       });
                     }
-                  } catch (error) {
-                    toast.error("Failed to Upload Image", {
-                      position: toast.POSITION.TOP_RIGHT,
-                    });
+                  } catch (e) {
+                    toast.error(
+                      e?.response?.data?.error ||
+                        "Something Went Wrong. Please Try Again...",
+                      {
+                        position: toast.POSITION.TOP_RIGHT,
+                      }
+                    );
                   }
                 });
 

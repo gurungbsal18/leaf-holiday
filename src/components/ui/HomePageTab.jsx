@@ -9,6 +9,7 @@ import { GlobalContext } from "@/context";
 import CustomAutocomplete from "@/components/ui/CustomAutocomplete";
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import axios from "@/utils/axios";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function HomePageTab({ position, valueDefault, url }) {
   const {
@@ -60,9 +61,12 @@ export default function HomePageTab({ position, valueDefault, url }) {
         setPageLevelLoader(false);
       }
     } catch (e) {
-      toast.error("Something Went Wrong. Please Try Again...", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error(
+        e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
+        {
+          position: toast.POSITION.TOP_RIGHT,
+        }
+      );
       setPageLevelLoader(false);
     }
   };
@@ -81,9 +85,12 @@ export default function HomePageTab({ position, valueDefault, url }) {
         setPageLevelLoader(false);
       }
     } catch (e) {
-      toast.error("Something Went Wrong. Please Try Again...", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error(
+        e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
+        {
+          position: toast.POSITION.TOP_RIGHT,
+        }
+      );
       setPageLevelLoader(false);
     }
   };
@@ -97,38 +104,45 @@ export default function HomePageTab({ position, valueDefault, url }) {
       {pageLevelLoader ? (
         <PageLevelLoader />
       ) : (
-        <div>
-          <div className="d-flex justify-content-between">
-            <div>
-              <TextField
-                className="mx-0"
-                label="Title"
-                sx={{ m: 1, width: "25ch" }}
-                type="text"
-                size="small"
-                {...register("title")}
-              />
-              <Button
-                disabled={packagesFields.length >= 6}
-                size="sm"
-                variant="success"
-                onClick={() => {
-                  packagesAppend(allPackages[0]);
-                }}>
-                <span className="d-flex align-items-center gap-1">
-                  + Add More Package
-                </span>
-              </Button>
-            </div>
-            <button
+        <div className="custom-dialog-inner">
+          <div className="d-flex justify-content-between mb-4 pb-2 border-bottom">
+            <h4 className="title">Add Packages</h4>
+            <span
               onClick={() => {
                 setDialogOpen(false);
-              }}>
-              close
-            </button>
+              }}
+              style={{ cursor: "pointer" }}>
+              <CloseIcon />
+            </span>
+          </div>
+          <div className="mb-2">
+            <div className="d-flex justify-content-between">
+              <div className="d-flex align-items-cente gap-2">
+                <TextField
+                  className="m-0"
+                  label="Title"
+                  sx={{ m: 1, width: "25ch" }}
+                  type="text"
+                  size="small"
+                  {...register("title")}
+                />
+                <button
+                  className="btn btn-sm btn-success"
+                  disabled={packagesFields.length >= 6}
+                  onClick={() => {
+                    packagesAppend(allPackages[0]);
+                  }}>
+                  <span className="d-flex align-items-center gap-1">
+                    + Add More Package
+                  </span>
+                </button>
+              </div>
+            </div>
           </div>
           {url && (
             <TextField
+              className="m-0 me-2"
+              size="small"
               label="Video URL"
               defaultValue={valueDefault?.videoUrl || ""}
               {...register("videoUrl")}
@@ -158,6 +172,7 @@ export default function HomePageTab({ position, valueDefault, url }) {
             );
           })}
           <button
+            className="btn btn-sm btn-success mt-2"
             onClick={handleSubmit(onSubmit)}
             disabled={
               watch("packages[0]") === "" ||

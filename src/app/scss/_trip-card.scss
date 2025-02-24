@@ -1,5 +1,5 @@
 .trip-card {
-  width: 400px;
+  // width: 400px;
   cursor: pointer;
   @media (max-width: 820px) {
     width: 100%;
@@ -32,5 +32,27 @@
   &:hover {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
       rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  }
+}
+.badge-container {
+  z-index: 1;
+  .group-tour-badge {
+    position: absolute;
+    top: 30px;
+    left: 26px;
+  }
+  .badge-group {
+    position: absolute;
+    top: 30px;
+    right: 26px;
+  }
+}
+
+@media (max-width: 576px) {
+  .package-card-region-name {
+    font-size: 12px;
+  }
+  .package-card-review-title {
+    font-size: 12px;
   }
 }

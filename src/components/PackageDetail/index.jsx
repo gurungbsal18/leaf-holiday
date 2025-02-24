@@ -37,38 +37,74 @@ import CollectionsIcon from "@mui/icons-material/Collections";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import { GlobalContext } from "@/context";
 import { getEmbeddedYouTubeUrl, isImage } from "@/utils/functions";
-import { CldVideoPlayer } from "next-cloudinary";
 import "next-cloudinary/dist/cld-video-player.css";
 import Fancybox from "@/components/FancyappWrapper";
+import { FaTripadvisor } from "react-icons/fa";
+import Rating from "@mui/material/Rating";
 import axios from "@/utils/axios";
+import PackageCard from "../PackageCard";
+import CreateTestimonial from "../CreateComponents/CreateTestimonial";
 
 export default function PackageDetail({ packageDetail }) {
+  const {
+    setDialogOpen,
+    setDialogContent,
+    isAuthUser,
+    user,
+    setBookingFormData,
+    pageLevelLoader,
+    setPageLevelLoader,
+  } = useContext(GlobalContext);
+
   const [showItineraryDetails, setShowItineraryDetails] = useState({});
   const [expandOrCollapse, setExpandOrCollapse] = useState(false);
   const [showCostInclude, setShowConstInclude] = useState(true);
   const [activeCost, setActiveCost] = useState(true);
   const [contentExpand, setContentExpand] = useState(false);
   const [showAnswer, setShowAnswer] = useState({});
+  const [isSticky, setIsSticky] = useState(false);
+  const [initialOffset, setInitialOffset] = useState(0);
+  const [relatedPackages, setRelatedPackages] = useState(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPos = window.scrollY;
+      if (scrollPos >= initialOffset) {
+        setIsSticky(true);
+      } else {
+        setIsSticky(false);
+      }
+    };
+
+    const stickyNavBar = document.querySelector(".single-trip-nav");
+    if (stickyNavBar) {
+      setInitialOffset(stickyNavBar.offsetTop);
+    }
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [initialOffset]);
+
+  const stickyNavBarStyle = {
+    position: isSticky ? "fixed" : "relative",
+    top: isSticky ? 0 : "auto",
+    maxWidth: isSticky ? "100%" : "revert-layer",
+    paddingLeft: isSticky ? "11%" : "0",
+  };
 
   const packageId = usePathname().match(/\/package\/([^\/]+)(?:\/|$)/)[1];
   "slug: ", packageId;
 
-  const {
-    user,
-    setBookingFormData,
-    isAuthUser,
-    pageLevelLoader,
-    setPageLevelLoader,
-  } = useContext(GlobalContext);
-
   const router = useRouter();
-  console.log(packageDetail);
 
   const iconMapping = {
     duration: { icon: <CalendarMonthIcon />, label: "Duration" },
     difficulty: { icon: <HikingIcon />, label: "Difficulty" },
     maxAltitude: { icon: <TerrainIcon />, label: "Max Altitude" },
-    bestWeater: { icon: <ThunderstormIcon />, label: "Best Weather" },
+    bestWeather: { icon: <ThunderstormIcon />, label: "Best Weather" },
     meals: { icon: <GiMeal />, label: "Meals" },
     accomodation: { icon: <FaBed />, label: "Accomodation" },
     transportation: { icon: <FaCar />, label: "Transportation" },
@@ -162,7 +198,25 @@ export default function PackageDetail({ packageDetail }) {
     }
   };
 
-  "package details: ", packageDetail;
+  const getRelatedPackages = async () => {
+    try {
+      const res = await axios.get(
+        `/region/slug/${packageDetail?.region?.slug}`
+      );
+      if (res.status === 200) {
+        let allPackages = res.data?.data[0]?.packages;
+        allPackages = allPackages.map((obj) => {
+          return { ...obj, region: packageDetail.region };
+        });
+        const arr = allPackages.filter((obj) => obj._id !== packageDetail._id);
+        setRelatedPackages(arr.slice(0, 6));
+      }
+    } catch (e) {}
+  };
+
+  useEffect(() => {
+    getRelatedPackages();
+  }, []);
 
   return (
     <div className="main-div mb-5">
@@ -191,7 +245,16 @@ export default function PackageDetail({ packageDetail }) {
       </div>
 
       <div className="bg-success-subtle">
-        <div className="container d-flex gap-5 single-trip-nav px-3 px-md-0">
+        <div
+          className={`container d-flex gap-5
+            ${
+              isSticky
+                ? "single-trip-nav sticky-trip-nav bg-success-subtle"
+                : "single-trip-nav"
+            }
+          `}
+          style={stickyNavBarStyle}
+        >
           {packageNavItems.map((item) => (
             <a key={item.id} href={item.path}>
               <span className="text-muted fs-12">{item.icon}</span> {item.label}
@@ -244,26 +307,21 @@ export default function PackageDetail({ packageDetail }) {
               </div>
             )}
             {packageDetail?.overview !== "" && (
-              <div id="overview">
+              <div id="overview" className="pt-6">
                 <h2 className="title">{packageDetail?.name}</h2>
-                {/* <div className="overview-content-collapse overview-content-expand"> */}
                 <div
-                  className={`${
-                    contentExpand
-                      ? "overview-content-expand"
-                      : "overview-content-collapse"
-                  }`}
                   dangerouslySetInnerHTML={{
                     __html: packageDetail?.overview,
-                  }}></div>
-                <Button size="sm" variant="success" onClick={readMoreBtn}>
+                  }}
+                ></div>
+                {/* <Button size="sm" variant="success" onClick={readMoreBtn}>
                   {contentExpand ? "Read Less" : "Read More"}
-                </Button>
+                </Button> */}
               </div>
             )}
             {packageDetail?.itineraries &&
               packageDetail?.itineraries.length !== 0 && (
-                <div className="mt-5" id="itinerary">
+                <div className="pt-6" id="itinerary">
                   <div className="d-flex justify-content-between mb-3 align-items-center">
                     <h4 className="title ">
                       <ModeOfTravelIcon />
@@ -272,7 +330,8 @@ export default function PackageDetail({ packageDetail }) {
                     <Button
                       variant="success"
                       size="sm"
-                      onClick={handleExpandCollapse}>
+                      onClick={handleExpandCollapse}
+                    >
                       {expandOrCollapse ? "Collapse All -" : "Expand All +"}
                     </Button>
                   </div>
@@ -282,7 +341,8 @@ export default function PackageDetail({ packageDetail }) {
                         <div
                           className="d-flex justify-content-between align-items-center bg-light p-2"
                           onClick={() => handleToggle(item._id)}
-                          style={{ cursor: "pointer" }}>
+                          style={{ cursor: "pointer" }}
+                        >
                           {showItineraryDetails[item._id]}
                           <span className="d-flex align-items-center gap-2">
                             <span className="text-success">
@@ -296,45 +356,56 @@ export default function PackageDetail({ packageDetail }) {
                           <Button
                             variant="success"
                             size="sm"
-                            className="itinerary-expand-btn">
+                            className="itinerary-expand-btn"
+                          >
                             {showItineraryDetails[item._id] ? "-" : "+"}
                           </Button>
                         </div>
                         <div
-                          className={`${
+                          className={`text-justify ${
                             showItineraryDetails[item._id]
                               ? "detail-itinerary"
                               : "d-none "
-                          }`}>
-                          <div className="itinerary-img">
-                            <Image
-                              src={item.imageUrl}
-                              height={500}
-                              width={500}
-                              alt={`${item.name}-image`}
-                            />
-                          </div>
+                          }`}
+                        >
+                          {item?.imageUrl && (
+                            <div className="itinerary-img">
+                              <Image
+                                src={item.imageUrl}
+                                height={500}
+                                width={500}
+                                alt={`${item.name}-image`}
+                              />
+                            </div>
+                          )}
                           <div
                             dangerouslySetInnerHTML={{
                               __html: item.content,
-                            }}></div>
+                            }}
+                          ></div>
                           <div className="d-flex justify-content-between itinerary-fact">
-                            <div className="d-flex align-items-center gap-1">
-                              <TerrainIcon className="text-muted" />
-                              <p className="m-0">
-                                Max Altitude: {item.maxAltitude}
-                              </p>
-                            </div>
-                            <div className="d-flex align-items-center gap-1">
-                              <GiMeal className="text-muted" />
-                              <p className="m-0">Meals: {item.meals}</p>
-                            </div>
-                            <div className="d-flex align-items-center gap-1">
-                              <FaBed className="text-muted" />
-                              <p className="m-0">
-                                Accomodation: {item.accomodation}
-                              </p>
-                            </div>
+                            {item.maxAltitude && item.maxAltitude !== 0 && (
+                              <div className="d-flex align-items-center gap-1">
+                                <TerrainIcon className="text-muted" />
+                                <p className="m-0 fs-14">
+                                  Max Altitude: {item.maxAltitude}
+                                </p>
+                              </div>
+                            )}
+                            {item.meals && (
+                              <div className="d-flex align-items-center gap-1">
+                                <GiMeal className="text-muted" />
+                                <p className="m-0 fs-14">Meals: {item.meals}</p>
+                              </div>
+                            )}
+                            {item.accomodation && (
+                              <div className="d-flex align-items-center gap-1">
+                                <FaBed className="text-muted" />
+                                <p className="m-0 fs-14">
+                                  Accomodation: {item.accomodation}
+                                </p>
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -344,7 +415,7 @@ export default function PackageDetail({ packageDetail }) {
               )}
             {(packageDetail?.inclusions.length !== 0 ||
               packageDetail?.exclusions.length !== 0) && (
-              <div className="cost-IE-container mt-5" id="costInclueExclude">
+              <div className="cost-IE-container pt-6" id="costInclueExclude">
                 <div className="cost-IE-header d-flex align-items-center gap-2">
                   <div
                     size="sm"
@@ -356,7 +427,8 @@ export default function PackageDetail({ packageDetail }) {
                     onClick={() => {
                       setShowConstInclude(true);
                       setActiveCost(true);
-                    }}>
+                    }}
+                  >
                     <span className="me-1">
                       <CheckCircleOutlineIcon fontSize="small" />
                     </span>
@@ -372,7 +444,8 @@ export default function PackageDetail({ packageDetail }) {
                     onClick={() => {
                       setShowConstInclude(false);
                       setActiveCost(false);
-                    }}>
+                    }}
+                  >
                     <span className="me-1">
                       <CancelIcon fontSize="small" />
                     </span>
@@ -414,7 +487,7 @@ export default function PackageDetail({ packageDetail }) {
                 </div>
               )}
             {packageDetail?.tripMapUrl && packageDetail?.tripMapUrl !== "" && (
-              <div className="map-container mt-5" id="map">
+              <div className="map-container pt-6" id="map">
                 <h4 className="title">
                   <MapIcon />
                   Trip Map
@@ -431,13 +504,13 @@ export default function PackageDetail({ packageDetail }) {
             )}
             {packageDetail?.departureDate &&
               packageDetail?.departureDate.length !== 0 && (
-                <div className="fix-departure-date-table mt-5" id="date-price">
+                <div className="fix-departure-date-table pt-6" id="date-price">
                   <h4 className="title">
                     <CalendarMonth />
                     Dates & Price
                   </h4>
                   {/* <table> */}
-                  <table className="table table-hover">
+                  <table className="table table-hover border my-4">
                     {/* <div className="d-flex gap-3"> */}
                     <thead>
                       <tr>
@@ -448,10 +521,8 @@ export default function PackageDetail({ packageDetail }) {
                         <th></th>
                       </tr>
                     </thead>
-                    {/* </div> */}
 
                     {packageDetail?.departureDate.map((item, index) => (
-                      // <div className="d-flex gap-3">
                       <tbody key={`departure-date-${index}`}>
                         <tr>
                           <td className="text-muted">
@@ -477,7 +548,8 @@ export default function PackageDetail({ packageDetail }) {
                                 router.push(
                                   `/package/${packageDetail.slug}/booking`
                                 );
-                              }}>
+                              }}
+                            >
                               Book Now
                             </button>
                           </td>
@@ -490,15 +562,16 @@ export default function PackageDetail({ packageDetail }) {
                 </div>
               )}
             <div
-              className="extra-contents"
+              className="extra-contents text-justify pt-4"
               dangerouslySetInnerHTML={{
                 __html: packageDetail?.content,
-              }}></div>
+              }}
+            ></div>
             {packageDetail?.gallery &&
               packageDetail?.gallery.length !== 0 &&
               packageDetail?.gallery[0].images.length !== 0 && (
-                <div>
-                  <h4 className="title mt-5">
+                <div id="package-gallery">
+                  <h4 className="title pt-6">
                     <CollectionsIcon />
                     Photo Gallery
                   </h4>
@@ -508,7 +581,8 @@ export default function PackageDetail({ packageDetail }) {
                         Carousel: {
                           infinite: false,
                         },
-                      }}>
+                      }}
+                    >
                       {packageDetail?.gallery[0].images.map((item) => (
                         <a data-fancybox="gallery" href={item} key={item}>
                           <div className="itinerary-img-container">
@@ -527,36 +601,30 @@ export default function PackageDetail({ packageDetail }) {
                 </div>
               )}
             {packageDetail?.videoGallery &&
-              packageDetail?.videoGallery.length !== 0 && (
+              packageDetail?.videoGallery.length !== 0 &&
+              packageDetail?.videoGallery[0] !== "" && (
                 <div>
                   <h4 className="title mt-5">
                     <CollectionsIcon />
                     Video Gallery
                   </h4>
                   <div>
-                    <Fancybox
-                      options={{
-                        Carousel: {
-                          infinite: false,
-                        },
-                      }}>
-                      {packageDetail?.videoGallery?.map((item) => (
-                        <a key={item} data-fancybox="gallery" href={item}>
-                          <iframe
-                            className="w-100"
-                            width="150"
-                            height="90"
-                            src={getEmbeddedYouTubeUrl(item)}
-                            title="YouTube video player"
-                            allowFullScreen></iframe>
-                        </a>
-                      ))}
-                    </Fancybox>
+                    {packageDetail?.videoGallery?.map((item) => (
+                      <iframe
+                        key={item}
+                        className="w-100"
+                        width="150"
+                        height="500"
+                        src={getEmbeddedYouTubeUrl(item)}
+                        title="YouTube video player"
+                        allowFullScreen
+                      ></iframe>
+                    ))}
                   </div>
                 </div>
               )}
             {packageDetail?.faq && packageDetail?.faq.length !== 0 && (
-              <div className="mt-5">
+              <div className="pt-6">
                 <h4 className="title">
                   <ContactSupportIcon />
                   FAQs
@@ -570,18 +638,56 @@ export default function PackageDetail({ packageDetail }) {
                           variant="success"
                           size="sm"
                           className="itinerary-expand-btn"
-                          onClick={() => handleFaqToggle(item._id)}>
+                          onClick={() => handleFaqToggle(item._id)}
+                        >
                           {showAnswer[item._id] ? "-" : "+"}
                         </Button>
                       </div>
                       <p
                         className={`text-muted ${
                           showAnswer[item._id] ? "" : "d-none"
-                        }`}>
+                        }`}
+                      >
                         {item.answer}
                       </p>
                     </li>
                   ))}
+                </ol>
+              </div>
+            )}
+            {packageDetail?.reviews && packageDetail?.reviews.length !== 0 && (
+              <div className="pt-6">
+                <div className="d-flex justify-content-between ">
+                  <h4 className="title">
+                    <ContactSupportIcon />
+                    Reviews
+                  </h4>
+                  <button
+                    className="btn btn-sm btn-success"
+                    onClick={() => {
+                      setDialogOpen(true);
+                      setDialogContent(<CreateTestimonial />);
+                    }}
+                  >
+                    Add a Review
+                  </button>
+                </div>
+                <ol>
+                  {packageDetail?.reviews.map(
+                    (item, index) =>
+                      item.isVerified && (
+                        <li key={`review-${index}`} className="d-flex">
+                          <div>
+                            <p className="text-muted">
+                              {item.userName} -{" "}
+                              {dayjs(item.date).format("DD MMM, YYYY")}
+                            </p>
+                            <Rating readOnly value={item.stars} />
+                            <p>{item.comment}</p>
+                          </div>
+                        </li>
+                      )
+                  )}
                 </ol>
               </div>
             )}
@@ -592,6 +698,15 @@ export default function PackageDetail({ packageDetail }) {
               packageId={packageDetail?.slug}
               pdfUrl={packageDetail?.pdfUrl}
             />
+          </div>
+        </div>
+        <div className="pt-6">
+          <h4 className="title">Related Packages</h4>
+          <div className="row">
+            {relatedPackages &&
+              relatedPackages.map((item) => (
+                <PackageCard key={item._id} packageDetail={item} />
+              ))}
           </div>
         </div>
       </Container>

@@ -45,7 +45,6 @@ export default function Settings() {
       isUpdate
         ? (res = await axios.put(`/setting/update/${data._id}`, data))
         : (res = await axios.post(`/setting/add`, data));
-      console.log(res);
 
       if (res.status === 200) {
         toast.success(res.data.message, {
@@ -79,7 +78,7 @@ export default function Settings() {
         const res = await axios.get(
           "https://leaf-holiday-backend.vercel.app/setting/"
         );
-        console.log(res);
+
         if (res.status === 200) {
           const settingData = res.data?.data;
           if (settingData.length > 0) {
@@ -95,9 +94,13 @@ export default function Settings() {
           setPageLevelLoader(false);
         }
       } catch (e) {
-        toast.error("Something Went Wrong. Please Try Again...", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+        toast.error(
+          e?.response?.data?.error ||
+            "Something Went Wrong. Please Try Again...",
+          {
+            position: toast.POSITION.TOP_RIGHT,
+          }
+        );
         setPageLevelLoader(false);
       }
     };
@@ -109,17 +112,23 @@ export default function Settings() {
       {pageLevelLoader ? (
         <PageLevelLoader />
       ) : (
-        <div className="">
+        <div className="p-4">
           <div className="">
-            <div className="d-flex justify-content-between p-3 ">
-              <p>{isUpdate ? "Update Settings" : "Create Settings"}</p>
-              <button type="submit" onClick={handleSubmit(onSubmit)}>
+            <div className="d-flex justify-content-between mb-4">
+              <h4 className="title m-0">
+                {isUpdate ? "Update Settings" : "Create Settings"}
+              </h4>
+              <button
+                type="submit"
+                onClick={handleSubmit(onSubmit)}
+                className="btn btn-sm btn-success"
+              >
                 {isUpdate ? "Update" : "Create"}
               </button>
             </div>
             <form>
-              <div className="d-flex gap-5">
-                <div className="d-flex flex-column gap-2">
+              <div className="row gap-5">
+                <div className="col-4 d-flex flex-column gap-4">
                   {leftDivData.map((item) => (
                     <Controller
                       key={item.id}
@@ -136,15 +145,8 @@ export default function Settings() {
                       )}
                     />
                   ))}
-                  <UploadToCloudinary
-                    selectedFile={selectedFile}
-                    setSelectedFile={setSelectedFile}
-                    label="Logo"
-                    setValue={setValue}
-                    formName="logo"
-                  />
                 </div>
-                <div className="d-flex flex-column gap-2">
+                <div className="col d-flex flex-column gap-4">
                   {rightDivData.map((item) => (
                     <Controller
                       key={item.id}
@@ -162,6 +164,15 @@ export default function Settings() {
                     />
                   ))}
                 </div>
+              </div>
+              <div className="upload-logo my-5 bg-light p-3 rounded">
+                <UploadToCloudinary
+                  selectedFile={selectedFile}
+                  setSelectedFile={setSelectedFile}
+                  label="Logo"
+                  setValue={setValue}
+                  formName="logo"
+                />
               </div>
             </form>
           </div>

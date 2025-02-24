@@ -10,6 +10,10 @@ import PageLevelLoader from "@/components/Loader/PageLevelLoader";
 import CustomAutocomplete from "@/components/ui/CustomAutocomplete";
 import { toast } from "react-toastify";
 import axios from "@/utils/axios";
+import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
+import dayjs from "dayjs";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 export default function CreateTestimonial() {
   const {
@@ -35,6 +39,8 @@ export default function CreateTestimonial() {
     userName: user?.role === "admin" ? "" : user?.name,
     stars: 1,
     comment: "",
+    date: dayjs(new Date()),
+    // source: "",
     isSelected: false,
     isVerified: user?.role === "admin" ? true : false,
   };
@@ -70,9 +76,12 @@ export default function CreateTestimonial() {
         setPageLevelLoader(false);
       }
     } catch (e) {
-      toast.error("Something Went Wrong. Please Try Again...", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error(
+        e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
+        {
+          position: toast.POSITION.TOP_RIGHT,
+        }
+      );
       setPageLevelLoader(false);
     }
   };
@@ -86,9 +95,9 @@ export default function CreateTestimonial() {
       {pageLevelLoader ? (
         <PageLevelLoader />
       ) : (
-        <div className="">
-          <div className="d-flex justify-content-between p-3 ">
-            <p>
+        <div className="p-3">
+          <div className="d-flex justify-content-between border-bottom align-items-center pb-2 mb-3">
+            <p className="m-0">
               {updateForm
                 ? verify
                   ? "Verify Review"
@@ -96,6 +105,7 @@ export default function CreateTestimonial() {
                 : "Create Review"}
             </p>
             <GrClose
+              style={{ cursor: "pointer" }}
               onClick={() => {
                 setDialogOpen(false);
                 setUpdateForm(null);
@@ -106,17 +116,26 @@ export default function CreateTestimonial() {
           <form>
             <div className="d-flex flex-column gap-2">
               {user?.role === "admin" && (
-                <div>
+                <div className="d-flex gap-3 flex-column">
                   <TextField
                     required
                     fullWidth
                     size="small"
-                    label="Name"
+                    label="Full Name"
                     type="text"
                     variant="outlined"
                     disabled={verify}
                     {...register("userName")}
                   />
+                  {/* <TextField
+                    required
+                    fullWidth
+                    size="small"
+                    label="Source"
+                    type="text"
+                    variant="outlined"
+                    {...register("source")}
+                  /> */}
                   <CustomAutocomplete
                     label="Select Package"
                     options={allPackages}
@@ -124,11 +143,21 @@ export default function CreateTestimonial() {
                     formName={"packageId"}
                     fieldName={updateForm?.packageId}
                   />
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <Controller
+                      name="date"
+                      control={control}
+                      render={({ field }) => (
+                        <MobileDatePicker className="w-100" {...field} />
+                      )}
+                    />
+                  </LocalizationProvider>
                 </div>
               )}
               <label name="comment">Comment</label>
               <TextareaAutosize
-                className="w-100"
+                minRows={4}
+                className="w-100 form-control"
                 size="large"
                 label="Comment"
                 type="text"
@@ -143,15 +172,19 @@ export default function CreateTestimonial() {
                 // defaultValue={-1}
                 render={({ field: { onChange, value } }) => (
                   <Rating
+                    className="rating-star"
                     name={"stars"}
                     onChange={onChange}
                     value={Number(value)}
-                    precision={0.5}
                     readOnly={verify}
                   />
                 )}
               />
-              <button type="submit" onClick={handleSubmit(onSubmit)}>
+              <button
+                type="submit"
+                onClick={handleSubmit(onSubmit)}
+                className="btn btn-sm btn-success"
+              >
                 {updateForm ? (verify ? "Verify" : "Update") : "Create"}
               </button>
             </div>

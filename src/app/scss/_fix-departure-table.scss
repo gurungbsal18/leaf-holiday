@@ -2,6 +2,16 @@
   table {
     width: 100%;
     border-collapse: collapse;
+    thead {
+      tr th {
+        text-align: left;
+      }
+    }
+    tbody {
+      tr td {
+        text-align: left;
+      }
+    }
   }
 }
 

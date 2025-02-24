@@ -1,6 +1,5 @@
 import PageLevelLoader from "@/components/Loader/PageLevelLoader";
-import React from "react";
 
-export default function AdminPagesLoading() {
+export default function Loading() {
   return <PageLevelLoader />;
 }

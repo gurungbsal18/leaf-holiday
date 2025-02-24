@@ -38,7 +38,6 @@ export default function CreateAdmin() {
       updateForm
         ? (res = await axios.put(`/admin/update/${data._id}`, data))
         : (res = await axios.post(`/admin/add`, data));
-      console.log(res);
 
       if (res.status === 200) {
         toast.success(res.data.message, {
@@ -56,7 +55,6 @@ export default function CreateAdmin() {
         );
       }
     } catch (e) {
-      console.log(e);
       toast.error(
         e?.response?.data?.error || "Something Went Wrong. Please Try Again...",
         {

@@ -130,8 +130,8 @@ export default function EditAboutUs() {
         <PageLevelLoader />
       ) : (
         <div className="dashboard-content-section p-4">
-          <div className="d-flex justify-content-between ">
-            <div className="d-flex align-items-center gap-2 mb-4">
+          <div className="d-flex justify-content-between mb-4">
+            <div className="d-flex align-items-center gap-2">
               <Link href="/admin/pages">
                 <ArrowBackIcon />
               </Link>
@@ -141,7 +141,8 @@ export default function EditAboutUs() {
             <button
               type="submit"
               onClick={handleSubmit(onSubmit)}
-              className="btn btn-success">
+              className="btn btn-success"
+            >
               <FileUploadIcon /> Publish
             </button>
           </div>

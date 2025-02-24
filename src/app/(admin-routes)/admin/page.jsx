@@ -8,6 +8,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MapIcon from "@mui/icons-material/Map";
 import ArticleIcon from "@mui/icons-material/Article";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 export default function AdminDashboard() {
   const { pageLevelLoader, setPageLevelLoader } = useContext(GlobalContext);
@@ -16,16 +17,15 @@ export default function AdminDashboard() {
     setPageLevelLoader(true);
     try {
       const res = await axios.get("/homepage/dashboard");
-      console.log(res);
       if (res.status === 200) {
         setDashboardData(res?.data);
-        setPageLevelLoader(false);
-      } else {
-        setPageLevelLoader(false);
       }
+      setPageLevelLoader(false);
     } catch (e) {
-      console.log(
-        e?.response?.data?.error || "Something went wrong. Please try again !!!"
+      toast.error(
+        e?.response?.data?.error ||
+          "Something went wrong. Please try again !!!",
+        { position: toast.POSITION.TOP_RIGHT }
       );
       setPageLevelLoader(false);
     }
@@ -47,7 +47,11 @@ export default function AdminDashboard() {
           <div className="row mt-4">
             {dashboardData &&
               Object.entries(dashboardData).map(([key, value]) => (
+
                 <div key={key} className="col-3">
+
+                <div className="col-3">
+
                   <div className="d-flex py-3 bg-success-subtle rounded flex-column-reverse justify-content-center align-items-center">
                     <div className="d-flex justify-content-center flex-column align-items-center py-2">
                       <p>{adminDataMapper[key]?.label}</p>

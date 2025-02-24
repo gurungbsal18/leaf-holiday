@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { GrClose } from "react-icons/gr";
 import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { GlobalContext } from "@/context";
 import { submitForm } from "@/utils/functions";
 import UploadToCloudinary from "@/components/ui/UploadToCloudinary";
@@ -64,11 +64,15 @@ export default function CreateRegion({ nameValue, setNameValue, setVal }) {
             position: toast.POSITION.TOP_RIGHT,
           });
         }
-      } catch (error) {
-        console.log(error);
-        toast.error("Error getting Destinations...", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+      } catch (e) {
+        toast.error(
+          e?.response?.data?.error ||
+            "Something Went Wrong. Please Try Again...",
+          {
+            position: toast.POSITION.TOP_RIGHT,
+          }
+        );
+        setPageLevelLoader(false);
       }
     };
 

@@ -11,6 +11,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "@/utils/axios";
+import Link from "next/link";
 
 export default function Footer() {
   const date = new Date();
@@ -32,8 +33,8 @@ export default function Footer() {
 
   return (
     <div className="footer bg-success p-5 pb-2 text-white">
-      <div className="footer-content d-flex justify-content-between flex-column flex-md-row">
-        <div className="d-flex flex-column footer-content-contact">
+      <div className="footer-content d-flex justify-content-between flex-column flex-md-row align-items-center align-items-start">
+        <div className="d-flex flex-column footer-content-contact align-items-center align-items-md-start">
           <h4>Contact Us</h4>
           <a href="tel:+9771234567890">
             <WhatsAppIcon />
@@ -50,24 +51,53 @@ export default function Footer() {
         </div>
         <div className="d-flex flex-column">
           <h4>Useful Links</h4>
-          <a href="">Trekking In Nepal</a>
-          <a href="">Travel Blogs</a>
-          <a href="">Travel News</a>
-          <a href="">Activities</a>
+          <a href="https://www.leaf-holidays.com/destination/nepal">
+            Trekking In Nepal
+          </a>
+          <a href="https://www.leaf-holidays.com/blog" target="_blank">
+            Travel Blogs
+          </a>
+          <a
+            href="https://www.leaf-holidays.com/travel-info/best-kailash-season-in-tibet"
+            target="_blank"
+          >
+            Best Season
+          </a>
+          <a href="https://www.leaf-holidays.com/activity" target="_blank">
+            Activities
+          </a>
         </div>
         <div className="d-flex flex-column">
           <h4>Get To Know Us</h4>
-          <a href="">About Us</a>
-          <a href="">Meet Our Team</a>
-          <a href="">Why Choose Us?</a>
-          <a href="">Contact Us</a>
+          <a href="https://www.leaf-holidays.com/aboutus" target="_blank">
+            About Us
+          </a>
+          <a href="https://www.leaf-holidays.com/ourTeam" target="_blank">
+            Meet Our Team
+          </a>
+          <a href="https://www.leaf-holidays.com/aboutus" target="_blank">
+            Why Choose Us?
+          </a>
+          <a href="https://www.leaf-holidays.com/contact" target="_blank">
+            Contact Us
+          </a>
         </div>
         <div className="d-flex flex-column">
           <h4>Legal Info</h4>
-          <a href="">Privacy Policy</a>
-          <a href="">Terms And Condition</a>
-          <a href="">Cancellation Policy</a>
-          <a href="">Covid Protocol</a>
+          <a
+            href="https://www.leaf-holidays.com/travel-info/travel-insurance"
+            target="_blank"
+          >
+            Travel Insurance
+          </a>
+          <a
+            href="https://www.leaf-holidays.com/travel-info/travel-insurance"
+            target="_blank"
+          >
+            Nepal Visa Information
+          </a>
+          {/* <a href="">Cancellation Policy</a>
+          <a href="">Covid Protocol</a> */}
         </div>
       </div>
       <div className="footer-association d-flex flex-column justify-content-center align-items-center mt-5">
@@ -85,31 +115,35 @@ export default function Footer() {
           />
         </div>
       </div>
-      <div className="d-flex justify-content-between mt-5">
-        <p className="m-0 fs-12">© Leaf Holiday {year}</p>
-        <div className="footer-social d-flex gap-2">
+      <div className="row justify-content-between mt-5">
+        <p className="m-0 fs-12 col-3">© Leaf Holiday {year}.</p>
+        <div className="footer-social d-flex gap-2 col-3 justify-content-end">
           <a
             href={leafData?.facebook || "#"}
             target="_blank"
-            className="text-white">
+            className="text-white"
+          >
             <FacebookIcon />
           </a>
           <a
             href={leafData?.instagram || "#"}
             target="_blank"
-            className="text-white">
+            className="text-white"
+          >
             <InstagramIcon />
           </a>
           <a
             href={leafData?.linkedin || "#"}
             target="_blank"
-            className="text-white">
+            className="text-white"
+          >
             <LinkedInIcon />
           </a>
           <a
             href={leafData?.twitter || "#"}
             target="_blank"
-            className="text-white">
+            className="text-white"
+          >
             <TwitterIcon />
           </a>
         </div>

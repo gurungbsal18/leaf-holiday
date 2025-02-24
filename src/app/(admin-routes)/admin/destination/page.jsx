@@ -18,7 +18,9 @@ export default function Destination() {
 
   return (
     <div className="dashboard-content-section p-4">
-      <AdminPages data={data} />
+      <div className="destination-page">
+        <AdminPages data={data} />
+      </div>
     </div>
   );
 }

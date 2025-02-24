@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { createContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import axios from "@/utils/axios";
@@ -29,12 +29,7 @@ export default function GlobalState({ children }) {
 
   const pathname = usePathname();
   const extractAdminPath = pathname.split("/");
-
-  useEffect(() => {
-    if (pathname !== "/login" && pathname !== "/register") {
-      setTrackPage(pathname);
-    }
-  }, [pathname]);
+  const router = useRouter();
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -46,18 +41,33 @@ export default function GlobalState({ children }) {
       setUser(userData);
       setBookingFormData(bookingData);
     } else {
+      localStorage.clear();
       setIsAuthUser(false);
       setUser({}); //unauthenticated user
     }
   }, [Cookies]);
 
   useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("user"));
+    setPageLevelLoader(true);
+    if (pathname !== "/login" && pathname !== "/register") {
+      setTrackPage(pathname);
+    }
     if (extractAdminPath[1] === "admin") {
-      setAdminView(true);
       setVerify(false);
+      if (!userData) {
+        setTrackPage("/");
+        router.push("/login");
+      }
+      if (userData && userData.role !== "admin") {
+        router.push("/");
+      }
     }
     if (!pathname.includes("/booking")) {
       localStorage.setItem("bookingData", null);
+    }
+    if (!pathname.includes("/create-package")) {
+      localStorage.removeItem("updatePackage");
     }
   }, [pathname]);
   return (
