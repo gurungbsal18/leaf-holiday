@@ -7,7 +7,7 @@ export default axios.create({
   baseURL:
     process.env.NEXT_PUBLIC_NODE_ENV === "development"
       ? "http://localhost:5001/"
-      : "https://leaf-backend.sushilbalami.com.np/",
+      : "https://leaf-holiday-backend.vercel.app/",
   headers: {
     Authorization: `Bearer ${token}`,
   },
